@@ -41,6 +41,7 @@ dependencies:
   iconsax: ^0.0.8
   liquid_pull_to_refresh: ^3.0.1
   sensors_plus: ^6.1.1
+  url_launcher: ^6.3.1
   # proximity_sensor: ^1.3.8
   # mobile_scanner: ^6.0.7
   # thermal: ^1.1.11
