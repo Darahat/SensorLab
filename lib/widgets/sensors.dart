@@ -17,6 +17,8 @@ import 'package:all_in_one_sensor_toolkit/screens/proximity_screen.dart';
 import 'package:all_in_one_sensor_toolkit/screens/qr_scanner_screen.dart';
 import 'package:all_in_one_sensor_toolkit/screens/magnetometer_screen.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:all_in_one_sensor_toolkit/screens/barometer_screen.dart';
+import 'package:all_in_one_sensor_toolkit/screens/humidity_screen.dart';
 
 final List<SensorCard> sensors = [
   SensorCard(
@@ -68,13 +70,13 @@ final List<SensorCard> sensors = [
     screen: const MagnetometerScreen(),
     category: 'Magnetic',
   ),
-  // SensorCard(
-  //   icon: Iconsax.cloud_snow,
-  //   label: 'Barometer',
-  //   color: Colors.cyan,
-  //   screen: const BarometerScreen(),
-  //   category: 'Environment',
-  // ),
+  SensorCard(
+    icon: Iconsax.cloud_snow,
+    label: 'Barometer',
+    color: Colors.cyan,
+    screen: const BarometerScreen(),
+    category: 'Environment',
+  ),
   SensorCard(
     icon: Iconsax.radar,
     label: 'Proximity',
@@ -82,6 +84,7 @@ final List<SensorCard> sensors = [
     screen: const ProximityScreen(),
     category: 'Device',
   ),
+
   // SensorCard(
   //   icon: Iconsax.temperature,
   //   label: 'Temperature',
@@ -89,13 +92,13 @@ final List<SensorCard> sensors = [
   //   screen: const TemperatureScreen(),
   //   category: 'Environment',
   // ),
-  // SensorCard(
-  //   icon: Iconsax.drop,
-  //   label: 'Humidity',
-  //   color: Colors.lightBlue,
-  //   screen: const HumidityScreen(),
-  //   category: 'Environment',
-  // ),
+  SensorCard(
+    icon: FontAwesomeIcons.droplet,
+    label: 'Humidity',
+    color: Colors.orange,
+    screen: const HumidityScreen(),
+    category: 'Environment',
+  ),
   SensorCard(
     icon: Iconsax.flash,
     label: 'Flashlight',
@@ -103,13 +106,7 @@ final List<SensorCard> sensors = [
     screen: FlashlightScreen(),
     category: 'Device',
   ),
-  // SensorCard(
-  //   icon: Iconsax.graph,
-  //   label: 'Sound Graph',
-  //   color: Colors.purple,
-  //   screen: const SoundGraphScreen(),
-  //   category: 'Audio',
-  // ),
+
   SensorCard(
     icon: Iconsax.scan,
     label: 'QR Scanner',

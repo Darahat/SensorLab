@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:iconsax/iconsax.dart';
+import 'dart:math';
+// import 'package:app_settings/app_settings.dart';
 
 class BarometerScreen extends StatefulWidget {
   const BarometerScreen({super.key});
@@ -12,93 +15,164 @@ class _BarometerScreenState extends State<BarometerScreen> {
   double _pressure = 1013.25; // Default sea level pressure in hPa
   double _altitude = 0;
   bool _isLoading = true;
+  bool _hasSensor = true;
+  bool _permissionGranted = true;
 
   @override
   void initState() {
     super.initState();
+    _checkPermissionsAndSensor();
+  }
+
+  Future<void> _checkPermissionsAndSensor() async {
+    // Check location permissions (needed for altitude)
+    final locationPermission = await Geolocator.checkPermission();
+    if (locationPermission == LocationPermission.denied) {
+      final requestedPermission = await Geolocator.requestPermission();
+      if (requestedPermission != LocationPermission.whileInUse &&
+          requestedPermission != LocationPermission.always) {
+        setState(() {
+          _permissionGranted = false;
+          _isLoading = false;
+        });
+        return;
+      }
+    }
+
+    // Check if device has barometer (simulated check)
+    // In a real app, you would use sensor_plus or similar to check
+    final hasBarometer = await _checkBarometerAvailability();
+
+    if (!hasBarometer) {
+      setState(() {
+        _hasSensor = false;
+        _isLoading = false;
+      });
+      return;
+    }
+
+    // Get data if we have permission and sensor
     _getBarometricData();
   }
 
+  Future<bool> _checkBarometerAvailability() async {
+    // This is a simulation - in a real app you'd use:
+    // await SensorManager().isSensorAvailable(Sensors.BAROMETER);
+    // Using sensor_plus package or similar
+    return true; // Assume true for this example
+  }
+
   Future<void> _getBarometricData() async {
-    // In a real app, you would get actual sensor data here
-    // This is a simulation for demo purposes
-    await Future.delayed(const Duration(seconds: 1));
+    try {
+      // Simulate getting data (replace with actual sensor reading)
+      final position = await Geolocator.getCurrentPosition();
 
-    final position = await Geolocator.getCurrentPosition();
-
-    setState(() {
-      // Simulate pressure based on altitude
-      _pressure = 1013.25 * pow(1 - (position.altitude / 44330), 5.255);
-      _altitude = position.altitude;
-      _isLoading = false;
-    });
+      setState(() {
+        // Simulate pressure based on altitude
+        _pressure = 1013.25 * pow(1 - (position.altitude / 44330), 5.255);
+        _altitude = position.altitude;
+        _isLoading = false;
+      });
+    } catch (e) {
+      setState(() {
+        _isLoading = false;
+        _hasSensor = false;
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Scaffold(
-      appBar: AppBar(title: const Text('Barometer')),
-      body:
-          _isLoading
-              ? const Center(child: CircularProgressIndicator())
-              : Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Column(
-                  children: [
-                    Expanded(
-                      child: Center(
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Text(
-                              '${_pressure.toStringAsFixed(2)}',
-                              style: const TextStyle(
-                                fontSize: 64,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            const SizedBox(height: 10),
-                            const Text(
-                              'hPa',
-                              style: TextStyle(
-                                fontSize: 24,
-                                color: Colors.grey,
-                              ),
-                            ),
-                            const SizedBox(height: 40),
-                            _buildPressureGauge(),
-                          ],
-                        ),
-                      ),
-                    ),
-                    _buildAltitudeCard(),
-                  ],
-                ),
-              ),
+      appBar: AppBar(
+        title: const Text('Barometer'),
+        centerTitle: true,
+        elevation: 0,
+        backgroundColor: colorScheme.surface,
+        foregroundColor: colorScheme.onSurface,
+      ),
+      body: Center(
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 500),
+          child: Padding(
+            padding: const EdgeInsets.all(24),
+            child: _buildContent(colorScheme),
+          ),
+        ),
+      ),
     );
   }
 
-  Widget _buildPressureGauge() {
-    final normalizedPressure = (_pressure - 950) / (1050 - 950);
-    final color = _getPressureColor(_pressure);
+  Widget _buildContent(ColorScheme colorScheme) {
+    if (!_permissionGranted) {
+      return _buildPermissionDeniedView(colorScheme);
+    }
 
-    return SizedBox(
-      width: 300,
-      height: 150,
+    if (!_hasSensor) {
+      return _buildNoSensorView(colorScheme);
+    }
+
+    if (_isLoading) {
+      return const Center(child: CircularProgressIndicator());
+    }
+
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        // Pressure Display
+        Text(
+          '${_pressure.toStringAsFixed(2)}',
+          style: TextStyle(
+            fontSize: 64,
+            fontWeight: FontWeight.bold,
+            color: _getPressureColor(_pressure, colorScheme),
+          ),
+        ),
+        const SizedBox(height: 8),
+        Text(
+          'hPa',
+          style: TextStyle(
+            fontSize: 20,
+            color: colorScheme.onSurface.withOpacity(0.6),
+          ),
+        ),
+        const SizedBox(height: 40),
+
+        // Pressure Gauge
+        _buildPressureGauge(colorScheme),
+        const SizedBox(height: 40),
+
+        // Altitude Card
+        _buildAltitudeCard(colorScheme),
+      ],
+    );
+  }
+
+  Widget _buildPressureGauge(ColorScheme colorScheme) {
+    final normalizedPressure = (_pressure - 950) / (1050 - 950);
+    final color = _getPressureColor(_pressure, colorScheme);
+
+    return Container(
+      height: 120,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: colorScheme.outline.withOpacity(0.2)),
+      ),
       child: Stack(
         children: [
           // Gauge background
           Container(
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(12),
               gradient: LinearGradient(
                 colors: [
-                  Colors.blue.shade300,
-                  Colors.green.shade300,
-                  Colors.yellow.shade300,
-                  Colors.red.shade300,
+                  colorScheme.primaryContainer,
+                  colorScheme.secondaryContainer,
+                  colorScheme.tertiaryContainer,
+                  colorScheme.errorContainer,
                 ],
-                stops: const [0.0, 0.4, 0.7, 1.0],
               ),
             ),
           ),
@@ -116,73 +190,130 @@ class _BarometerScreenState extends State<BarometerScreen> {
                     shape: BoxShape.circle,
                     boxShadow: [
                       BoxShadow(
-                        color: color.withOpacity(0.5),
+                        color: color.withOpacity(0.3),
                         blurRadius: 10,
                         spreadRadius: 2,
                       ),
                     ],
                   ),
-                  child: const Icon(Iconsax.arrow_down, color: Colors.white),
+                  child: Icon(
+                    Iconsax.arrow_down,
+                    color: colorScheme.onPrimary,
+                    size: 16,
+                  ),
                 ),
                 const SizedBox(height: 5),
-                Container(width: 2, height: 100, color: color),
+                Container(width: 2, height: 70, color: color),
               ],
             ),
           ),
           // Labels
           Positioned(
             bottom: 10,
-            left: 0,
-            child: Text('950', style: TextStyle(color: Colors.blue.shade800)),
+            left: 10,
+            child: Text('950', style: TextStyle(color: colorScheme.primary)),
           ),
           Positioned(
             bottom: 10,
-            left: 120,
-            child: Text('1000', style: TextStyle(color: Colors.green.shade800)),
+            left: 140,
+            child: Text('1000', style: TextStyle(color: colorScheme.secondary)),
           ),
           Positioned(
             bottom: 10,
-            right: 0,
-            child: Text('1050', style: TextStyle(color: Colors.red.shade800)),
+            right: 10,
+            child: Text('1050', style: TextStyle(color: colorScheme.error)),
           ),
         ],
       ),
     );
   }
 
-  Color _getPressureColor(double pressure) {
-    if (pressure < 980) return Colors.blue;
-    if (pressure < 1010) return Colors.green;
-    if (pressure < 1030) return Colors.yellow;
-    return Colors.red;
-  }
-
-  Widget _buildAltitudeCard() {
-    return Card(
-      elevation: 2,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Row(
-          children: [
-            const Icon(Iconsax.location, size: 40, color: Colors.blue),
-            const SizedBox(width: 16),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text('Altitude', style: TextStyle(color: Colors.grey)),
-                Text(
-                  '${_altitude.toStringAsFixed(2)} meters',
-                  style: const TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
+  Widget _buildAltitudeCard(ColorScheme colorScheme) {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: colorScheme.surfaceVariant,
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: colorScheme.outline.withOpacity(0.2)),
+      ),
+      child: Row(
+        children: [
+          Icon(Iconsax.location, size: 32, color: colorScheme.primary),
+          const SizedBox(width: 16),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Altitude',
+                style: TextStyle(color: colorScheme.onSurface.withOpacity(0.6)),
+              ),
+              Text(
+                '${_altitude.toStringAsFixed(2)} meters',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: colorScheme.onSurface,
                 ),
-              ],
-            ),
-          ],
-        ),
+              ),
+            ],
+          ),
+        ],
       ),
     );
+  }
+
+  Widget _buildPermissionDeniedView(ColorScheme colorScheme) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Icon(Iconsax.warning_2, size: 60, color: colorScheme.error),
+        const SizedBox(height: 20),
+        Text(
+          'Permission Required',
+          style: TextStyle(
+            fontSize: 18,
+            color: colorScheme.onSurface,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        const SizedBox(height: 10),
+        Text(
+          'Location permission is needed to calculate atmospheric pressure',
+          textAlign: TextAlign.center,
+          style: TextStyle(color: colorScheme.onSurface.withOpacity(0.6)),
+        ),
+        const SizedBox(height: 20),
+      ],
+    );
+  }
+
+  Widget _buildNoSensorView(ColorScheme colorScheme) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Icon(Iconsax.warning_2, size: 60, color: colorScheme.error),
+        const SizedBox(height: 20),
+        Text(
+          'Barometer Not Available',
+          style: TextStyle(
+            fontSize: 18,
+            color: colorScheme.onSurface,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        const SizedBox(height: 10),
+        Text(
+          'This device doesn\'t have a barometer sensor',
+          style: TextStyle(color: colorScheme.onSurface.withOpacity(0.6)),
+        ),
+      ],
+    );
+  }
+
+  Color _getPressureColor(double pressure, ColorScheme colorScheme) {
+    if (pressure < 980) return colorScheme.primary;
+    if (pressure < 1010) return colorScheme.secondary;
+    if (pressure < 1030) return colorScheme.tertiary;
+    return colorScheme.error;
   }
 }

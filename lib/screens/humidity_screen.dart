@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:iconsax/iconsax.dart';
+import 'dart:math';
 
 class HumidityScreen extends StatefulWidget {
   const HumidityScreen({super.key});
@@ -10,11 +13,40 @@ class HumidityScreen extends StatefulWidget {
 class _HumidityScreenState extends State<HumidityScreen> {
   double _humidity = 0;
   bool _isLoading = true;
+  bool _hasSensor = true;
+  bool _permissionGranted = true;
 
   @override
   void initState() {
     super.initState();
+    _checkPermissionsAndSensor();
+  }
+
+  Future<void> _checkPermissionsAndSensor() async {
+    // Check if we need environmental sensors permission
+    // Note: Most Android devices don't require special permissions for humidity
+    // This is a placeholder for actual permission checks if needed
+
+    // Check if device has humidity sensor (simulated check)
+    final hasHumiditySensor = await _checkHumidityAvailability();
+
+    if (!hasHumiditySensor) {
+      setState(() {
+        _hasSensor = false;
+        _isLoading = false;
+      });
+      return;
+    }
+
+    // Get data if we have permission and sensor
     _simulateHumidity();
+  }
+
+  Future<bool> _checkHumidityAvailability() async {
+    // This is a simulation - in a real app you'd use:
+    // await SensorManager().isSensorAvailable(Sensors.RELATIVE_HUMIDITY);
+    // Using sensor_plus package or similar
+    return false; // Most phones don't have humidity sensors
   }
 
   Future<void> _simulateHumidity() async {
@@ -30,73 +62,184 @@ class _HumidityScreenState extends State<HumidityScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Scaffold(
-      appBar: AppBar(title: const Text('Humidity Sensor')),
-      body:
-          _isLoading
-              ? const Center(child: CircularProgressIndicator())
-              : Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SizedBox(
-                      width: 200,
-                      height: 200,
-                      child: CustomPaint(
-                        painter: _HumidityPainter(humidity: _humidity),
-                      ),
-                    ),
-                    const SizedBox(height: 30),
-                    Text(
-                      '${_humidity.toStringAsFixed(1)}%',
-                      style: const TextStyle(
-                        fontSize: 42,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    const SizedBox(height: 10),
-                    Text(
-                      _getHumidityDescription(_humidity),
-                      style: TextStyle(
-                        fontSize: 18,
-                        color: _getHumidityColor(_humidity),
-                      ),
-                    ),
-                    const SizedBox(height: 30),
-                    _buildComfortIndicator(),
-                  ],
-                ),
-              ),
+      appBar: AppBar(
+        title: const Text('Humidity'),
+        centerTitle: true,
+        elevation: 0,
+        backgroundColor: colorScheme.surface,
+        foregroundColor: colorScheme.onSurface,
+      ),
+      body: Center(
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 500),
+          child: Padding(
+            padding: const EdgeInsets.all(24),
+            child: _buildContent(colorScheme),
+          ),
+        ),
+      ),
     );
   }
 
-  Widget _buildComfortIndicator() {
+  Widget _buildContent(ColorScheme colorScheme) {
+    if (!_permissionGranted) {
+      return _buildPermissionDeniedView(colorScheme);
+    }
+
+    if (!_hasSensor) {
+      return _buildNoSensorView(colorScheme);
+    }
+
+    if (_isLoading) {
+      return const Center(child: CircularProgressIndicator());
+    }
+
+    final humidityColor = _getHumidityColor(_humidity, colorScheme);
+
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        // Humidity Visualization
+        SizedBox(
+          width: 200,
+          height: 200,
+          child: CustomPaint(
+            painter: _HumidityPainter(
+              humidity: _humidity,
+              colorScheme: colorScheme,
+            ),
+          ),
+        ),
+        const SizedBox(height: 40),
+
+        // Humidity Value
+        Text(
+          '${_humidity.toStringAsFixed(1)}%',
+          style: TextStyle(
+            fontSize: 48,
+            fontWeight: FontWeight.bold,
+            color: humidityColor,
+          ),
+        ),
+        const SizedBox(height: 8),
+
+        // Humidity Description
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          decoration: BoxDecoration(
+            color: colorScheme.surfaceVariant,
+            borderRadius: BorderRadius.circular(20),
+            border: Border.all(color: colorScheme.outline.withOpacity(0.2)),
+          ),
+          child: Text(
+            _getHumidityDescription(_humidity),
+            style: TextStyle(color: humidityColor, fontWeight: FontWeight.bold),
+          ),
+        ),
+
+        const SizedBox(height: 40),
+
+        // Comfort Level Indicator
+        _buildComfortIndicator(colorScheme),
+      ],
+    );
+  }
+
+  Widget _buildComfortIndicator(ColorScheme colorScheme) {
     final comfortLevel = _calculateComfortLevel(_humidity);
+    final comfortColor = _getComfortColor(comfortLevel, colorScheme);
 
     return Column(
       children: [
-        const Text(
+        Text(
           'Comfort Level',
-          style: TextStyle(fontSize: 16, color: Colors.grey),
+          style: TextStyle(color: colorScheme.onSurface.withOpacity(0.6)),
         ),
-        const SizedBox(height: 8),
+        const SizedBox(height: 12),
         SizedBox(
-          width: 200,
-          height: 20,
+          width: 250,
           child: ClipRRect(
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(8),
             child: LinearProgressIndicator(
               value: comfortLevel,
-              backgroundColor: Colors.grey.shade200,
-              color: _getComfortColor(comfortLevel),
-              minHeight: 20,
+              backgroundColor: colorScheme.surfaceVariant,
+              color: comfortColor,
+              minHeight: 12,
             ),
           ),
         ),
         const SizedBox(height: 8),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: const [Text('Dry'), Text('Ideal'), Text('Humid')],
+          children: [
+            Text(
+              'Dry',
+              style: TextStyle(color: colorScheme.onSurface.withOpacity(0.6)),
+            ),
+            Text(
+              'Ideal',
+              style: TextStyle(color: colorScheme.onSurface.withOpacity(0.6)),
+            ),
+            Text(
+              'Humid',
+              style: TextStyle(color: colorScheme.onSurface.withOpacity(0.6)),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+
+  Widget _buildPermissionDeniedView(ColorScheme colorScheme) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Icon(Iconsax.warning_2, size: 60, color: colorScheme.error),
+        const SizedBox(height: 20),
+        Text(
+          'Permission Required',
+          style: TextStyle(
+            fontSize: 18,
+            color: colorScheme.onSurface,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        const SizedBox(height: 10),
+        Text(
+          'Sensor permission is needed to measure humidity',
+          style: TextStyle(color: colorScheme.onSurface.withOpacity(0.6)),
+          textAlign: TextAlign.center,
+        ),
+        const SizedBox(height: 20),
+        ElevatedButton(
+          onPressed: () => openAppSettings(),
+          child: const Text('Open Settings'),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildNoSensorView(ColorScheme colorScheme) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Icon(Iconsax.warning_2, size: 60, color: colorScheme.error),
+        const SizedBox(height: 20),
+        Text(
+          'Humidity Sensor Not Available',
+          style: TextStyle(
+            fontSize: 18,
+            color: colorScheme.onSurface,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        const SizedBox(height: 10),
+        Text(
+          'This device doesn\'t have a humidity sensor',
+          style: TextStyle(color: colorScheme.onSurface.withOpacity(0.6)),
         ),
       ],
     );
@@ -109,10 +252,10 @@ class _HumidityScreenState extends State<HumidityScreen> {
     return 0.7 + (humidity - 70) / 30 * 0.3;
   }
 
-  Color _getComfortColor(double comfortLevel) {
-    if (comfortLevel < 0.3) return Colors.orange;
-    if (comfortLevel < 0.7) return Colors.green;
-    return Colors.red;
+  Color _getComfortColor(double comfortLevel, ColorScheme colorScheme) {
+    if (comfortLevel < 0.3) return colorScheme.primary;
+    if (comfortLevel < 0.7) return colorScheme.secondary;
+    return colorScheme.error;
   }
 
   String _getHumidityDescription(double humidity) {
@@ -123,36 +266,37 @@ class _HumidityScreenState extends State<HumidityScreen> {
     return 'Humid';
   }
 
-  Color _getHumidityColor(double humidity) {
-    if (humidity < 30) return Colors.orange;
-    if (humidity < 60) return Colors.green;
-    return Colors.red;
+  Color _getHumidityColor(double humidity, ColorScheme colorScheme) {
+    if (humidity < 30) return colorScheme.primary;
+    if (humidity < 60) return colorScheme.secondary;
+    return colorScheme.error;
   }
 }
 
 class _HumidityPainter extends CustomPainter {
   final double humidity;
+  final ColorScheme colorScheme;
 
-  _HumidityPainter({required this.humidity});
+  _HumidityPainter({required this.humidity, required this.colorScheme});
 
   @override
   void paint(Canvas canvas, Size size) {
     final center = Offset(size.width / 2, size.height / 2);
     final radius = size.width / 2 * 0.8;
-    final fillAngle = 2 * 3.1416 * (humidity / 100);
+    final fillAngle = 2 * pi * (humidity / 100);
     final color = _getHumidityColor(humidity);
 
     // Draw background circle
     final bgPaint =
         Paint()
-          ..color = Colors.grey.shade200
+          ..color = colorScheme.surfaceVariant
           ..style = PaintingStyle.fill;
     canvas.drawCircle(center, radius, bgPaint);
 
     // Draw filled portion
     final fillPaint =
         Paint()
-          ..color = color.withOpacity(0.3)
+          ..color = color.withOpacity(0.2)
           ..style = PaintingStyle.fill;
 
     final path =
@@ -161,7 +305,7 @@ class _HumidityPainter extends CustomPainter {
           ..lineTo(center.dx, center.dy - radius)
           ..arcTo(
             Rect.fromCircle(center: center, radius: radius),
-            -3.1416 / 2,
+            -pi / 2,
             fillAngle,
             false,
           )
@@ -203,13 +347,14 @@ class _HumidityPainter extends CustomPainter {
   }
 
   Color _getHumidityColor(double humidity) {
-    if (humidity < 30) return Colors.orange;
-    if (humidity < 60) return Colors.green;
-    return Colors.red;
+    if (humidity < 30) return colorScheme.primary;
+    if (humidity < 60) return colorScheme.secondary;
+    return colorScheme.error;
   }
 
   @override
   bool shouldRepaint(covariant _HumidityPainter oldDelegate) {
-    return humidity != oldDelegate.humidity;
+    return humidity != oldDelegate.humidity ||
+        colorScheme != oldDelegate.colorScheme;
   }
 }
