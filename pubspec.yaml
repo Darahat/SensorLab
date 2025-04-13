@@ -1,4 +1,4 @@
-name: all_in_one_sensor_toolkit
+name: sensorlab
 description: "Measure ambient light, detect sound levels, and sense nearby objects using your phone’s built-in sensors. This app provides a simple and intuitive interface for accessing and visualizing sensor data, making it easy to monitor your environment and gather information about the world around you."
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.

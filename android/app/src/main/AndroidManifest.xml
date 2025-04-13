@@ -1,4 +1,4 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.darahat.all_in_one_sensor_toolkit">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.darahat.sensorlab">
 <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
@@ -13,7 +13,7 @@
 <uses-permission android:name="android.permission.BODY_SENSORS"/>
 <uses-permission android:name="android.permission.WAKE_LOCK"/>
     <application
-        android:label="all_in_one_sensor_toolkit"
+        android:label="SensorLab"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
         <activity

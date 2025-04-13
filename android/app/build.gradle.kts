@@ -15,7 +15,7 @@ if (keystorePropertiesFile.exists()) {
 }
 
 android {
-    namespace = "com.darahat.all_in_one_sensor_toolkit"
+    namespace = "com.darahat.sensorlab"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = "28.0.13004108"
 
@@ -29,7 +29,7 @@ android {
     }
 
     defaultConfig {
-    applicationId = "com.darahat.all_in_one_sensor_toolkit"
+    applicationId = "com.darahat.sensorlab"
     minSdk = 23           // ✅ Override Flutter's default
     targetSdk = flutter.targetSdkVersion
     versionCode = flutter.versionCode

@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>All-in-One Sensor Toolkit</string>
+	<string>SensorLab</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -13,7 +13,7 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>All-in-One Sensor Toolkit</string>
+	<string>SensorLab</string>
 	<key>NSMicrophoneUsageDescription</key>
 <string>Need microphone access to measure noise levels</string>
 <key>NSCameraUsageDescription</key>

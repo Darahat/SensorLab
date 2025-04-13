@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:all_in_one_sensor_toolkit/screens/home_screen.dart';
+import 'package:sensorlab/screens/home_screen.dart';
 import 'package:flutter/animation.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -113,7 +113,7 @@ class _SplashScreenState extends State<SplashScreen>
                           end: Alignment.bottomRight,
                         ).createShader(bounds),
                     child: Text(
-                      'Sensor Toolkit',
+                      'Sensor Lab',
                       style: TextStyle(
                         fontSize: 32,
                         fontWeight: FontWeight.bold,

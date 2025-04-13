@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:all_in_one_sensor_toolkit/models/sensor_card.dart';
+import 'package:sensorlab/models/sensor_card.dart';
 
 class SensorSearchDelegate extends SearchDelegate {
   final List<SensorCard> sensors;

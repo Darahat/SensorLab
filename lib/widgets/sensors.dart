@@ -1,24 +1,19 @@
-import 'package:all_in_one_sensor_toolkit/models/sensor_card.dart';
-import 'package:all_in_one_sensor_toolkit/screens/flashlight_screen.dart';
+import 'package:sensorlab/models/sensor_card.dart';
+import 'package:sensorlab/screens/flashlight_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:all_in_one_sensor_toolkit/screens/compass_screen.dart';
-import 'package:all_in_one_sensor_toolkit/screens/geolocator_screen.dart';
-import 'package:all_in_one_sensor_toolkit/screens/light_meter_screen.dart';
-import 'package:all_in_one_sensor_toolkit/screens/noise_meter_screen.dart';
-import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
-import 'package:all_in_one_sensor_toolkit/widgets/create_interstitial_ad.dart';
-import 'package:all_in_one_sensor_toolkit/widgets/sensor_grid_item.dart';
-import 'package:all_in_one_sensor_toolkit/widgets/sensor_search_delegate.dart';
-import 'package:all_in_one_sensor_toolkit/widgets/show_settings.dart';
-import 'package:all_in_one_sensor_toolkit/screens/gyroscope_screen.dart';
-import 'package:all_in_one_sensor_toolkit/screens/accelerometer_screen.dart';
-import 'package:all_in_one_sensor_toolkit/screens/proximity_screen.dart';
-import 'package:all_in_one_sensor_toolkit/screens/qr_scanner_screen.dart';
-import 'package:all_in_one_sensor_toolkit/screens/magnetometer_screen.dart';
+import 'package:sensorlab/screens/compass_screen.dart';
+import 'package:sensorlab/screens/geolocator_screen.dart';
+import 'package:sensorlab/screens/light_meter_screen.dart';
+import 'package:sensorlab/screens/noise_meter_screen.dart';
+import 'package:sensorlab/screens/gyroscope_screen.dart';
+import 'package:sensorlab/screens/accelerometer_screen.dart';
+import 'package:sensorlab/screens/proximity_screen.dart';
+import 'package:sensorlab/screens/qr_scanner_screen.dart';
+import 'package:sensorlab/screens/magnetometer_screen.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:all_in_one_sensor_toolkit/screens/barometer_screen.dart';
-import 'package:all_in_one_sensor_toolkit/screens/humidity_screen.dart';
+import 'package:sensorlab/screens/barometer_screen.dart';
+import 'package:sensorlab/screens/humidity_screen.dart';
 
 final List<SensorCard> sensors = [
   SensorCard(

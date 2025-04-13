@@ -1,4 +1,4 @@
-package com.darahat.all_in_one_sensor_toolkit
+package com.darahat.sensorlab
 
 import io.flutter.embedding.android.FlutterActivity
 
