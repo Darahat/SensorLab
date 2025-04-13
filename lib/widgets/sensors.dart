@@ -1,4 +1,5 @@
 import 'package:all_in_one_sensor_toolkit/models/sensor_card.dart';
+import 'package:all_in_one_sensor_toolkit/screens/flashlight_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:all_in_one_sensor_toolkit/screens/compass_screen.dart';
@@ -10,6 +11,12 @@ import 'package:all_in_one_sensor_toolkit/widgets/create_interstitial_ad.dart';
 import 'package:all_in_one_sensor_toolkit/widgets/sensor_grid_item.dart';
 import 'package:all_in_one_sensor_toolkit/widgets/sensor_search_delegate.dart';
 import 'package:all_in_one_sensor_toolkit/widgets/show_settings.dart';
+import 'package:all_in_one_sensor_toolkit/screens/gyroscope_screen.dart';
+import 'package:all_in_one_sensor_toolkit/screens/accelerometer_screen.dart';
+import 'package:all_in_one_sensor_toolkit/screens/proximity_screen.dart';
+import 'package:all_in_one_sensor_toolkit/screens/qr_scanner_screen.dart';
+import 'package:all_in_one_sensor_toolkit/screens/magnetometer_screen.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 final List<SensorCard> sensors = [
   SensorCard(
@@ -40,27 +47,27 @@ final List<SensorCard> sensors = [
     screen: const CompassScreen(),
     category: 'Navigation',
   ),
-  // SensorCard(
-  //   icon: Iconsax.activity,
-  //   label: 'Accelerometer',
-  //   color: Colors.pink,
-  //   screen: const AccelerometerScreen(),
-  //   category: 'Motion',
-  // ),
-  // SensorCard(
-  //   icon: Iconsax.cpu,
-  //   label: 'Gyroscope',
-  //   color: Colors.blue,
-  //   screen: const GyroscopeScreen(),
-  //   category: 'Motion',
-  // ),
-  // SensorCard(
-  //   icon: Iconsax.magnet,
-  //   label: 'Magnetometer',
-  //   color: Colors.red,
-  //   screen: const MagnetometerScreen(),
-  //   category: 'Magnetic',
-  // ),
+  SensorCard(
+    icon: Iconsax.activity,
+    label: 'Accelerometer',
+    color: Colors.pink,
+    screen: const AccelerometerScreen(),
+    category: 'Motion',
+  ),
+  SensorCard(
+    icon: Iconsax.cpu,
+    label: 'Gyroscope',
+    color: Colors.blue,
+    screen: const GyroscopeScreen(),
+    category: 'Motion',
+  ),
+  SensorCard(
+    icon: FontAwesomeIcons.magnet,
+    label: 'Magnetometer',
+    color: Colors.red,
+    screen: const MagnetometerScreen(),
+    category: 'Magnetic',
+  ),
   // SensorCard(
   //   icon: Iconsax.cloud_snow,
   //   label: 'Barometer',
@@ -68,13 +75,13 @@ final List<SensorCard> sensors = [
   //   screen: const BarometerScreen(),
   //   category: 'Environment',
   // ),
-  // SensorCard(
-  //   icon: Iconsax.proximity,
-  //   label: 'Proximity',
-  //   color: Colors.green,
-  //   screen: const ProximityScreen(),
-  //   category: 'Device',
-  // ),
+  SensorCard(
+    icon: Iconsax.radar,
+    label: 'Proximity',
+    color: Colors.green,
+    screen: const ProximityScreen(),
+    category: 'Device',
+  ),
   // SensorCard(
   //   icon: Iconsax.temperature,
   //   label: 'Temperature',
@@ -89,13 +96,13 @@ final List<SensorCard> sensors = [
   //   screen: const HumidityScreen(),
   //   category: 'Environment',
   // ),
-  // SensorCard(
-  //   icon: Iconsax.flash,
-  //   label: 'Flashlight',
-  //   color: Colors.yellow,
-  //   screen: const FlashlightScreen(),
-  //   category: 'Device',
-  // ),
+  SensorCard(
+    icon: Iconsax.flash,
+    label: 'Flashlight',
+    color: Colors.yellow,
+    screen: FlashlightScreen(),
+    category: 'Device',
+  ),
   // SensorCard(
   //   icon: Iconsax.graph,
   //   label: 'Sound Graph',
@@ -103,11 +110,11 @@ final List<SensorCard> sensors = [
   //   screen: const SoundGraphScreen(),
   //   category: 'Audio',
   // ),
-  // SensorCard(
-  //   icon: Iconsax.scan,
-  //   label: 'QR Scanner',
-  //   color: Colors.lime,
-  //   screen: const QRScannerScreen(),
-  //   category: 'Utility',
-  // ),
+  SensorCard(
+    icon: Iconsax.scan,
+    label: 'QR Scanner',
+    color: Colors.lime,
+    screen: const QRScannerScreen(),
+    category: 'Utility',
+  ),
 ];

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sensors_plus/sensors_plus.dart';
+import 'package:iconsax/iconsax.dart';
 
 class AccelerometerScreen extends StatefulWidget {
   const AccelerometerScreen({super.key});
@@ -15,11 +16,15 @@ class _AccelerometerScreenState extends State<AccelerometerScreen> {
   double _maxX = 0;
   double _maxY = 0;
   double _maxZ = 0;
+  bool _isActive = false;
 
   @override
   void initState() {
     super.initState();
     accelerometerEvents.listen((AccelerometerEvent event) {
+      if (!_isActive) {
+        setState(() => _isActive = true);
+      }
       setState(() {
         _x = event.x;
         _y = event.y;
@@ -35,12 +40,19 @@ class _AccelerometerScreenState extends State<AccelerometerScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final isDarkMode = colorScheme.brightness == Brightness.dark;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Accelerometer'),
+        centerTitle: true,
+        elevation: 0,
+        backgroundColor: colorScheme.surface,
+        foregroundColor: colorScheme.onSurface,
         actions: [
           IconButton(
-            icon: const Icon(Iconsax.refresh),
+            icon: Icon(Iconsax.refresh, color: colorScheme.primary),
             onPressed:
                 () => setState(() {
                   _maxX = 0;
@@ -50,29 +62,90 @@ class _AccelerometerScreenState extends State<AccelerometerScreen> {
           ),
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Column(
-          children: [
-            _build3DIndicator(),
-            const SizedBox(height: 30),
-            _buildDataTable(),
-            const SizedBox(height: 20),
-            _buildGauge('X-Axis', _x, Colors.pink),
-            _buildGauge('Y-Axis', _y, Colors.blue),
-            _buildGauge('Z-Axis', _z, Colors.green),
-          ],
+      body: Center(
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 500),
+          child: Padding(
+            padding: const EdgeInsets.all(24),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                // 3D Visualization
+                _build3DIndicator(colorScheme),
+                const SizedBox(height: 40),
+
+                // Status Indicator
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 24,
+                    vertical: 8,
+                  ),
+                  decoration: BoxDecoration(
+                    color:
+                        _isActive
+                            ? colorScheme.primary.withOpacity(0.1)
+                            : colorScheme.surfaceVariant,
+                    borderRadius: BorderRadius.circular(20),
+                    border: Border.all(
+                      color:
+                          _isActive
+                              ? colorScheme.primary
+                              : colorScheme.outline.withOpacity(0.3),
+                      width: 1,
+                    ),
+                  ),
+                  child: Text(
+                    _isActive ? 'ACTIVE' : 'MOVE YOUR DEVICE',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color:
+                          _isActive
+                              ? colorScheme.primary
+                              : colorScheme.onSurfaceVariant,
+                      letterSpacing: 1.1,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 40),
+
+                // Data Table
+                _buildDataTable(colorScheme),
+                const SizedBox(height: 30),
+
+                // Measurement Unit
+                Text(
+                  'Acceleration (m/s²)',
+                  style: TextStyle(
+                    color: colorScheme.onSurface.withOpacity(0.6),
+                  ),
+                ),
+              ],
+            ),
+          ),
         ),
       ),
     );
   }
 
-  Widget _build3DIndicator() {
+  Widget _build3DIndicator(ColorScheme colorScheme) {
     return SizedBox(
       height: 150,
       child: Stack(
         alignment: Alignment.center,
         children: [
+          Container(
+            width: 120,
+            height: 120,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: colorScheme.surfaceVariant,
+              border: Border.all(
+                color: colorScheme.outline.withOpacity(0.3),
+                width: 2,
+              ),
+            ),
+          ),
           Transform.translate(
             offset: Offset(_x * 5, -_y * 5),
             child: Container(
@@ -81,135 +154,106 @@ class _AccelerometerScreenState extends State<AccelerometerScreen> {
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 gradient: RadialGradient(
-                  colors: [Colors.pink.withOpacity(0.8), Colors.pink],
-                  stops: const [0.5, 1.0],
+                  colors: [colorScheme.primaryContainer, colorScheme.primary],
                 ),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.pink.withOpacity(0.5),
-                    blurRadius: 10,
-                    spreadRadius: 2,
+                    color: colorScheme.primary.withOpacity(0.3),
+                    blurRadius: 15,
+                    spreadRadius: 3,
                   ),
                 ],
               ),
+              child: Icon(Iconsax.box, size: 30, color: colorScheme.onPrimary),
             ),
           ),
-          const Icon(Iconsax.cube, size: 40, color: Colors.white),
         ],
       ),
     );
   }
 
-  Widget _buildDataTable() {
-    return Table(
-      border: TableBorder.all(color: Colors.grey.withOpacity(0.3)),
-      children: [
-        TableRow(
-          decoration: BoxDecoration(color: Colors.grey.withOpacity(0.1)),
-          children: const [
-            Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Text(
-                'Axis',
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Text(
-                'Current',
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Text('Max', style: TextStyle(fontWeight: FontWeight.bold)),
-            ),
-          ],
-        ),
-        _buildTableRow('X', _x, _maxX),
-        _buildTableRow('Y', _y, _maxY),
-        _buildTableRow('Z', _z, _maxZ),
-      ],
-    );
-  }
-
-  TableRow _buildTableRow(String axis, double value, double maxValue) {
-    return TableRow(
-      children: [
-        Padding(padding: const EdgeInsets.all(8.0), child: Text(axis)),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text(value.toStringAsFixed(2)),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text(maxValue.toStringAsFixed(2)),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildGauge(String label, double value, Color color) {
-    final normalizedValue = value.clamp(-10, 10) / 10;
-
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+  Widget _buildDataTable(ColorScheme colorScheme) {
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: colorScheme.outline.withOpacity(0.2)),
+      ),
+      child: Table(
+        columnWidths: const {
+          0: FlexColumnWidth(1),
+          1: FlexColumnWidth(2),
+          2: FlexColumnWidth(2),
+        },
         children: [
-          Text(label, style: const TextStyle(fontSize: 14)),
-          const SizedBox(height: 4),
-          Stack(
+          TableRow(
+            decoration: BoxDecoration(
+              color: colorScheme.surfaceVariant,
+              borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(12),
+                topRight: Radius.circular(12),
+              ),
+            ),
             children: [
-              Container(
-                height: 20,
-                decoration: BoxDecoration(
-                  color: Colors.grey.withOpacity(0.2),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-              ),
-              AnimatedContainer(
-                duration: const Duration(milliseconds: 200),
-                height: 20,
-                width: (normalizedValue.abs() *
-                        MediaQuery.of(context).size.width /
-                        2.5)
-                    .clamp(0, MediaQuery.of(context).size.width / 2.5),
-                decoration: BoxDecoration(
-                  color: color.withOpacity(0.7),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                alignment:
-                    normalizedValue > 0
-                        ? Alignment.centerLeft
-                        : Alignment.centerRight,
-              ),
-              Positioned(
-                left: MediaQuery.of(context).size.width / 5,
-                child: Container(
-                  height: 20,
-                  width: 2,
-                  color: Colors.white.withOpacity(0.5),
-                ),
-              ),
+              _buildTableHeader('Axis', colorScheme),
+              _buildTableHeader('Current', colorScheme),
+              _buildTableHeader('Max', colorScheme),
             ],
           ),
-          Align(
-            alignment:
-                normalizedValue > 0
-                    ? Alignment.centerRight
-                    : Alignment.centerLeft,
-            child: Padding(
-              padding: const EdgeInsets.only(top: 4.0),
-              child: Text(
-                value.toStringAsFixed(2),
-                style: TextStyle(color: color, fontWeight: FontWeight.bold),
-              ),
-            ),
-          ),
+          _buildTableRow('X', _x, _maxX, colorScheme),
+          _buildTableRow('Y', _y, _maxY, colorScheme),
+          _buildTableRow('Z', _z, _maxZ, colorScheme),
         ],
       ),
+    );
+  }
+
+  Widget _buildTableHeader(String text, ColorScheme colorScheme) {
+    return Padding(
+      padding: const EdgeInsets.all(12),
+      child: Text(
+        text,
+        style: TextStyle(
+          fontWeight: FontWeight.bold,
+          color: colorScheme.primary,
+        ),
+      ),
+    );
+  }
+
+  TableRow _buildTableRow(
+    String axis,
+    double value,
+    double maxValue,
+    ColorScheme colorScheme,
+  ) {
+    return TableRow(
+      decoration: BoxDecoration(color: colorScheme.surface),
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(12),
+          child: Text(
+            axis,
+            style: TextStyle(color: colorScheme.onSurface.withOpacity(0.8)),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(12),
+          child: Text(
+            value.toStringAsFixed(2),
+            style: TextStyle(
+              color: colorScheme.onSurface,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(12),
+          child: Text(
+            maxValue.toStringAsFixed(2),
+            style: TextStyle(color: colorScheme.onSurface),
+          ),
+        ),
+      ],
     );
   }
 }

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:sensors_plus/sensors_plus.dart';
+import 'package:iconsax/iconsax.dart';
+import 'dart:math';
+import 'dart:async';
 
 class MagnetometerScreen extends StatefulWidget {
   const MagnetometerScreen({super.key});
@@ -14,11 +17,16 @@ class _MagnetometerScreenState extends State<MagnetometerScreen> {
   double _z = 0;
   double _strength = 0;
   double _maxStrength = 0;
+  StreamSubscription<MagnetometerEvent>? _magnetometerSubscription;
 
   @override
   void initState() {
     super.initState();
-    magnetometerEvents.listen((MagnetometerEvent event) {
+    _startListening();
+  }
+
+  void _startListening() {
+    _magnetometerSubscription = magnetometerEvents.listen((event) {
       final strength = calculateStrength(event.x, event.y, event.z);
       setState(() {
         _x = event.x;
@@ -31,95 +39,136 @@ class _MagnetometerScreenState extends State<MagnetometerScreen> {
   }
 
   double calculateStrength(double x, double y, double z) {
-    return (x * x + y * y + z * z).sqrt();
+    return sqrt(x * x + y * y + z * z);
+  }
+
+  @override
+  void dispose() {
+    _magnetometerSubscription?.cancel();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     final normalizedStrength = (_strength / 1000).clamp(0, 1);
-    final color = Color.lerp(Colors.green, Colors.red, normalizedStrength)!;
+    final strengthColor =
+        Color.lerp(
+          colorScheme.primary,
+          colorScheme.error,
+          normalizedStrength.toDouble(),
+        )!;
 
     return Scaffold(
       appBar: AppBar(
         title: const Text('Magnetometer'),
+        centerTitle: true,
+        elevation: 0,
+        backgroundColor: colorScheme.surface,
+        foregroundColor: colorScheme.onSurface,
         actions: [
           IconButton(
-            icon: const Icon(Iconsax.refresh),
+            icon: Icon(Iconsax.refresh, color: colorScheme.primary),
             onPressed: () => setState(() => _maxStrength = 0),
           ),
         ],
       ),
-      body: Column(
-        children: [
-          Expanded(
-            child: Center(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    '${_strength.toStringAsFixed(2)} μT',
-                    style: TextStyle(
-                      fontSize: 32,
-                      fontWeight: FontWeight.bold,
-                      color: color,
-                    ),
-                  ),
-                  const SizedBox(height: 10),
-                  Text(
-                    'Max: ${_maxStrength.toStringAsFixed(2)} μT',
-                    style: TextStyle(color: Colors.grey.shade600),
-                  ),
-                  const SizedBox(height: 40),
-                  SizedBox(
-                    width: 200,
-                    height: 200,
-                    child: CustomPaint(
-                      painter: _MagneticFieldPainter(
-                        x: _x,
-                        y: _y,
-                        z: _z,
-                        strength: normalizedStrength,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          Container(
-            padding: const EdgeInsets.all(20),
+      body: Center(
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 500),
+          child: Padding(
+            padding: const EdgeInsets.all(24),
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                _buildFieldIndicator('X', _x, Colors.red),
-                _buildFieldIndicator('Y', _y, Colors.green),
-                _buildFieldIndicator('Z', _z, Colors.blue),
+                // Magnetic Field Visualization
+                SizedBox(
+                  width: 200,
+                  height: 200,
+                  child: CustomPaint(
+                    painter: _MagneticFieldPainter(
+                      x: _x,
+                      y: _y,
+                      z: _z,
+                      strength: normalizedStrength.toDouble(),
+                      colorScheme: colorScheme,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 40),
+
+                // Strength Indicator
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 24,
+                    vertical: 12,
+                  ),
+                  decoration: BoxDecoration(
+                    color: colorScheme.surfaceVariant,
+                    borderRadius: BorderRadius.circular(20),
+                    border: Border.all(
+                      color: colorScheme.outline.withOpacity(0.3),
+                      width: 1,
+                    ),
+                  ),
+                  child: Column(
+                    children: [
+                      Text(
+                        '${_strength.toStringAsFixed(2)} μT',
+                        style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                          color: strengthColor,
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        'Max: ${_maxStrength.toStringAsFixed(2)} μT',
+                        style: TextStyle(
+                          color: colorScheme.onSurface.withOpacity(0.6),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 40),
+
+                // Axis Indicators
+                _buildFieldIndicator('X', _x, colorScheme.primary),
+                _buildFieldIndicator('Y', _y, colorScheme.secondary),
+                _buildFieldIndicator('Z', _z, colorScheme.tertiary),
               ],
             ),
           ),
-        ],
+        ),
       ),
     );
   }
 
   Widget _buildFieldIndicator(String label, double value, Color color) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      padding: const EdgeInsets.symmetric(vertical: 8),
       child: Row(
         children: [
           SizedBox(
             width: 30,
-            child: Text(label, style: TextStyle(color: color)),
-          ),
-          Expanded(
-            child: LinearProgressIndicator(
-              value: (value.abs() / 1000).clamp(0, 1),
-              backgroundColor: Colors.grey.shade200,
-              color: color,
-              minHeight: 10,
-              borderRadius: BorderRadius.circular(5),
+            child: Text(
+              label,
+              style: TextStyle(color: color, fontWeight: FontWeight.bold),
             ),
           ),
-          const SizedBox(width: 10),
+          Expanded(
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(4),
+              child: LinearProgressIndicator(
+                value: (value.abs() / 1000).clamp(0, 1),
+                backgroundColor: Colors.grey.withOpacity(0.2),
+                color: color,
+                minHeight: 8,
+              ),
+            ),
+          ),
+          const SizedBox(width: 12),
           SizedBox(
             width: 80,
             child: Text(
@@ -139,12 +188,14 @@ class _MagneticFieldPainter extends CustomPainter {
   final double y;
   final double z;
   final double strength;
+  final ColorScheme colorScheme;
 
   _MagneticFieldPainter({
     required this.x,
     required this.y,
     required this.z,
     required this.strength,
+    required this.colorScheme,
   });
 
   @override
@@ -155,12 +206,12 @@ class _MagneticFieldPainter extends CustomPainter {
     // Draw field lines
     final fieldPaint =
         Paint()
-          ..color = Colors.blue.withOpacity(0.3)
+          ..color = colorScheme.primary.withOpacity(0.2)
           ..style = PaintingStyle.stroke
           ..strokeWidth = 1.5;
 
     for (int i = 0; i < 8; i++) {
-      final angle = i * (2 * 3.1416 / 8);
+      final angle = i * (2 * pi / 8);
       final dx = x * 0.1 * radius * cos(angle);
       final dy = y * 0.1 * radius * sin(angle);
 
@@ -175,26 +226,26 @@ class _MagneticFieldPainter extends CustomPainter {
     final angle = atan2(y, x);
     final needlePaint =
         Paint()
-          ..color = Colors.red
+          ..color = colorScheme.error
           ..style = PaintingStyle.fill;
 
     final needlePath =
         Path()
           ..moveTo(center.dx, center.dy)
           ..lineTo(
-            center.dx + radius * 0.8 * cos(angle + 3.1416),
-            center.dy + radius * 0.8 * sin(angle + 3.1416),
+            center.dx + radius * 0.8 * cos(angle + pi),
+            center.dy + radius * 0.8 * sin(angle + pi),
           )
           ..lineTo(
-            center.dx + radius * 0.2 * cos(angle + 3.1416 / 2),
-            center.dy + radius * 0.2 * sin(angle + 3.1416 / 2),
+            center.dx + radius * 0.2 * cos(angle + pi / 2),
+            center.dy + radius * 0.2 * sin(angle + pi / 2),
           )
           ..close();
 
     canvas.drawPath(needlePath, needlePaint);
 
     // Draw center point
-    canvas.drawCircle(center, 5, Paint()..color = Colors.black);
+    canvas.drawCircle(center, 5, Paint()..color = colorScheme.onSurface);
   }
 
   @override
@@ -202,6 +253,7 @@ class _MagneticFieldPainter extends CustomPainter {
     return x != oldDelegate.x ||
         y != oldDelegate.y ||
         z != oldDelegate.z ||
-        strength != oldDelegate.strength;
+        strength != oldDelegate.strength ||
+        colorScheme != oldDelegate.colorScheme;
   }
 }

@@ -1,11 +1,12 @@
-// main.dart
 import 'package:flutter/material.dart';
 import 'package:all_in_one_sensor_toolkit/screens/splash_screen.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:torch_controller/torch_controller.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   MobileAds.instance.initialize();
+  TorchController().initialize(); // Corrected initialization
   debugDisableShadows = true;
   runApp(const MyApp());
 }

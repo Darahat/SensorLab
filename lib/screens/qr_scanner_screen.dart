@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
+import 'package:iconsax/iconsax.dart';
+import 'package:flutter/services.dart';
 
 class QRScannerScreen extends StatefulWidget {
   const QRScannerScreen({super.key});

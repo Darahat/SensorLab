@@ -42,12 +42,14 @@ dependencies:
   liquid_pull_to_refresh: ^3.0.1
   sensors_plus: ^6.1.1
   url_launcher: ^6.3.1
-  # proximity_sensor: ^1.3.8
-  # mobile_scanner: ^6.0.7
+  proximity_sensor: ^1.3.8
+  mobile_scanner: ^6.0.7
   # thermal: ^1.1.11
   # environment_sensors: ^0.3.0
-  # torch_light: ^1.1.0
+  torch_controller: ^2.0.1
+  fl_chart: ^0.70.2
   # google_mobile_ads: ^5.3.1
+  font_awesome_flutter: ^10.8.0
 
 dev_dependencies:
   flutter_test:
