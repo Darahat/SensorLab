@@ -94,7 +94,7 @@ class SensorGridItem extends StatelessWidget {
                           sensor.label,
                           style: theme.textTheme.titleMedium?.copyWith(
                             fontWeight: FontWeight.w600,
-                            fontSize: 16,
+                            fontSize: 12,
                             color: isDark ? Colors.white : Colors.grey.shade800,
                           ),
                           textAlign: TextAlign.center,
@@ -103,6 +103,7 @@ class SensorGridItem extends StatelessWidget {
                         Text(
                           sensor.category,
                           style: theme.textTheme.bodySmall?.copyWith(
+                            fontSize: 10,
                             color:
                                 isDark
                                     ? Colors.white.withOpacity(0.7)
