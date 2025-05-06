@@ -12,6 +12,10 @@
 <uses-feature android:name="android.hardware.camera.flash" />
 <uses-permission android:name="android.permission.BODY_SENSORS"/>
 <uses-permission android:name="android.permission.WAKE_LOCK"/>
+<uses-permission android:name="android.permission.VIBRATE" />
+<uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+ <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
     <application
         android:label="SensorLab"
         android:name="${applicationName}"
@@ -39,6 +43,10 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+         <service
+    android:name="com.flutterbackgroundservice.flutterbackgroundservice.BackgroundService"
+    android:enabled="true"
+    android:exported="false" />
         <!-- Don't delete the meta-data below.
              This is used by the Flutter tool to generate GeneratedPluginRegistrant.java -->
         <meta-data 

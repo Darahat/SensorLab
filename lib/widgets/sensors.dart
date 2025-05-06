@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:sensorlab/screens/compass_screen.dart';
 import 'package:sensorlab/screens/geolocator_screen.dart';
+import 'package:sensorlab/screens/health_screen.dart';
 import 'package:sensorlab/screens/light_meter_screen.dart';
 import 'package:sensorlab/screens/noise_meter_screen.dart';
 import 'package:sensorlab/screens/gyroscope_screen.dart';
@@ -12,10 +13,24 @@ import 'package:sensorlab/screens/proximity_screen.dart';
 import 'package:sensorlab/screens/qr_scanner_screen.dart';
 import 'package:sensorlab/screens/magnetometer_screen.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:sensorlab/screens/barometer_screen.dart';
 import 'package:sensorlab/screens/humidity_screen.dart';
+import 'package:sensorlab/screens/heart_beat_screen.dart';
 
 final List<SensorCard> sensors = [
+  SensorCard(
+    icon: Icons.health_and_safety,
+    label: 'Calorie Burn',
+    color: Colors.yellow,
+    screen: const HealthScreen(),
+    category: 'Health',
+  ),
+  // SensorCard(
+  //   icon: Iconsax.speedometer,
+  //   label: 'Speed Tracker',
+  //   color: Colors.red,
+  //   screen: const SpeedTrackerScreen(),
+  //   category: 'Motion',
+  // ),
   SensorCard(
     icon: Iconsax.sound,
     label: 'Noise Meter',
@@ -65,13 +80,7 @@ final List<SensorCard> sensors = [
     screen: const MagnetometerScreen(),
     category: 'Magnetic',
   ),
-  SensorCard(
-    icon: Iconsax.cloud_snow,
-    label: 'Barometer',
-    color: Colors.cyan,
-    screen: const BarometerScreen(),
-    category: 'Environment',
-  ),
+
   SensorCard(
     icon: Iconsax.radar,
     label: 'Proximity',
@@ -80,13 +89,13 @@ final List<SensorCard> sensors = [
     category: 'Device',
   ),
 
-  // SensorCard(
-  //   icon: Iconsax.temperature,
-  //   label: 'Temperature',
-  //   color: Colors.orange,
-  //   screen: const TemperatureScreen(),
-  //   category: 'Environment',
-  // ),
+  SensorCard(
+    icon: Iconsax.heart,
+    label: 'Heart Rate',
+    color: Colors.orange,
+    screen: const HeartRateScreen(),
+    category: 'Health',
+  ),
   SensorCard(
     icon: FontAwesomeIcons.droplet,
     label: 'Humidity',

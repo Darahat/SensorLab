@@ -30,114 +30,97 @@ class SensorGridItem extends StatelessWidget {
             borderRadius: BorderRadius.circular(20),
           ),
           clipBehavior: Clip.antiAlias,
-          child: Stack(
+          child: Row(
             children: [
-              // ⬅ Left-side background gradient (fixed width, full height)
-              Positioned.fill(
-                child: Row(
+              // Left column (fixed width) - Sensor Info
+              Container(
+                width: fixedColumnWidth,
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors:
+                        isDark
+                            ? [
+                              Colors.grey.shade800.withOpacity(0.8),
+                              Colors.grey.shade900.withOpacity(0.9),
+                            ]
+                            : [
+                              Colors.white.withOpacity(0.9),
+                              Colors.grey.shade50.withOpacity(0.9),
+                            ],
+                  ),
+                ),
+                padding: const EdgeInsets.all(10),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Container(
-                      width: fixedColumnWidth,
+                      padding: const EdgeInsets.all(16),
                       decoration: BoxDecoration(
                         gradient: LinearGradient(
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                          colors:
-                              isDark
-                                  ? [
-                                    Colors.grey.shade800.withOpacity(0.8),
-                                    Colors.grey.shade900.withOpacity(0.9),
-                                  ]
-                                  : [
-                                    Colors.white.withOpacity(0.9),
-                                    Colors.grey.shade50.withOpacity(0.9),
-                                  ],
+                          colors: [
+                            sensor.color.withOpacity(0.2),
+                            sensor.color.withOpacity(0.1),
+                          ],
                         ),
+                        shape: BoxShape.circle,
                       ),
+                      child: Icon(sensor.icon, size: 28, color: sensor.color),
                     ),
-                    Expanded(
-                      child: Container(),
-                    ), // Fill the rest with transparent
+                    const SizedBox(height: 12),
+                    Text(
+                      sensor.label,
+                      style: theme.textTheme.titleMedium?.copyWith(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 12,
+                        color: isDark ? Colors.white : Colors.grey.shade800,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      sensor.category,
+                      style: theme.textTheme.bodySmall?.copyWith(
+                        fontSize: 10,
+                        color:
+                            isDark
+                                ? Colors.white.withOpacity(0.7)
+                                : Colors.grey.shade600,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
                   ],
                 ),
               ),
 
-              // Main content
-              SizedBox(
-                width: fixedColumnWidth,
-                child: Container(
-                  padding: const EdgeInsets.all(10),
-                  child: SingleChildScrollView(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.all(16),
-                          decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                              colors: [
-                                sensor.color.withOpacity(0.2),
-                                sensor.color.withOpacity(0.1),
-                              ],
-                            ),
-                            shape: BoxShape.circle,
-                          ),
-                          child: Icon(
-                            sensor.icon,
-                            size: 28,
-                            color: sensor.color,
-                          ),
+              // Right column (expanded) - Status Badge (Top Center)
+              Expanded(
+                child: Column(
+                  crossAxisAlignment:
+                      CrossAxisAlignment.center, // Horizontal center
+                  mainAxisAlignment: MainAxisAlignment.start, // Align to top
+                  children: [
+                    const SizedBox(height: 12), // Optional top padding
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 8,
+                        vertical: 4,
+                      ),
+                      decoration: BoxDecoration(
+                        color: sensor.color.withOpacity(0.2),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Text(
+                        sensorStatus,
+                        style: theme.textTheme.labelSmall?.copyWith(
+                          color: sensor.color,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 7,
                         ),
-                        const SizedBox(height: 12),
-                        Text(
-                          sensor.label,
-                          style: theme.textTheme.titleMedium?.copyWith(
-                            fontWeight: FontWeight.w600,
-                            fontSize: 12,
-                            color: isDark ? Colors.white : Colors.grey.shade800,
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-                        const SizedBox(height: 4),
-                        Text(
-                          sensor.category,
-                          style: theme.textTheme.bodySmall?.copyWith(
-                            fontSize: 10,
-                            color:
-                                isDark
-                                    ? Colors.white.withOpacity(0.7)
-                                    : Colors.grey.shade600,
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-                      ],
+                      ),
                     ),
-                  ),
-                ),
-              ),
-
-              // Status badge
-              Positioned(
-                top: 12,
-                right: 12,
-                child: Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 8,
-                    vertical: 4,
-                  ),
-                  decoration: BoxDecoration(
-                    color: sensor.color.withOpacity(0.2),
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: Text(
-                    sensorStatus,
-                    style: theme.textTheme.labelSmall?.copyWith(
-                      color: sensor.color,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 7,
-                    ),
-                  ),
+                  ],
                 ),
               ),
             ],

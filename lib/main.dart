@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_background_service/flutter_background_service.dart';
 import 'package:sensorlab/screens/splash_screen.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:torch_controller/torch_controller.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   MobileAds.instance.initialize();
+
   TorchController().initialize(); // Corrected initialization
   debugDisableShadows = true;
+
   runApp(const MyApp());
 }
 
@@ -20,18 +23,43 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'SensorLab',
       theme: ThemeData(
-        useMaterial3: true,
         colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.deepPurple,
+          seedColor: const Color(0xFF6C63FF),
           brightness: Brightness.light,
+          primary: const Color(0xFF6C63FF),
+          secondary: const Color(0xFF4D8DEE),
+        ),
+        useMaterial3: true,
+        cardTheme: CardTheme(
+          elevation: 0,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
+          surfaceTintColor: Colors.white,
         ),
       ),
       darkTheme: ThemeData(
-        useMaterial3: true,
         colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.deepPurple,
+          seedColor: const Color(0xFF6C63FF),
           brightness: Brightness.dark,
+          primary: const Color(0xFF6C63FF),
+          secondary: const Color(0xFF4D8DEE),
         ),
+        useMaterial3: true,
+        cardTheme: CardTheme(
+          elevation: 0,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
+          surfaceTintColor: Colors.grey[900],
+          color: Colors.grey[850],
+        ),
+        scaffoldBackgroundColor: Colors.black,
+        textTheme: const TextTheme(
+          bodyMedium: TextStyle(color: Colors.white70),
+          titleLarge: TextStyle(color: Colors.white),
+        ),
+        iconTheme: const IconThemeData(color: Colors.white70),
       ),
       themeMode: ThemeMode.system,
       home: const SplashScreen(),
