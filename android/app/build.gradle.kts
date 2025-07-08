@@ -24,22 +24,23 @@ android {
     ndkVersion = "28.0.13004108"
 
     compileOptions {
-         isCoreLibraryDesugaringEnabled = true
-        sourceCompatibility = JavaVersion.VERSION_17  // Changed from 21
+        isCoreLibraryDesugaringEnabled = true
+        sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
 
     kotlinOptions {
-        jvmTarget = "17"  // Changed from "21"
+        jvmTarget = "17"
         freeCompilerArgs = listOf("-Xjvm-default=all")
     }
 
     defaultConfig {
         applicationId = "com.darahat.sensorlab"
         minSdk = 24
-        targetSdk = 34
+        targetSdk = 35
         versionCode = flutter.versionCode.toInt()
         versionName = flutter.versionName
+        multiDexEnabled = true
     }
 
     signingConfigs {
@@ -69,8 +70,12 @@ dependencies {
     implementation("androidx.work:work-runtime-ktx:$workmanagerVersion")
     coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.1.5")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
-}
+    implementation("androidx.multidex:multidex:2.0.1")
 
+}
+ kotlin {
+        jvmToolchain(17)
+    }
 flutter {
     source = "../.."
 }

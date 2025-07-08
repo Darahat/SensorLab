@@ -6,7 +6,6 @@ import 'package:sensorlab/screens/compass_screen.dart';
 import 'package:sensorlab/screens/geolocator_screen.dart';
 import 'package:sensorlab/screens/health_screen.dart';
 import 'package:sensorlab/screens/light_meter_screen.dart';
-import 'package:sensorlab/screens/noise_meter_screen.dart';
 import 'package:sensorlab/screens/gyroscope_screen.dart';
 import 'package:sensorlab/screens/accelerometer_screen.dart';
 import 'package:sensorlab/screens/proximity_screen.dart';
@@ -23,20 +22,6 @@ final List<SensorCard> sensors = [
     color: Colors.yellow,
     screen: const HealthScreen(),
     category: 'Health',
-  ),
-  // SensorCard(
-  //   icon: Iconsax.speedometer,
-  //   label: 'Speed Tracker',
-  //   color: Colors.red,
-  //   screen: const SpeedTrackerScreen(),
-  //   category: 'Motion',
-  // ),
-  SensorCard(
-    icon: Iconsax.sound,
-    label: 'Noise Meter',
-    color: Colors.indigo,
-    screen: const NoiseMeterScreen(),
-    category: 'Audio',
   ),
   SensorCard(
     icon: Iconsax.location,

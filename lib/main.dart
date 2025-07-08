@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_background_service/flutter_background_service.dart';
-import 'package:sensorlab/screens/splash_screen.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:sensorlab/screens/splash_screen.dart';
 import 'package:torch_controller/torch_controller.dart';
 
 void main() async {
@@ -30,7 +29,7 @@ class MyApp extends StatelessWidget {
           secondary: const Color(0xFF4D8DEE),
         ),
         useMaterial3: true,
-        cardTheme: CardTheme(
+        cardTheme: CardThemeData(
           elevation: 0,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16),
@@ -46,7 +45,7 @@ class MyApp extends StatelessWidget {
           secondary: const Color(0xFF4D8DEE),
         ),
         useMaterial3: true,
-        cardTheme: CardTheme(
+        cardTheme: CardThemeData(
           elevation: 0,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16),

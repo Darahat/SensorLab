@@ -1,5 +1,5 @@
 buildscript {
-    val kotlinVersion = "1.9.22"  // Note: camelCase variable name
+    val kotlinVersion = "2.0.0"  // Note: camelCase variable name
     val workmanagerVersion = "2.9.0"
 
     repositories {
@@ -7,7 +7,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath("com.android.tools.build:gradle:8.1.2")
+        classpath("com.android.tools.build:gradle:8.2.2")
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion")  // Fixed: use kotlinVersion (not kotlin_version)
     }
 }
@@ -21,6 +21,20 @@ allprojects {
     repositories {
         google()
         mavenCentral()
+    }
+}
+
+subprojects {
+    afterEvaluate {
+        tasks.withType<JavaCompile> {
+            sourceCompatibility = "17"
+            targetCompatibility = "17"
+        }
+        tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+            kotlinOptions {
+                jvmTarget = "17"
+            }
+        }
     }
 }
 

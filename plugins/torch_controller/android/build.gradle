@@ -26,13 +26,18 @@ apply plugin: 'kotlin-android'
 
 android {
     namespace 'com.example.torch_controller'
-    compileSdkVersion 31
+    compileSdkVersion 35
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
 
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
     }
     defaultConfig {
-        minSdkVersion 21
+        minSdkVersion 23
     }
     lintOptions {
         disable 'InvalidPackage'
@@ -40,7 +45,7 @@ android {
 
     // ✅ Add this block to fix the JVM target error
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "17"
     }
 }
 

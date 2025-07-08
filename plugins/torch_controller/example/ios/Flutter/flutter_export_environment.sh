@@ -1,7 +1,7 @@
 #!/bin/sh
 # This is a generated file; do not edit or check into version control.
-export "FLUTTER_ROOT=D:\dev\flutter"
-export "FLUTTER_APPLICATION_PATH=D:\Dream\Project plan 2\SensorLab\plugins\torch_controller\example"
+export "FLUTTER_ROOT=C:\Users\darahat42\fvm\versions\stable"
+export "FLUTTER_APPLICATION_PATH=D:\Dream\Flutter App\SensorLab\plugins\torch_controller\example"
 export "COCOAPODS_PARALLEL_CODE_SIGN=true"
 export "FLUTTER_TARGET=lib\main.dart"
 export "FLUTTER_BUILD_DIR=build"
