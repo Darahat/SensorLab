@@ -71,6 +71,7 @@ dependencies {
     coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.1.5")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
     implementation("androidx.multidex:multidex:2.0.1")
+    implementation("com.google.android.material:material:1.12.0") // Add this line
 
 }
  kotlin {
