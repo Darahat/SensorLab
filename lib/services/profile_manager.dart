@@ -1,4 +1,5 @@
 import 'package:shared_preferences/shared_preferences.dart';
+
 import '../models/health_data.dart';
 
 class ProfileManager {
@@ -21,11 +22,25 @@ class ProfileManager {
 
   Future<HealthData> loadProfile() async {
     final prefs = await SharedPreferences.getInstance();
+
+    double readDoubleFallback(String key, double fallback) {
+      final d = prefs.getDouble(key);
+      if (d != null) return d;
+      final i = prefs.getInt(key);
+      if (i != null) return i.toDouble();
+      final s = prefs.getString(key);
+      if (s != null) {
+        final parsed = double.tryParse(s);
+        if (parsed != null) return parsed;
+      }
+      return fallback;
+    }
+
     return HealthData()
       ..name = prefs.getString(_keyName) ?? 'User'
-      ..weightKg = prefs.getDouble(_keyWeightKg) ?? 70.0
-      ..heightFeet = prefs.getDouble(_keyHeightFeet) ?? 5.0
-      ..heightInches = prefs.getDouble(_keyHeightInches) ?? 7.0
+      ..weightKg = readDoubleFallback(_keyWeightKg, 70.0)
+      ..heightFeet = readDoubleFallback(_keyHeightFeet, 5.0)
+      ..heightInches = readDoubleFallback(_keyHeightInches, 7.0)
       ..age = prefs.getInt(_keyAge) ?? 30
       ..gender = prefs.getString(_keyGender) ?? 'male';
   }

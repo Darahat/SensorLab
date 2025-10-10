@@ -1,7 +1,8 @@
 import 'dart:async';
 
-import 'package:sensors_plus/sensors_plus.dart';
 import 'package:pedometer/pedometer.dart';
+import 'package:sensors_plus/sensors_plus.dart';
+
 import '../models/activity_type.dart';
 
 class MovementTracker {
@@ -17,11 +18,11 @@ class MovementTracker {
     required Function(GyroscopeEvent) onGyroscope,
     required Function(int) onSteps,
   }) {
-    _accelSub = userAccelerometerEvents.listen(onAccelerometer);
+    _accelSub = userAccelerometerEventStream().listen(onAccelerometer);
 
     switch (activityType) {
       case ActivityType.treadmill:
-        _gyroSub = gyroscopeEvents.listen(onGyroscope);
+        _gyroSub = gyroscopeEventStream().listen(onGyroscope);
         break;
       case ActivityType.walking:
       case ActivityType.running:

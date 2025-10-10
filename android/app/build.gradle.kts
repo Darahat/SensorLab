@@ -41,6 +41,11 @@ android {
         versionCode = flutter.versionCode.toInt()
         versionName = flutter.versionName
         multiDexEnabled = true
+        // manifest placeholders allow us to inject the AdMob App ID from
+        // local properties or environment variables without checking them into VCS.
+        manifestPlaceholders["ADMOB_APP_ID"] = keystoreProperties.getProperty("ADMOB_APP_ID")
+            ?: System.getenv("ADMOB_APP_ID")
+            ?: "ca-app-pub-3940256099942544~3347511713" // default test app id
     }
 
     signingConfigs {

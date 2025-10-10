@@ -1,11 +1,12 @@
 import 'dart:async';
-import 'package:flutter/material.dart';
-import 'package:camera/camera.dart';
-import 'package:torch_controller/torch_controller.dart';
 import 'dart:math';
 
+import 'package:camera/camera.dart';
+import 'package:flutter/material.dart';
+import 'package:torch_controller/torch_controller.dart';
+
 class HeartRateScreen extends StatefulWidget {
-  const HeartRateScreen({Key? key}) : super(key: key);
+  const HeartRateScreen({super.key});
 
   @override
   _HeartRateScreenState createState() => _HeartRateScreenState();
@@ -325,8 +326,10 @@ class _HeartRateScreenState extends State<HeartRateScreen> {
     if (_isFlashOn) {
       controller.toggle();
     }
-    // Then dispose camera
-    _cameraController?.dispose();
+    // Then attempt to stop camera / image stream and dispose resources.
+    // We intentionally don't await here because dispose cannot be async.
+    // ignore: unawaited_futures
+    _stopCamera();
     super.dispose();
   }
 

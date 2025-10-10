@@ -1,13 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:sensorlab/screens/splash_screen.dart';
 import 'package:torch_controller/torch_controller.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  MobileAds.instance.initialize();
+  // Load environment variables from .env (optional - fails silently if missing)
+  try {
+    await dotenv.load();
+  } catch (_) {}
 
-  TorchController().initialize(); // Corrected initialization
+  await MobileAds.instance.initialize();
+
+  // Initialize torch controller; do not await in case the plugin's
+  // initialize implementation is synchronous/void in some environments.
+  TorchController()
+      .initialize(); // Ensure torch controller is configured before runApp
   debugDisableShadows = true;
 
   runApp(const MyApp());

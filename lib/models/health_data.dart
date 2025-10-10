@@ -19,13 +19,25 @@ class HealthData {
   DateTime? trackingStartTime;
   double get heightCm => (heightFeet * 30.48) + (heightInches * 2.54);
   set heightCm(double value) {
-    heightFeet = (value / 30.48).floorToDouble();
-    heightInches = (value / 2.54) % 12;
+    // Convert centimeters to feet + inches. We keep feet as whole number
+    // and inches as fractional (0..<12). If value is non-positive we keep
+    // sensible defaults.
+    if (value <= 0) return;
+    final totalInches = value / 2.54;
+    final feet = (totalInches ~/ 12); // integer feet
+    final inches = totalInches - (feet * 12); // fractional inches
+    heightFeet = feet.toDouble();
+    heightInches = double.parse(inches.toStringAsFixed(2));
   }
 
   double get heightMeters => heightCm / 100;
   // Health Metrics
-  double get bmi => weightKg / ((heightCm / 100) * (heightCm / 100));
+  double get bmi {
+    final meters = heightMeters;
+    if (meters <= 0) return 0.0;
+    return weightKg / (meters * meters);
+  }
+
   String get bmiCategory {
     if (bmi < 18.5) return 'Underweight';
     if (bmi < 25) return 'Normal';

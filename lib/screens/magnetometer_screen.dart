@@ -1,8 +1,9 @@
-import 'package:flutter/material.dart';
-import 'package:sensors_plus/sensors_plus.dart';
-import 'package:iconsax/iconsax.dart';
-import 'dart:math';
 import 'dart:async';
+import 'dart:math';
+
+import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
+import 'package:sensors_plus/sensors_plus.dart';
 
 class MagnetometerScreen extends StatefulWidget {
   const MagnetometerScreen({super.key});
@@ -26,7 +27,7 @@ class _MagnetometerScreenState extends State<MagnetometerScreen> {
   }
 
   void _startListening() {
-    _magnetometerSubscription = magnetometerEvents.listen((event) {
+    _magnetometerSubscription = magnetometerEventStream().listen((event) {
       final strength = calculateStrength(event.x, event.y, event.z);
       setState(() {
         _x = event.x;

@@ -1,18 +1,14 @@
-import 'package:sensorlab/widgets/show_interstitial_ad_than_navigate.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:sensorlab/screens/geolocator_screen.dart';
-import 'package:sensorlab/models/sensor_card.dart';
-import 'package:sensorlab/screens/light_meter_screen.dart';
-import 'package:sensorlab/screens/compass_screen.dart';
-import 'package:sensorlab/screens/noise_meter_screen.dart';
 import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
-import 'package:sensorlab/widgets/sensor_search_delegate.dart';
-import 'package:sensorlab/widgets/sensor_grid_item.dart';
+import 'package:sensorlab/models/sensor_card.dart';
 import 'package:sensorlab/widgets/create_interstitial_ad.dart';
-import 'package:sensorlab/widgets/show_settings.dart';
+import 'package:sensorlab/widgets/sensor_grid_item.dart';
+import 'package:sensorlab/widgets/sensor_search_delegate.dart';
 import 'package:sensorlab/widgets/sensors.dart';
+import 'package:sensorlab/widgets/show_interstitial_ad_than_navigate.dart';
+import 'package:sensorlab/widgets/show_settings.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -29,7 +25,7 @@ class _HomeScreenState extends State<HomeScreen>
   InterstitialAd? _interstitialAd;
   bool _isRefreshing = false;
   int _selectedTabIndex = 0;
-  late TabController _tabController; // Added explicit TabController
+  TabController? _tabController; // Nullable — created in didChangeDependencies
 
   @override
   void initState() {
@@ -57,6 +53,8 @@ class _HomeScreenState extends State<HomeScreen>
 
     // Initialize ads
     createInterstitialAd();
+    // read the shared instance (may be null until loaded)
+    _interstitialAd = interstitialAd;
 
     // Initialize tab controller after build is complete
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -73,20 +71,37 @@ class _HomeScreenState extends State<HomeScreen>
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    // Initialize tab controller here to ensure proper context
+    // Initialize tab controller here to ensure proper context. If a controller
+    // already exists (didChangeDependencies can be called multiple times),
+    // dispose it first to avoid leaking listeners.
     final categories = _getUniqueCategories();
-    _tabController = TabController(
-      length: categories.length + 1,
-      vsync: this,
-      initialIndex: _selectedTabIndex,
-    );
-    _tabController.addListener(_handleTabChange);
+    if (mounted) {
+      if (_tabController != null) {
+        try {
+          _tabController!.removeListener(_handleTabChange);
+          _tabController!.dispose();
+        } catch (_) {}
+      }
+
+      // Safely clamp the initial index to an integer within range
+      var initialIndex = _selectedTabIndex;
+      if (initialIndex < 0) initialIndex = 0;
+      if (initialIndex > categories.length) initialIndex = categories.length;
+
+      _tabController = TabController(
+        length: categories.length + 1,
+        vsync: this,
+        initialIndex: initialIndex,
+      );
+      _tabController!.addListener(_handleTabChange);
+    }
   }
 
   void _handleTabChange() {
-    if (_tabController.indexIsChanging) {
+    if (_tabController == null) return;
+    if (_tabController!.indexIsChanging) {
       setState(() {
-        _selectedTabIndex = _tabController.index;
+        _selectedTabIndex = _tabController!.index;
       });
     }
   }
@@ -113,7 +128,12 @@ class _HomeScreenState extends State<HomeScreen>
   @override
   void dispose() {
     _animationController.dispose();
-    _tabController.dispose(); // Dispose the tab controller
+    try {
+      if (_tabController != null) {
+        _tabController!.removeListener(_handleTabChange);
+        _tabController!.dispose(); // Dispose the tab controller
+      }
+    } catch (_) {}
     WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
@@ -260,66 +280,80 @@ class _HomeScreenState extends State<HomeScreen>
   }
 
   Widget _buildSensorGrid(List<SensorCard> sensorsToShow) {
-    return sensorsToShow.isEmpty
-        ? Center(
-          child: Text(
-            'No sensors available',
-            style: TextStyle(
-              color: Theme.of(context).textTheme.bodyLarge?.color,
+    if (sensorsToShow.isEmpty) {
+      return Center(
+        child: Text(
+          'No sensors available',
+          style: TextStyle(color: Theme.of(context).textTheme.bodyLarge?.color),
+        ),
+      );
+    }
+
+    // Clamp animation values so initial builds don't show NaN or negative scale
+    final safeOpacity = (_fadeAnimation.value).clamp(0.0, 1.0);
+    final safeScale = (_scaleAnimation.value).clamp(0.0, 2.0);
+
+    return CustomScrollView(
+      physics: const BouncingScrollPhysics(),
+      slivers: [
+        SliverPadding(
+          padding: const EdgeInsets.all(16),
+          sliver: SliverToBoxAdapter(
+            child: AnimatedBuilder(
+              animation: _animationController,
+              builder: (context, child) {
+                return Opacity(
+                  opacity: safeOpacity,
+                  child: Transform.scale(
+                    scale: safeScale,
+                    child: const SizedBox.shrink(),
+                  ),
+                );
+              },
             ),
           ),
-        )
-        : CustomScrollView(
-          physics: const BouncingScrollPhysics(),
-          slivers: [
-            SliverPadding(
-              padding: const EdgeInsets.all(16),
-              sliver: SliverToBoxAdapter(
-                child: AnimatedBuilder(
-                  animation: _animationController,
-                  builder: (context, child) {
-                    return Opacity(
-                      opacity: _fadeAnimation.value,
-                      child: Transform.scale(
-                        scale: _scaleAnimation.value,
-                        child: GridView.builder(
-                          physics: const NeverScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          padding: EdgeInsets.zero,
-                          gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 2,
-                                mainAxisSpacing: 16,
-                                crossAxisSpacing: 16,
-                                childAspectRatio: 1.1,
-                              ),
-                          itemCount: sensorsToShow.length,
-                          itemBuilder: (context, index) {
-                            return SensorGridItem(
-                              sensor: sensorsToShow[index],
-                              sensorStatus: "NEW",
-                              onTap: () {
-                                _animationController.forward(from: 0);
-                                showInterstitialAdThenNavigate(
-                                  context: context,
-                                  screen: sensorsToShow[index].screen,
-                                  interstitialAd: _interstitialAd,
-                                );
-                              },
-                            );
-                          },
-                        ),
-                      ),
-                    );
-                  },
-                ),
-              ),
+        ),
+
+        // Actual grid as a SliverGrid to avoid nested scrollables
+        SliverPadding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          sliver: SliverGrid(
+            delegate: SliverChildBuilderDelegate((context, index) {
+              return SensorGridItem(
+                sensor: sensorsToShow[index],
+                sensorStatus: "NEW",
+                onTap: () {
+                  _animationController.forward(from: 0);
+                  // Use the shared interstitial instance; if it's null, the
+                  // show helper will navigate immediately.
+                  _interstitialAd = interstitialAd;
+                  showInterstitialAdThenNavigate(
+                    context: context,
+                    screen: sensorsToShow[index].screen,
+                    interstitialAd: _interstitialAd,
+                  );
+                },
+              );
+            }, childCount: sensorsToShow.length),
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              mainAxisSpacing: 16,
+              crossAxisSpacing: 16,
+              childAspectRatio: 1.1,
             ),
-          ],
-        );
+          ),
+        ),
+      ],
+    );
   }
 
   List<String> _getUniqueCategories() {
-    return sensors.map((s) => s.category).toSet().toList();
+    // Preserve original order while removing duplicates
+    final seen = <String>{};
+    final result = <String>[];
+    for (final s in sensors) {
+      if (seen.add(s.category)) result.add(s.category);
+    }
+    return result;
   }
 }

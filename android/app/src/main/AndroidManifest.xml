@@ -49,9 +49,9 @@
     android:exported="false" />
         <!-- Don't delete the meta-data below.
              This is used by the Flutter tool to generate GeneratedPluginRegistrant.java -->
-        <meta-data 
+        <meta-data
         android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-5150231094870616~6399537177"/>     
+            android:value="${ADMOB_APP_ID}"/>     
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />

@@ -1,7 +1,8 @@
 import 'dart:async'; // Import this for StreamSubscription
+
 import 'package:flutter/material.dart';
-import 'package:sensors_plus/sensors_plus.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:sensors_plus/sensors_plus.dart';
 
 class AccelerometerScreen extends StatefulWidget {
   const AccelerometerScreen({super.key});
@@ -18,12 +19,16 @@ class _AccelerometerScreenState extends State<AccelerometerScreen> {
   double _maxY = 0;
   double _maxZ = 0;
   bool _isActive = false;
-  StreamSubscription<AccelerometerEvent>? _accelerometerSubscription; // Add this line
+  StreamSubscription<AccelerometerEvent>?
+  _accelerometerSubscription; // Add this line
 
   @override
   void initState() {
     super.initState();
-    _accelerometerSubscription = accelerometerEvents.listen((AccelerometerEvent event) { // Assign to the new variable
+    _accelerometerSubscription = accelerometerEventStream().listen((
+      AccelerometerEvent event,
+    ) {
+      // Assign to the new variable
       if (!_isActive) {
         setState(() => _isActive = true);
       }
@@ -41,7 +46,8 @@ class _AccelerometerScreenState extends State<AccelerometerScreen> {
   }
 
   @override
-  void dispose() { // Add this method
+  void dispose() {
+    // Add this method
     _accelerometerSubscription?.cancel(); // Cancel the subscription
     super.dispose();
   }

@@ -35,14 +35,16 @@ class TorchController {
   /// - debug: Enable/disable debugPrint of error thrown by the methods
   /// - suppressTorchErrors: Suppress native errors from the usage of the torch in different devices. Active this if you
   ///   don't want or need to handle torch errors
-  void initialize(
+  Future<void> initialize(
       {double intensity = 1.0,
       bool debug = false,
       bool suppressTorchErrors = false}) async {
+    // Keep signature async for future plugin startup logic.
     _ensureInitialized = true;
     _debug = debug;
     _torchIntensity = intensity;
     _suppressTorchErrors = suppressTorchErrors;
+    return;
   }
 
   /// Return a `bool` if the current device is able to use torch methods.

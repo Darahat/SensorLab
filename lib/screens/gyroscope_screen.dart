@@ -1,8 +1,9 @@
-import 'package:flutter/material.dart';
-import 'package:sensors_plus/sensors_plus.dart';
-import 'package:iconsax/iconsax.dart';
-import 'package:fl_chart/fl_chart.dart';
 import 'dart:async';
+
+import 'package:fl_chart/fl_chart.dart';
+import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
+import 'package:sensors_plus/sensors_plus.dart';
 
 class GyroscopeScreen extends StatefulWidget {
   const GyroscopeScreen({super.key});
@@ -35,7 +36,7 @@ class _GyroscopeScreenState extends State<GyroscopeScreen>
       duration: const Duration(milliseconds: 300),
     );
 
-    gyroscopeEvents.listen((GyroscopeEvent event) {
+    gyroscopeEventStream().listen((GyroscopeEvent event) {
       if (!_isActive) {
         setState(() => _isActive = true);
       }

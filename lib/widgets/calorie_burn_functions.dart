@@ -1,7 +1,8 @@
-import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:http/http.dart' as http;
 import 'dart:convert';
+
+import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:http/http.dart' as http;
 
 class CalorieBurnHelper {
   final BuildContext context;
@@ -34,9 +35,15 @@ class CalorieBurnHelper {
 
   Future<void> fetchTemperature(double lat, double lon) async {
     try {
+      final apiKey = dotenv.env['OPENWEATHER_API_KEY'] ?? '';
+      if (apiKey.isEmpty) {
+        debugPrint('OpenWeather API key not set. Skipping temperature fetch.');
+        return;
+      }
+
       final response = await http.get(
         Uri.parse(
-          'https://api.openweathermap.org/data/2.5/weather?lat=$lat&lon=$lon&appid=YOUR_API_KEY&units=metric',
+          'https://api.openweathermap.org/data/2.5/weather?lat=$lat&lon=$lon&appid=$apiKey&units=metric',
         ),
       );
 
