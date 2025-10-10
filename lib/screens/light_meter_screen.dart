@@ -1,267 +1,490 @@
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:light/light.dart';
-import 'dart:async';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class LightMeterScreen extends StatefulWidget {
+import '../src/core/providers.dart';
+
+class LightMeterScreen extends ConsumerStatefulWidget {
   const LightMeterScreen({super.key});
 
   @override
-  _LightMeterScreenState createState() => _LightMeterScreenState();
+  ConsumerState<LightMeterScreen> createState() => _LightMeterScreenState();
 }
 
-class _LightMeterScreenState extends State<LightMeterScreen> {
-  Light? _light;
-  int _luxValue = 0;
-  StreamSubscription<int>? _lightSubscription;
-  bool _isDarkMode = false;
-  double _scale = 1.0;
-
+class _LightMeterScreenState extends ConsumerState<LightMeterScreen> {
   @override
   void initState() {
     super.initState();
-    _initLightSensor();
-  }
-
-  void _initLightSensor() async {
-    try {
-      _light = Light();
-      _startListening();
-    } catch (e) {
-      if (mounted) {
-        setState(() {
-          _luxValue = -1; // Error state
-        });
-      }
-    }
-  }
-
-  void _startListening() {
-    _lightSubscription = _light?.lightSensorStream.listen(
-      (luxValue) {
-        if (mounted) {
-          setState(() {
-            _luxValue = luxValue;
-            _isDarkMode = luxValue < 10; // Threshold for dark mode
-            _scale =
-                1.0 + (luxValue.clamp(0, 1000) / 5000); // Subtle pulse effect
-          });
-        }
-      },
-      onError: (error) {
-        if (mounted) {
-          setState(() {
-            _luxValue = -1; // Error state
-          });
-        }
-      },
-    );
-  }
-
-  @override
-  void dispose() {
-    _lightSubscription?.cancel();
-    super.dispose();
-  }
-
-  String _getLightCondition(int lux) {
-    if (lux < 0) return 'Sensor Error';
-    if (lux < 10) return 'Pitch Black';
-    if (lux < 50) return 'Very Dark';
-    if (lux < 200) return 'Dim';
-    if (lux < 1000) return 'Normal';
-    if (lux < 5000) return 'Bright';
-    return 'Very Bright';
-  }
-
-  Color _getLightColor(int lux) {
-    if (lux < 0) return Colors.red;
-    if (lux < 10) return Colors.blueGrey;
-    if (lux < 50) return Colors.indigo;
-    if (lux < 200) return Colors.blue;
-    if (lux < 1000) return Colors.green;
-    if (lux < 5000) return Colors.orange;
-    return Colors.red;
+    // Get initial reading when screen loads
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref.read(lightMeterProvider.notifier).getSingleReading();
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final bool systemDarkMode = theme.brightness == Brightness.dark;
-    final bool useDarkMode = _luxValue < 10 || systemDarkMode;
+    final lightMeterData = ref.watch(lightMeterProvider);
+    final lightMeterNotifier = ref.read(lightMeterProvider.notifier);
 
     return Scaffold(
       appBar: AppBar(
-        centerTitle: true,
-        title: const Text(
-          'Light Meter',
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
-        backgroundColor:
-            useDarkMode ? Colors.deepPurple.shade800 : Colors.deepPurple,
+        title: const Text('Light Meter'),
         actions: [
           IconButton(
-            icon: const Icon(Icons.info_outline),
-            onPressed: () => _showInfoDialog(context),
+            icon: const Icon(Icons.refresh),
+            onPressed: () => lightMeterNotifier.resetData(),
+            tooltip: 'Reset Data',
           ),
         ],
       ),
-      body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors:
-                useDarkMode
-                    ? [Colors.deepPurple.shade900, Colors.indigo.shade900]
-                    : [Colors.deepPurple.shade100, Colors.indigo.shade100],
-          ),
-        ),
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              // Animated Light Icon
-              AnimatedScale(
-                scale: _scale,
-                duration: const Duration(milliseconds: 300),
-                child: Icon(
-                  _luxValue < 0 ? Icons.error_outline : Icons.wb_sunny,
-                  size: 100,
-                  color: _getLightColor(_luxValue),
-                ),
-              ),
-              const SizedBox(height: 30),
-
-              // Light Value Display
-              Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 24,
-                  vertical: 16,
-                ),
-                decoration: BoxDecoration(
-                  color:
-                      useDarkMode ? Colors.deepPurple.shade700 : Colors.white,
-                  borderRadius: BorderRadius.circular(20),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.1),
-                      blurRadius: 10,
-                      offset: const Offset(0, 4),
-                    ),
-                  ],
-                ),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            // Current Reading Card
+            Card(
+              child: Padding(
+                padding: const EdgeInsets.all(20.0),
                 child: Column(
                   children: [
-                    Text(
-                      _luxValue < 0 ? '--' : '$_luxValue',
-                      style: TextStyle(
-                        fontSize: 48,
-                        fontWeight: FontWeight.bold,
-                        color: useDarkMode ? Colors.white : Colors.black,
-                      ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          lightMeterData.isReading
+                              ? Icons.lightbulb
+                              : Icons.lightbulb_outline,
+                          size: 32,
+                          color:
+                              lightMeterData.isReading
+                                  ? Colors.yellow
+                                  : Colors.grey,
+                        ),
+                        const SizedBox(width: 12),
+                        Text(
+                          lightMeterData.isReading ? 'Measuring' : 'Stopped',
+                          style: const TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
                     ),
-                    Text(
-                      'lux',
-                      style: TextStyle(
-                        fontSize: 20,
-                        color: useDarkMode ? Colors.white70 : Colors.black54,
+                    const SizedBox(height: 20),
+
+                    // Current Light Reading Display
+                    Container(
+                      width: 200,
+                      height: 200,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Color(
+                          lightMeterData.lightLevelColor,
+                        ).withOpacity(0.2),
+                        border: Border.all(
+                          color: Color(lightMeterData.lightLevelColor),
+                          width: 4,
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 20),
-
-              // Light Condition Indicator
-              Text(
-                _getLightCondition(_luxValue),
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                  color: _getLightColor(_luxValue),
-                ),
-              ),
-              const SizedBox(height: 10),
-
-              // Visual Indicator
-              Container(
-                width: 200,
-                height: 20,
-                margin: const EdgeInsets.symmetric(vertical: 10),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: useDarkMode ? Colors.black26 : Colors.white70,
-                ),
-                child: FractionallySizedBox(
-                  alignment: Alignment.centerLeft,
-                  widthFactor:
-                      _luxValue < 0 ? 0 : (_luxValue / 5000).clamp(0.0, 1.0),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      gradient: LinearGradient(
-                        colors: [
-                          Colors.blue,
-                          Colors.green,
-                          Colors.yellow,
-                          Colors.orange,
-                          Colors.red,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            lightMeterData.lightLevelIcon,
+                            style: const TextStyle(fontSize: 32),
+                          ),
+                          const SizedBox(height: 8),
+                          Text(
+                            lightMeterData.formattedCurrentLux,
+                            style: TextStyle(
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
+                              color: Color(lightMeterData.lightLevelColor),
+                            ),
+                          ),
+                          const SizedBox(height: 4),
+                          Text(
+                            lightMeterData.lightLevelDescription,
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: Color(lightMeterData.lightLevelColor),
+                              fontWeight: FontWeight.w500,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
                         ],
                       ),
                     ),
+
+                    const SizedBox(height: 20),
+
+                    // Control Buttons
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        ElevatedButton.icon(
+                          onPressed:
+                              () => lightMeterNotifier.getSingleReading(),
+                          icon: const Icon(Icons.camera_alt),
+                          label: const Text('Single Reading'),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.blue,
+                            foregroundColor: Colors.white,
+                          ),
+                        ),
+                        ElevatedButton.icon(
+                          onPressed:
+                              () => lightMeterNotifier.toggleMeasurement(),
+                          icon: Icon(
+                            lightMeterData.isReading
+                                ? Icons.stop
+                                : Icons.play_arrow,
+                          ),
+                          label: Text(
+                            lightMeterData.isReading ? 'Stop' : 'Continuous',
+                          ),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor:
+                                lightMeterData.isReading
+                                    ? Colors.red
+                                    : Colors.green,
+                            foregroundColor: Colors.white,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+
+            const SizedBox(height: 16),
+
+            // Statistics Card (only show if we have session data)
+            if (lightMeterData.totalReadings > 0) ...[
+              Card(
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        'Session Statistics',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(height: 16),
+
+                      Row(
+                        children: [
+                          Expanded(
+                            child: _buildStatCard(
+                              'Duration',
+                              lightMeterData.formattedSessionDuration,
+                              Icons.timer,
+                              Colors.blue,
+                            ),
+                          ),
+                          const SizedBox(width: 8),
+                          Expanded(
+                            child: _buildStatCard(
+                              'Readings',
+                              '${lightMeterData.totalReadings}',
+                              Icons.analytics,
+                              Colors.purple,
+                            ),
+                          ),
+                        ],
+                      ),
+
+                      const SizedBox(height: 12),
+
+                      Row(
+                        children: [
+                          Expanded(
+                            child: _buildStatCard(
+                              'Min',
+                              lightMeterData.formattedMinLux,
+                              Icons.keyboard_arrow_down,
+                              Colors.green,
+                            ),
+                          ),
+                          const SizedBox(width: 8),
+                          Expanded(
+                            child: _buildStatCard(
+                              'Average',
+                              lightMeterData.formattedAverageLux,
+                              Icons.remove,
+                              Colors.orange,
+                            ),
+                          ),
+                          const SizedBox(width: 8),
+                          Expanded(
+                            child: _buildStatCard(
+                              'Max',
+                              lightMeterData.formattedMaxLux,
+                              Icons.keyboard_arrow_up,
+                              Colors.red,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
                 ),
               ),
 
-              // Information Text
-              Padding(
-                padding: const EdgeInsets.all(20),
-                child: Text(
-                  _luxValue < 0
-                      ? 'Could not access light sensor. Please check permissions.'
-                      : 'The current light level is ${_getLightCondition(_luxValue).toLowerCase()}',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: useDarkMode ? Colors.white70 : Colors.black54,
+              const SizedBox(height: 16),
+            ],
+
+            // Real-time Chart (only show if we have data)
+            if (lightMeterData.recentReadings.isNotEmpty)
+              Card(
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        'Real-time Light Levels',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(height: 16),
+                      SizedBox(
+                        height: 200,
+                        child: LineChart(
+                          LineChartData(
+                            gridData: const FlGridData(show: true),
+                            titlesData: FlTitlesData(
+                              leftTitles: AxisTitles(
+                                sideTitles: SideTitles(
+                                  showTitles: true,
+                                  reservedSize: 50,
+                                  getTitlesWidget: (value, meta) {
+                                    return Text(
+                                      '${value.toInt()}',
+                                      style: const TextStyle(fontSize: 10),
+                                    );
+                                  },
+                                ),
+                              ),
+                              bottomTitles: const AxisTitles(
+                                sideTitles: SideTitles(showTitles: false),
+                              ),
+                              topTitles: const AxisTitles(
+                                sideTitles: SideTitles(showTitles: false),
+                              ),
+                              rightTitles: const AxisTitles(
+                                sideTitles: SideTitles(showTitles: false),
+                              ),
+                            ),
+                            borderData: FlBorderData(show: true),
+                            lineBarsData: [
+                              LineChartBarData(
+                                spots:
+                                    lightMeterData.recentReadings
+                                        .asMap()
+                                        .entries
+                                        .map((entry) {
+                                          return FlSpot(
+                                            entry.key.toDouble(),
+                                            entry.value,
+                                          );
+                                        })
+                                        .toList(),
+                                isCurved: true,
+                                color: Color(lightMeterData.lightLevelColor),
+                                barWidth: 2,
+                                dotData: const FlDotData(show: false),
+                                belowBarData: BarAreaData(
+                                  show: true,
+                                  color: Color(
+                                    lightMeterData.lightLevelColor,
+                                  ).withOpacity(0.1),
+                                ),
+                              ),
+                            ],
+                            minY: 0,
+                            maxY:
+                                lightMeterData.recentReadings.isNotEmpty
+                                    ? lightMeterData.recentReadings.reduce(
+                                          (a, b) => a > b ? a : b,
+                                        ) *
+                                        1.2
+                                    : 100,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),
-            ],
-          ),
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => setState(() {}), // Refresh
-        backgroundColor: useDarkMode ? Colors.amber : Colors.deepPurple,
-        child: Icon(
-          Icons.refresh,
-          color: useDarkMode ? Colors.black : Colors.white,
+
+            const SizedBox(height: 16),
+
+            // Light Level Guide
+            Card(
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      'Light Level Guide',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 12),
+                    _buildLightGuideItem(
+                      '🌑',
+                      'Dark',
+                      '0-10 lux',
+                      'Night, no moonlight',
+                      Colors.grey[800]!,
+                    ),
+                    _buildLightGuideItem(
+                      '🌘',
+                      'Dim',
+                      '10-200 lux',
+                      'Moonlight, candle',
+                      Colors.grey[600]!,
+                    ),
+                    _buildLightGuideItem(
+                      '💡',
+                      'Indoor',
+                      '200-500 lux',
+                      'Living room lighting',
+                      Colors.orange,
+                    ),
+                    _buildLightGuideItem(
+                      '🏢',
+                      'Office',
+                      '500-1000 lux',
+                      'Office workspace',
+                      Colors.yellow[700]!,
+                    ),
+                    _buildLightGuideItem(
+                      '☀️',
+                      'Bright',
+                      '1000-10000 lux',
+                      'Bright room, cloudy day',
+                      Colors.yellow,
+                    ),
+                    _buildLightGuideItem(
+                      '🌞',
+                      'Daylight',
+                      '10000+ lux',
+                      'Direct sunlight',
+                      Colors.yellow[200]!,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+
+            // Error Message
+            if (lightMeterData.errorMessage != null)
+              Card(
+                color: Colors.red.shade100,
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Row(
+                    children: [
+                      const Icon(Icons.error, color: Colors.red),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: Text(
+                          lightMeterData.errorMessage!,
+                          style: const TextStyle(color: Colors.red),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+          ],
         ),
       ),
     );
   }
 
-  void _showInfoDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder:
-          (context) => AlertDialog(
-            title: const Text('About Light Meter'),
-            content: const Text(
-              'This sensor measures ambient light levels in lux (lx).\n\n'
-              'Typical light levels:\n'
-              '• Moonlight: 1 lx\n'
-              '• Room lighting: 50-300 lx\n'
-              '• Office lighting: 300-500 lx\n'
-              '• Full daylight: 10,000-25,000 lx',
+  Widget _buildStatCard(
+    String label,
+    String value,
+    IconData icon,
+    Color color,
+  ) {
+    return Container(
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: color.withOpacity(0.1),
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: color.withOpacity(0.3)),
+      ),
+      child: Column(
+        children: [
+          Icon(icon, color: color, size: 20),
+          const SizedBox(height: 4),
+          Text(
+            label,
+            style: TextStyle(
+              fontSize: 12,
+              color: color,
+              fontWeight: FontWeight.w500,
             ),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.pop(context),
-                child: const Text('OK'),
-              ),
-            ],
           ),
+          const SizedBox(height: 2),
+          Text(
+            value,
+            style: TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.bold,
+              color: color,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildLightGuideItem(
+    String emoji,
+    String level,
+    String range,
+    String examples,
+    Color color,
+  ) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4),
+      child: Row(
+        children: [
+          Text(emoji, style: const TextStyle(fontSize: 20)),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  '$level ($range)',
+                  style: TextStyle(fontWeight: FontWeight.w500, color: color),
+                ),
+                Text(
+                  examples,
+                  style: TextStyle(fontSize: 12, color: Colors.grey[600]),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

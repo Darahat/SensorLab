@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:sensorlab/screens/splash_screen.dart';
+import 'package:sensorlab/src/core/providers.dart';
 import 'package:torch_controller/torch_controller.dart';
 
 void main() async {
@@ -19,11 +21,28 @@ void main() async {
       .initialize(); // Ensure torch controller is configured before runApp
   debugDisableShadows = true;
 
-  runApp(const MyApp());
+  runApp(const ProviderScope(child: MyApp()));
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends ConsumerStatefulWidget {
   const MyApp({super.key});
+
+  @override
+  ConsumerState<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends ConsumerState<MyApp> {
+  @override
+  void initState() {
+    super.initState();
+    // Eagerly initialize AdManager through Riverpod so the first
+    // interstitial is requested early in app startup.
+    try {
+      ref.read(adManagerProvider).loadInterstitial();
+    } catch (e) {
+      debugPrint('AdManager.loadInterstitial() failed in initState: $e');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {

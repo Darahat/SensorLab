@@ -1,63 +1,23 @@
-import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:sensors_plus/sensors_plus.dart';
 
-class MagnetometerScreen extends StatefulWidget {
+import '../src/features/magnetometer/providers/magnetometer_provider.dart';
+
+class MagnetometerScreen extends ConsumerWidget {
   const MagnetometerScreen({super.key});
 
   @override
-  State<MagnetometerScreen> createState() => _MagnetometerScreenState();
-}
-
-class _MagnetometerScreenState extends State<MagnetometerScreen> {
-  double _x = 0;
-  double _y = 0;
-  double _z = 0;
-  double _strength = 0;
-  double _maxStrength = 0;
-  StreamSubscription<MagnetometerEvent>? _magnetometerSubscription;
-
-  @override
-  void initState() {
-    super.initState();
-    _startListening();
-  }
-
-  void _startListening() {
-    _magnetometerSubscription = magnetometerEventStream().listen((event) {
-      final strength = calculateStrength(event.x, event.y, event.z);
-      setState(() {
-        _x = event.x;
-        _y = event.y;
-        _z = event.z;
-        _strength = strength;
-        _maxStrength = strength > _maxStrength ? strength : _maxStrength;
-      });
-    });
-  }
-
-  double calculateStrength(double x, double y, double z) {
-    return sqrt(x * x + y * y + z * z);
-  }
-
-  @override
-  void dispose() {
-    _magnetometerSubscription?.cancel();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final magnetometerData = ref.watch(magnetometerProvider);
     final colorScheme = Theme.of(context).colorScheme;
-    final normalizedStrength = (_strength / 1000).clamp(0, 1);
     final strengthColor =
         Color.lerp(
           colorScheme.primary,
           colorScheme.error,
-          normalizedStrength.toDouble(),
+          magnetometerData.normalizedStrength,
         )!;
 
     return Scaffold(
@@ -70,7 +30,9 @@ class _MagnetometerScreenState extends State<MagnetometerScreen> {
         actions: [
           IconButton(
             icon: Icon(Iconsax.refresh, color: colorScheme.primary),
-            onPressed: () => setState(() => _maxStrength = 0),
+            onPressed:
+                () =>
+                    ref.read(magnetometerProvider.notifier).resetMaxStrength(),
           ),
         ],
       ),
@@ -88,10 +50,10 @@ class _MagnetometerScreenState extends State<MagnetometerScreen> {
                   height: 200,
                   child: CustomPaint(
                     painter: _MagneticFieldPainter(
-                      x: _x,
-                      y: _y,
-                      z: _z,
-                      strength: normalizedStrength.toDouble(),
+                      x: magnetometerData.x,
+                      y: magnetometerData.y,
+                      z: magnetometerData.z,
+                      strength: magnetometerData.normalizedStrength,
                       colorScheme: colorScheme,
                     ),
                   ),
@@ -115,7 +77,7 @@ class _MagnetometerScreenState extends State<MagnetometerScreen> {
                   child: Column(
                     children: [
                       Text(
-                        '${_strength.toStringAsFixed(2)} μT',
+                        magnetometerData.strengthWithUnit,
                         style: TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.bold,
@@ -124,7 +86,7 @@ class _MagnetometerScreenState extends State<MagnetometerScreen> {
                       ),
                       const SizedBox(height: 4),
                       Text(
-                        'Max: ${_maxStrength.toStringAsFixed(2)} μT',
+                        magnetometerData.maxStrengthWithUnit,
                         style: TextStyle(
                           color: colorScheme.onSurface.withOpacity(0.6),
                         ),
@@ -135,9 +97,21 @@ class _MagnetometerScreenState extends State<MagnetometerScreen> {
                 const SizedBox(height: 40),
 
                 // Axis Indicators
-                _buildFieldIndicator('X', _x, colorScheme.primary),
-                _buildFieldIndicator('Y', _y, colorScheme.secondary),
-                _buildFieldIndicator('Z', _z, colorScheme.tertiary),
+                _buildFieldIndicator(
+                  'X',
+                  magnetometerData.x,
+                  colorScheme.primary,
+                ),
+                _buildFieldIndicator(
+                  'Y',
+                  magnetometerData.y,
+                  colorScheme.secondary,
+                ),
+                _buildFieldIndicator(
+                  'Z',
+                  magnetometerData.z,
+                  colorScheme.tertiary,
+                ),
               ],
             ),
           ),

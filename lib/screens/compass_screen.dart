@@ -1,60 +1,16 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_compass/flutter_compass.dart';
 import 'dart:math' as math;
 
-class CompassScreen extends StatefulWidget {
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import '../src/features/compass/providers/compass_provider.dart';
+
+class CompassScreen extends ConsumerWidget {
   const CompassScreen({super.key});
 
   @override
-  _CompassScreenState createState() => _CompassScreenState();
-}
-
-class _CompassScreenState extends State<CompassScreen> {
-  double? _heading;
-  bool _isCalibrating = false;
-  String _currentDirection = 'N';
-  final List<String> _directions = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'];
-
-  @override
-  void initState() {
-    super.initState();
-    _startCompass();
-  }
-
-  void _startCompass() {
-    FlutterCompass.events?.listen(
-      (event) {
-        if (mounted) {
-          setState(() {
-            _heading = event.heading;
-            _updateDirection();
-          });
-        }
-      },
-      onError: (error) {
-        if (mounted) {
-          setState(() {
-            _heading = null;
-          });
-        }
-      },
-    );
-  }
-
-  void _updateDirection() {
-    if (_heading == null) return;
-    final index = ((_heading! + 22.5) % 360) ~/ 45;
-    _currentDirection = _directions[index];
-  }
-
-  Future<void> _calibrateCompass() async {
-    setState(() => _isCalibrating = true);
-    await Future.delayed(const Duration(seconds: 3));
-    setState(() => _isCalibrating = false);
-  }
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final compassData = ref.watch(compassProvider);
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
 
@@ -70,7 +26,7 @@ class _CompassScreenState extends State<CompassScreen> {
         actions: [
           IconButton(
             icon: const Icon(Icons.refresh),
-            onPressed: _calibrateCompass,
+            onPressed: () => ref.read(compassProvider.notifier).calibrate(),
             tooltip: 'Calibrate',
           ),
         ],
@@ -106,14 +62,14 @@ class _CompassScreenState extends State<CompassScreen> {
                     ),
                   ),
                   Transform.rotate(
-                    angle: ((_heading ?? 0) * (math.pi / 180) * -1),
+                    angle: ((compassData.heading ?? 0) * (math.pi / 180) * -1),
                     child: Image.asset(
                       'assets/images/compass.png',
                       width: 250,
                       color: isDark ? Colors.white : Colors.black87,
                     ),
                   ),
-                  if (_isCalibrating)
+                  if (compassData.isCalibrating)
                     Positioned(
                       bottom: 20,
                       child: Column(
@@ -159,7 +115,7 @@ class _CompassScreenState extends State<CompassScreen> {
                     ),
                     const SizedBox(width: 8),
                     Text(
-                      _currentDirection,
+                      compassData.currentDirection,
                       style: TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
@@ -173,7 +129,7 @@ class _CompassScreenState extends State<CompassScreen> {
 
               // Heading Display
               Text(
-                '${_heading?.toStringAsFixed(1) ?? '--'}°',
+                compassData.headingWithUnit,
                 style: TextStyle(
                   fontSize: 42,
                   fontWeight: FontWeight.bold,
@@ -190,7 +146,7 @@ class _CompassScreenState extends State<CompassScreen> {
               ),
 
               // Accuracy Indicator
-              if (_heading != null) ...[
+              if (compassData.hasValidReading) ...[
                 const SizedBox(height: 30),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -209,6 +165,25 @@ class _CompassScreenState extends State<CompassScreen> {
                     ),
                   ],
                 ),
+              ] else if (compassData.hasError) ...[
+                const SizedBox(height: 30),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.error_outline,
+                      color: isDark ? Colors.redAccent : Colors.red,
+                      size: 20,
+                    ),
+                    const SizedBox(width: 8),
+                    Text(
+                      'Compass Error',
+                      style: TextStyle(
+                        color: isDark ? Colors.white70 : Colors.black54,
+                      ),
+                    ),
+                  ],
+                ),
               ],
             ],
           ),
@@ -217,7 +192,7 @@ class _CompassScreenState extends State<CompassScreen> {
 
       // Bottom Action Button
       floatingActionButton: FloatingActionButton(
-        onPressed: _calibrateCompass,
+        onPressed: () => ref.read(compassProvider.notifier).calibrate(),
         backgroundColor: isDark ? Colors.amber : Colors.deepPurple,
         child: Icon(Icons.refresh, color: isDark ? Colors.black : Colors.white),
       ),

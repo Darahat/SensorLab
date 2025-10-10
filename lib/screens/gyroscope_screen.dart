@@ -1,32 +1,20 @@
-import 'dart:async';
-
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:sensors_plus/sensors_plus.dart';
 
-class GyroscopeScreen extends StatefulWidget {
+import '../src/features/gyroscope/providers/gyroscope_provider.dart';
+
+class GyroscopeScreen extends ConsumerStatefulWidget {
   const GyroscopeScreen({super.key});
 
   @override
-  State<GyroscopeScreen> createState() => _GyroscopeScreenState();
+  ConsumerState<GyroscopeScreen> createState() => _GyroscopeScreenState();
 }
 
-class _GyroscopeScreenState extends State<GyroscopeScreen>
+class _GyroscopeScreenState extends ConsumerState<GyroscopeScreen>
     with SingleTickerProviderStateMixin {
-  double _x = 0;
-  double _y = 0;
-  double _z = 0;
-  double _intensity = 0;
-  bool _isActive = false;
-
   late AnimationController _controller;
-
-  List<FlSpot> _xSpots = [];
-  List<FlSpot> _ySpots = [];
-  List<FlSpot> _zSpots = [];
-  int _time = 0;
-  Timer? _timer;
 
   @override
   void initState() {
@@ -35,44 +23,19 @@ class _GyroscopeScreenState extends State<GyroscopeScreen>
       vsync: this,
       duration: const Duration(milliseconds: 300),
     );
-
-    gyroscopeEventStream().listen((GyroscopeEvent event) {
-      if (!_isActive) {
-        setState(() => _isActive = true);
-      }
-
-      setState(() {
-        _x = event.x;
-        _y = event.y;
-        _z = event.z;
-
-        _intensity = (_x.abs() + _y.abs() + _z.abs()) / 3;
-
-        _xSpots.add(FlSpot(_time.toDouble(), _x));
-        _ySpots.add(FlSpot(_time.toDouble(), _y));
-        _zSpots.add(FlSpot(_time.toDouble(), _z));
-
-        if (_xSpots.length > 50) {
-          _xSpots.removeAt(0);
-          _ySpots.removeAt(0);
-          _zSpots.removeAt(0);
-        }
-
-        _time++;
-      });
-
-      _controller.forward(from: 0);
-    });
   }
 
   @override
   void dispose() {
     _controller.dispose();
-    _timer?.cancel();
     super.dispose();
   }
 
-  LineChartData _buildLineChart() {
+  LineChartData _buildLineChart(
+    List<FlSpot> xSpots,
+    List<FlSpot> ySpots,
+    List<FlSpot> zSpots,
+  ) {
     return LineChartData(
       minY: -5,
       maxY: 5,
@@ -81,21 +44,21 @@ class _GyroscopeScreenState extends State<GyroscopeScreen>
       borderData: FlBorderData(show: false),
       lineBarsData: [
         LineChartBarData(
-          spots: _xSpots,
+          spots: xSpots,
           isCurved: true,
           color: Colors.red,
           dotData: FlDotData(show: false),
           barWidth: 2,
         ),
         LineChartBarData(
-          spots: _ySpots,
+          spots: ySpots,
           isCurved: true,
           color: Colors.green,
           dotData: FlDotData(show: false),
           barWidth: 2,
         ),
         LineChartBarData(
-          spots: _zSpots,
+          spots: zSpots,
           isCurved: true,
           color: Colors.blue,
           dotData: FlDotData(show: false),
@@ -107,7 +70,27 @@ class _GyroscopeScreenState extends State<GyroscopeScreen>
 
   @override
   Widget build(BuildContext context) {
+    final gyroscopeData = ref.watch(gyroscopeProvider);
     final colorScheme = Theme.of(context).colorScheme;
+
+    // Trigger animation when data changes
+    if (gyroscopeData.isActive) {
+      _controller.forward(from: 0);
+    }
+
+    // Convert GyroscopePoint to FlSpot for chart
+    final xSpots =
+        gyroscopeData.xPoints
+            .map((point) => FlSpot(point.time, point.value))
+            .toList();
+    final ySpots =
+        gyroscopeData.yPoints
+            .map((point) => FlSpot(point.time, point.value))
+            .toList();
+    final zSpots =
+        gyroscopeData.zPoints
+            .map((point) => FlSpot(point.time, point.value))
+            .toList();
 
     return Scaffold(
       appBar: AppBar(
@@ -132,8 +115,12 @@ class _GyroscopeScreenState extends State<GyroscopeScreen>
                       return Transform(
                         transform:
                             Matrix4.identity()
-                              ..rotateX(_x * 0.1 * _controller.value)
-                              ..rotateY(_y * 0.1 * _controller.value),
+                              ..rotateX(
+                                gyroscopeData.x * 0.1 * _controller.value,
+                              )
+                              ..rotateY(
+                                gyroscopeData.y * 0.1 * _controller.value,
+                              ),
                         alignment: Alignment.center,
                         child: Container(
                           width: 200,
@@ -169,7 +156,7 @@ class _GyroscopeScreenState extends State<GyroscopeScreen>
                               Positioned(
                                 top: 30,
                                 child: Text(
-                                  'X: ${_x.toStringAsFixed(2)}',
+                                  'X: ${gyroscopeData.x.toStringAsFixed(2)}',
                                   style: TextStyle(
                                     color: colorScheme.onPrimary,
                                     fontWeight: FontWeight.bold,
@@ -179,7 +166,7 @@ class _GyroscopeScreenState extends State<GyroscopeScreen>
                               Positioned(
                                 bottom: 30,
                                 child: Text(
-                                  'Y: ${_y.toStringAsFixed(2)}',
+                                  'Y: ${gyroscopeData.y.toStringAsFixed(2)}',
                                   style: TextStyle(
                                     color: colorScheme.onPrimary,
                                     fontWeight: FontWeight.bold,
@@ -189,7 +176,7 @@ class _GyroscopeScreenState extends State<GyroscopeScreen>
                               Positioned(
                                 left: 30,
                                 child: Text(
-                                  'Z: ${_z.toStringAsFixed(2)}',
+                                  'Z: ${gyroscopeData.z.toStringAsFixed(2)}',
                                   style: TextStyle(
                                     color: colorScheme.onPrimary,
                                     fontWeight: FontWeight.bold,
@@ -218,21 +205,21 @@ class _GyroscopeScreenState extends State<GyroscopeScreen>
                       ),
                       const SizedBox(height: 8),
                       LinearProgressIndicator(
-                        value: _intensity.clamp(0.0, 1.0),
+                        value: gyroscopeData.intensity.clamp(0.0, 1.0),
                         minHeight: 10,
                         backgroundColor: colorScheme.surfaceVariant.withOpacity(
                           0.4,
                         ),
                         color:
-                            _intensity > 0.5
+                            gyroscopeData.intensity > 0.5
                                 ? Colors.red
-                                : _intensity > 0.2
+                                : gyroscopeData.intensity > 0.2
                                 ? Colors.orange
                                 : Colors.green,
                       ),
                       const SizedBox(height: 10),
                       Text(
-                        '${(_intensity * 100).toStringAsFixed(0)}%',
+                        '${(gyroscopeData.intensity * 100).toStringAsFixed(0)}%',
                         style: TextStyle(
                           color: colorScheme.onSurface.withOpacity(0.7),
                         ),
@@ -256,7 +243,9 @@ class _GyroscopeScreenState extends State<GyroscopeScreen>
                       const SizedBox(height: 10),
                       SizedBox(
                         height: 200,
-                        child: LineChart(_buildLineChart()),
+                        child: LineChart(
+                          _buildLineChart(xSpots, ySpots, zSpots),
+                        ),
                       ),
                     ],
                   ),
@@ -271,24 +260,24 @@ class _GyroscopeScreenState extends State<GyroscopeScreen>
                     ),
                     decoration: BoxDecoration(
                       color:
-                          _isActive
+                          gyroscopeData.isActive
                               ? colorScheme.primary.withOpacity(0.1)
                               : colorScheme.surfaceVariant,
                       borderRadius: BorderRadius.circular(20),
                       border: Border.all(
                         color:
-                            _isActive
+                            gyroscopeData.isActive
                                 ? colorScheme.primary
                                 : colorScheme.outline.withOpacity(0.3),
                       ),
                     ),
                     child: Text(
-                      _isActive ? 'ACTIVE' : 'MOVE YOUR DEVICE',
+                      gyroscopeData.isActive ? 'ACTIVE' : 'MOVE YOUR DEVICE',
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
                         color:
-                            _isActive
+                            gyroscopeData.isActive
                                 ? colorScheme.primary
                                 : colorScheme.onSurfaceVariant,
                         letterSpacing: 1.1,

@@ -65,6 +65,8 @@ dependencies:
 
   pedometer: ^4.1.1
   flutter_dotenv: ^5.0.2
+  flutter_riverpod: ^2.3.6
+  noise_meter: ^5.0.1
   # google_mobile_ads: ^5.3.1
 
 dev_dependencies:

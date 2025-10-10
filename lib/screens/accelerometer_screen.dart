@@ -1,59 +1,16 @@
-import 'dart:async'; // Import this for StreamSubscription
-
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:sensors_plus/sensors_plus.dart';
 
-class AccelerometerScreen extends StatefulWidget {
+import '../src/features/accelerometer/models/accelerometer_data.dart';
+import '../src/features/accelerometer/providers/accelerometer_provider.dart';
+
+class AccelerometerScreen extends ConsumerWidget {
   const AccelerometerScreen({super.key});
 
   @override
-  State<AccelerometerScreen> createState() => _AccelerometerScreenState();
-}
-
-class _AccelerometerScreenState extends State<AccelerometerScreen> {
-  double _x = 0;
-  double _y = 0;
-  double _z = 0;
-  double _maxX = 0;
-  double _maxY = 0;
-  double _maxZ = 0;
-  bool _isActive = false;
-  StreamSubscription<AccelerometerEvent>?
-  _accelerometerSubscription; // Add this line
-
-  @override
-  void initState() {
-    super.initState();
-    _accelerometerSubscription = accelerometerEventStream().listen((
-      AccelerometerEvent event,
-    ) {
-      // Assign to the new variable
-      if (!_isActive) {
-        setState(() => _isActive = true);
-      }
-      setState(() {
-        _x = event.x;
-        _y = event.y;
-        _z = event.z;
-
-        // Update max values
-        _maxX = _x.abs() > _maxX ? _x.abs() : _maxX;
-        _maxY = _y.abs() > _maxY ? _y.abs() : _maxY;
-        _maxZ = _z.abs() > _maxZ ? _z.abs() : _maxZ;
-      });
-    });
-  }
-
-  @override
-  void dispose() {
-    // Add this method
-    _accelerometerSubscription?.cancel(); // Cancel the subscription
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final accelerometerData = ref.watch(accelerometerProvider);
     final colorScheme = Theme.of(context).colorScheme;
     final isDarkMode = colorScheme.brightness == Brightness.dark;
 
@@ -68,11 +25,7 @@ class _AccelerometerScreenState extends State<AccelerometerScreen> {
           IconButton(
             icon: Icon(Iconsax.refresh, color: colorScheme.primary),
             onPressed:
-                () => setState(() {
-                  _maxX = 0;
-                  _maxY = 0;
-                  _maxZ = 0;
-                }),
+                () => ref.read(accelerometerProvider.notifier).resetMaxValues(),
           ),
         ],
       ),
@@ -85,7 +38,7 @@ class _AccelerometerScreenState extends State<AccelerometerScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 // 3D Visualization
-                _build3DIndicator(colorScheme),
+                _build3DIndicator(colorScheme, accelerometerData),
                 const SizedBox(height: 40),
 
                 // Status Indicator
@@ -96,25 +49,25 @@ class _AccelerometerScreenState extends State<AccelerometerScreen> {
                   ),
                   decoration: BoxDecoration(
                     color:
-                        _isActive
+                        accelerometerData.isActive
                             ? colorScheme.primary.withOpacity(0.1)
                             : colorScheme.surfaceVariant,
                     borderRadius: BorderRadius.circular(20),
                     border: Border.all(
                       color:
-                          _isActive
+                          accelerometerData.isActive
                               ? colorScheme.primary
                               : colorScheme.outline.withOpacity(0.3),
                       width: 1,
                     ),
                   ),
                   child: Text(
-                    _isActive ? 'ACTIVE' : 'MOVE YOUR DEVICE',
+                    accelerometerData.isActive ? 'ACTIVE' : 'MOVE YOUR DEVICE',
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
                       color:
-                          _isActive
+                          accelerometerData.isActive
                               ? colorScheme.primary
                               : colorScheme.onSurfaceVariant,
                       letterSpacing: 1.1,
@@ -124,7 +77,7 @@ class _AccelerometerScreenState extends State<AccelerometerScreen> {
                 const SizedBox(height: 40),
 
                 // Data Table
-                _buildDataTable(colorScheme),
+                _buildDataTable(colorScheme, accelerometerData),
                 const SizedBox(height: 30),
 
                 // Measurement Unit
@@ -142,7 +95,7 @@ class _AccelerometerScreenState extends State<AccelerometerScreen> {
     );
   }
 
-  Widget _build3DIndicator(ColorScheme colorScheme) {
+  Widget _build3DIndicator(ColorScheme colorScheme, AccelerometerData data) {
     return SizedBox(
       height: 150,
       child: Stack(
@@ -161,7 +114,7 @@ class _AccelerometerScreenState extends State<AccelerometerScreen> {
             ),
           ),
           Transform.translate(
-            offset: Offset(_x * 5, -_y * 5),
+            offset: Offset(data.x * 5, -data.y * 5),
             child: Container(
               width: 60,
               height: 60,
@@ -186,7 +139,7 @@ class _AccelerometerScreenState extends State<AccelerometerScreen> {
     );
   }
 
-  Widget _buildDataTable(ColorScheme colorScheme) {
+  Widget _buildDataTable(ColorScheme colorScheme, AccelerometerData data) {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12),
@@ -213,9 +166,9 @@ class _AccelerometerScreenState extends State<AccelerometerScreen> {
               _buildTableHeader('Max', colorScheme),
             ],
           ),
-          _buildTableRow('X', _x, _maxX, colorScheme),
-          _buildTableRow('Y', _y, _maxY, colorScheme),
-          _buildTableRow('Z', _z, _maxZ, colorScheme),
+          _buildTableRow('X', data.x, data.maxX, colorScheme),
+          _buildTableRow('Y', data.y, data.maxY, colorScheme),
+          _buildTableRow('Z', data.z, data.maxZ, colorScheme),
         ],
       ),
     );
