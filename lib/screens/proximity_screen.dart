@@ -1,216 +1,550 @@
 import 'package:flutter/material.dart';
-import 'package:proximity_sensor/proximity_sensor.dart';
-import 'package:iconsax/iconsax.dart';
-import 'dart:async';
-import 'package:permission_handler/permission_handler.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class ProximityScreen extends StatefulWidget {
+import '../src/core/providers.dart';
+
+class ProximityScreen extends ConsumerStatefulWidget {
   const ProximityScreen({super.key});
 
   @override
-  State<ProximityScreen> createState() => _ProximityScreenState();
+  ConsumerState<ProximityScreen> createState() => _ProximityScreenState();
 }
 
-class _ProximityScreenState extends State<ProximityScreen> {
-  bool _isNear = false;
-  bool _hasSensor = true;
-  bool _permissionGranted = false;
-  late StreamSubscription<dynamic> _proximitySubscription;
-
+class _ProximityScreenState extends ConsumerState<ProximityScreen> {
   @override
   void initState() {
     super.initState();
-    _checkPermissions();
-  }
-
-  Future<void> _checkPermissions() async {
-    // Check if we have permission
-    var status = await Permission.sensors.status;
-
-    if (!status.isGranted) {
-      // Request permission if not granted
-      status = await Permission.sensors.request();
-    }
-
-    if (status.isGranted) {
-      setState(() => _permissionGranted = true);
-      _initProximitySensor();
-    } else {
-      setState(() => _permissionGranted = false);
-    }
-  }
-
-  Future<void> _initProximitySensor() async {
-    try {
-      _proximitySubscription = ProximitySensor.events.listen((int event) {
-        if (mounted) {
-          setState(() {
-            _isNear = event > 0; // 1 or higher indicates near
-          });
-        }
-      });
-    } catch (e) {
-      if (mounted) {
-        setState(() => _hasSensor = false);
-      }
-    }
-  }
-
-  @override
-  void dispose() {
-    _proximitySubscription.cancel();
-    super.dispose();
+    // Check permissions when screen loads
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref.read(proximityProvider.notifier).checkPermissions();
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
+    final proximityData = ref.watch(proximityProvider);
+    final proximityNotifier = ref.read(proximityProvider.notifier);
 
     return Scaffold(
       appBar: AppBar(
         title: const Text('Proximity Sensor'),
-        centerTitle: true,
-        elevation: 0,
-        backgroundColor: colorScheme.surface,
-        foregroundColor: colorScheme.onSurface,
-      ),
-      body: Center(
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: 500),
-          child: Padding(
-            padding: const EdgeInsets.all(24),
-            child: _buildContent(colorScheme),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.refresh),
+            onPressed: () => proximityNotifier.resetData(),
+            tooltip: 'Reset Data',
           ),
+        ],
+      ),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            // Permission/Sensor Status
+            if (!proximityData.hasPermission || !proximityData.hasSensor) ...[
+              Card(
+                color:
+                    (!proximityData.hasPermission ? Colors.red : Colors.orange)
+                        .shade100,
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    children: [
+                      Icon(
+                        !proximityData.hasPermission
+                            ? Icons.security
+                            : Icons.sensors_off,
+                        size: 48,
+                        color:
+                            !proximityData.hasPermission
+                                ? Colors.red
+                                : Colors.orange,
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                        !proximityData.hasPermission
+                            ? 'Permission Required'
+                            : 'Sensor Not Available',
+                        style: const TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                        !proximityData.hasPermission
+                            ? 'Grant sensor permission to access proximity sensor'
+                            : 'Device does not have a proximity sensor',
+                        textAlign: TextAlign.center,
+                      ),
+                      if (!proximityData.hasPermission) ...[
+                        const SizedBox(height: 16),
+                        ElevatedButton(
+                          onPressed: () => proximityNotifier.checkPermissions(),
+                          child: const Text('Grant Permission'),
+                        ),
+                      ],
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(height: 16),
+            ],
+
+            // Current Reading Card
+            if (proximityData.hasPermission && proximityData.hasSensor) ...[
+              Card(
+                child: Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            proximityData.isReading
+                                ? Icons.sensors
+                                : Icons.sensors_off,
+                            size: 32,
+                            color:
+                                proximityData.isReading
+                                    ? Colors.green
+                                    : Colors.grey,
+                          ),
+                          const SizedBox(width: 12),
+                          Text(
+                            proximityData.isReading ? 'Active' : 'Inactive',
+                            style: const TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 20),
+
+                      // Current Proximity State Display
+                      Container(
+                        width: 200,
+                        height: 200,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Color(
+                            proximityData.proximityStateColor,
+                          ).withOpacity(0.2),
+                          border: Border.all(
+                            color: Color(proximityData.proximityStateColor),
+                            width: 4,
+                          ),
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              proximityData.proximityStateIcon,
+                              style: const TextStyle(fontSize: 48),
+                            ),
+                            const SizedBox(height: 12),
+                            Text(
+                              proximityData.formattedDistance,
+                              style: TextStyle(
+                                fontSize: 24,
+                                fontWeight: FontWeight.bold,
+                                color: Color(proximityData.proximityStateColor),
+                              ),
+                            ),
+                            const SizedBox(height: 8),
+                            Text(
+                              proximityData.proximityStateDescription,
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: Color(proximityData.proximityStateColor),
+                                fontWeight: FontWeight.w500,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                          ],
+                        ),
+                      ),
+
+                      const SizedBox(height: 20),
+
+                      // Control Buttons
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          ElevatedButton.icon(
+                            onPressed:
+                                () => proximityNotifier.getSingleReading(),
+                            icon: const Icon(Icons.camera_alt),
+                            label: const Text('Single Reading'),
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.blue,
+                              foregroundColor: Colors.white,
+                            ),
+                          ),
+                          ElevatedButton.icon(
+                            onPressed:
+                                () => proximityNotifier.toggleMeasurement(),
+                            icon: Icon(
+                              proximityData.isReading
+                                  ? Icons.stop
+                                  : Icons.play_arrow,
+                            ),
+                            label: Text(
+                              proximityData.isReading ? 'Stop' : 'Monitor',
+                            ),
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor:
+                                  proximityData.isReading
+                                      ? Colors.red
+                                      : Colors.green,
+                              foregroundColor: Colors.white,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+
+              const SizedBox(height: 16),
+
+              // Statistics Card (only show if we have session data)
+              if (proximityData.totalReadings > 0) ...[
+                Card(
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          'Session Statistics',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const SizedBox(height: 16),
+
+                        Row(
+                          children: [
+                            Expanded(
+                              child: _buildStatCard(
+                                'Duration',
+                                proximityData.formattedSessionDuration,
+                                Icons.timer,
+                                Colors.blue,
+                              ),
+                            ),
+                            const SizedBox(width: 8),
+                            Expanded(
+                              child: _buildStatCard(
+                                'Total Readings',
+                                '${proximityData.totalReadings}',
+                                Icons.analytics,
+                                Colors.purple,
+                              ),
+                            ),
+                          ],
+                        ),
+
+                        const SizedBox(height: 12),
+
+                        Row(
+                          children: [
+                            Expanded(
+                              child: _buildStatCard(
+                                'Near',
+                                '${proximityData.nearDetections}',
+                                Icons.warning,
+                                Colors.orange,
+                              ),
+                            ),
+                            const SizedBox(width: 8),
+                            Expanded(
+                              child: _buildStatCard(
+                                'Near %',
+                                proximityData.nearDetectionPercentage,
+                                Icons.pie_chart,
+                                Colors.orange,
+                              ),
+                            ),
+                            const SizedBox(width: 8),
+                            Expanded(
+                              child: _buildStatCard(
+                                'Far',
+                                '${proximityData.farDetections}',
+                                Icons.check_circle,
+                                Colors.green,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+
+                const SizedBox(height: 16),
+              ],
+
+              // Real-time Activity Chart (only show if we have data)
+              if (proximityData.recentReadings.isNotEmpty)
+                Card(
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          'Proximity Activity Timeline',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const SizedBox(height: 16),
+                        SizedBox(
+                          height: 100,
+                          child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            reverse: true,
+                            itemCount: proximityData.recentReadings.length,
+                            itemBuilder: (context, index) {
+                              final reading =
+                                  proximityData.recentReadings[proximityData
+                                          .recentReadings
+                                          .length -
+                                      1 -
+                                      index];
+                              return Container(
+                                width: 4,
+                                margin: const EdgeInsets.symmetric(
+                                  horizontal: 1,
+                                ),
+                                decoration: BoxDecoration(
+                                  color:
+                                      reading.isNear
+                                          ? Colors.orange
+                                          : Colors.green,
+                                  borderRadius: BorderRadius.circular(2),
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
+                              children: [
+                                Container(
+                                  width: 12,
+                                  height: 12,
+                                  decoration: const BoxDecoration(
+                                    color: Colors.orange,
+                                    shape: BoxShape.circle,
+                                  ),
+                                ),
+                                const SizedBox(width: 4),
+                                const Text(
+                                  'Near',
+                                  style: TextStyle(fontSize: 12),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                Container(
+                                  width: 12,
+                                  height: 12,
+                                  decoration: const BoxDecoration(
+                                    color: Colors.green,
+                                    shape: BoxShape.circle,
+                                  ),
+                                ),
+                                const SizedBox(width: 4),
+                                const Text(
+                                  'Far',
+                                  style: TextStyle(fontSize: 12),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+
+              const SizedBox(height: 16),
+
+              // Proximity Guide
+              Card(
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        'How Proximity Sensor Works',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(height: 12),
+                      _buildProximityGuideItem(
+                        '🔴',
+                        'Near Detection',
+                        'Object detected close to sensor',
+                        'Usually when something is within 5cm of the sensor',
+                        Colors.orange,
+                      ),
+                      _buildProximityGuideItem(
+                        '🟢',
+                        'Far Detection',
+                        'No object detected nearby',
+                        'Clear area around the proximity sensor',
+                        Colors.green,
+                      ),
+                      const SizedBox(height: 12),
+                      Container(
+                        padding: const EdgeInsets.all(12),
+                        decoration: BoxDecoration(
+                          color: Colors.blue.shade50,
+                          borderRadius: BorderRadius.circular(8),
+                          border: Border.all(color: Colors.blue.shade200),
+                        ),
+                        child: Row(
+                          children: [
+                            const Icon(Icons.info, color: Colors.blue),
+                            const SizedBox(width: 12),
+                            const Expanded(
+                              child: Text(
+                                'The proximity sensor is typically located near the earpiece and is used to turn off the screen during phone calls.',
+                                style: TextStyle(fontSize: 13),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+
+            // Error Message
+            if (proximityData.errorMessage != null)
+              Card(
+                color: Colors.red.shade100,
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Row(
+                    children: [
+                      const Icon(Icons.error, color: Colors.red),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: Text(
+                          proximityData.errorMessage!,
+                          style: const TextStyle(color: Colors.red),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+          ],
         ),
       ),
     );
   }
 
-  Widget _buildContent(ColorScheme colorScheme) {
-    if (!_permissionGranted) {
-      return Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+  Widget _buildStatCard(
+    String label,
+    String value,
+    IconData icon,
+    Color color,
+  ) {
+    return Container(
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: color.withOpacity(0.1),
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: color.withOpacity(0.3)),
+      ),
+      child: Column(
         children: [
-          Icon(Iconsax.warning_2, size: 60, color: colorScheme.error),
-          const SizedBox(height: 20),
+          Icon(icon, color: color, size: 20),
+          const SizedBox(height: 4),
           Text(
-            'Permission Required',
+            label,
             style: TextStyle(
-              fontSize: 18,
-              color: colorScheme.onSurface,
-              fontWeight: FontWeight.bold,
+              fontSize: 12,
+              color: color,
+              fontWeight: FontWeight.w500,
             ),
           ),
-          const SizedBox(height: 10),
+          const SizedBox(height: 2),
           Text(
-            'Please grant sensor permission to use this feature',
-            style: TextStyle(color: colorScheme.onSurface.withOpacity(0.6)),
-            textAlign: TextAlign.center,
-          ),
-          const SizedBox(height: 20),
-          ElevatedButton(
-            onPressed: () => openAppSettings(),
-            child: const Text('Open Settings'),
+            value,
+            style: TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.bold,
+              color: color,
+            ),
           ),
         ],
-      );
-    }
+      ),
+    );
+  }
 
-    if (!_hasSensor) {
-      return Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+  Widget _buildProximityGuideItem(
+    String emoji,
+    String title,
+    String description,
+    String details,
+    Color color,
+  ) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 6),
+      child: Row(
         children: [
-          Icon(Iconsax.warning_2, size: 60, color: colorScheme.error),
-          const SizedBox(height: 20),
-          Text(
-            'Proximity Sensor Not Available',
-            style: TextStyle(
-              fontSize: 18,
-              color: colorScheme.onSurface,
-              fontWeight: FontWeight.bold,
+          Text(emoji, style: const TextStyle(fontSize: 20)),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: TextStyle(
+                    fontWeight: FontWeight.w500,
+                    color: color,
+                    fontSize: 14,
+                  ),
+                ),
+                Text(
+                  description,
+                  style: const TextStyle(
+                    fontSize: 13,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+                Text(
+                  details,
+                  style: TextStyle(fontSize: 11, color: Colors.grey[600]),
+                ),
+              ],
             ),
-          ),
-          const SizedBox(height: 10),
-          Text(
-            'This device doesn\'t have a proximity sensor',
-            style: TextStyle(color: colorScheme.onSurface.withOpacity(0.6)),
           ),
         ],
-      );
-    }
-
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        // Proximity Indicator
-        AnimatedContainer(
-          duration: const Duration(milliseconds: 300),
-          width: 200,
-          height: 200,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color:
-                _isNear
-                    ? colorScheme.errorContainer
-                    : colorScheme.primaryContainer,
-            boxShadow: [
-              BoxShadow(
-                color:
-                    _isNear
-                        ? colorScheme.error.withOpacity(0.3)
-                        : colorScheme.primary.withOpacity(0.3),
-                blurRadius: 20,
-                spreadRadius: 5,
-              ),
-            ],
-            border: Border.all(
-              color: _isNear ? colorScheme.error : colorScheme.primary,
-              width: 2,
-            ),
-          ),
-          child: Icon(
-            _isNear ? Iconsax.close_circle : Iconsax.tick_circle,
-            size: 60,
-            color:
-                _isNear
-                    ? colorScheme.onErrorContainer
-                    : colorScheme.onPrimaryContainer,
-          ),
-        ),
-        const SizedBox(height: 40),
-        // Status Indicator
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
-          decoration: BoxDecoration(
-            color:
-                _isNear
-                    ? colorScheme.error.withOpacity(0.1)
-                    : colorScheme.primary.withOpacity(0.1),
-            borderRadius: BorderRadius.circular(20),
-            border: Border.all(
-              color: _isNear ? colorScheme.error : colorScheme.primary,
-              width: 1,
-            ),
-          ),
-          child: Text(
-            _isNear ? 'OBJECT NEAR' : 'NO OBJECT DETECTED',
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-              color: _isNear ? colorScheme.error : colorScheme.primary,
-              letterSpacing: 1.1,
-            ),
-          ),
-        ),
-        const SizedBox(height: 20),
-        Text(
-          _isNear
-              ? 'Move your hand away from the sensor'
-              : 'Bring your hand near the top of the device',
-          style: TextStyle(color: colorScheme.onSurface.withOpacity(0.6)),
-          textAlign: TextAlign.center,
-        ),
-      ],
+      ),
     );
   }
 }

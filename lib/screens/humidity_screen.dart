@@ -1,360 +1,563 @@
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:permission_handler/permission_handler.dart';
-import 'package:iconsax/iconsax.dart';
-import 'dart:math';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class HumidityScreen extends StatefulWidget {
+import '../src/core/providers.dart';
+
+class HumidityScreen extends ConsumerStatefulWidget {
   const HumidityScreen({super.key});
 
   @override
-  State<HumidityScreen> createState() => _HumidityScreenState();
+  ConsumerState<HumidityScreen> createState() => _HumidityScreenState();
 }
 
-class _HumidityScreenState extends State<HumidityScreen> {
-  double _humidity = 0;
-  bool _isLoading = true;
-  bool _hasSensor = true;
-  bool _permissionGranted = true;
-
+class _HumidityScreenState extends ConsumerState<HumidityScreen> {
   @override
   void initState() {
     super.initState();
-    _checkPermissionsAndSensor();
-  }
-
-  Future<void> _checkPermissionsAndSensor() async {
-    // Check if we need environmental sensors permission
-    // Note: Most Android devices don't require special permissions for humidity
-    // This is a placeholder for actual permission checks if needed
-
-    // Check if device has humidity sensor (simulated check)
-    final hasHumiditySensor = await _checkHumidityAvailability();
-
-    if (!hasHumiditySensor) {
-      setState(() {
-        _hasSensor = false;
-        _isLoading = false;
-      });
-      return;
-    }
-
-    // Get data if we have permission and sensor
-    _simulateHumidity();
-  }
-
-  Future<bool> _checkHumidityAvailability() async {
-    // This is a simulation - in a real app you'd use:
-    // await SensorManager().isSensorAvailable(Sensors.RELATIVE_HUMIDITY);
-    // Using sensor_plus package or similar
-    return false; // Most phones don't have humidity sensors
-  }
-
-  Future<void> _simulateHumidity() async {
-    // Note: Most phones don't have humidity sensors
-    // This is a simulation for demo purposes
-    await Future.delayed(const Duration(seconds: 1));
-
-    setState(() {
-      _humidity = 45 + Random().nextDouble() * 30; // Random between 45-75%
-      _isLoading = false;
+    // Check sensor availability when screen loads
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref.read(humidityProvider.notifier).checkSensorAvailability();
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
+    final humidityData = ref.watch(humidityProvider);
+    final humidityNotifier = ref.read(humidityProvider.notifier);
 
     return Scaffold(
       appBar: AppBar(
         title: const Text('Humidity'),
-        centerTitle: true,
-        elevation: 0,
-        backgroundColor: colorScheme.surface,
-        foregroundColor: colorScheme.onSurface,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.refresh),
+            onPressed: () => humidityNotifier.resetData(),
+            tooltip: 'Reset Data',
+          ),
+        ],
       ),
-      body: Center(
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: 500),
-          child: Padding(
-            padding: const EdgeInsets.all(24),
-            child: _buildContent(colorScheme),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildContent(ColorScheme colorScheme) {
-    if (!_permissionGranted) {
-      return _buildPermissionDeniedView(colorScheme);
-    }
-
-    if (!_hasSensor) {
-      return _buildNoSensorView(colorScheme);
-    }
-
-    if (_isLoading) {
-      return const Center(child: CircularProgressIndicator());
-    }
-
-    final humidityColor = _getHumidityColor(_humidity, colorScheme);
-
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        // Humidity Visualization
-        SizedBox(
-          width: 200,
-          height: 200,
-          child: CustomPaint(
-            painter: _HumidityPainter(
-              humidity: _humidity,
-              colorScheme: colorScheme,
-            ),
-          ),
-        ),
-        const SizedBox(height: 40),
-
-        // Humidity Value
-        Text(
-          '${_humidity.toStringAsFixed(1)}%',
-          style: TextStyle(
-            fontSize: 48,
-            fontWeight: FontWeight.bold,
-            color: humidityColor,
-          ),
-        ),
-        const SizedBox(height: 8),
-
-        // Humidity Description
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-          decoration: BoxDecoration(
-            color: colorScheme.surfaceVariant,
-            borderRadius: BorderRadius.circular(20),
-            border: Border.all(color: colorScheme.outline.withOpacity(0.2)),
-          ),
-          child: Text(
-            _getHumidityDescription(_humidity),
-            style: TextStyle(color: humidityColor, fontWeight: FontWeight.bold),
-          ),
-        ),
-
-        const SizedBox(height: 40),
-
-        // Comfort Level Indicator
-        _buildComfortIndicator(colorScheme),
-      ],
-    );
-  }
-
-  Widget _buildComfortIndicator(ColorScheme colorScheme) {
-    final comfortLevel = _calculateComfortLevel(_humidity);
-    final comfortColor = _getComfortColor(comfortLevel, colorScheme);
-
-    return Column(
-      children: [
-        Text(
-          'Comfort Level',
-          style: TextStyle(color: colorScheme.onSurface.withOpacity(0.6)),
-        ),
-        const SizedBox(height: 12),
-        SizedBox(
-          width: 250,
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(8),
-            child: LinearProgressIndicator(
-              value: comfortLevel,
-              backgroundColor: colorScheme.surfaceVariant,
-              color: comfortColor,
-              minHeight: 12,
-            ),
-          ),
-        ),
-        const SizedBox(height: 8),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Text(
-              'Dry',
-              style: TextStyle(color: colorScheme.onSurface.withOpacity(0.6)),
+            // Sensor Status Card
+            if (!humidityData.hasSensor)
+              Card(
+                color: Colors.orange.shade100,
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    children: [
+                      const Icon(Icons.info, size: 48, color: Colors.orange),
+                      const SizedBox(height: 8),
+                      const Text(
+                        'No Humidity Sensor Detected',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      const Text(
+                        'Most smartphones don\'t have humidity sensors. Showing simulated data for demonstration.',
+                        textAlign: TextAlign.center,
+                      ),
+                      const SizedBox(height: 16),
+                      ElevatedButton(
+                        onPressed:
+                            () => humidityNotifier.checkSensorAvailability(),
+                        child: const Text('Check Again'),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+
+            // Current Reading Card
+            Card(
+              child: Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          humidityData.isReading
+                              ? Icons.water_drop
+                              : Icons.water_drop_outlined,
+                          size: 32,
+                          color:
+                              humidityData.isReading
+                                  ? Colors.blue
+                                  : Colors.grey,
+                        ),
+                        const SizedBox(width: 12),
+                        Text(
+                          humidityData.isReading ? 'Measuring' : 'Stopped',
+                          style: const TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 20),
+
+                    // Current Humidity Display
+                    Container(
+                      width: 200,
+                      height: 200,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Color(
+                          humidityData.humidityLevelColor,
+                        ).withOpacity(0.2),
+                        border: Border.all(
+                          color: Color(humidityData.humidityLevelColor),
+                          width: 4,
+                        ),
+                      ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            humidityData.humidityLevelIcon,
+                            style: const TextStyle(fontSize: 32),
+                          ),
+                          const SizedBox(height: 8),
+                          Text(
+                            humidityData.formattedCurrentHumidity,
+                            style: TextStyle(
+                              fontSize: 28,
+                              fontWeight: FontWeight.bold,
+                              color: Color(humidityData.humidityLevelColor),
+                            ),
+                          ),
+                          const SizedBox(height: 4),
+                          Text(
+                            humidityData.humidityLevelDescription,
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: Color(humidityData.humidityLevelColor),
+                              fontWeight: FontWeight.w500,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                        ],
+                      ),
+                    ),
+
+                    const SizedBox(height: 20),
+
+                    // Control Buttons
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        ElevatedButton.icon(
+                          onPressed: () => humidityNotifier.getSingleReading(),
+                          icon: const Icon(Icons.camera_alt),
+                          label: const Text('Single Reading'),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.blue,
+                            foregroundColor: Colors.white,
+                          ),
+                        ),
+                        ElevatedButton.icon(
+                          onPressed: () => humidityNotifier.toggleMeasurement(),
+                          icon: Icon(
+                            humidityData.isReading
+                                ? Icons.stop
+                                : Icons.play_arrow,
+                          ),
+                          label: Text(
+                            humidityData.isReading ? 'Stop' : 'Continuous',
+                          ),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor:
+                                humidityData.isReading
+                                    ? Colors.red
+                                    : Colors.green,
+                            foregroundColor: Colors.white,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
             ),
-            Text(
-              'Ideal',
-              style: TextStyle(color: colorScheme.onSurface.withOpacity(0.6)),
+
+            const SizedBox(height: 16),
+
+            // Comfort Assessment Card
+            Card(
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      'Comfort Assessment',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 12),
+                    Container(
+                      padding: const EdgeInsets.all(12),
+                      decoration: BoxDecoration(
+                        color: Color(
+                          humidityData.humidityLevelColor,
+                        ).withOpacity(0.1),
+                        borderRadius: BorderRadius.circular(8),
+                        border: Border.all(
+                          color: Color(
+                            humidityData.humidityLevelColor,
+                          ).withOpacity(0.3),
+                        ),
+                      ),
+                      child: Row(
+                        children: [
+                          Text(
+                            humidityData.humidityLevelIcon,
+                            style: const TextStyle(fontSize: 24),
+                          ),
+                          const SizedBox(width: 12),
+                          Expanded(
+                            child: Text(
+                              humidityData.comfortAssessment,
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: Color(humidityData.humidityLevelColor),
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ),
-            Text(
-              'Humid',
-              style: TextStyle(color: colorScheme.onSurface.withOpacity(0.6)),
+
+            const SizedBox(height: 16),
+
+            // Statistics Card (only show if we have session data)
+            if (humidityData.totalReadings > 0) ...[
+              Card(
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        'Session Statistics',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(height: 16),
+
+                      Row(
+                        children: [
+                          Expanded(
+                            child: _buildStatCard(
+                              'Duration',
+                              humidityData.formattedSessionDuration,
+                              Icons.timer,
+                              Colors.blue,
+                            ),
+                          ),
+                          const SizedBox(width: 8),
+                          Expanded(
+                            child: _buildStatCard(
+                              'Readings',
+                              '${humidityData.totalReadings}',
+                              Icons.analytics,
+                              Colors.purple,
+                            ),
+                          ),
+                        ],
+                      ),
+
+                      const SizedBox(height: 12),
+
+                      Row(
+                        children: [
+                          Expanded(
+                            child: _buildStatCard(
+                              'Min',
+                              humidityData.formattedMinHumidity,
+                              Icons.keyboard_arrow_down,
+                              Colors.green,
+                            ),
+                          ),
+                          const SizedBox(width: 8),
+                          Expanded(
+                            child: _buildStatCard(
+                              'Average',
+                              humidityData.formattedAverageHumidity,
+                              Icons.remove,
+                              Colors.orange,
+                            ),
+                          ),
+                          const SizedBox(width: 8),
+                          Expanded(
+                            child: _buildStatCard(
+                              'Max',
+                              humidityData.formattedMaxHumidity,
+                              Icons.keyboard_arrow_up,
+                              Colors.red,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+
+              const SizedBox(height: 16),
+            ],
+
+            // Real-time Chart (only show if we have data)
+            if (humidityData.recentReadings.isNotEmpty)
+              Card(
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        'Real-time Humidity Levels',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(height: 16),
+                      SizedBox(
+                        height: 200,
+                        child: LineChart(
+                          LineChartData(
+                            gridData: const FlGridData(show: true),
+                            titlesData: FlTitlesData(
+                              leftTitles: AxisTitles(
+                                sideTitles: SideTitles(
+                                  showTitles: true,
+                                  reservedSize: 40,
+                                  getTitlesWidget: (value, meta) {
+                                    return Text(
+                                      '${value.toInt()}%',
+                                      style: const TextStyle(fontSize: 10),
+                                    );
+                                  },
+                                ),
+                              ),
+                              bottomTitles: const AxisTitles(
+                                sideTitles: SideTitles(showTitles: false),
+                              ),
+                              topTitles: const AxisTitles(
+                                sideTitles: SideTitles(showTitles: false),
+                              ),
+                              rightTitles: const AxisTitles(
+                                sideTitles: SideTitles(showTitles: false),
+                              ),
+                            ),
+                            borderData: FlBorderData(show: true),
+                            lineBarsData: [
+                              LineChartBarData(
+                                spots:
+                                    humidityData.recentReadings
+                                        .asMap()
+                                        .entries
+                                        .map((entry) {
+                                          return FlSpot(
+                                            entry.key.toDouble(),
+                                            entry.value,
+                                          );
+                                        })
+                                        .toList(),
+                                isCurved: true,
+                                color: Color(humidityData.humidityLevelColor),
+                                barWidth: 2,
+                                dotData: const FlDotData(show: false),
+                                belowBarData: BarAreaData(
+                                  show: true,
+                                  color: Color(
+                                    humidityData.humidityLevelColor,
+                                  ).withOpacity(0.1),
+                                ),
+                              ),
+                            ],
+                            minY: 0,
+                            maxY: 100,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+
+            const SizedBox(height: 16),
+
+            // Humidity Level Guide
+            Card(
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      'Humidity Level Guide',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 12),
+                    _buildHumidityGuideItem(
+                      '🏜️',
+                      'Very Dry',
+                      '0-30%',
+                      'May cause skin/respiratory irritation',
+                      Colors.red,
+                    ),
+                    _buildHumidityGuideItem(
+                      '🌵',
+                      'Dry',
+                      '30-40%',
+                      'Somewhat dry, consider humidifier',
+                      Colors.orange,
+                    ),
+                    _buildHumidityGuideItem(
+                      '🌿',
+                      'Comfortable',
+                      '40-60%',
+                      'Ideal humidity level',
+                      Colors.green,
+                    ),
+                    _buildHumidityGuideItem(
+                      '💧',
+                      'Humid',
+                      '60-70%',
+                      'Somewhat humid, may feel sticky',
+                      Colors.blue,
+                    ),
+                    _buildHumidityGuideItem(
+                      '🌊',
+                      'Very Humid',
+                      '70%+',
+                      'Too humid, may promote mold',
+                      Colors.indigo,
+                    ),
+                  ],
+                ),
+              ),
             ),
+
+            // Error Message
+            if (humidityData.errorMessage != null)
+              Card(
+                color: Colors.orange.shade100,
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Row(
+                    children: [
+                      const Icon(Icons.info, color: Colors.orange),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: Text(
+                          humidityData.errorMessage!,
+                          style: const TextStyle(color: Colors.orange),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
           ],
         ),
-      ],
+      ),
     );
   }
 
-  Widget _buildPermissionDeniedView(ColorScheme colorScheme) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Icon(Iconsax.warning_2, size: 60, color: colorScheme.error),
-        const SizedBox(height: 20),
-        Text(
-          'Permission Required',
-          style: TextStyle(
-            fontSize: 18,
-            color: colorScheme.onSurface,
-            fontWeight: FontWeight.bold,
+  Widget _buildStatCard(
+    String label,
+    String value,
+    IconData icon,
+    Color color,
+  ) {
+    return Container(
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: color.withOpacity(0.1),
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: color.withOpacity(0.3)),
+      ),
+      child: Column(
+        children: [
+          Icon(icon, color: color, size: 20),
+          const SizedBox(height: 4),
+          Text(
+            label,
+            style: TextStyle(
+              fontSize: 12,
+              color: color,
+              fontWeight: FontWeight.w500,
+            ),
           ),
-        ),
-        const SizedBox(height: 10),
-        Text(
-          'Sensor permission is needed to measure humidity',
-          style: TextStyle(color: colorScheme.onSurface.withOpacity(0.6)),
-          textAlign: TextAlign.center,
-        ),
-        const SizedBox(height: 20),
-        ElevatedButton(
-          onPressed: () => openAppSettings(),
-          child: const Text('Open Settings'),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildNoSensorView(ColorScheme colorScheme) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Icon(Iconsax.warning_2, size: 60, color: colorScheme.error),
-        const SizedBox(height: 20),
-        Text(
-          'Humidity Sensor Not Available',
-          style: TextStyle(
-            fontSize: 18,
-            color: colorScheme.onSurface,
-            fontWeight: FontWeight.bold,
+          const SizedBox(height: 2),
+          Text(
+            value,
+            style: TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.bold,
+              color: color,
+            ),
           ),
-        ),
-        const SizedBox(height: 10),
-        Text(
-          'This device doesn\'t have a humidity sensor',
-          style: TextStyle(color: colorScheme.onSurface.withOpacity(0.6)),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
-  double _calculateComfortLevel(double humidity) {
-    // Returns 0-1 where 0.3-0.7 is ideal
-    if (humidity < 30) return humidity / 30 * 0.3;
-    if (humidity < 70) return 0.3 + (humidity - 30) / 40 * 0.4;
-    return 0.7 + (humidity - 70) / 30 * 0.3;
-  }
-
-  Color _getComfortColor(double comfortLevel, ColorScheme colorScheme) {
-    if (comfortLevel < 0.3) return colorScheme.primary;
-    if (comfortLevel < 0.7) return colorScheme.secondary;
-    return colorScheme.error;
-  }
-
-  String _getHumidityDescription(double humidity) {
-    if (humidity < 30) return 'Dry air';
-    if (humidity < 40) return 'Pleasantly dry';
-    if (humidity < 60) return 'Comfortable';
-    if (humidity < 70) return 'Slightly humid';
-    return 'Humid';
-  }
-
-  Color _getHumidityColor(double humidity, ColorScheme colorScheme) {
-    if (humidity < 30) return colorScheme.primary;
-    if (humidity < 60) return colorScheme.secondary;
-    return colorScheme.error;
-  }
-}
-
-class _HumidityPainter extends CustomPainter {
-  final double humidity;
-  final ColorScheme colorScheme;
-
-  _HumidityPainter({required this.humidity, required this.colorScheme});
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    final center = Offset(size.width / 2, size.height / 2);
-    final radius = size.width / 2 * 0.8;
-    final fillAngle = 2 * pi * (humidity / 100);
-    final color = _getHumidityColor(humidity);
-
-    // Draw background circle
-    final bgPaint =
-        Paint()
-          ..color = colorScheme.surfaceVariant
-          ..style = PaintingStyle.fill;
-    canvas.drawCircle(center, radius, bgPaint);
-
-    // Draw filled portion
-    final fillPaint =
-        Paint()
-          ..color = color.withOpacity(0.2)
-          ..style = PaintingStyle.fill;
-
-    final path =
-        Path()
-          ..moveTo(center.dx, center.dy)
-          ..lineTo(center.dx, center.dy - radius)
-          ..arcTo(
-            Rect.fromCircle(center: center, radius: radius),
-            -pi / 2,
-            fillAngle,
-            false,
-          )
-          ..close();
-
-    canvas.drawPath(path, fillPaint);
-
-    // Draw outline
-    final outlinePaint =
-        Paint()
-          ..color = color
-          ..style = PaintingStyle.stroke
-          ..strokeWidth = 3;
-    canvas.drawCircle(center, radius, outlinePaint);
-
-    // Draw drop icon
-    final dropPaint =
-        Paint()
-          ..color = color
-          ..style = PaintingStyle.fill;
-
-    final dropPath =
-        Path()
-          ..moveTo(center.dx, center.dy - radius * 0.3)
-          ..quadraticBezierTo(
-            center.dx + radius * 0.3,
-            center.dy - radius * 0.1,
-            center.dx,
-            center.dy + radius * 0.4,
-          )
-          ..quadraticBezierTo(
-            center.dx - radius * 0.3,
-            center.dy - radius * 0.1,
-            center.dx,
-            center.dy - radius * 0.3,
-          );
-
-    canvas.drawPath(dropPath, dropPaint);
-  }
-
-  Color _getHumidityColor(double humidity) {
-    if (humidity < 30) return colorScheme.primary;
-    if (humidity < 60) return colorScheme.secondary;
-    return colorScheme.error;
-  }
-
-  @override
-  bool shouldRepaint(covariant _HumidityPainter oldDelegate) {
-    return humidity != oldDelegate.humidity ||
-        colorScheme != oldDelegate.colorScheme;
+  Widget _buildHumidityGuideItem(
+    String emoji,
+    String level,
+    String range,
+    String description,
+    Color color,
+  ) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4),
+      child: Row(
+        children: [
+          Text(emoji, style: const TextStyle(fontSize: 20)),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  '$level ($range)',
+                  style: TextStyle(fontWeight: FontWeight.w500, color: color),
+                ),
+                Text(
+                  description,
+                  style: TextStyle(fontSize: 12, color: Colors.grey[600]),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }
