@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
-import 'package:sensorlab/screens/splash_screen.dart';
 import 'package:sensorlab/src/core/providers.dart';
-import 'package:torch_controller/torch_controller.dart';
+import 'package:sensorlab/src/shared/presentation/screens/splash_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -15,10 +14,8 @@ void main() async {
 
   await MobileAds.instance.initialize();
 
-  // Initialize torch controller; do not await in case the plugin's
-  // initialize implementation is synchronous/void in some environments.
-  TorchController()
-      .initialize(); // Ensure torch controller is configured before runApp
+  // Note: torch_light package doesn't require initialization in main()
+  // It's handled per-use in the flashlight provider
   debugDisableShadows = true;
 
   runApp(const ProviderScope(child: MyApp()));

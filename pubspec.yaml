@@ -46,12 +46,7 @@ dependencies:
   mobile_scanner: ^6.0.7
   # thermal: ^1.1.11
   # environment_sensors: ^0.3.0
-  torch_controller:
-    path: ./plugins/torch_controller
-  # workmanager:
-  #   git:
-  #     url: https://github.com/fluttercommunity/flutter_workmanager
-  #     ref: 8b1e7a9
+
   fl_chart: ^0.70.2
   font_awesome_flutter: ^10.8.0
   camera: ^0.11.1
@@ -67,6 +62,7 @@ dependencies:
   flutter_dotenv: ^5.0.2
   flutter_riverpod: ^2.3.6
   noise_meter: ^5.0.1
+  torch_light: ^1.1.0
   # google_mobile_ads: ^5.3.1
 
 dev_dependencies:
