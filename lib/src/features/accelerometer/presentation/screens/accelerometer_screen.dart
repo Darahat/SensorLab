@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:sensorlab/l10n/app_localizations.dart';
 
 import '../../models/accelerometer_data.dart';
 import '../providers/accelerometer_provider.dart';
@@ -13,10 +14,11 @@ class AccelerometerScreen extends ConsumerWidget {
     final accelerometerData = ref.watch(accelerometerProvider);
     final colorScheme = Theme.of(context).colorScheme;
     final isDarkMode = colorScheme.brightness == Brightness.dark;
+    final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Accelerometer'),
+        title: Text(l10n.accelerometer),
         centerTitle: true,
         elevation: 0,
         backgroundColor: colorScheme.surface,
@@ -24,8 +26,8 @@ class AccelerometerScreen extends ConsumerWidget {
         actions: [
           IconButton(
             icon: Icon(Iconsax.refresh, color: colorScheme.primary),
-            onPressed:
-                () => ref.read(accelerometerProvider.notifier).resetMaxValues(),
+            onPressed: () =>
+                ref.read(accelerometerProvider.notifier).resetMaxValues(),
           ),
         ],
       ),
@@ -48,28 +50,27 @@ class AccelerometerScreen extends ConsumerWidget {
                     vertical: 8,
                   ),
                   decoration: BoxDecoration(
-                    color:
-                        accelerometerData.isActive
-                            ? colorScheme.primary.withOpacity(0.1)
-                            : colorScheme.surfaceVariant,
+                    color: accelerometerData.isActive
+                        ? colorScheme.primary.withOpacity(0.1)
+                        : colorScheme.surfaceVariant,
                     borderRadius: BorderRadius.circular(20),
                     border: Border.all(
-                      color:
-                          accelerometerData.isActive
-                              ? colorScheme.primary
-                              : colorScheme.outline.withOpacity(0.3),
+                      color: accelerometerData.isActive
+                          ? colorScheme.primary
+                          : colorScheme.outline.withOpacity(0.3),
                       width: 1,
                     ),
                   ),
                   child: Text(
-                    accelerometerData.isActive ? 'ACTIVE' : 'MOVE YOUR DEVICE',
+                    accelerometerData.isActive
+                        ? l10n.active
+                        : l10n.moveYourDevice,
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
-                      color:
-                          accelerometerData.isActive
-                              ? colorScheme.primary
-                              : colorScheme.onSurfaceVariant,
+                      color: accelerometerData.isActive
+                          ? colorScheme.primary
+                          : colorScheme.onSurfaceVariant,
                       letterSpacing: 1.1,
                     ),
                   ),
@@ -77,12 +78,12 @@ class AccelerometerScreen extends ConsumerWidget {
                 const SizedBox(height: 40),
 
                 // Data Table
-                _buildDataTable(colorScheme, accelerometerData),
+                _buildDataTable(colorScheme, accelerometerData, l10n),
                 const SizedBox(height: 30),
 
                 // Measurement Unit
                 Text(
-                  'Acceleration (m/s²)',
+                  l10n.accelerationUnit,
                   style: TextStyle(
                     color: colorScheme.onSurface.withOpacity(0.6),
                   ),
@@ -139,7 +140,11 @@ class AccelerometerScreen extends ConsumerWidget {
     );
   }
 
-  Widget _buildDataTable(ColorScheme colorScheme, AccelerometerData data) {
+  Widget _buildDataTable(
+    ColorScheme colorScheme,
+    AccelerometerData data,
+    AppLocalizations l10n,
+  ) {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12),
@@ -161,14 +166,14 @@ class AccelerometerScreen extends ConsumerWidget {
               ),
             ),
             children: [
-              _buildTableHeader('Axis', colorScheme),
-              _buildTableHeader('Current', colorScheme),
-              _buildTableHeader('Max', colorScheme),
+              _buildTableHeader(l10n.axis, colorScheme),
+              _buildTableHeader(l10n.current, colorScheme),
+              _buildTableHeader(l10n.max, colorScheme),
             ],
           ),
-          _buildTableRow('X', data.x, data.maxX, colorScheme),
-          _buildTableRow('Y', data.y, data.maxY, colorScheme),
-          _buildTableRow('Z', data.z, data.maxZ, colorScheme),
+          _buildTableRow(l10n.xAxis, data.x, data.maxX, colorScheme),
+          _buildTableRow(l10n.yAxis, data.y, data.maxY, colorScheme),
+          _buildTableRow(l10n.zAxis, data.z, data.maxZ, colorScheme),
         ],
       ),
     );

@@ -1,23 +1,25 @@
 // side_nav.dart
 import 'package:flutter/material.dart';
+import 'package:sensorlab/l10n/app_localizations.dart';
 
 class SideNav extends StatelessWidget {
   const SideNav({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Drawer(
       child: ListView(
         padding: EdgeInsets.zero,
-        children: const [
+        children: [
           DrawerHeader(
-            decoration: BoxDecoration(color: Colors.blue),
+            decoration: const BoxDecoration(color: Colors.blue),
             child: Text(
-              'Menu',
-              style: TextStyle(color: Colors.white, fontSize: 24),
+              l10n.menu,
+              style: const TextStyle(color: Colors.white, fontSize: 24),
             ),
           ),
-          ListTile(leading: Icon(Icons.home), title: Text('Home')),
+          ListTile(leading: const Icon(Icons.home), title: Text(l10n.home)),
         ],
       ),
     );

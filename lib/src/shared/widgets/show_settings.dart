@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:sensorlab/l10n/app_localizations.dart';
 import 'package:sensorlab/src/features/app_settings/presentation/pages/settings_page.dart';
 
 void showSettings(BuildContext context) {
+  final l10n = AppLocalizations.of(context)!;
   showModalBottomSheet(
     context: context,
     isScrollControlled: true,
@@ -34,7 +36,7 @@ void showSettings(BuildContext context) {
                   ),
                   const SizedBox(height: 12),
                   Text(
-                    'Settings',
+                    l10n.settings,
                     style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                       fontWeight: FontWeight.bold,
                     ),

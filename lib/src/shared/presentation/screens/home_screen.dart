@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
+import 'package:sensorlab/l10n/app_localizations.dart';
 import 'package:sensorlab/src/features/app_settings/provider/settings_provider.dart';
 import 'package:sensorlab/src/shared/models/sensor_card.dart';
 import 'package:sensorlab/src/shared/widgets/create_interstitial_ad.dart';
@@ -78,7 +79,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
     // Initialize tab controller here to ensure proper context. If a controller
     // already exists (didChangeDependencies can be called multiple times),
     // dispose it first to avoid leaking listeners.
-    final categories = _getUniqueCategories();
+    final l10n = AppLocalizations.of(context)!;
+    final categories = _getUniqueCategories(l10n);
     if (mounted) {
       if (_tabController != null) {
         try {
@@ -146,7 +148,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
-    final categories = _getUniqueCategories();
+    final l10n = AppLocalizations.of(context)!;
+    final sensorList = getSensors(l10n);
+    final categories = _getUniqueCategories(l10n);
 
     // Watch settings to get adsEnabled status
     final settingsAsync = ref.watch(settingsControllerProvider);
@@ -160,13 +164,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (adsEnabled && _interstitialAd == null) {
         // Create ads if enabled and not already created
-        print('🟢 Creating ads - enabled: $adsEnabled');
         createInterstitialAd();
         _interstitialAd = interstitialAd;
       } else if (!adsEnabled && _interstitialAd != null) {
         // Dispose ads if disabled and currently created
-        print('🔴 Disposing ads - enabled: $adsEnabled');
-        _interstitialAd?.dispose();
+        disposeInterstitialAd();
         _interstitialAd = null;
       }
     });
@@ -187,13 +189,13 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
               flexibleSpace: FlexibleSpaceBar(
                 centerTitle: true,
                 titlePadding: const EdgeInsets.only(bottom: 100),
-                title: const Text(
-                  'Sensors Lab',
+                title: Text(
+                  l10n.appName,
                   style: TextStyle(
                     fontWeight: FontWeight.w600,
                     color: Colors.white,
                     shadows: [
-                      Shadow(
+                      const Shadow(
                         color: Colors.black26,
                         blurRadius: 10,
                         offset: Offset(0, 2),
@@ -227,7 +229,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
                   ),
                   onPressed: () => showSearch(
                     context: context,
-                    delegate: SensorSearchDelegate(sensors: sensors),
+                    delegate: SensorSearchDelegate(sensors: sensorList),
                   ),
                 ),
 
@@ -287,10 +289,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
             controller: _tabController, // Use the same controller
             children: [
               // 'All' tab
-              _buildSensorGrid(sensors, adsEnabled),
+              _buildSensorGrid(sensorList, adsEnabled),
               // Category tabs
               ...categories.map((category) {
-                final categorySensors = sensors
+                final categorySensors = sensorList
                     .where((sensor) => sensor.category == category)
                     .toList();
                 return _buildSensorGrid(categorySensors, adsEnabled);
@@ -303,10 +305,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
   }
 
   Widget _buildSensorGrid(List<SensorCard> sensorsToShow, bool adsEnabled) {
+    final l10n = AppLocalizations.of(context)!;
     if (sensorsToShow.isEmpty) {
       return Center(
         child: Text(
-          'No sensors available',
+          l10n.noSensorsAvailable,
           style: TextStyle(color: Theme.of(context).textTheme.bodyLarge?.color),
         ),
       );
@@ -371,11 +374,12 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
     );
   }
 
-  List<String> _getUniqueCategories() {
+  List<String> _getUniqueCategories(AppLocalizations l10n) {
+    final sensorList = getSensors(l10n);
     // Preserve original order while removing duplicates
     final seen = <String>{};
     final result = <String>[];
-    for (final s in sensors) {
+    for (final s in sensorList) {
       if (seen.add(s.category)) result.add(s.category);
     }
     return result;

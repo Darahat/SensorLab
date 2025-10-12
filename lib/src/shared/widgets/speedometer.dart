@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sensorlab/l10n/app_localizations.dart';
 
 class Speedometer extends StatelessWidget {
   final double currentSpeed;
@@ -14,6 +15,7 @@ class Speedometer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Container(
       width: 280,
       height: 280,
@@ -52,7 +54,7 @@ class Speedometer extends StatelessWidget {
                 ),
               ),
               Text(
-                'km/h',
+                l10n.kmh,
                 style: TextStyle(
                   fontSize: 18,
                   color: colorScheme.onSurface.withOpacity(0.6),
@@ -74,7 +76,7 @@ class Speedometer extends StatelessWidget {
                 borderRadius: BorderRadius.circular(20),
               ),
               child: Text(
-                isMoving ? 'MOVING' : 'STATIONARY',
+                isMoving ? l10n.moving : l10n.stationary,
                 style: TextStyle(
                   fontSize: 12,
                   fontWeight: FontWeight.bold,

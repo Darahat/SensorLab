@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:sensorlab/l10n/app_localizations.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -103,7 +104,7 @@ class _SplashScreenState extends State<SplashScreen>
                       end: Alignment.bottomRight,
                     ).createShader(bounds),
                     child: Text(
-                      'Sensor Lab',
+                      AppLocalizations.of(context)!.appName,
                       style: TextStyle(
                         fontSize: 32,
                         fontWeight: FontWeight.bold,
@@ -119,7 +120,7 @@ class _SplashScreenState extends State<SplashScreen>
                   child: Padding(
                     padding: const EdgeInsets.only(top: 8),
                     child: Text(
-                      'All your sensors in one place',
+                      AppLocalizations.of(context)!.allYourSensorsInOnePlace,
                       style: TextStyle(
                         fontSize: 16,
                         color: Colors.white.withOpacity(0.8),

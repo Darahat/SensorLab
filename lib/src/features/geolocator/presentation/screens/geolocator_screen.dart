@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:geocoding/geocoding.dart';
+import 'package:sensorlab/l10n/app_localizations.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class GeolocatorPage extends StatefulWidget {
@@ -25,13 +26,15 @@ class _GeolocatorPageState extends State<GeolocatorPage> {
       _serviceDisabled = false;
     });
 
+    final l10n = AppLocalizations.of(context)!;
+
     try {
       // Check if location services are enabled
       bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
       if (!serviceEnabled) {
         setState(() {
           _serviceDisabled = true;
-          _location = "Location services are disabled";
+          _location = l10n.locationServicesDisabled;
         });
         return;
       }
@@ -43,7 +46,7 @@ class _GeolocatorPageState extends State<GeolocatorPage> {
         if (permission == LocationPermission.denied) {
           setState(() {
             _permissionDenied = true;
-            _location = "Location permission denied";
+            _location = l10n.locationPermissionDenied;
           });
           return;
         }
@@ -52,7 +55,7 @@ class _GeolocatorPageState extends State<GeolocatorPage> {
       if (permission == LocationPermission.deniedForever) {
         setState(() {
           _permissionDenied = true;
-          _location = "Location permissions are permanently denied";
+          _location = l10n.locationPermissionsPermanentlyDenied;
         });
         return;
       }
@@ -74,7 +77,7 @@ class _GeolocatorPageState extends State<GeolocatorPage> {
       await _getAddressFromLatLng(position.latitude, position.longitude);
     } catch (e) {
       setState(() {
-        _location = "Error getting location: $e";
+        _location = l10n.errorGettingLocation(e.toString());
       });
     } finally {
       setState(() => _isLoading = false);
@@ -82,6 +85,7 @@ class _GeolocatorPageState extends State<GeolocatorPage> {
   }
 
   Future<void> _getAddressFromLatLng(double lat, double lon) async {
+    final l10n = AppLocalizations.of(context)!;
     try {
       List<Placemark> placemarks = await placemarkFromCoordinates(lat, lon);
       Placemark place = placemarks[0];
@@ -94,7 +98,7 @@ class _GeolocatorPageState extends State<GeolocatorPage> {
       });
     } catch (e) {
       setState(() {
-        _address = "Failed to get address: $e";
+        _address = l10n.failedToGetAddress(e.toString());
       });
     }
   }
@@ -115,7 +119,7 @@ class _GeolocatorPageState extends State<GeolocatorPage> {
       } else {
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('No app available to open maps')),
+            SnackBar(content: Text(AppLocalizations.of(context)!.noAppToOpenMaps)),
           );
         }
       }
@@ -123,7 +127,7 @@ class _GeolocatorPageState extends State<GeolocatorPage> {
       if (mounted) {
         ScaffoldMessenger.of(
           context,
-        ).showSnackBar(SnackBar(content: Text('Error: ${e.toString()}')));
+        ).showSnackBar(SnackBar(content: Text(AppLocalizations.of(context)!.errorGettingLocation(e.toString()))));
       }
     }
   }
@@ -132,13 +136,14 @@ class _GeolocatorPageState extends State<GeolocatorPage> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
+    final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text(
-          'Geolocator',
-          style: TextStyle(fontWeight: FontWeight.bold),
+        title: Text(
+          l10n.geolocator,
+          style: const TextStyle(fontWeight: FontWeight.bold),
         ),
         backgroundColor:
             isDark ? Colors.deepPurple.shade800 : Colors.deepPurple,
@@ -220,7 +225,7 @@ class _GeolocatorPageState extends State<GeolocatorPage> {
                         ),
                         const SizedBox(width: 10),
                         Text(
-                          'Accuracy: $_accuracy',
+                          l10n.accuracy(_accuracy),
                           style: TextStyle(
                             color: isDark ? Colors.white70 : Colors.black54,
                           ),
@@ -259,8 +264,8 @@ class _GeolocatorPageState extends State<GeolocatorPage> {
                   children: [
                     Text(
                       _serviceDisabled
-                          ? 'Please enable location services'
-                          : 'Please grant location permissions',
+                          ? l10n.pleaseEnableLocationServices
+                          : l10n.pleaseGrantLocationPermissions,
                       style: TextStyle(
                         color: isDark ? Colors.amber : Colors.deepPurple,
                         fontWeight: FontWeight.bold,
@@ -284,7 +289,7 @@ class _GeolocatorPageState extends State<GeolocatorPage> {
                         )
                         : const Icon(Icons.gps_fixed),
                 label: Text(
-                  _isLoading ? 'Locating...' : 'Get Current Location',
+                  _isLoading ? l10n.locating : l10n.getCurrentLocation,
                 ),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: isDark ? Colors.amber : Colors.deepPurple,
@@ -301,7 +306,7 @@ class _GeolocatorPageState extends State<GeolocatorPage> {
                 ElevatedButton.icon(
                   onPressed: _openInMaps,
                   icon: const Icon(Icons.map),
-                  label: const Text('Open in Maps'),
+                  label: Text(l10n.openInMaps),
                   style: ElevatedButton.styleFrom(
                     backgroundColor:
                         isDark ? Colors.deepPurple.shade600 : Colors.white,
@@ -320,27 +325,17 @@ class _GeolocatorPageState extends State<GeolocatorPage> {
   }
 
   void _showInfoDialog(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     showDialog(
       context: context,
       builder:
           (context) => AlertDialog(
-            title: const Text('About Geolocator'),
-            content: const Text(
-              'This tool shows your current location using your device\'s GPS.\n\n'
-              'Features:\n'
-              '• Precise latitude/longitude coordinates\n'
-              '• Estimated accuracy measurement\n'
-              '• Reverse geocoding to get address\n'
-              '• Open location in maps\n\n'
-              'For best results, ensure you have:\n'
-              '• Location services enabled\n'
-              '• Clear view of the sky\n'
-              '• Internet connection for address lookup',
-            ),
+            title: Text(l10n.aboutGeolocator),
+            content: Text(l10n.geolocatorDescription),
             actions: [
               TextButton(
                 onPressed: () => Navigator.pop(context),
-                child: const Text('OK'),
+                child: Text(l10n.ok),
               ),
             ],
           ),

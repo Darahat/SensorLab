@@ -25,7 +25,7 @@ class SettingsController extends AsyncNotifier<AppSettings> {
     final currentSettings = state.value;
     if (currentSettings == null) return;
 
-    state = const AsyncValue.loading();
+    // state = const AsyncValue.loading();
 
     try {
       final updatedSettings = currentSettings.copyWith(
@@ -101,6 +101,13 @@ class SettingsController extends AsyncNotifier<AppSettings> {
     );
   }
 
+  /// Update language
+  Future<void> updateLanguage(String languageCode) async {
+    await _updateSetting(
+      (settings) => settings.copyWith(languageCode: languageCode),
+    );
+  }
+
   /// Reset settings to defaults
   Future<void> resetToDefaults() async {
     state = const AsyncValue.loading();
@@ -120,7 +127,7 @@ class SettingsController extends AsyncNotifier<AppSettings> {
     final currentSettings = state.value;
     if (currentSettings == null) return;
 
-    state = const AsyncValue.loading();
+    // state = const AsyncValue.loading();
 
     try {
       final updatedSettings = updater(currentSettings);

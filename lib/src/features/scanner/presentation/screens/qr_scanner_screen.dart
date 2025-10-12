@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
+import 'package:sensorlab/l10n/app_localizations.dart';
 
 import '../../../heart_beat/presentation/providers/heart_beat_provider.dart';
 import '../../models/scan_result.dart';
@@ -53,97 +54,100 @@ class _QRScannerScreenState extends ConsumerState<QRScannerScreen> {
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
 
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('QR Code Scanner'),
+    return Builder(builder: (context) {
+      final l10n = AppLocalizations.of(context)!;
+      return Scaffold(
+        appBar: AppBar(
+          title: Text(l10n.qrCodeScanner),
+          backgroundColor: Colors.black,
+          foregroundColor: Colors.white,
+          actions: [
+            IconButton(
+              icon: Icon(_isTorchOn ? Iconsax.flash_slash : Iconsax.flash_1),
+              onPressed: () {
+                _controller.toggleTorch();
+                setState(() => _isTorchOn = !_isTorchOn);
+              },
+            ),
+            IconButton(
+              icon: Icon(_isScanning ? Iconsax.pause : Iconsax.play),
+              onPressed: () {
+                if (_isScanning) {
+                  _controller.stop();
+                } else {
+                  _controller.start();
+                }
+                setState(() => _isScanning = !_isScanning);
+              },
+            ),
+          ],
+        ),
         backgroundColor: Colors.black,
-        foregroundColor: Colors.white,
-        actions: [
-          IconButton(
-            icon: Icon(_isTorchOn ? Iconsax.flash_slash : Iconsax.flash_1),
-            onPressed: () {
-              _controller.toggleTorch();
-              setState(() => _isTorchOn = !_isTorchOn);
-            },
-          ),
-          IconButton(
-            icon: Icon(_isScanning ? Iconsax.pause : Iconsax.play),
-            onPressed: () {
-              if (_isScanning) {
-                _controller.stop();
-              } else {
-                _controller.start();
-              }
-              setState(() => _isScanning = !_isScanning);
-            },
-          ),
-        ],
-      ),
-      backgroundColor: Colors.black,
-      body: Stack(
-        children: [
-          // Camera preview
-          MobileScanner(controller: _controller, onDetect: _onQRCodeDetected),
+        body: Stack(
+          children: [
+            // Camera preview
+            MobileScanner(controller: _controller, onDetect: _onQRCodeDetected),
 
-          // Centered scanner overlay with fixed size
-          Align(
-            alignment: Alignment.center,
-            child: SizedBox(
-              width: MediaQuery.of(context).size.width * 0.8,
-              height: MediaQuery.of(context).size.width * 0.8,
-              child: const ScannerOverlay(
-                title: 'Scan QR Code',
-                subtitle: 'Position the QR code within the frame',
-                scanType: ScanType.qrCode,
+            // Centered scanner overlay with fixed size
+            Align(
+              alignment: Alignment.center,
+              child: SizedBox(
+                width: MediaQuery.of(context).size.width * 0.8,
+                height: MediaQuery.of(context).size.width * 0.8,
+                child: ScannerOverlay(
+                  title: l10n.scanQrCode,
+                  subtitle: l10n.positionQrCodeInFrame,
+                  scanType: ScanType.qrCode,
+                ),
               ),
             ),
-          ),
 
-          // Bottom instruction panel
-          Positioned(
-            bottom: 0,
-            left: 0,
-            right: 0,
-            child: Container(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [
-                    Colors.transparent,
-                    Colors.black.withOpacity(0.7),
-                    Colors.black.withOpacity(0.9),
+            // Bottom instruction panel
+            Positioned(
+              bottom: 0,
+              left: 0,
+              right: 0,
+              child: Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      Colors.transparent,
+                      Colors.black.withOpacity(0.7),
+                      Colors.black.withOpacity(0.9),
+                    ],
+                  ),
+                ),
+                padding: const EdgeInsets.fromLTRB(24, 40, 24, 40),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(Iconsax.scan, color: colorScheme.primary, size: 32),
+                    const SizedBox(height: 12),
+                    Text(
+                      l10n.qrCodeScanner,
+                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      l10n.scanningForQrCodes,
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                        color: Colors.white.withOpacity(0.8),
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
                   ],
                 ),
               ),
-              padding: const EdgeInsets.fromLTRB(24, 40, 24, 40),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Icon(Iconsax.scan, color: colorScheme.primary, size: 32),
-                  const SizedBox(height: 12),
-                  Text(
-                    'QR Code Scanner',
-                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    'Scanning for QR codes, Data Matrix, PDF417, and Aztec codes',
-                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      color: Colors.white.withOpacity(0.8),
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                ],
-              ),
             ),
-          ),
-        ],
-      ),
-    );
+          ],
+        ),
+      );
+    });
   }
 
   void _onQRCodeDetected(BarcodeCapture capture) {

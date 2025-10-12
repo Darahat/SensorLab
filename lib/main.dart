@@ -21,7 +21,7 @@ Future<void> main() async {
     return;
   }
 
-  runApp(UncontrolledProviderScope(container: container, child: const App()));
+  runApp(UncontrolledProviderScope(container: container, child: App()));
 }
 
 // import 'package:flutter/material.dart';

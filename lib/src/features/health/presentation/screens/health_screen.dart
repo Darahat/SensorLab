@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:sensorlab/l10n/app_localizations.dart';
 
 import '../../domain/entities/activity_type.dart';
 import '../../domain/entities/user_profile.dart' as domain;
@@ -99,49 +100,52 @@ class _HealthScreenState extends ConsumerState<HealthScreen> {
     final healthData = ref.watch(healthProvider);
     final colorScheme = Theme.of(context).colorScheme;
 
-    return Scaffold(
-      backgroundColor: colorScheme.surface,
-      appBar: AppBar(
-        title: const Text(
-          'Health Tracker',
-          style: TextStyle(fontWeight: FontWeight.w600),
-        ),
+    return Builder(builder: (context) {
+      final l10n = AppLocalizations.of(context)!;
+      return Scaffold(
         backgroundColor: colorScheme.surface,
-        elevation: 0,
-        actions: [
-          IconButton(
-            icon: Icon(Iconsax.user, color: colorScheme.primary),
-            onPressed: _showProfileEditor,
+        appBar: AppBar(
+          title: Text(
+            l10n.healthTracker,
+            style: const TextStyle(fontWeight: FontWeight.w600),
           ),
-        ],
-      ),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _buildWelcomeCard(healthData, colorScheme),
-              const SizedBox(height: 16),
-              _buildQuickStats(healthData, colorScheme),
-              const SizedBox(height: 24),
-              _buildActivitySelector(healthData, colorScheme),
-              const SizedBox(height: 16),
-              _buildTrackingControls(healthData, colorScheme),
-              const SizedBox(height: 16),
-              if (healthData.sessionState == HealthSessionState.tracking) ...[
-                _buildSensorDisplay(healthData, colorScheme),
+          backgroundColor: colorScheme.surface,
+          elevation: 0,
+          actions: [
+            IconButton(
+              icon: Icon(Iconsax.user, color: colorScheme.primary),
+              onPressed: _showProfileEditor,
+            ),
+          ],
+        ),
+        body: SafeArea(
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _buildWelcomeCard(healthData, colorScheme, l10n),
                 const SizedBox(height: 16),
+                _buildQuickStats(healthData, colorScheme, l10n),
+                const SizedBox(height: 24),
+                _buildActivitySelector(healthData, colorScheme, l10n),
+                const SizedBox(height: 16),
+                _buildTrackingControls(healthData, colorScheme, l10n),
+                const SizedBox(height: 16),
+                if (healthData.sessionState == HealthSessionState.tracking) ...[
+                  _buildSensorDisplay(healthData, colorScheme, l10n),
+                  const SizedBox(height: 16),
+                ],
+                _buildCalorieDisplay(healthData, colorScheme, l10n),
               ],
-              _buildCalorieDisplay(healthData, colorScheme),
-            ],
+            ),
           ),
         ),
-      ),
-    );
+      );
+    });
   }
 
-  Widget _buildWelcomeCard(HealthData healthData, ColorScheme colorScheme) {
+  Widget _buildWelcomeCard(HealthData healthData, ColorScheme colorScheme, AppLocalizations l10n) {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(20),
@@ -157,7 +161,7 @@ class _HealthScreenState extends ConsumerState<HealthScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Hello, ${healthData.profile.name}!',
+            l10n.helloUser(healthData.profile.name),
             style: TextStyle(
               color: colorScheme.onPrimary,
               fontSize: 24,
@@ -166,7 +170,7 @@ class _HealthScreenState extends ConsumerState<HealthScreen> {
           ),
           const SizedBox(height: 8),
           Text(
-            'Ready to track your ${healthData.selectedActivity.displayName.toLowerCase()} session?',
+            l10n.readyToTrackSession(healthData.selectedActivity.displayName.toLowerCase()),
             style: TextStyle(
               color: colorScheme.onPrimary.withOpacity(0.9),
               fontSize: 16,
@@ -176,13 +180,13 @@ class _HealthScreenState extends ConsumerState<HealthScreen> {
           Row(
             children: [
               _buildProfileStat(
-                'BMI',
+                l10n.bmi,
                 healthData.profile.bmi.toStringAsFixed(1),
                 colorScheme,
               ),
               const SizedBox(width: 20),
               _buildProfileStat(
-                'BMR',
+                l10n.bmr,
                 '${healthData.profile.basalMetabolicRate.toInt()} cal',
                 colorScheme,
               ),
@@ -221,12 +225,12 @@ class _HealthScreenState extends ConsumerState<HealthScreen> {
     );
   }
 
-  Widget _buildQuickStats(HealthData healthData, ColorScheme colorScheme) {
+  Widget _buildQuickStats(HealthData healthData, ColorScheme colorScheme, AppLocalizations l10n) {
     return Row(
       children: [
         Expanded(
           child: _buildStatCard(
-            'Steps',
+            l10n.steps,
             '${healthData.steps}',
             '/ ${healthData.targetSteps}',
             Iconsax.activity,
@@ -236,7 +240,7 @@ class _HealthScreenState extends ConsumerState<HealthScreen> {
         const SizedBox(width: 12),
         Expanded(
           child: _buildStatCard(
-            'Distance',
+            l10n.distance,
             (healthData.distance / 1000).toStringAsFixed(2),
             'km',
             Iconsax.location,
@@ -246,7 +250,7 @@ class _HealthScreenState extends ConsumerState<HealthScreen> {
         const SizedBox(width: 12),
         Expanded(
           child: _buildStatCard(
-            'Duration',
+            l10n.duration,
             _formatDuration(healthData.sessionDuration),
             '',
             Iconsax.clock,
@@ -319,6 +323,7 @@ class _HealthScreenState extends ConsumerState<HealthScreen> {
   Widget _buildActivitySelector(
     HealthData healthData,
     ColorScheme colorScheme,
+    AppLocalizations l10n,
   ) {
     return Container(
       padding: const EdgeInsets.all(16),
@@ -330,7 +335,7 @@ class _HealthScreenState extends ConsumerState<HealthScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Activity Type',
+            l10n.activityType,
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.w600,
@@ -387,6 +392,7 @@ class _HealthScreenState extends ConsumerState<HealthScreen> {
   Widget _buildTrackingControls(
     HealthData healthData,
     ColorScheme colorScheme,
+    AppLocalizations l10n,
   ) {
     final isTracking = healthData.sessionState == HealthSessionState.tracking;
     final isPaused = healthData.sessionState == HealthSessionState.paused;
@@ -404,7 +410,7 @@ class _HealthScreenState extends ConsumerState<HealthScreen> {
               onPressed: _onStartStopTracking,
               icon: Icon(isTracking ? Iconsax.stop : Iconsax.play),
               label: Text(
-                isTracking ? 'Stop' : (isPaused ? 'Resume' : 'Start'),
+                isTracking ? l10n.stop : (isPaused ? l10n.resume : l10n.start),
               ),
               style: ElevatedButton.styleFrom(
                 backgroundColor:
@@ -420,7 +426,7 @@ class _HealthScreenState extends ConsumerState<HealthScreen> {
             ElevatedButton.icon(
               onPressed: _onPauseTracking,
               icon: const Icon(Iconsax.pause),
-              label: const Text('Pause'),
+              label: Text(l10n.pause),
               style: ElevatedButton.styleFrom(
                 backgroundColor: colorScheme.secondary,
                 foregroundColor: colorScheme.onSecondary,
@@ -432,7 +438,7 @@ class _HealthScreenState extends ConsumerState<HealthScreen> {
           ElevatedButton.icon(
             onPressed: _onResetSession,
             icon: const Icon(Iconsax.refresh),
-            label: const Text('Reset'),
+            label: Text(l10n.reset),
             style: ElevatedButton.styleFrom(
               backgroundColor: colorScheme.outline,
               foregroundColor: colorScheme.onSurface,
@@ -444,7 +450,7 @@ class _HealthScreenState extends ConsumerState<HealthScreen> {
     );
   }
 
-  Widget _buildSensorDisplay(HealthData healthData, ColorScheme colorScheme) {
+  Widget _buildSensorDisplay(HealthData healthData, ColorScheme colorScheme, AppLocalizations l10n) {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -455,7 +461,7 @@ class _HealthScreenState extends ConsumerState<HealthScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Live Sensor Data',
+            l10n.liveSensorData,
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.w600,
@@ -467,21 +473,21 @@ class _HealthScreenState extends ConsumerState<HealthScreen> {
             children: [
               Expanded(
                 child: _buildSensorStat(
-                  'Avg Intensity',
+                  l10n.avgIntensity,
                   healthData.averageIntensity.toStringAsFixed(2),
                   colorScheme,
                 ),
               ),
               Expanded(
                 child: _buildSensorStat(
-                  'Peak Intensity',
+                  l10n.peakIntensity,
                   healthData.peakIntensity.toStringAsFixed(2),
                   colorScheme,
                 ),
               ),
               Expanded(
                 child: _buildSensorStat(
-                  'Movements',
+                  l10n.movements,
                   '${healthData.movementCount}',
                   colorScheme,
                 ),
@@ -515,7 +521,7 @@ class _HealthScreenState extends ConsumerState<HealthScreen> {
     );
   }
 
-  Widget _buildCalorieDisplay(HealthData healthData, ColorScheme colorScheme) {
+  Widget _buildCalorieDisplay(HealthData healthData, ColorScheme colorScheme, AppLocalizations l10n) {
     final progress =
         healthData.targetCalories > 0
             ? (healthData.caloriesBurned / healthData.targetCalories).clamp(
@@ -537,7 +543,7 @@ class _HealthScreenState extends ConsumerState<HealthScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'Calories Burned',
+                l10n.caloriesBurned,
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.w600,
@@ -562,7 +568,7 @@ class _HealthScreenState extends ConsumerState<HealthScreen> {
           ),
           const SizedBox(height: 12),
           Text(
-            'BMR: ${healthData.profile.basalMetabolicRate.toInt()} cal/day',
+            l10n.bmrPerDay(healthData.profile.basalMetabolicRate.toInt().toString()),
             style: TextStyle(
               fontSize: 14,
               color: colorScheme.onSurface.withOpacity(0.7),
@@ -604,31 +610,32 @@ class _HealthScreenState extends ConsumerState<HealthScreen> {
   }
 
   void _showProfileEditor() {
+    final l10n = AppLocalizations.of(context)!;
     showDialog(
       context: context,
       builder:
           (context) => AlertDialog(
-            title: const Text('Profile Settings'),
+            title: Text(l10n.profileSettings),
             content: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text('Name: ${ref.read(healthProvider).profile.name}'),
-                Text('Age: ${ref.read(healthProvider).profile.age}'),
+                Text('${l10n.name}: ${ref.read(healthProvider).profile.name}'),
+                Text('${l10n.age}: ${ref.read(healthProvider).profile.age}'),
                 Text(
-                  'Weight: ${ref.read(healthProvider).profile.weight.toStringAsFixed(1)} kg',
+                  '${l10n.weight}: ${ref.read(healthProvider).profile.weight.toStringAsFixed(1)} kg',
                 ),
                 Text(
-                  'Height: ${ref.read(healthProvider).profile.height.toStringAsFixed(1)} cm',
+                  '${l10n.height}: ${ref.read(healthProvider).profile.height.toStringAsFixed(1)} cm',
                 ),
                 Text(
-                  'BMI: ${ref.read(healthProvider).profile.bmi.toStringAsFixed(1)}',
+                  '${l10n.bmi}: ${ref.read(healthProvider).profile.bmi.toStringAsFixed(1)}',
                 ),
               ],
             ),
             actions: [
               TextButton(
                 onPressed: () => Navigator.of(context).pop(),
-                child: const Text('OK'),
+                child: Text(l10n.ok),
               ),
             ],
           ),

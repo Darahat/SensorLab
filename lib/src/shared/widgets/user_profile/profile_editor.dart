@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sensorlab/l10n/app_localizations.dart';
 import 'package:sensorlab/src/features/health/domain/entities/user_profile.dart'
     as domain;
 import 'package:sensorlab/src/features/health/models/health_data.dart';
@@ -52,22 +53,23 @@ class _ProfileEditorState extends State<ProfileEditor> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
-      appBar: AppBar(title: const Text('Edit Profile')),
+      appBar: AppBar(title: Text(l10n.editProfile)),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Column(
           children: [
             TextField(
               controller: _nameController,
-              decoration: const InputDecoration(labelText: 'Name'),
+              decoration: InputDecoration(labelText: l10n.name),
             ),
             const SizedBox(height: 16),
             TextField(
               controller: _weightController,
               keyboardType: TextInputType.number,
-              decoration: const InputDecoration(
-                labelText: 'Weight (kg)',
+              decoration: InputDecoration(
+                labelText: l10n.weightKg,
                 suffixText: 'kg',
               ),
             ),
@@ -78,7 +80,7 @@ class _ProfileEditorState extends State<ProfileEditor> {
                   child: TextField(
                     controller: _feetController,
                     keyboardType: TextInputType.number,
-                    decoration: const InputDecoration(labelText: 'Feet'),
+                    decoration: InputDecoration(labelText: l10n.feet),
                   ),
                 ),
                 const SizedBox(width: 16),
@@ -86,7 +88,7 @@ class _ProfileEditorState extends State<ProfileEditor> {
                   child: TextField(
                     controller: _inchesController,
                     keyboardType: TextInputType.number,
-                    decoration: const InputDecoration(labelText: 'Inches'),
+                    decoration: InputDecoration(labelText: l10n.inches),
                   ),
                 ),
               ],
@@ -95,23 +97,23 @@ class _ProfileEditorState extends State<ProfileEditor> {
             TextField(
               controller: _ageController,
               keyboardType: TextInputType.number,
-              decoration: const InputDecoration(labelText: 'Age'),
+              decoration: InputDecoration(labelText: l10n.age),
             ),
             const SizedBox(height: 16),
             DropdownButtonFormField<String>(
               value: _gender,
-              items: const [
-                DropdownMenuItem(value: 'male', child: Text('Male')),
-                DropdownMenuItem(value: 'female', child: Text('Female')),
-                DropdownMenuItem(value: 'other', child: Text('Other')),
+              items: [
+                DropdownMenuItem(value: 'male', child: Text(l10n.male)),
+                DropdownMenuItem(value: 'female', child: Text(l10n.female)),
+                DropdownMenuItem(value: 'other', child: Text(l10n.other)),
               ],
               onChanged: (value) => setState(() => _gender = value ?? 'male'),
-              decoration: const InputDecoration(labelText: 'Gender'),
+              decoration: InputDecoration(labelText: l10n.gender),
             ),
             const SizedBox(height: 24),
             ElevatedButton(
               onPressed: _saveProfile,
-              child: const Text('Save Profile'),
+              child: Text(l10n.saveProfile),
             ),
           ],
         ),

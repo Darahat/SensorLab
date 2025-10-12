@@ -1,6 +1,7 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:sensorlab/l10n/app_localizations.dart';
 
 import '../../models/heart_beat_data.dart';
 import '../providers/heart_beat_provider.dart';
@@ -13,72 +14,78 @@ class HeartRateScreen extends ConsumerWidget {
     final heartBeatData = ref.watch(heartBeatProvider);
     final heartBeatNotifier = ref.read(heartBeatProvider.notifier);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Heart Rate Monitor'),
-        actions: [
-          IconButton(
-            icon: Icon(
-              heartBeatData.isFlashOn ? Icons.flash_on : Icons.flash_off,
+    return Builder(builder: (context) {
+      final l10n = AppLocalizations.of(context)!;
+      return Scaffold(
+        appBar: AppBar(
+          title: Text(l10n.heartRateMonitor),
+          actions: [
+            IconButton(
+              icon: Icon(
+                heartBeatData.isFlashOn ? Icons.flash_on : Icons.flash_off,
+              ),
+              onPressed: () => heartBeatNotifier.toggleFlash(),
+              tooltip: l10n.toggleFlash,
             ),
-            onPressed: () => heartBeatNotifier.toggleFlash(),
-            tooltip: 'Toggle flash',
-          ),
-        ],
-      ),
-      body:
-          heartBeatData.isInitialized
-              ? Column(
-                children: [
-                  Expanded(
-                    child: Stack(
-                      children: [
-                        if (heartBeatNotifier.cameraController != null &&
-                            heartBeatNotifier
-                                .cameraController!
-                                .value
-                                .isInitialized)
-                          CameraPreview(heartBeatNotifier.cameraController!),
-                        Column(
-                          children: [
-                            _buildEnvironmentWarning(
-                              context,
-                              heartBeatData,
-                              heartBeatNotifier,
-                            ),
-                            Center(
-                              child: Container(
-                                padding: const EdgeInsets.all(20),
-                                decoration: BoxDecoration(
-                                  color: Colors.black54,
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                child: Text(
-                                  heartBeatData.statusMessage,
-                                  style: const TextStyle(color: Colors.white),
+          ],
+        ),
+        body:
+            heartBeatData.isInitialized
+                ? Column(
+                  children: [
+                    Expanded(
+                      child: Stack(
+                        children: [
+                          if (heartBeatNotifier.cameraController != null &&
+                              heartBeatNotifier
+                                  .cameraController!
+                                  .value
+                                  .isInitialized)
+                            CameraPreview(heartBeatNotifier.cameraController!),
+                          Column(
+                            children: [
+                              _buildEnvironmentWarning(
+                                context,
+                                heartBeatData,
+                                heartBeatNotifier,
+                                l10n,
+                              ),
+                              Center(
+                                child: Container(
+                                  padding: const EdgeInsets.all(20),
+                                  decoration: BoxDecoration(
+                                    color: Colors.black54,
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  child: Text(
+                                    heartBeatData.statusMessage,
+                                    style: const TextStyle(color: Colors.white),
+                                  ),
                                 ),
                               ),
-                            ),
-                          ],
-                        ),
-                      ],
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                  _buildHeartRateDisplay(
-                    context,
-                    heartBeatData,
-                    heartBeatNotifier,
-                  ),
-                ],
-              )
-              : _buildLoadingScreen(heartBeatData),
-    );
+                    _buildHeartRateDisplay(
+                      context,
+                      heartBeatData,
+                      heartBeatNotifier,
+                      l10n,
+                    ),
+                  ],
+                )
+                : _buildLoadingScreen(heartBeatData),
+      );
+    });
   }
 
   Widget _buildEnvironmentWarning(
     BuildContext context,
     HeartBeatData data,
     HeartBeatNotifier notifier,
+    AppLocalizations l10n,
   ) {
     if (!data.showSoundWarning) return const SizedBox.shrink();
 
@@ -100,7 +107,7 @@ class HeartRateScreen extends ConsumerWidget {
             const Icon(Icons.warning_amber_rounded, color: Colors.white),
             const SizedBox(width: 10),
             Text(
-              'Quiet environment needed ($remaining s)',
+              l10n.quietEnvironmentNeeded(remaining.toString()),
               style: const TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.bold,
@@ -121,6 +128,7 @@ class HeartRateScreen extends ConsumerWidget {
     BuildContext context,
     HeartBeatData data,
     HeartBeatNotifier notifier,
+    AppLocalizations l10n,
   ) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
@@ -142,7 +150,7 @@ class HeartRateScreen extends ConsumerWidget {
       padding: const EdgeInsets.all(20),
       child: Column(
         children: [
-          const Text('Estimated Heart Rate', style: TextStyle(fontSize: 18)),
+          Text(l10n.estimatedHeartRate, style: const TextStyle(fontSize: 18)),
           const SizedBox(height: 8),
           Text(
             data.bpmWithUnit,
@@ -169,12 +177,12 @@ class HeartRateScreen extends ConsumerWidget {
               ElevatedButton.icon(
                 onPressed: () => notifier.toggleFlash(),
                 icon: Icon(data.isFlashOn ? Icons.flash_off : Icons.flash_on),
-                label: Text(data.isFlashOn ? 'Flash Off' : 'Flash On'),
+                label: Text(data.isFlashOn ? l10n.flashOff : l10n.flashOn),
               ),
               ElevatedButton.icon(
                 onPressed: () => notifier.reset(),
                 icon: const Icon(Icons.refresh),
-                label: const Text('Reset'),
+                label: Text(l10n.reset),
               ),
             ],
           ),
@@ -190,10 +198,10 @@ class HeartRateScreen extends ConsumerWidget {
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Icon(Icons.check_circle, color: Colors.green, size: 16),
+                  const Icon(Icons.check_circle, color: Colors.green, size: 16),
                   const SizedBox(width: 8),
                   Text(
-                    'Stable measurement',
+                    l10n.stableMeasurement,
                     style: TextStyle(
                       color: Colors.green[700],
                       fontWeight: FontWeight.w500,
@@ -216,7 +224,7 @@ class HeartRateScreen extends ConsumerWidget {
           if (data.status != HeartRateStatus.error)
             const CircularProgressIndicator(),
           if (data.status == HeartRateStatus.error)
-            Icon(Icons.error_outline, size: 64, color: Colors.red),
+            const Icon(Icons.error_outline, size: 64, color: Colors.red),
           const SizedBox(height: 20),
           Text(
             data.statusMessage,

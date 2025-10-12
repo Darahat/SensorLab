@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
+import 'package:sensorlab/l10n/app_localizations.dart';
 
 class CalorieBurnHelper {
   final BuildContext context;
@@ -102,6 +103,7 @@ class CalorieBurnHelper {
   }
 
   Future<void> showWeightInputDialog() async {
+    final l10n = AppLocalizations.of(context)!;
     final weightController = TextEditingController(
       text: userWeight.toStringAsFixed(0),
     );
@@ -116,7 +118,7 @@ class CalorieBurnHelper {
           (context) => StatefulBuilder(
             builder:
                 (context, setState) => AlertDialog(
-                  title: const Text('Enter Your Details'),
+                  title: Text(l10n.enterYourDetails),
                   content: SingleChildScrollView(
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
@@ -124,36 +126,36 @@ class CalorieBurnHelper {
                         TextField(
                           controller: weightController,
                           keyboardType: TextInputType.number,
-                          decoration: const InputDecoration(
-                            labelText: 'Weight (kg)',
+                          decoration: InputDecoration(
+                            labelText: l10n.weightKg,
                             suffixText: 'kg',
                           ),
                         ),
                         TextField(
                           controller: heightController,
                           keyboardType: TextInputType.number,
-                          decoration: const InputDecoration(
-                            labelText: 'Height (cm)',
+                          decoration: InputDecoration(
+                            labelText: l10n.heightCm,
                             suffixText: 'cm',
                           ),
                         ),
                         const SizedBox(height: 16),
                         DropdownButtonFormField<String>(
                           value: selectedGender,
-                          items: const [
+                          items: [
                             DropdownMenuItem(
                               value: 'male',
-                              child: Text('Male'),
+                              child: Text(l10n.male),
                             ),
                             DropdownMenuItem(
                               value: 'female',
-                              child: Text('Female'),
+                              child: Text(l10n.female),
                             ),
                           ],
                           onChanged:
                               (value) => setState(() => selectedGender = value),
-                          decoration: const InputDecoration(
-                            labelText: 'Gender',
+                          decoration: InputDecoration(
+                            labelText: l10n.gender,
                           ),
                         ),
                       ],
@@ -162,7 +164,7 @@ class CalorieBurnHelper {
                   actions: [
                     TextButton(
                       onPressed: () => Navigator.pop(context),
-                      child: const Text('Cancel'),
+                      child: Text(l10n.cancel),
                     ),
                     TextButton(
                       onPressed: () async {
@@ -186,7 +188,7 @@ class CalorieBurnHelper {
                         }
                         Navigator.pop(context);
                       },
-                      child: const Text('Save'),
+                      child: Text(l10n.save),
                     ),
                   ],
                 ),
@@ -195,16 +197,17 @@ class CalorieBurnHelper {
   }
 
   Future<void> showActivityTypeDialog() async {
+    final l10n = AppLocalizations.of(context)!;
     await showDialog(
       context: context,
       builder:
           (context) => AlertDialog(
-            title: const Text('Select Activity'),
+            title: Text(l10n.selectActivity),
             content: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
                 ListTile(
-                  title: const Text('Walking'),
+                  title: Text(l10n.walking),
                   leading: const Icon(Icons.directions_walk),
                   onTap: () {
                     safeSetState(() => activityType = 'Walking');
@@ -216,7 +219,7 @@ class CalorieBurnHelper {
                   },
                 ),
                 ListTile(
-                  title: const Text('Running'),
+                  title: Text(l10n.running),
                   leading: const Icon(Icons.directions_run),
                   onTap: () {
                     safeSetState(() => activityType = 'Running');
@@ -228,7 +231,7 @@ class CalorieBurnHelper {
                   },
                 ),
                 ListTile(
-                  title: const Text('Cycling'),
+                  title: Text(l10n.cycling),
                   leading: const Icon(Icons.directions_bike),
                   onTap: () {
                     safeSetState(() => activityType = 'Cycling');

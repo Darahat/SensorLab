@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:sensorlab/l10n/app_localizations.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../models/scan_result.dart';
@@ -15,52 +16,55 @@ class ScanResultScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('${result.scanType.displayName} Result'),
-        actions: [
-          IconButton(
-            icon: const Icon(Iconsax.copy),
-            onPressed: () => _copyToClipboard(context),
-          ),
-          IconButton(
-            icon: const Icon(Iconsax.share),
-            onPressed: () => _shareResult(context),
-          ),
-        ],
-      ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(24),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Header card
-            _buildHeaderCard(colorScheme),
-            const SizedBox(height: 24),
-
-            // Content card
-            _buildContentCard(colorScheme),
-            const SizedBox(height: 24),
-
-            // Actions card (if actionable)
-            if (result.isActionable) ...[
-              _buildActionsCard(colorScheme, context),
-              const SizedBox(height: 24),
-            ],
-
-            // Technical details card
-            _buildTechnicalCard(colorScheme),
-            const SizedBox(height: 32),
-
-            // Action buttons
-            _buildActionButtons(context, colorScheme),
+    return Builder(builder: (context) {
+      final l10n = AppLocalizations.of(context)!;
+      return Scaffold(
+        appBar: AppBar(
+          title: Text('${result.scanType.displayName} ${l10n.scanResult}'),
+          actions: [
+            IconButton(
+              icon: const Icon(Iconsax.copy),
+              onPressed: () => _copyToClipboard(context, l10n),
+            ),
+            IconButton(
+              icon: const Icon(Iconsax.share),
+              onPressed: () => _shareResult(context, l10n),
+            ),
           ],
         ),
-      ),
-    );
+        body: SingleChildScrollView(
+          padding: const EdgeInsets.all(24),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Header card
+              _buildHeaderCard(colorScheme, l10n),
+              const SizedBox(height: 24),
+
+              // Content card
+              _buildContentCard(colorScheme, l10n),
+              const SizedBox(height: 24),
+
+              // Actions card (if actionable)
+              if (result.isActionable) ...[
+                _buildActionsCard(colorScheme, context, l10n),
+                const SizedBox(height: 24),
+              ],
+
+              // Technical details card
+              _buildTechnicalCard(colorScheme, l10n),
+              const SizedBox(height: 32),
+
+              // Action buttons
+              _buildActionButtons(context, colorScheme, l10n),
+            ],
+          ),
+        ),
+      );
+    });
   }
 
-  Widget _buildHeaderCard(ColorScheme colorScheme) {
+  Widget _buildHeaderCard(ColorScheme colorScheme, AppLocalizations l10n) {
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(20),
@@ -100,7 +104,7 @@ class ScanResultScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    'Scanned ${result.formattedTimestamp}',
+                    l10n.scannedOn(result.formattedTimestamp),
                     style: TextStyle(
                       fontSize: 12,
                       color: colorScheme.onSurface.withOpacity(0.6),
@@ -116,7 +120,7 @@ class ScanResultScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildContentCard(ColorScheme colorScheme) {
+  Widget _buildContentCard(ColorScheme colorScheme, AppLocalizations l10n) {
     final parsedContent = result.parsedContent;
 
     return Card(
@@ -133,9 +137,9 @@ class ScanResultScreen extends StatelessWidget {
                   size: 20,
                 ),
                 const SizedBox(width: 8),
-                const Text(
-                  'Content',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                Text(
+                  l10n.content,
+                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
               ],
             ),
@@ -213,7 +217,7 @@ class ScanResultScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildActionsCard(ColorScheme colorScheme, BuildContext context) {
+  Widget _buildActionsCard(ColorScheme colorScheme, BuildContext context, AppLocalizations l10n) {
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(20),
@@ -228,9 +232,9 @@ class ScanResultScreen extends StatelessWidget {
                   size: 20,
                 ),
                 const SizedBox(width: 8),
-                const Text(
-                  'Quick Actions',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                Text(
+                  l10n.quickActions,
+                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
               ],
             ),
@@ -241,7 +245,7 @@ class ScanResultScreen extends StatelessWidget {
               child: FilledButton.icon(
                 icon: _getActionIcon(),
                 label: Text(result.actionLabel),
-                onPressed: () => _performAction(context),
+                onPressed: () => _performAction(context, l10n),
                 style: FilledButton.styleFrom(
                   padding: const EdgeInsets.symmetric(vertical: 16),
                 ),
@@ -253,7 +257,7 @@ class ScanResultScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildTechnicalCard(ColorScheme colorScheme) {
+  Widget _buildTechnicalCard(ColorScheme colorScheme, AppLocalizations l10n) {
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(20),
@@ -264,33 +268,33 @@ class ScanResultScreen extends StatelessWidget {
               children: [
                 Icon(Iconsax.cpu, color: colorScheme.primary, size: 20),
                 const SizedBox(width: 8),
-                const Text(
-                  'Technical Details',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                Text(
+                  l10n.technicalDetails,
+                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
               ],
             ),
             const SizedBox(height: 16),
 
-            _buildDetailRow('Format', result.format.name, colorScheme),
+            _buildDetailRow(l10n.format, result.format.name, colorScheme),
             if (result.formatDetails != null)
               _buildDetailRow(
-                'Description',
+                l10n.description,
                 result.formatDetails!,
                 colorScheme,
               ),
             _buildDetailRow(
-              'Data Length',
+              l10n.dataLength,
               '${result.rawData.length} characters',
               colorScheme,
             ),
             _buildDetailRow(
-              'Scan Type',
+              l10n.scanType,
               result.scanType.displayName,
               colorScheme,
             ),
             _buildDetailRow(
-              'Content Type',
+              l10n.contentType,
               result.contentType.displayName,
               colorScheme,
             ),
@@ -329,7 +333,7 @@ class ScanResultScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildActionButtons(BuildContext context, ColorScheme colorScheme) {
+  Widget _buildActionButtons(BuildContext context, ColorScheme colorScheme, AppLocalizations l10n) {
     return Column(
       children: [
         Row(
@@ -337,8 +341,8 @@ class ScanResultScreen extends StatelessWidget {
             Expanded(
               child: OutlinedButton.icon(
                 icon: const Icon(Iconsax.copy),
-                label: const Text('Copy All'),
-                onPressed: () => _copyToClipboard(context),
+                label: Text(l10n.copyAll),
+                onPressed: () => _copyToClipboard(context, l10n),
                 style: OutlinedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(vertical: 16),
                 ),
@@ -348,8 +352,8 @@ class ScanResultScreen extends StatelessWidget {
             Expanded(
               child: OutlinedButton.icon(
                 icon: const Icon(Iconsax.share),
-                label: const Text('Share'),
-                onPressed: () => _shareResult(context),
+                label: Text(l10n.share),
+                onPressed: () => _shareResult(context, l10n),
                 style: OutlinedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(vertical: 16),
                 ),
@@ -362,7 +366,7 @@ class ScanResultScreen extends StatelessWidget {
           width: double.infinity,
           child: FilledButton.icon(
             icon: const Icon(Iconsax.scan),
-            label: const Text('Scan Another'),
+            label: Text(l10n.scanAnother),
             onPressed: () => _scanAnother(context),
             style: FilledButton.styleFrom(
               padding: const EdgeInsets.symmetric(vertical: 16),
@@ -396,28 +400,28 @@ class ScanResultScreen extends StatelessWidget {
     }
   }
 
-  void _copyToClipboard(BuildContext context) {
+  void _copyToClipboard(BuildContext context, AppLocalizations l10n) {
     Clipboard.setData(ClipboardData(text: result.rawData));
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('Copied to clipboard'),
-        duration: Duration(seconds: 2),
+      SnackBar(
+        content: Text(l10n.copiedToClipboard),
+        duration: const Duration(seconds: 2),
       ),
     );
   }
 
-  void _shareResult(BuildContext context) {
+  void _shareResult(BuildContext context, AppLocalizations l10n) {
     // Note: You might want to use the share_plus package for better sharing
     Clipboard.setData(ClipboardData(text: result.rawData));
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('Content copied to clipboard for sharing'),
-        duration: Duration(seconds: 2),
+      SnackBar(
+        content: Text(l10n.contentCopied),
+        duration: const Duration(seconds: 2),
       ),
     );
   }
 
-  void _performAction(BuildContext context) async {
+  void _performAction(BuildContext context, AppLocalizations l10n) async {
     try {
       switch (result.contentType) {
         case ContentType.url:
@@ -425,7 +429,7 @@ class ScanResultScreen extends StatelessWidget {
           if (await canLaunchUrl(uri)) {
             await launchUrl(uri);
           } else {
-            _showErrorSnackBar(context, 'Cannot open URL');
+            _showErrorSnackBar(context, l10n.cannotOpenUrl);
           }
           break;
 
@@ -471,7 +475,7 @@ class ScanResultScreen extends StatelessWidget {
           break;
 
         default:
-          _copyToClipboard(context);
+          _copyToClipboard(context, l10n);
       }
     } catch (e) {
       _showErrorSnackBar(context, 'Action failed: $e');
