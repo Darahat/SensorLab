@@ -925,4 +925,153 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get inches => 'Inches';
+
+  @override
+  String get productBarcodes => 'Product barcodes';
+
+  @override
+  String get isbnNumbers => 'ISBN numbers';
+
+  @override
+  String get upcCodes => 'UPC codes';
+
+  @override
+  String get eanCodes => 'EAN codes';
+
+  @override
+  String get code128_39 => 'Code 128/39';
+
+  @override
+  String get websiteUrls => 'Website URLs';
+
+  @override
+  String get wifiPasswords => 'WiFi passwords';
+
+  @override
+  String get contactInformation => 'Contact information';
+
+  @override
+  String get locationCoordinates => 'Location coordinates';
+
+  @override
+  String get calendarEvents => 'Calendar events';
+
+  @override
+  String get nearDetection => 'Near Detection';
+
+  @override
+  String get objectDetectedClose => 'Object detected close to sensor';
+
+  @override
+  String get usuallyWithin5cm => 'Usually when something is within 5cm of the sensor';
+
+  @override
+  String get farDetection => 'Far Detection';
+
+  @override
+  String get noObjectDetected => 'No object detected nearby';
+
+  @override
+  String get clearAreaAroundSensor => 'Clear area around the proximity sensor';
+
+  @override
+  String get tooDryIrritation => 'Too dry - may cause skin and respiratory irritation';
+
+  @override
+  String get somewhatDryHumidifier => 'Somewhat dry - consider using a humidifier';
+
+  @override
+  String get idealHumidityLevel => 'Ideal humidity level for comfort and health';
+
+  @override
+  String get somewhatHumidSticky => 'Somewhat humid - may feel sticky';
+
+  @override
+  String get tooHumidMold => 'Too humid - may promote mold growth';
+
+  @override
+  String get flashlightOn => 'Flashlight ON';
+
+  @override
+  String get flashlightOff => 'Flashlight OFF';
+
+  @override
+  String get meters => 'meters';
+
+  @override
+  String get realTimeLightLevels => 'Real-time Light Levels';
+
+  @override
+  String get lightLevelGuide => 'Light Level Guide';
+
+  @override
+  String get darkLevel => 'Dark';
+
+  @override
+  String get dimLevel => 'Dim';
+
+  @override
+  String get indoorLevel => 'Indoor';
+
+  @override
+  String get officeLevel => 'Office';
+
+  @override
+  String get brightLevel => 'Bright';
+
+  @override
+  String get daylightLevel => 'Daylight';
+
+  @override
+  String get darkRange => '0-10 lux';
+
+  @override
+  String get dimRange => '10-200 lux';
+
+  @override
+  String get indoorRange => '200-500 lux';
+
+  @override
+  String get officeRange => '500-1000 lux';
+
+  @override
+  String get brightRange => '1000-10000 lux';
+
+  @override
+  String get daylightRange => '10000+ lux';
+
+  @override
+  String get darkExample => 'Night, no moonlight';
+
+  @override
+  String get dimExample => 'Moonlight, candle';
+
+  @override
+  String get indoorExample => 'Living room lighting';
+
+  @override
+  String get officeExample => 'Office workspace';
+
+  @override
+  String get brightExample => 'Bright room, cloudy day';
+
+  @override
+  String get daylightExample => 'Direct sunlight';
+
+  @override
+  String get grantSensorPermission => 'Grant sensor permission to access proximity sensor';
+
+  @override
+  String get deviceNoProximitySensor => 'Device does not have a proximity sensor';
+
+  @override
+  String get proximitySensorLocation => 'The proximity sensor is typically located near the earpiece and is used to turn off the screen during phone calls.';
+
+  @override
+  String get pausedCameraInUse => 'Paused - Camera in use by another feature';
+
+  @override
+  String generalError(String error) {
+    return 'Error: $error';
+  }
 }

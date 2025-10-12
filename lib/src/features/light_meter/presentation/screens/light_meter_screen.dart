@@ -255,9 +255,9 @@ class _LightMeterScreenState extends ConsumerState<LightMeterScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text(
-                            'Real-time Light Levels',
-                            style: TextStyle(
+                          Text(
+                            l10n.realTimeLightLevels,
+                            style: const TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
                             ),
@@ -342,9 +342,9 @@ class _LightMeterScreenState extends ConsumerState<LightMeterScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
-                          'Light Level Guide',
-                          style: TextStyle(
+                        Text(
+                          l10n.lightLevelGuide,
+                          style: const TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
                           ),
@@ -352,44 +352,44 @@ class _LightMeterScreenState extends ConsumerState<LightMeterScreen> {
                         const SizedBox(height: 12),
                         _buildLightGuideItem(
                           '🌑',
-                          'Dark',
-                          '0-10 lux',
-                          'Night, no moonlight',
+                          l10n.darkLevel,
+                          l10n.darkRange,
+                          l10n.darkExample,
                           Colors.grey[800]!,
                         ),
                         _buildLightGuideItem(
                           '🌘',
-                          'Dim',
-                          '10-200 lux',
-                          'Moonlight, candle',
+                          l10n.dimLevel,
+                          l10n.dimRange,
+                          l10n.dimExample,
                           Colors.grey[600]!,
                         ),
                         _buildLightGuideItem(
                           '💡',
-                          'Indoor',
-                          '200-500 lux',
-                          'Living room lighting',
+                          l10n.indoorLevel,
+                          l10n.indoorRange,
+                          l10n.indoorExample,
                           Colors.orange,
                         ),
                         _buildLightGuideItem(
                           '🏢',
-                          'Office',
-                          '500-1000 lux',
-                          'Office workspace',
+                          l10n.officeLevel,
+                          l10n.officeRange,
+                          l10n.officeExample,
                           Colors.yellow[700]!,
                         ),
                         _buildLightGuideItem(
                           '☀️',
-                          'Bright',
-                          '1000-10000 lux',
-                          'Bright room, cloudy day',
+                          l10n.brightLevel,
+                          l10n.brightRange,
+                          l10n.brightExample,
                           Colors.yellow,
                         ),
                         _buildLightGuideItem(
                           '🌞',
-                          'Daylight',
-                          '10000+ lux',
-                          'Direct sunlight',
+                          l10n.daylightLevel,
+                          l10n.daylightRange,
+                          l10n.daylightExample,
                           Colors.yellow[200]!,
                         ),
                       ],

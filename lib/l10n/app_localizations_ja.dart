@@ -925,4 +925,153 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get inches => 'インチ';
+
+  @override
+  String get productBarcodes => '商品バーコード';
+
+  @override
+  String get isbnNumbers => 'ISBN番号';
+
+  @override
+  String get upcCodes => 'UPCコード';
+
+  @override
+  String get eanCodes => 'EANコード';
+
+  @override
+  String get code128_39 => 'Code 128/39';
+
+  @override
+  String get websiteUrls => 'ウェブサイトURL';
+
+  @override
+  String get wifiPasswords => 'WiFiパスワード';
+
+  @override
+  String get contactInformation => '連絡先情報';
+
+  @override
+  String get locationCoordinates => '位置座標';
+
+  @override
+  String get calendarEvents => 'カレンダーイベント';
+
+  @override
+  String get nearDetection => '近距離検出';
+
+  @override
+  String get objectDetectedClose => 'センサーの近くで物体を検出';
+
+  @override
+  String get usuallyWithin5cm => '通常、センサーから5cm以内に何かがある場合';
+
+  @override
+  String get farDetection => '遠距離検出';
+
+  @override
+  String get noObjectDetected => '近くに物体が検出されません';
+
+  @override
+  String get clearAreaAroundSensor => 'センサー周辺のエリアをクリア';
+
+  @override
+  String get tooDryIrritation => '乾燥しすぎ - 皮膚や呼吸器の刺激を引き起こす可能性があります';
+
+  @override
+  String get somewhatDryHumidifier => 'やや乾燥 - 加湿器の使用を検討してください';
+
+  @override
+  String get idealHumidityLevel => '快適さと健康に理想的な湿度レベル';
+
+  @override
+  String get somewhatHumidSticky => 'やや湿度が高い - べたつく感じがするかもしれません';
+
+  @override
+  String get tooHumidMold => '湿度が高すぎます - カビの繁殖を促進する可能性があります';
+
+  @override
+  String get flashlightOn => 'フラッシュライト オン';
+
+  @override
+  String get flashlightOff => 'フラッシュライト オフ';
+
+  @override
+  String get meters => 'メートル';
+
+  @override
+  String get realTimeLightLevels => 'リアルタイム照度レベル';
+
+  @override
+  String get lightLevelGuide => '照度レベルガイド';
+
+  @override
+  String get darkLevel => '暗い';
+
+  @override
+  String get dimLevel => '薄暗い';
+
+  @override
+  String get indoorLevel => '屋内';
+
+  @override
+  String get officeLevel => 'オフィス';
+
+  @override
+  String get brightLevel => '明るい';
+
+  @override
+  String get daylightLevel => '日光';
+
+  @override
+  String get darkRange => '0-10 lux';
+
+  @override
+  String get dimRange => '10-200 lux';
+
+  @override
+  String get indoorRange => '200-500 lux';
+
+  @override
+  String get officeRange => '500-1000 lux';
+
+  @override
+  String get brightRange => '1000-10000 lux';
+
+  @override
+  String get daylightRange => '10000+ lux';
+
+  @override
+  String get darkExample => '夜、月明かりなし';
+
+  @override
+  String get dimExample => '月明かり、ろうそく';
+
+  @override
+  String get indoorExample => 'リビングルーム照明';
+
+  @override
+  String get officeExample => 'オフィスワークスペース';
+
+  @override
+  String get brightExample => '明るい部屋、曇りの日';
+
+  @override
+  String get daylightExample => '直射日光';
+
+  @override
+  String get grantSensorPermission => '近接センサーにアクセスするためのセンサー権限を許可してください';
+
+  @override
+  String get deviceNoProximitySensor => 'デバイスには近接センサーがありません';
+
+  @override
+  String get proximitySensorLocation => '近接センサーは通常イヤピース付近に位置し、通話中に画面を消すために使用されます。';
+
+  @override
+  String get pausedCameraInUse => '一時停止 - カメラが他の機能で使用中';
+
+  @override
+  String generalError(String error) {
+    return 'エラー: $error';
+  }
 }

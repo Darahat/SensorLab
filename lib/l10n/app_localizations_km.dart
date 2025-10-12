@@ -925,4 +925,153 @@ class AppLocalizationsKm extends AppLocalizations {
 
   @override
   String get inches => 'អ៊ីញ';
+
+  @override
+  String get productBarcodes => 'បាកូដផលិតផល';
+
+  @override
+  String get isbnNumbers => 'លេខ ISBN';
+
+  @override
+  String get upcCodes => 'កូដ UPC';
+
+  @override
+  String get eanCodes => 'កូដ EAN';
+
+  @override
+  String get code128_39 => 'កូដ 128/39';
+
+  @override
+  String get websiteUrls => 'URL វេបសាយ';
+
+  @override
+  String get wifiPasswords => 'ពាក្យសម្ងាត់ WiFi';
+
+  @override
+  String get contactInformation => 'ព័ត៌មានទំនាក់ទំនង';
+
+  @override
+  String get locationCoordinates => 'កូអរដោនេទីតាំង';
+
+  @override
+  String get calendarEvents => 'ព្រឹត្តិការណ៍ប្រតិទិន';
+
+  @override
+  String get nearDetection => 'ការរកឃើញនៅជិត';
+
+  @override
+  String get objectDetectedClose => 'វត្ថុត្រូវបានរកឃើញនៅជិតឧបករណ៍ចាប់សញ្ញា';
+
+  @override
+  String get usuallyWithin5cm => 'ជាធម្មតានៅពេលមានអ្វីមួយនៅក្នុងរយៈ 5 សង់ទីម៉ែត្រពីឧបករណ៍ចាប់សញ្ញា';
+
+  @override
+  String get farDetection => 'ការរកឃើញនៅឆ្ងាយ';
+
+  @override
+  String get noObjectDetected => 'មិនបានរកឃើញវត្ថុនៅជិតទេ';
+
+  @override
+  String get clearAreaAroundSensor => 'តំបន់ស្អាតជុំវិញឧបករណ៍ចាប់សញ្ញា';
+
+  @override
+  String get tooDryIrritation => 'ស្ងួតពេក - អាចបណ្តាលឱ្យស្បែកនិងដង្ហើមរលាក';
+
+  @override
+  String get somewhatDryHumidifier => 'ស្ងួតបន្តិច - គួរពិចារណាប្រើម៉ាស៊ីនបន្ថែមសំណើម';
+
+  @override
+  String get idealHumidityLevel => 'កម្រិតសំណើមល្អសម្រាប់ការងាយស្រួលនិងសុខភាព';
+
+  @override
+  String get somewhatHumidSticky => 'មានសំណើមបន្តិច - អាចមានអារម្មណ៍ជាប់';
+
+  @override
+  String get tooHumidMold => 'សើម្ពេក - អាចបណ្តាលឱ្យមានផ្សិតលូតលាស់';
+
+  @override
+  String get flashlightOn => 'ភ្លើងបំភ្លឺ បើក';
+
+  @override
+  String get flashlightOff => 'ភ្លើងបំភ្លឺ បិទ';
+
+  @override
+  String get meters => 'ម៉ែត្រ';
+
+  @override
+  String get realTimeLightLevels => 'កម្រិតពន្លឺពេលវេលាពិត';
+
+  @override
+  String get lightLevelGuide => 'មគ្គុទេសក៍កម្រិតពន្លឺ';
+
+  @override
+  String get darkLevel => 'ងងឹត';
+
+  @override
+  String get dimLevel => 'ចុងចាំងបន្តិច';
+
+  @override
+  String get indoorLevel => 'ក្នុងផ្ទះ';
+
+  @override
+  String get officeLevel => 'ការិយាល័យ';
+
+  @override
+  String get brightLevel => 'ភ្លឺ';
+
+  @override
+  String get daylightLevel => 'ពន្លឺថ្ងៃ';
+
+  @override
+  String get darkRange => '0-10 lux';
+
+  @override
+  String get dimRange => '10-200 lux';
+
+  @override
+  String get indoorRange => '200-500 lux';
+
+  @override
+  String get officeRange => '500-1000 lux';
+
+  @override
+  String get brightRange => '1000-10000 lux';
+
+  @override
+  String get daylightRange => '10000+ lux';
+
+  @override
+  String get darkExample => 'យប់ គ្មានពន្លឺព្រះច័ន្ទ';
+
+  @override
+  String get dimExample => 'ពន្លឺព្រះច័ន្ទ ទៀន';
+
+  @override
+  String get indoorExample => 'ពន្លឺបន្ទប់ទទួលភ្ញៀវ';
+
+  @override
+  String get officeExample => 'កន្លែងធ្វើការការិយាល័យ';
+
+  @override
+  String get brightExample => 'បន្ទប់ភ្លឺ ថ្ងៃមេឃ';
+
+  @override
+  String get daylightExample => 'ពន្លឺព្រះអាទិត្យផ្ទាល់';
+
+  @override
+  String get grantSensorPermission => 'ផ្តល់ការអនុញ្ញាតឧបករណ៍ចាប់សញ្ញាដើម្បីចូលប្រើឧបករណ៍ចាប់សញ្ញាភាពជិត';
+
+  @override
+  String get deviceNoProximitySensor => 'ឧបករណ៍មិនមានឧបករណ៍ចាប់សញ្ញាភាពជិត';
+
+  @override
+  String get proximitySensorLocation => 'ឧបករណ៍ចាប់សញ្ញាភាពជិតធម្មតាស្ថិតនៅក្បែរកាសឆ្នាំ និងប្រើសម្រាប់បិទអេក្រង់កំឡុងពេលហៅទូរស័ព្ទ។';
+
+  @override
+  String get pausedCameraInUse => 'បានផ្អាក - ម៉ាស៊ីនថតកំពុងប្រើដោយមុខងារផ្សេង';
+
+  @override
+  String generalError(String error) {
+    return 'កំហុស: $error';
+  }
 }

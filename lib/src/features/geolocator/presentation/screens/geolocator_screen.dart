@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:sensorlab/l10n/app_localizations.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -10,8 +10,8 @@ class GeolocatorPage extends StatefulWidget {
 }
 
 class _GeolocatorPageState extends State<GeolocatorPage> {
-  String _location = "Press the button to get location";
-  String _address = "Address will appear here";
+  String _location = "";
+  String _address = "";
   String _accuracy = "--";
   double? _latitude;
   double? _longitude;
@@ -70,7 +70,8 @@ class _GeolocatorPageState extends State<GeolocatorPage> {
         _longitude = position.longitude;
         _location =
             "${position.latitude.toStringAsFixed(6)}, ${position.longitude.toStringAsFixed(6)}";
-        _accuracy = "${position.accuracy?.toStringAsFixed(2) ?? "--"} meters";
+        _accuracy =
+            "${position.accuracy?.toStringAsFixed(2) ?? "--"} ${l10n.meters}";
       });
 
       // Get address from coordinates
@@ -119,15 +120,21 @@ class _GeolocatorPageState extends State<GeolocatorPage> {
       } else {
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(AppLocalizations.of(context)!.noAppToOpenMaps)),
+            SnackBar(
+              content: Text(AppLocalizations.of(context)!.noAppToOpenMaps),
+            ),
           );
         }
       }
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(SnackBar(content: Text(AppLocalizations.of(context)!.errorGettingLocation(e.toString()))));
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              AppLocalizations.of(context)!.errorGettingLocation(e.toString()),
+            ),
+          ),
+        );
       }
     }
   }
@@ -138,6 +145,14 @@ class _GeolocatorPageState extends State<GeolocatorPage> {
     final isDark = theme.brightness == Brightness.dark;
     final l10n = AppLocalizations.of(context)!;
 
+    // Initialize localized strings if empty
+    if (_location.isEmpty) {
+      _location = l10n.pressButtonToGetLocation;
+    }
+    if (_address.isEmpty) {
+      _address = l10n.addressWillAppearHere;
+    }
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -145,8 +160,9 @@ class _GeolocatorPageState extends State<GeolocatorPage> {
           l10n.geolocator,
           style: const TextStyle(fontWeight: FontWeight.bold),
         ),
-        backgroundColor:
-            isDark ? Colors.deepPurple.shade800 : Colors.deepPurple,
+        backgroundColor: isDark
+            ? Colors.deepPurple.shade800
+            : Colors.deepPurple,
         actions: [
           IconButton(
             icon: const Icon(Icons.info_outline),
@@ -159,10 +175,9 @@ class _GeolocatorPageState extends State<GeolocatorPage> {
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors:
-                isDark
-                    ? [Colors.deepPurple.shade900, Colors.indigo.shade900]
-                    : [Colors.deepPurple.shade100, Colors.indigo.shade100],
+            colors: isDark
+                ? [Colors.deepPurple.shade900, Colors.indigo.shade900]
+                : [Colors.deepPurple.shade100, Colors.indigo.shade100],
           ),
         ),
         child: Padding(
@@ -277,17 +292,16 @@ class _GeolocatorPageState extends State<GeolocatorPage> {
 
               ElevatedButton.icon(
                 onPressed: _isLoading ? null : _getCurrentLocation,
-                icon:
-                    _isLoading
-                        ? const SizedBox(
-                          width: 16,
-                          height: 16,
-                          child: CircularProgressIndicator(
-                            strokeWidth: 2,
-                            color: Colors.white,
-                          ),
-                        )
-                        : const Icon(Icons.gps_fixed),
+                icon: _isLoading
+                    ? const SizedBox(
+                        width: 16,
+                        height: 16,
+                        child: CircularProgressIndicator(
+                          strokeWidth: 2,
+                          color: Colors.white,
+                        ),
+                      )
+                    : const Icon(Icons.gps_fixed),
                 label: Text(
                   _isLoading ? l10n.locating : l10n.getCurrentLocation,
                 ),
@@ -308,8 +322,9 @@ class _GeolocatorPageState extends State<GeolocatorPage> {
                   icon: const Icon(Icons.map),
                   label: Text(l10n.openInMaps),
                   style: ElevatedButton.styleFrom(
-                    backgroundColor:
-                        isDark ? Colors.deepPurple.shade600 : Colors.white,
+                    backgroundColor: isDark
+                        ? Colors.deepPurple.shade600
+                        : Colors.white,
                     foregroundColor: isDark ? Colors.white : Colors.deepPurple,
                     padding: const EdgeInsets.symmetric(
                       horizontal: 24,
@@ -328,17 +343,16 @@ class _GeolocatorPageState extends State<GeolocatorPage> {
     final l10n = AppLocalizations.of(context)!;
     showDialog(
       context: context,
-      builder:
-          (context) => AlertDialog(
-            title: Text(l10n.aboutGeolocator),
-            content: Text(l10n.geolocatorDescription),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.pop(context),
-                child: Text(l10n.ok),
-              ),
-            ],
+      builder: (context) => AlertDialog(
+        title: Text(l10n.aboutGeolocator),
+        content: Text(l10n.geolocatorDescription),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: Text(l10n.ok),
           ),
+        ],
+      ),
     );
   }
 }

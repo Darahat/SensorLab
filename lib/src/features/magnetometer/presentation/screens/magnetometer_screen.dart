@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:iconsax/iconsax.dart';
 
+import '../../../../../l10n/app_localizations.dart';
 import '../providers/magnetometer_provider.dart';
 
 class MagnetometerScreen extends ConsumerWidget {
@@ -13,16 +14,15 @@ class MagnetometerScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final magnetometerData = ref.watch(magnetometerProvider);
     final colorScheme = Theme.of(context).colorScheme;
-    final strengthColor =
-        Color.lerp(
-          colorScheme.primary,
-          colorScheme.error,
-          magnetometerData.normalizedStrength,
-        )!;
+    final strengthColor = Color.lerp(
+      colorScheme.primary,
+      colorScheme.error,
+      magnetometerData.normalizedStrength,
+    )!;
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Magnetometer'),
+        title: Text(AppLocalizations.of(context)!.magnetometer),
         centerTitle: true,
         elevation: 0,
         backgroundColor: colorScheme.surface,
@@ -30,9 +30,8 @@ class MagnetometerScreen extends ConsumerWidget {
         actions: [
           IconButton(
             icon: Icon(Iconsax.refresh, color: colorScheme.primary),
-            onPressed:
-                () =>
-                    ref.read(magnetometerProvider.notifier).resetMaxStrength(),
+            onPressed: () =>
+                ref.read(magnetometerProvider.notifier).resetMaxStrength(),
           ),
         ],
       ),
@@ -179,11 +178,10 @@ class _MagneticFieldPainter extends CustomPainter {
     final radius = size.width / 2 * 0.8;
 
     // Draw field lines
-    final fieldPaint =
-        Paint()
-          ..color = colorScheme.primary.withOpacity(0.2)
-          ..style = PaintingStyle.stroke
-          ..strokeWidth = 1.5;
+    final fieldPaint = Paint()
+      ..color = colorScheme.primary.withOpacity(0.2)
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 1.5;
 
     for (int i = 0; i < 8; i++) {
       final angle = i * (2 * pi / 8);
@@ -199,23 +197,21 @@ class _MagneticFieldPainter extends CustomPainter {
 
     // Draw compass needle
     final angle = atan2(y, x);
-    final needlePaint =
-        Paint()
-          ..color = colorScheme.error
-          ..style = PaintingStyle.fill;
+    final needlePaint = Paint()
+      ..color = colorScheme.error
+      ..style = PaintingStyle.fill;
 
-    final needlePath =
-        Path()
-          ..moveTo(center.dx, center.dy)
-          ..lineTo(
-            center.dx + radius * 0.8 * cos(angle + pi),
-            center.dy + radius * 0.8 * sin(angle + pi),
-          )
-          ..lineTo(
-            center.dx + radius * 0.2 * cos(angle + pi / 2),
-            center.dy + radius * 0.2 * sin(angle + pi / 2),
-          )
-          ..close();
+    final needlePath = Path()
+      ..moveTo(center.dx, center.dy)
+      ..lineTo(
+        center.dx + radius * 0.8 * cos(angle + pi),
+        center.dy + radius * 0.8 * sin(angle + pi),
+      )
+      ..lineTo(
+        center.dx + radius * 0.2 * cos(angle + pi / 2),
+        center.dy + radius * 0.2 * sin(angle + pi / 2),
+      )
+      ..close();
 
     canvas.drawPath(needlePath, needlePaint);
 

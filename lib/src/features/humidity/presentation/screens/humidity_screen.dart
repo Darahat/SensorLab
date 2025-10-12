@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sensorlab/l10n/app_localizations.dart';
 
 import '../../../../core/providers.dart';
+import '../../models/humidity_data.dart';
 
 class HumidityScreen extends ConsumerStatefulWidget {
   const HumidityScreen({super.key});
@@ -243,7 +244,10 @@ class _HumidityScreenState extends ConsumerState<HumidityScreen> {
                               const SizedBox(width: 12),
                               Expanded(
                                 child: Text(
-                                  humidityData.comfortAssessment,
+                                  _getLocalizedComfortAssessment(
+                                    humidityData,
+                                    l10n,
+                                  ),
                                   style: TextStyle(
                                     fontSize: 14,
                                     color: Color(
@@ -579,5 +583,23 @@ class _HumidityScreenState extends ConsumerState<HumidityScreen> {
         ],
       ),
     );
+  }
+
+  String _getLocalizedComfortAssessment(
+    HumidityData humidityData,
+    AppLocalizations l10n,
+  ) {
+    switch (humidityData.humidityLevel) {
+      case HumidityLevel.veryDry:
+        return l10n.tooDryIrritation;
+      case HumidityLevel.dry:
+        return l10n.somewhatDryHumidifier;
+      case HumidityLevel.comfortable:
+        return l10n.idealHumidityLevel;
+      case HumidityLevel.humid:
+        return l10n.somewhatHumidSticky;
+      case HumidityLevel.veryHumid:
+        return l10n.tooHumidMold;
+    }
   }
 }

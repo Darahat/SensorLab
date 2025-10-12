@@ -167,7 +167,7 @@ class HeartBeatNotifier extends StateNotifier<HeartBeatData> {
       } else {
         state = state.copyWith(
           status: HeartRateStatus.fingerNotDetected,
-          statusMessage: 'Press finger firmly on camera',
+          statusMessage: 'Place finger firmly on camera',
         );
         return;
       }

@@ -925,4 +925,153 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get inches => 'Pulgadas';
+
+  @override
+  String get productBarcodes => 'Códigos de barras de productos';
+
+  @override
+  String get isbnNumbers => 'Números ISBN';
+
+  @override
+  String get upcCodes => 'Códigos UPC';
+
+  @override
+  String get eanCodes => 'Códigos EAN';
+
+  @override
+  String get code128_39 => 'Code 128/39';
+
+  @override
+  String get websiteUrls => 'URLs de sitios web';
+
+  @override
+  String get wifiPasswords => 'Contraseñas WiFi';
+
+  @override
+  String get contactInformation => 'Información de contacto';
+
+  @override
+  String get locationCoordinates => 'Coordenadas de ubicación';
+
+  @override
+  String get calendarEvents => 'Eventos de calendario';
+
+  @override
+  String get nearDetection => 'Detección Cercana';
+
+  @override
+  String get objectDetectedClose => 'Objeto detectado cerca del sensor';
+
+  @override
+  String get usuallyWithin5cm => 'Generalmente cuando algo está dentro de 5cm del sensor';
+
+  @override
+  String get farDetection => 'Detección Lejana';
+
+  @override
+  String get noObjectDetected => 'No se detectó ningún objeto cerca';
+
+  @override
+  String get clearAreaAroundSensor => 'Área despejada alrededor del sensor';
+
+  @override
+  String get tooDryIrritation => 'Demasiado seco - puede causar irritación en la piel y respiración';
+
+  @override
+  String get somewhatDryHumidifier => 'Algo seco - considera usar un humidificador';
+
+  @override
+  String get idealHumidityLevel => 'Nivel de humedad ideal para comodidad y salud';
+
+  @override
+  String get somewhatHumidSticky => 'Algo húmedo - puede sentirse pegajoso';
+
+  @override
+  String get tooHumidMold => 'Demasiado húmedo - puede favorecer el crecimiento de moho';
+
+  @override
+  String get flashlightOn => 'Linterna ENCENDIDA';
+
+  @override
+  String get flashlightOff => 'Linterna APAGADA';
+
+  @override
+  String get meters => 'metros';
+
+  @override
+  String get realTimeLightLevels => 'Niveles de Luz en Tiempo Real';
+
+  @override
+  String get lightLevelGuide => 'Guía de Niveles de Luz';
+
+  @override
+  String get darkLevel => 'Oscuro';
+
+  @override
+  String get dimLevel => 'Tenue';
+
+  @override
+  String get indoorLevel => 'Interior';
+
+  @override
+  String get officeLevel => 'Oficina';
+
+  @override
+  String get brightLevel => 'Brillante';
+
+  @override
+  String get daylightLevel => 'Luz del día';
+
+  @override
+  String get darkRange => '0-10 lux';
+
+  @override
+  String get dimRange => '10-200 lux';
+
+  @override
+  String get indoorRange => '200-500 lux';
+
+  @override
+  String get officeRange => '500-1000 lux';
+
+  @override
+  String get brightRange => '1000-10000 lux';
+
+  @override
+  String get daylightRange => '10000+ lux';
+
+  @override
+  String get darkExample => 'Noche, sin luz de luna';
+
+  @override
+  String get dimExample => 'Luz de luna, vela';
+
+  @override
+  String get indoorExample => 'Iluminación de sala de estar';
+
+  @override
+  String get officeExample => 'Espacio de trabajo de oficina';
+
+  @override
+  String get brightExample => 'Habitación brillante, día nublado';
+
+  @override
+  String get daylightExample => 'Luz solar directa';
+
+  @override
+  String get grantSensorPermission => 'Conceder permisos de sensor para acceder al sensor de proximidad';
+
+  @override
+  String get deviceNoProximitySensor => 'El dispositivo no tiene un sensor de proximidad';
+
+  @override
+  String get proximitySensorLocation => 'El sensor de proximidad se encuentra típicamente cerca del auricular y se usa para apagar la pantalla durante las llamadas telefónicas.';
+
+  @override
+  String get pausedCameraInUse => 'Pausado - Cámara en uso por otra función';
+
+  @override
+  String generalError(String error) {
+    return 'Error: $error';
+  }
 }

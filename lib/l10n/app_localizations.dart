@@ -1886,6 +1886,300 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Inches'**
   String get inches;
+
+  /// No description provided for @productBarcodes.
+  ///
+  /// In en, this message translates to:
+  /// **'Product barcodes'**
+  String get productBarcodes;
+
+  /// No description provided for @isbnNumbers.
+  ///
+  /// In en, this message translates to:
+  /// **'ISBN numbers'**
+  String get isbnNumbers;
+
+  /// No description provided for @upcCodes.
+  ///
+  /// In en, this message translates to:
+  /// **'UPC codes'**
+  String get upcCodes;
+
+  /// No description provided for @eanCodes.
+  ///
+  /// In en, this message translates to:
+  /// **'EAN codes'**
+  String get eanCodes;
+
+  /// No description provided for @code128_39.
+  ///
+  /// In en, this message translates to:
+  /// **'Code 128/39'**
+  String get code128_39;
+
+  /// No description provided for @websiteUrls.
+  ///
+  /// In en, this message translates to:
+  /// **'Website URLs'**
+  String get websiteUrls;
+
+  /// No description provided for @wifiPasswords.
+  ///
+  /// In en, this message translates to:
+  /// **'WiFi passwords'**
+  String get wifiPasswords;
+
+  /// No description provided for @contactInformation.
+  ///
+  /// In en, this message translates to:
+  /// **'Contact information'**
+  String get contactInformation;
+
+  /// No description provided for @locationCoordinates.
+  ///
+  /// In en, this message translates to:
+  /// **'Location coordinates'**
+  String get locationCoordinates;
+
+  /// No description provided for @calendarEvents.
+  ///
+  /// In en, this message translates to:
+  /// **'Calendar events'**
+  String get calendarEvents;
+
+  /// No description provided for @nearDetection.
+  ///
+  /// In en, this message translates to:
+  /// **'Near Detection'**
+  String get nearDetection;
+
+  /// No description provided for @objectDetectedClose.
+  ///
+  /// In en, this message translates to:
+  /// **'Object detected close to sensor'**
+  String get objectDetectedClose;
+
+  /// No description provided for @usuallyWithin5cm.
+  ///
+  /// In en, this message translates to:
+  /// **'Usually when something is within 5cm of the sensor'**
+  String get usuallyWithin5cm;
+
+  /// No description provided for @farDetection.
+  ///
+  /// In en, this message translates to:
+  /// **'Far Detection'**
+  String get farDetection;
+
+  /// No description provided for @noObjectDetected.
+  ///
+  /// In en, this message translates to:
+  /// **'No object detected nearby'**
+  String get noObjectDetected;
+
+  /// No description provided for @clearAreaAroundSensor.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear area around the proximity sensor'**
+  String get clearAreaAroundSensor;
+
+  /// No description provided for @tooDryIrritation.
+  ///
+  /// In en, this message translates to:
+  /// **'Too dry - may cause skin and respiratory irritation'**
+  String get tooDryIrritation;
+
+  /// No description provided for @somewhatDryHumidifier.
+  ///
+  /// In en, this message translates to:
+  /// **'Somewhat dry - consider using a humidifier'**
+  String get somewhatDryHumidifier;
+
+  /// No description provided for @idealHumidityLevel.
+  ///
+  /// In en, this message translates to:
+  /// **'Ideal humidity level for comfort and health'**
+  String get idealHumidityLevel;
+
+  /// No description provided for @somewhatHumidSticky.
+  ///
+  /// In en, this message translates to:
+  /// **'Somewhat humid - may feel sticky'**
+  String get somewhatHumidSticky;
+
+  /// No description provided for @tooHumidMold.
+  ///
+  /// In en, this message translates to:
+  /// **'Too humid - may promote mold growth'**
+  String get tooHumidMold;
+
+  /// No description provided for @flashlightOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Flashlight ON'**
+  String get flashlightOn;
+
+  /// No description provided for @flashlightOff.
+  ///
+  /// In en, this message translates to:
+  /// **'Flashlight OFF'**
+  String get flashlightOff;
+
+  /// No description provided for @meters.
+  ///
+  /// In en, this message translates to:
+  /// **'meters'**
+  String get meters;
+
+  /// No description provided for @realTimeLightLevels.
+  ///
+  /// In en, this message translates to:
+  /// **'Real-time Light Levels'**
+  String get realTimeLightLevels;
+
+  /// No description provided for @lightLevelGuide.
+  ///
+  /// In en, this message translates to:
+  /// **'Light Level Guide'**
+  String get lightLevelGuide;
+
+  /// No description provided for @darkLevel.
+  ///
+  /// In en, this message translates to:
+  /// **'Dark'**
+  String get darkLevel;
+
+  /// No description provided for @dimLevel.
+  ///
+  /// In en, this message translates to:
+  /// **'Dim'**
+  String get dimLevel;
+
+  /// No description provided for @indoorLevel.
+  ///
+  /// In en, this message translates to:
+  /// **'Indoor'**
+  String get indoorLevel;
+
+  /// No description provided for @officeLevel.
+  ///
+  /// In en, this message translates to:
+  /// **'Office'**
+  String get officeLevel;
+
+  /// No description provided for @brightLevel.
+  ///
+  /// In en, this message translates to:
+  /// **'Bright'**
+  String get brightLevel;
+
+  /// No description provided for @daylightLevel.
+  ///
+  /// In en, this message translates to:
+  /// **'Daylight'**
+  String get daylightLevel;
+
+  /// No description provided for @darkRange.
+  ///
+  /// In en, this message translates to:
+  /// **'0-10 lux'**
+  String get darkRange;
+
+  /// No description provided for @dimRange.
+  ///
+  /// In en, this message translates to:
+  /// **'10-200 lux'**
+  String get dimRange;
+
+  /// No description provided for @indoorRange.
+  ///
+  /// In en, this message translates to:
+  /// **'200-500 lux'**
+  String get indoorRange;
+
+  /// No description provided for @officeRange.
+  ///
+  /// In en, this message translates to:
+  /// **'500-1000 lux'**
+  String get officeRange;
+
+  /// No description provided for @brightRange.
+  ///
+  /// In en, this message translates to:
+  /// **'1000-10000 lux'**
+  String get brightRange;
+
+  /// No description provided for @daylightRange.
+  ///
+  /// In en, this message translates to:
+  /// **'10000+ lux'**
+  String get daylightRange;
+
+  /// No description provided for @darkExample.
+  ///
+  /// In en, this message translates to:
+  /// **'Night, no moonlight'**
+  String get darkExample;
+
+  /// No description provided for @dimExample.
+  ///
+  /// In en, this message translates to:
+  /// **'Moonlight, candle'**
+  String get dimExample;
+
+  /// No description provided for @indoorExample.
+  ///
+  /// In en, this message translates to:
+  /// **'Living room lighting'**
+  String get indoorExample;
+
+  /// No description provided for @officeExample.
+  ///
+  /// In en, this message translates to:
+  /// **'Office workspace'**
+  String get officeExample;
+
+  /// No description provided for @brightExample.
+  ///
+  /// In en, this message translates to:
+  /// **'Bright room, cloudy day'**
+  String get brightExample;
+
+  /// No description provided for @daylightExample.
+  ///
+  /// In en, this message translates to:
+  /// **'Direct sunlight'**
+  String get daylightExample;
+
+  /// No description provided for @grantSensorPermission.
+  ///
+  /// In en, this message translates to:
+  /// **'Grant sensor permission to access proximity sensor'**
+  String get grantSensorPermission;
+
+  /// No description provided for @deviceNoProximitySensor.
+  ///
+  /// In en, this message translates to:
+  /// **'Device does not have a proximity sensor'**
+  String get deviceNoProximitySensor;
+
+  /// No description provided for @proximitySensorLocation.
+  ///
+  /// In en, this message translates to:
+  /// **'The proximity sensor is typically located near the earpiece and is used to turn off the screen during phone calls.'**
+  String get proximitySensorLocation;
+
+  /// No description provided for @pausedCameraInUse.
+  ///
+  /// In en, this message translates to:
+  /// **'Paused - Camera in use by another feature'**
+  String get pausedCameraInUse;
+
+  /// No description provided for @generalError.
+  ///
+  /// In en, this message translates to:
+  /// **'Error: {error}'**
+  String generalError(String error);
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
