@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sensorlab/src/shared/presentation/screens/home_screen.dart';
+import 'package:go_router/go_router.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -43,17 +43,9 @@ class _SplashScreenState extends State<SplashScreen>
     _controller.forward();
 
     Future.delayed(const Duration(seconds: 3), () {
-      Navigator.pushReplacement(
-        context,
-        PageRouteBuilder(
-          pageBuilder:
-              (context, animation, secondaryAnimation) => const HomeScreen(),
-          transitionsBuilder: (context, animation, secondaryAnimation, child) {
-            return FadeTransition(opacity: animation, child: child);
-          },
-          transitionDuration: const Duration(milliseconds: 800),
-        ),
-      );
+      if (mounted) {
+        context.go('/');
+      }
     });
   }
 
@@ -105,12 +97,11 @@ class _SplashScreenState extends State<SplashScreen>
                 FadeTransition(
                   opacity: _fadeAnimation,
                   child: ShaderMask(
-                    shaderCallback:
-                        (bounds) => const LinearGradient(
-                          colors: [Colors.white, Colors.amber],
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                        ).createShader(bounds),
+                    shaderCallback: (bounds) => const LinearGradient(
+                      colors: [Colors.white, Colors.amber],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                    ).createShader(bounds),
                     child: Text(
                       'Sensor Lab',
                       style: TextStyle(

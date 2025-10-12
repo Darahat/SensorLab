@@ -37,7 +37,6 @@ void createInterstitialAd() {
   // If we already have a loaded ad, don't load another.
   if (interstitialAd != null) return;
   final adUnitId = _getInterstitialAdUnitId();
-
   InterstitialAd.load(
     adUnitId: adUnitId,
     request: const AdRequest(),

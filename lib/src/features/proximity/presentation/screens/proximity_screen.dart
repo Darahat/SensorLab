@@ -56,10 +56,9 @@ class _ProximityScreenState extends ConsumerState<ProximityScreen> {
                             ? Icons.security
                             : Icons.sensors_off,
                         size: 48,
-                        color:
-                            !proximityData.hasPermission
-                                ? Colors.red
-                                : Colors.orange,
+                        color: !proximityData.hasPermission
+                            ? Colors.red
+                            : Colors.orange,
                       ),
                       const SizedBox(height: 8),
                       Text(
@@ -107,10 +106,9 @@ class _ProximityScreenState extends ConsumerState<ProximityScreen> {
                                 ? Icons.sensors
                                 : Icons.sensors_off,
                             size: 32,
-                            color:
-                                proximityData.isReading
-                                    ? Colors.green
-                                    : Colors.grey,
+                            color: proximityData.isReading
+                                ? Colors.green
+                                : Colors.grey,
                           ),
                           const SizedBox(width: 12),
                           Text(
@@ -171,12 +169,12 @@ class _ProximityScreenState extends ConsumerState<ProximityScreen> {
                       const SizedBox(height: 20),
 
                       // Control Buttons
-                      Row(
+                      Column(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           ElevatedButton.icon(
-                            onPressed:
-                                () => proximityNotifier.getSingleReading(),
+                            onPressed: () =>
+                                proximityNotifier.getSingleReading(),
                             icon: const Icon(Icons.camera_alt),
                             label: const Text('Single Reading'),
                             style: ElevatedButton.styleFrom(
@@ -184,9 +182,11 @@ class _ProximityScreenState extends ConsumerState<ProximityScreen> {
                               foregroundColor: Colors.white,
                             ),
                           ),
+                          const SizedBox(height: 4),
+
                           ElevatedButton.icon(
-                            onPressed:
-                                () => proximityNotifier.toggleMeasurement(),
+                            onPressed: () =>
+                                proximityNotifier.toggleMeasurement(),
                             icon: Icon(
                               proximityData.isReading
                                   ? Icons.stop
@@ -196,10 +196,9 @@ class _ProximityScreenState extends ConsumerState<ProximityScreen> {
                               proximityData.isReading ? 'Stop' : 'Monitor',
                             ),
                             style: ElevatedButton.styleFrom(
-                              backgroundColor:
-                                  proximityData.isReading
-                                      ? Colors.red
-                                      : Colors.green,
+                              backgroundColor: proximityData.isReading
+                                  ? Colors.red
+                                  : Colors.green,
                               foregroundColor: Colors.white,
                             ),
                           ),
@@ -326,10 +325,9 @@ class _ProximityScreenState extends ConsumerState<ProximityScreen> {
                                   horizontal: 1,
                                 ),
                                 decoration: BoxDecoration(
-                                  color:
-                                      reading.isNear
-                                          ? Colors.orange
-                                          : Colors.green,
+                                  color: reading.isNear
+                                      ? Colors.orange
+                                      : Colors.green,
                                   borderRadius: BorderRadius.circular(2),
                                 ),
                               );

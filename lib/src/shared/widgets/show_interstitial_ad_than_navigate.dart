@@ -5,8 +5,10 @@ Future<void> showInterstitialAdThenNavigate({
   required BuildContext context,
   required Widget screen,
   required InterstitialAd? interstitialAd,
+  bool adsEnabled = true, // Add ads enabled parameter
 }) async {
-  if (interstitialAd != null) {
+  // Only show ad if ads are enabled and interstitial ad is available
+  if (adsEnabled && interstitialAd != null) {
     interstitialAd.show();
     await Future.delayed(const Duration(milliseconds: 800));
   }

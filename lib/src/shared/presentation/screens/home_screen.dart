@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
+import 'package:sensorlab/src/features/app_settings/provider/settings_provider.dart';
 import 'package:sensorlab/src/shared/models/sensor_card.dart';
 import 'package:sensorlab/src/shared/widgets/create_interstitial_ad.dart';
 import 'package:sensorlab/src/shared/widgets/sensor_grid_item.dart';
@@ -10,14 +12,14 @@ import 'package:sensorlab/src/shared/widgets/sensors.dart';
 import 'package:sensorlab/src/shared/widgets/show_interstitial_ad_than_navigate.dart';
 import 'package:sensorlab/src/shared/widgets/show_settings.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  ConsumerState<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen>
+class _HomeScreenState extends ConsumerState<HomeScreen>
     with TickerProviderStateMixin, WidgetsBindingObserver {
   late AnimationController _animationController;
   late Animation<double> _scaleAnimation;
@@ -51,14 +53,16 @@ class _HomeScreenState extends State<HomeScreen>
       ),
     );
 
-    // Initialize ads
-    createInterstitialAd();
-    // read the shared instance (may be null until loaded)
-    _interstitialAd = interstitialAd;
-
     // Initialize tab controller after build is complete
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (mounted) {
+        // Check if ads are enabled before creating them
+        final settingsAsync = ref.read(settingsControllerProvider);
+        if (settingsAsync.hasValue && settingsAsync.value!.adsEnabled) {
+          createInterstitialAd();
+          _interstitialAd = interstitialAd;
+        }
+
         setState(() {
           _animationController.forward();
           // Trigger a refresh when the screen loads
@@ -144,6 +148,29 @@ class _HomeScreenState extends State<HomeScreen>
     final isDark = theme.brightness == Brightness.dark;
     final categories = _getUniqueCategories();
 
+    // Watch settings to get adsEnabled status
+    final settingsAsync = ref.watch(settingsControllerProvider);
+    final adsEnabled = settingsAsync.when(
+      data: (settings) => settings.adsEnabled,
+      loading: () => true, // Default to true while loading
+      error: (_, __) => true, // Default to true on error
+    );
+
+    // Manage ads based on settings
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (adsEnabled && _interstitialAd == null) {
+        // Create ads if enabled and not already created
+        print('🟢 Creating ads - enabled: $adsEnabled');
+        createInterstitialAd();
+        _interstitialAd = interstitialAd;
+      } else if (!adsEnabled && _interstitialAd != null) {
+        // Dispose ads if disabled and currently created
+        print('🔴 Disposing ads - enabled: $adsEnabled');
+        _interstitialAd?.dispose();
+        _interstitialAd = null;
+      }
+    });
+
     return Scaffold(
       extendBodyBehindAppBar: true,
       body: NestedScrollView(
@@ -177,13 +204,9 @@ class _HomeScreenState extends State<HomeScreen>
                 background: DecoratedBox(
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
-                      colors:
-                          isDark
-                              ? [
-                                Colors.deepPurple.shade900,
-                                Colors.indigo.shade900,
-                              ]
-                              : [Colors.deepPurple, Colors.indigoAccent],
+                      colors: isDark
+                          ? [Colors.deepPurple.shade900, Colors.indigo.shade900]
+                          : [Colors.deepPurple, Colors.indigoAccent],
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
                     ),
@@ -198,21 +221,22 @@ class _HomeScreenState extends State<HomeScreen>
                 IconButton(
                   icon: Icon(
                     Iconsax.search_normal,
-                    color:
-                        isDark ? Colors.white : Colors.white.withOpacity(0.9),
+                    color: isDark
+                        ? Colors.white
+                        : Colors.white.withOpacity(0.9),
                   ),
-                  onPressed:
-                      () => showSearch(
-                        context: context,
-                        delegate: SensorSearchDelegate(sensors: sensors),
-                      ),
+                  onPressed: () => showSearch(
+                    context: context,
+                    delegate: SensorSearchDelegate(sensors: sensors),
+                  ),
                 ),
 
                 IconButton(
                   icon: Icon(
                     Iconsax.setting_2,
-                    color:
-                        isDark ? Colors.white : Colors.white.withOpacity(0.9),
+                    color: isDark
+                        ? Colors.white
+                        : Colors.white.withOpacity(0.9),
                   ),
                   onPressed: () => showSettings(context),
                 ),
@@ -235,17 +259,17 @@ class _HomeScreenState extends State<HomeScreen>
                       const Tab(text: 'All'),
                       ...categories.map((category) => Tab(text: category)),
                     ],
-                    indicatorColor:
-                        isDark ? Colors.white : Colors.white.withOpacity(0.8),
+                    indicatorColor: isDark
+                        ? Colors.white
+                        : Colors.white.withOpacity(0.8),
                     labelStyle: const TextStyle(
                       fontWeight: FontWeight.w600,
                       fontSize: 14,
                     ),
                     labelColor: Colors.amberAccent,
-                    unselectedLabelColor:
-                        isDark
-                            ? Colors.white.withOpacity(0.6)
-                            : Colors.white.withOpacity(0.7),
+                    unselectedLabelColor: isDark
+                        ? Colors.white.withOpacity(0.6)
+                        : Colors.white.withOpacity(0.7),
                   ),
                 ),
               ),
@@ -263,14 +287,13 @@ class _HomeScreenState extends State<HomeScreen>
             controller: _tabController, // Use the same controller
             children: [
               // 'All' tab
-              _buildSensorGrid(sensors),
+              _buildSensorGrid(sensors, adsEnabled),
               // Category tabs
               ...categories.map((category) {
-                final categorySensors =
-                    sensors
-                        .where((sensor) => sensor.category == category)
-                        .toList();
-                return _buildSensorGrid(categorySensors);
+                final categorySensors = sensors
+                    .where((sensor) => sensor.category == category)
+                    .toList();
+                return _buildSensorGrid(categorySensors, adsEnabled);
               }),
             ],
           ),
@@ -279,7 +302,7 @@ class _HomeScreenState extends State<HomeScreen>
     );
   }
 
-  Widget _buildSensorGrid(List<SensorCard> sensorsToShow) {
+  Widget _buildSensorGrid(List<SensorCard> sensorsToShow, bool adsEnabled) {
     if (sensorsToShow.isEmpty) {
       return Center(
         child: Text(
@@ -331,6 +354,7 @@ class _HomeScreenState extends State<HomeScreen>
                     context: context,
                     screen: sensorsToShow[index].screen,
                     interstitialAd: _interstitialAd,
+                    adsEnabled: adsEnabled, // Pass ads enabled setting
                   );
                 },
               );

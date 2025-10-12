@@ -1,90 +1,85 @@
 name: sensorlab
 description: "Measure ambient light, detect sound levels, and sense nearby objects using your phone’s built-in sensors. This app provides a simple and intuitive interface for accessing and visualizing sensor data, making it easy to monitor your environment and gather information about the world around you."
-# The following line prevents the package from being accidentally published to
-# pub.dev using `flutter pub publish`. This is preferred for private packages.
-publish_to: "none" # Remove this line if you wish to publish to pub.dev
-
-# The following defines the version and build number for your application.
-# A version number is three numbers separated by dots, like 1.2.43
-# followed by an optional build number separated by a +.
-# Both the version and the builder number may be overridden in flutter
-# build by specifying --build-name and --build-number, respectively.
-# In Android, build-name is used as versionName while build-number used as versionCode.
-# Read more about Android versioning at https://developer.android.com/studio/publish/versioning
-# In iOS, build-name is used as CFBundleShortVersionString while build-number is used as CFBundleVersion.
-# Read more about iOS versioning at
-# https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-# In Windows, build-name is used as the major, minor, and patch parts
-# of the product and file versions while build-number is used as the build suffix.
+publish_to: "none"
 version: 1.1.1+8
 
 environment:
-  sdk: ^3.7.0
+  sdk: ">=3.8.0 <4.0.0"
 
-# Dependencies specify other packages that your package needs in order to work.
-# To automatically upgrade your package dependencies to the latest versions
-# consider running `flutter pub upgrade --major-versions`. Alternatively,
-# dependencies can be manually updated by changing the version numbers below to
-# the latest version available on pub.dev. To see which dependencies have newer
-# versions available, run `flutter pub outdated`.
 dependencies:
   flutter:
     sdk: flutter
+
+  # --- State Management ---
+  flutter_riverpod: ^2.3.6
+
+  # --- Permissions & System Services ---
   permission_handler: ^11.4.0
-
   geolocator: ^13.0.4
-  light: ^4.1.0
-  flutter_compass: ^0.8.1
   geocoding: ^3.0.0
-  flutter_launcher_icons: ^0.14.3
-  google_mobile_ads: ^5.3.1
-  iconsax: ^0.0.8
-  liquid_pull_to_refresh: ^3.0.1
-  sensors_plus: ^6.1.1
-  url_launcher: ^6.3.1
-  proximity_sensor: ^1.3.8
-  mobile_scanner: ^6.0.7
-  # thermal: ^1.1.11
-  # environment_sensors: ^0.3.0
-
-  fl_chart: ^0.70.2
-  font_awesome_flutter: ^10.8.0
-  camera: ^0.11.1
-  vibration: ^3.1.3
-  http: ^1.3.0
-  shared_preferences: ^2.5.3
-  # workmanager: ^0.5.2
-  flutter_local_notifications: ^19.1.0
   flutter_background_service: ^5.1.0
   flutter_background_service_android: ^6.3.0
-
   pedometer: ^4.1.1
-  flutter_dotenv: ^5.0.2
-  flutter_riverpod: ^2.3.6
-  noise_meter: ^5.0.1
+  vibration: ^3.1.3
   torch_light: ^1.1.0
-  # google_mobile_ads: ^5.3.1
+
+  # --- Sensors ---
+  light: ^4.1.0
+  sensors_plus: ^6.1.1
+  proximity_sensor: ^1.3.8
+  noise_meter: ^5.0.1
+  flutter_compass: ^0.8.1
+  mobile_scanner: ^6.0.7
+  camera: ^0.11.1
+
+  # --- Database & Storage ---
+  hive: ^2.2.3
+  hive_flutter: ^1.1.0
+  shared_preferences: ^2.3.3
+  path_provider: ^2.1.2
+
+  # --- Network & API ---
+  http: ^1.2.2
+  flutter_dotenv: ^6.0.0
+
+  # --- UI & Visualization ---
+  fl_chart: ^0.70.2
+  font_awesome_flutter: ^10.8.0
+  iconsax: ^0.0.8
+  liquid_pull_to_refresh: ^3.0.1
+  google_mobile_ads: ^5.3.1
+  url_launcher: ^6.3.1
+  go_router: ^14.6.1
+
+  # --- Localization & Utils ---
+  flutter_localization: ^0.3.3
+  logger: ^2.6.2
+  json_annotation: ^4.9.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  # The "flutter_lints" package below contains a set of recommended lints to
-  # encourage good coding practices. The lint set provided by the package is
-  # activated in the `analysis_options.yaml` file located at the root of your
-  # package. See that file for information about deactivating specific lint
-  # rules and activating additional ones.
   flutter_lints: ^5.0.0
 
-# For information on the generic Dart part of this file, see the
-# following page: https://dart.dev/tools/pub/pubspec
+  # --- Code Generation ---
+  build_runner: ^2.4.11
+  hive_generator: ^2.0.1
+  json_serializable: ^6.6.2
+
+flutter:
+  uses-material-design: true
+  generate: true
+  assets:
+    - assets/images/compass.png
+    - assets/icons/icon.png
 
 flutter_launcher_icons:
   android: "launcher_icon"
   ios: true
   image_path: "assets/icons/icon.png"
-  remove_alpha_ios: true # <-- Add this line to remove transparency
-  min_sdk_android: 21 # android min sdk min:16, default 21
+  remove_alpha_ios: true
+  min_sdk_android: 21
   web:
     generate: true
     image_path: "assets/icons/icon.png"
@@ -93,45 +88,7 @@ flutter_launcher_icons:
   windows:
     generate: true
     image_path: "assets/icons/icon.png"
-    icon_size: 48 # min:48, max:256, default: 48
+    icon_size: 48
   macos:
     generate: true
     image_path: "assets/icons/icon.png"
-
-# The following section is specific to Flutter packages.
-flutter:
-  # The following line ensures that the Material Icons font is
-  # included with your application, so that you can use the icons in
-  # the material Icons class.
-  uses-material-design: true
-  # To add custom fonts to your application, add a fonts section here,
-
-  assets:
-    # - images/compass.png
-    - assets/images/compass.png
-    - assets/icons/icon.png
-  # An image asset can refer to one or more resolution-specific "variants", see
-  # https://flutter.dev/to/resolution-aware-images
-
-  # For details regarding adding assets from package dependencies, see
-  # https://flutter.dev/to/asset-from-package
-
-  # To add custom fonts to your application, add a fonts section here,
-  # in this "flutter" section. Each entry in this list should have a
-  # "family" key with the font family name, and a "fonts" key with a
-  # list giving the asset and other descriptors for the font. For
-  # example:
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
-  #       - asset: fonts/Schyler-Italic.ttf
-  #         style: italic
-  #   - family: Trajan Pro
-  #     fonts:
-  #       - asset: fonts/TrajanPro.ttf
-  #       - asset: fonts/TrajanPro_Bold.ttf
-  #         weight: 700
-  #
-  # For details regarding fonts from package dependencies,
-  # see https://flutter.dev/to/font-from-package

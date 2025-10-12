@@ -35,8 +35,9 @@ class HeartBeatNotifier extends StateNotifier<HeartBeatData> {
 
       _cameraController = CameraController(
         camera,
-        ResolutionPreset.high,
+        ResolutionPreset.medium, // Reduced from high to medium
         enableAudio: false,
+        imageFormatGroup: ImageFormatGroup.yuv420, // Specify format
       );
 
       await _cameraController!.initialize();
@@ -78,6 +79,28 @@ class HeartBeatNotifier extends StateNotifier<HeartBeatData> {
     state = state.copyWith(showSoundWarning: false);
   }
 
+  void pauseMonitoring() {
+    try {
+      _cameraController?.stopImageStream();
+      state = state.copyWith(
+        status: HeartRateStatus.ready,
+        statusMessage: 'Paused - Camera in use by another feature',
+      );
+    } catch (e) {
+      // Camera might already be stopped
+    }
+  }
+
+  void resumeMonitoring() {
+    if (_cameraController != null && _cameraController!.value.isInitialized) {
+      state = state.copyWith(
+        status: HeartRateStatus.ready,
+        statusMessage: 'Ready - Cover camera with finger',
+      );
+      _startMonitoring();
+    }
+  }
+
   void _startMonitoring() {
     if (_cameraController == null || !_cameraController!.value.isInitialized) {
       return;
@@ -101,13 +124,15 @@ class HeartBeatNotifier extends StateNotifier<HeartBeatData> {
         final avg = total ~/ plane.bytes.length;
 
         final newSamples = List<int>.from(state.samples)..add(avg);
-        if (newSamples.length > 100) {
-          newSamples.removeAt(0);
+        if (newSamples.length > 50) {
+          // Reduced buffer size from 100 to 50
+          newSamples.removeRange(0, newSamples.length - 50);
         }
 
         state = state.copyWith(samples: newSamples);
 
-        if (newSamples.length > 100) {
+        if (newSamples.length > 30) {
+          // Reduced from 100 to 30
           _calculateBPM();
         }
       } catch (e) {
@@ -208,10 +233,9 @@ class HeartBeatNotifier extends StateNotifier<HeartBeatData> {
     }
 
     final avgInterval = intervals.reduce((a, b) => a + b) / intervals.length;
-    intervals =
-        intervals
-            .where((i) => (i - avgInterval).abs() < avgInterval * 0.4)
-            .toList();
+    intervals = intervals
+        .where((i) => (i - avgInterval).abs() < avgInterval * 0.4)
+        .toList();
 
     if (intervals.length >= 2) {
       final validInterval =
@@ -277,12 +301,17 @@ class HeartBeatNotifier extends StateNotifier<HeartBeatData> {
   CameraController? get cameraController => _cameraController;
 
   @override
+  @override
   void dispose() {
     _warningTimer?.cancel();
     if (state.isFlashOn) {
       TorchLight.disableTorch();
     }
-    _cameraController?.stopImageStream();
+    try {
+      _cameraController?.stopImageStream();
+    } catch (e) {
+      // Image stream might already be stopped
+    }
     _cameraController?.dispose();
     super.dispose();
   }

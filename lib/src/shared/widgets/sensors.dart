@@ -12,7 +12,7 @@ import 'package:sensorlab/src/features/humidity/presentation/screens/humidity_sc
 import 'package:sensorlab/src/features/light_meter/presentation/screens/light_meter_screen.dart';
 import 'package:sensorlab/src/features/magnetometer/presentation/screens/magnetometer_screen.dart';
 import 'package:sensorlab/src/features/proximity/presentation/screens/proximity_screen.dart';
-import 'package:sensorlab/src/features/qr_scanner/presentation/screens/qr_scanner_screen.dart';
+import 'package:sensorlab/src/features/scanner/presentation/screens/scanner_main_screen.dart';
 import 'package:sensorlab/src/shared/models/sensor_card.dart';
 
 final List<SensorCard> sensors = [
@@ -98,9 +98,9 @@ final List<SensorCard> sensors = [
 
   SensorCard(
     icon: Iconsax.scan,
-    label: 'QR Scanner',
+    label: 'Scanner',
     color: Colors.lime,
-    screen: const QRScannerScreen(),
+    screen: const ScannerMainScreen(),
     category: 'Utility',
   ),
 ];

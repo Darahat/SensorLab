@@ -66,8 +66,8 @@ class _HumidityScreenState extends ConsumerState<HumidityScreen> {
                       ),
                       const SizedBox(height: 16),
                       ElevatedButton(
-                        onPressed:
-                            () => humidityNotifier.checkSensorAvailability(),
+                        onPressed: () =>
+                            humidityNotifier.checkSensorAvailability(),
                         child: const Text('Check Again'),
                       ),
                     ],
@@ -89,10 +89,9 @@ class _HumidityScreenState extends ConsumerState<HumidityScreen> {
                               ? Icons.water_drop
                               : Icons.water_drop_outlined,
                           size: 32,
-                          color:
-                              humidityData.isReading
-                                  ? Colors.blue
-                                  : Colors.grey,
+                          color: humidityData.isReading
+                              ? Colors.blue
+                              : Colors.grey,
                         ),
                         const SizedBox(width: 12),
                         Text(
@@ -153,7 +152,7 @@ class _HumidityScreenState extends ConsumerState<HumidityScreen> {
                     const SizedBox(height: 20),
 
                     // Control Buttons
-                    Row(
+                    Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         ElevatedButton.icon(
@@ -165,6 +164,8 @@ class _HumidityScreenState extends ConsumerState<HumidityScreen> {
                             foregroundColor: Colors.white,
                           ),
                         ),
+                        const SizedBox(height: 4),
+
                         ElevatedButton.icon(
                           onPressed: () => humidityNotifier.toggleMeasurement(),
                           icon: Icon(
@@ -176,10 +177,9 @@ class _HumidityScreenState extends ConsumerState<HumidityScreen> {
                             humidityData.isReading ? 'Stop' : 'Continuous',
                           ),
                           style: ElevatedButton.styleFrom(
-                            backgroundColor:
-                                humidityData.isReading
-                                    ? Colors.red
-                                    : Colors.green,
+                            backgroundColor: humidityData.isReading
+                                ? Colors.red
+                                : Colors.green,
                             foregroundColor: Colors.white,
                           ),
                         ),
@@ -289,8 +289,9 @@ class _HumidityScreenState extends ConsumerState<HumidityScreen> {
                       const SizedBox(height: 12),
 
                       Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          Expanded(
+                          Flexible(
                             child: _buildStatCard(
                               'Min',
                               humidityData.formattedMinHumidity,
@@ -298,8 +299,8 @@ class _HumidityScreenState extends ConsumerState<HumidityScreen> {
                               Colors.green,
                             ),
                           ),
-                          const SizedBox(width: 8),
-                          Expanded(
+                          const SizedBox(width: 4),
+                          Flexible(
                             child: _buildStatCard(
                               'Average',
                               humidityData.formattedAverageHumidity,
@@ -307,8 +308,8 @@ class _HumidityScreenState extends ConsumerState<HumidityScreen> {
                               Colors.orange,
                             ),
                           ),
-                          const SizedBox(width: 8),
-                          Expanded(
+                          const SizedBox(width: 4),
+                          Flexible(
                             child: _buildStatCard(
                               'Max',
                               humidityData.formattedMaxHumidity,
@@ -373,17 +374,16 @@ class _HumidityScreenState extends ConsumerState<HumidityScreen> {
                             borderData: FlBorderData(show: true),
                             lineBarsData: [
                               LineChartBarData(
-                                spots:
-                                    humidityData.recentReadings
-                                        .asMap()
-                                        .entries
-                                        .map((entry) {
-                                          return FlSpot(
-                                            entry.key.toDouble(),
-                                            entry.value,
-                                          );
-                                        })
-                                        .toList(),
+                                spots: humidityData.recentReadings
+                                    .asMap()
+                                    .entries
+                                    .map((entry) {
+                                      return FlSpot(
+                                        entry.key.toDouble(),
+                                        entry.value,
+                                      );
+                                    })
+                                    .toList(),
                                 isCurved: true,
                                 color: Color(humidityData.humidityLevelColor),
                                 barWidth: 2,
