@@ -285,6 +285,27 @@ Both files are excluded from version control for security.
 
 ---
 
+## 🔧 Integration & Usage
+
+### **For Developers**
+
+Want to use SensorLab features in your own app? We've got you covered!
+
+| Guide                                                  | Description                        | Best For                     |
+| ------------------------------------------------------ | ---------------------------------- | ---------------------------- |
+| **[🚀 Quick Start Template](QUICK_START_TEMPLATE.md)** | Ready-to-use health app template   | Beginners, rapid prototyping |
+| **[📖 Integration Guide](INTEGRATION_GUIDE.md)**       | Complete feature integration guide | Custom implementations       |
+| **[📚 Module Documentation](docs/modules/)**           | Individual module guides           | Specific feature integration |
+
+### **Popular Use Cases**
+
+- **Health & Fitness Apps** - Activity tracking, user profiles, settings
+- **IoT Sensor Dashboards** - Real-time sensor data visualization
+- **Educational Projects** - Learning Flutter, sensors, localization
+- **Prototype Development** - Quick sensor integration testing
+
+---
+
 ## 🤝 Contributing
 
 ### **Development Setup**

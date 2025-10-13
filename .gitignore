@@ -17,6 +17,13 @@ linux
 macos
 windows
 
+# Security - AdMob & Signing
+android/key.properties
+ios/Runner/Config.xcconfig
+*.jks
+*.keystore
+release-key.*
+
 # IntelliJ related
 *.iml
 *.ipr

@@ -45,7 +45,7 @@ android {
         // local properties or environment variables without checking them into VCS.
         manifestPlaceholders["ADMOB_APP_ID"] = keystoreProperties.getProperty("ADMOB_APP_ID")
             ?: System.getenv("ADMOB_APP_ID")
-            ?: "ca-app-pub-3940256099942544~3347511713" // default test app id
+            ?: "ca-app-pub-3940256099942544~3347511713" // Google's official test app id for development
     }
 
     signingConfigs {

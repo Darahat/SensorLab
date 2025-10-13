@@ -53,7 +53,7 @@ storePassword=your_keystore_password
 keyPassword=your_key_password
 keyAlias=upload
 storeFile=../path/to/your/keystore.jks
-ADMOB_APP_ID=ca-app-pub-3940256099942544~3347511713
+ADMOB_APP_ID=YOUR_ADMOB_APP_ID_HERE
 ```
 
 ### `.env` (Optional)
