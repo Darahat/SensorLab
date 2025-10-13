@@ -67,6 +67,9 @@ dev_dependencies:
   hive_generator: ^2.0.1
   json_serializable: ^6.6.2
 
+  # --- App Icon Generation ---
+  flutter_launcher_icons: ^0.14.1
+
 flutter:
   uses-material-design: true
   generate: true
