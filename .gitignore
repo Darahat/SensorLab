@@ -16,6 +16,7 @@ web
 linux
 macos
 windows
+
 # IntelliJ related
 *.iml
 *.ipr
