@@ -189,19 +189,27 @@ keytool -genkey -v -keystore android/release-key.jks -keyalg RSA -keysize 2048 -
 
 For detailed setup instructions, see: **[Android Setup Guide](ANDROID_SETUP.md)**
 
-#### API Keys and Environment Variables
+#### 🔑 Environment Variables Setup
 
-This project uses secure configuration for API keys:
+For optional features (AdMob, API keys), configure environment variables:
 
-- For development: Uses Google's test AdMob IDs automatically
-- For production: Set `ADMOB_APP_ID` in your `key.properties` file
-- All sensitive data is excluded from version control
+```bash
+# Copy the template file
+cp .env.example .env
 
-#### Android Configuration
+# Edit .env with your actual values (optional)
+```
 
-- AdMob integration is optional and uses test IDs by default
-- Production AdMob ID can be set in `android/key.properties`
-- Debug builds automatically use Google's test ad units
+**⚠️ Security Note**: Never commit `.env` files to version control!
+
+#### Configuration Overview
+
+The app uses a two-file configuration system:
+
+1. **`android/key.properties`** - Android signing and AdMob App ID
+2. **`.env`** - AdMob ad unit IDs and API keys (optional)
+
+Both files are excluded from version control for security.
 
 ---
 

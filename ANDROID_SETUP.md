@@ -56,18 +56,31 @@ mv release-key.jks ~/.android/release-key.jks
 
 ## 📱 AdMob Setup (Optional)
 
-If you want to use AdMob ads:
+### Step 1: Configure AdMob App ID
 
 1. Create an AdMob account at https://admob.google.com/
 2. Create a new app in AdMob console
 3. Get your App ID from AdMob console
-4. Update `ADMOB_APP_ID` in `key.properties`
+4. Update `ADMOB_APP_ID` in `android/key.properties`
 
-For development/testing, you can use Google's test App ID:
+For development/testing, keep the default test App ID:
 
-```
+```properties
 ADMOB_APP_ID=ca-app-pub-3940256099942544~3347511713
 ```
+
+### Step 2: Configure Ad Unit IDs (Optional)
+
+1. Create ad units in AdMob console
+2. Copy `.env.example` to `.env`
+3. Update ad unit IDs in `.env` file:
+
+```env
+AD_UNIT_INTERSTITIAL_ANDROID=ca-app-pub-XXXXXXXXXXXXXXXX/XXXXXXXXXX
+AD_UNIT_INTERSTITIAL_IOS=ca-app-pub-XXXXXXXXXXXXXXXX/XXXXXXXXXX
+```
+
+**Note**: The app works perfectly with test ads if you skip this step.
 
 ## 🏗️ Building Release APK
 
