@@ -171,31 +171,37 @@ flutter build web --release
 
 ### **4. Environment Configuration**
 
-#### API Keys and Secrets
+#### 🔐 Android Signing Setup
 
-This project reads runtime secrets (AdMob IDs, API keys) from a `.env` file using `flutter_dotenv` and Android manifest placeholders.
+For building release APKs, you need to configure Android app signing:
 
-- Copy `.env.example` to `.env` at the project root and fill your production keys.
-- Do NOT commit `.env` or any real keys to version control.
+```bash
+# Copy the template file
+cp android/key.properties.example android/key.properties
 
-#### Environment Variables
+# Generate a keystore (replace with your details)
+keytool -genkey -v -keystore android/release-key.jks -keyalg RSA -keysize 2048 -validity 10000 -alias upload
 
-Create `.env` file in project root:
-
-```env
-# API Keys (if needed)
-GOOGLE_MAPS_API_KEY=your_api_key_here
-ADMOB_APP_ID=your_admob_id_here
-
-# Debug settings
-DEBUG_MODE=true
-LOG_LEVEL=verbose
+# Edit android/key.properties with your actual values
 ```
+
+**⚠️ Security Note**: Never commit `key.properties` or keystore files to version control!
+
+For detailed setup instructions, see: **[Android Setup Guide](ANDROID_SETUP.md)**
+
+#### API Keys and Environment Variables
+
+This project uses secure configuration for API keys:
+
+- For development: Uses Google's test AdMob IDs automatically
+- For production: Set `ADMOB_APP_ID` in your `key.properties` file
+- All sensitive data is excluded from version control
 
 #### Android Configuration
 
-- `ADMOB_APP_ID` is injected into the Android manifest via `manifestPlaceholders` in `android/app/build.gradle.kts`. You can set it in `key.properties` or as an environment variable `ADMOB_APP_ID` when building.
-- For development, the app uses Google's test ad unit IDs automatically when running in debug mode.
+- AdMob integration is optional and uses test IDs by default
+- Production AdMob ID can be set in `android/key.properties`
+- Debug builds automatically use Google's test ad units
 
 ---
 
@@ -303,3 +309,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ⭐ **Star this repository if you find it helpful!** ⭐
 
 </div>
+flutter dart mobile sensors accelerometer gyroscope compass gps health tracker qr scanner internationalization cross platform android ios real time data clean architecture material design riverpod sensor toolkit measurement app
