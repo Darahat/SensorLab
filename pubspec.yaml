@@ -1,7 +1,7 @@
 name: sensorlab
 description: "Measure ambient light, detect sound levels, and sense nearby objects using your phone’s built-in sensors. This app provides a simple and intuitive interface for accessing and visualizing sensor data, making it easy to monitor your environment and gather information about the world around you."
 publish_to: "none"
-version: 1.1.1+8
+version: 2.0.0+0
 
 environment:
   sdk: ">=3.8.0 <4.0.0"
@@ -80,15 +80,3 @@ flutter_launcher_icons:
   image_path: "assets/icons/icon.png"
   remove_alpha_ios: true
   min_sdk_android: 23
-  web:
-    generate: true
-    image_path: "assets/icons/icon.png"
-    background_color: "#0B3F69"
-    theme_color: "#0B3F69"
-  windows:
-    generate: true
-    image_path: "assets/icons/icon.png"
-    icon_size: 48
-  macos:
-    generate: true
-    image_path: "assets/icons/icon.png"
