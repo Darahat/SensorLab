@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_scanner/mobile_scanner.dart';
-import 'package:iconsax/iconsax.dart';
 import 'package:flutter/services.dart';
+import 'package:iconsax/iconsax.dart';
+import 'package:mobile_scanner/mobile_scanner.dart';
+
+import '../../../../../l10n/app_localizations.dart';
 
 class QRScannerScreen extends StatefulWidget {
   const QRScannerScreen({super.key});
@@ -24,9 +26,10 @@ class _QRScannerScreenState extends State<QRScannerScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('QR/Barcode Scanner'),
+        title: Text(l10n.qrBarcodeScanner),
         actions: [
           IconButton(
             icon: Icon(_isTorchOn ? Iconsax.flash_slash : Iconsax.flash_1),
@@ -180,6 +183,7 @@ class _QRScannerScreenState extends State<QRScannerScreen> {
       minChildSize: 0.2,
       maxChildSize: 0.7,
       builder: (context, scrollController) {
+        final l10n = AppLocalizations.of(context)!;
         return Container(
           decoration: BoxDecoration(
             color: Theme.of(context).cardColor,
@@ -207,9 +211,12 @@ class _QRScannerScreenState extends State<QRScannerScreen> {
                 ),
               ),
               const SizedBox(height: 20),
-              const Text(
-                'Scanned Data',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              Text(
+                l10n.scannedData,
+                style: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
               const SizedBox(height: 10),
               Container(
@@ -229,11 +236,11 @@ class _QRScannerScreenState extends State<QRScannerScreen> {
                   Expanded(
                     child: FilledButton.icon(
                       icon: const Icon(Iconsax.copy),
-                      label: const Text('Copy'),
+                      label: Text(l10n.copy),
                       onPressed: () {
                         Clipboard.setData(ClipboardData(text: _scannedData));
                         ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text('Copied to clipboard')),
+                          SnackBar(content: Text(l10n.copiedToClipboard)),
                         );
                       },
                     ),
@@ -242,7 +249,7 @@ class _QRScannerScreenState extends State<QRScannerScreen> {
                   Expanded(
                     child: FilledButton.icon(
                       icon: const Icon(Iconsax.close_circle),
-                      label: const Text('Clear'),
+                      label: Text(l10n.clear),
                       style: FilledButton.styleFrom(
                         backgroundColor: Colors.red,
                       ),

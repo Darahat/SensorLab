@@ -22,4 +22,10 @@ class HiveConstants {
 
   /// hive box for user to user chat
   static const String uTouChatBox = "uTou_chat_box";
+
+  /// hive box for user profile
+  static const String userProfileBox = "user_profile_box";
+
+  /// hive box for activity session
+  static const String activitySessionBox = "activity_session_box";
 }

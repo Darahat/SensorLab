@@ -1,13 +1,33 @@
+import 'package:hive/hive.dart';
+
+part 'user_profile.g.dart';
+
 /// Core business entity for User Profile
 /// Pure domain entity with business logic for health calculations
+@HiveType(typeId: 1)
 class UserProfile {
+  @HiveField(0)
   final String id;
+
+  @HiveField(1)
   final String name;
+
+  @HiveField(2)
   final int age;
+
+  @HiveField(3)
   final double weight; // in kg
+
+  @HiveField(4)
   final double height; // in cm
+
+  @HiveField(5)
   final Gender gender;
+
+  @HiveField(6)
   final DateTime createdAt;
+
+  @HiveField(7)
   final DateTime updatedAt;
 
   const UserProfile({
@@ -130,8 +150,12 @@ class UserProfile {
   }
 }
 
+@HiveType(typeId: 2)
 enum Gender {
+  @HiveField(0)
   male,
+
+  @HiveField(1)
   female;
 
   String get displayName {

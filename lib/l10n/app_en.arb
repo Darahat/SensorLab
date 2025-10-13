@@ -370,6 +370,10 @@
   "walking": "Walking",
   "running": "Running",
   "cycling": "Cycling",
+  "sitting": "Sitting",
+  "standing": "Standing",
+  "stairs": "Stairs",
+  "workout": "Workout",
   "environment": "Environment",
   "navigation": "Navigation",
   "motion": "Motion",
@@ -437,5 +441,75 @@
         "type": "String"
       }
     }
-  }
+  },
+  "currentMode": "Current mode: {mode}",
+  "@currentMode": {
+    "placeholders": {
+      "mode": {
+        "type": "String"
+      }
+    }
+  },
+  "noiseLevelGuide": "Noise Level Guide",
+  "quiet": "Quiet",
+  "moderate": "Moderate",
+  "loud": "Loud",
+  "veryLoud": "Very Loud",
+  "dangerous": "Dangerous",
+  "whisperLibrary": "Whisper, library",
+  "normalConversation": "Normal conversation",
+  "trafficOffice": "Traffic, office",
+  "motorcycleShouting": "Motorcycle, shouting",
+  "rockConcertChainsaw": "Rock concert, chainsaw",
+  "qrBarcodeScanner": "QR/Barcode Scanner",
+  "scannedData": "Scanned Data",
+  "copy": "Copy",
+  "clear": "Clear",
+  "pageNotFound": "Page Not Found",
+  "goHome": "Go Home",
+  "pageNotFoundMessage": "Page not found: {uri}",
+  "@pageNotFoundMessage": {
+    "placeholders": {
+      "uri": {
+        "type": "String"
+      }
+    }
+  },
+  "more": "More",
+  "theme": "Theme",
+  "about": "About",
+  "allSettings": "All Settings",
+  "getNotifiedAboutSensorReadings": "Get notified about sensor readings",
+  "themeChangeRequiresRestart": "Theme switching requires app restart",
+  "quickSettings": "Quick Settings",
+  "darkModeActive": "Dark mode active",
+  "lightModeActive": "Light mode active",
+  "sensorData": "SENSOR DATA",
+  "stepsLabel": "Steps",
+  "accelX": "Accel X",
+  "accelY": "Accel Y",
+  "accelZ": "Accel Z",
+  "gyroX": "Gyro X",
+  "gyroY": "Gyro Y",
+  "gyroZ": "Gyro Z",
+  "qrScannerSubtitle": "Scan QR codes, Data Matrix, PDF417, and Aztec codes",
+  "barcodeScannerSubtitle": "Scan product barcodes like UPC, EAN, Code 128, and more",
+  "activity": "Activity",
+  "startTracking": "START TRACKING",
+  "stopTracking": "STOP TRACKING",
+  "trackingActive": "Tracking Active",
+  "sessionPaused": "Session Paused",
+  "updateYourPersonalInformation": "Update your personal information",
+  "personalInformation": "Personal Information",
+  "physicalMeasurements": "Physical Measurements",
+  "enterYourFullName": "Enter your full name",
+  "pleaseEnterYourName": "Please enter your name",
+  "enterYourAge": "Enter your age",
+  "pleaseEnterYourAge": "Please enter your age",
+  "pleaseEnterValidNumber": "Please enter a valid number",
+  "selectYourGender": "Select your gender",
+  "enterYourWeightInKg": "Enter your weight in kg",
+  "pleaseEnterYourWeight": "Please enter your weight",
+  "enterYourHeightInCm": "Enter your height in cm",
+  "pleaseEnterYourHeight": "Please enter your height"
 }

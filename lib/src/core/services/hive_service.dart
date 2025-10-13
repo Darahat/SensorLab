@@ -3,6 +3,9 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:sensorlab/src/core/errors/exceptions.dart';
 import 'package:sensorlab/src/core/utils/logger.dart';
 import 'package:sensorlab/src/features/app_settings/domain/models/app_settings.dart';
+import 'package:sensorlab/src/features/health/domain/entities/activity_session.dart';
+import 'package:sensorlab/src/features/health/domain/entities/activity_type.dart';
+import 'package:sensorlab/src/features/health/domain/entities/user_profile.dart';
 
 import '../constants/hive_constants.dart';
 
@@ -23,38 +26,64 @@ class HiveService {
   /// Constructor receives dependencies.
   HiveService(this._appLogger);
 
-  /// [authBox] Instance
-  // static const String authBoxName = HiveConstants.authBox;
-
-  /// [taskBox] Instance
-  // static const String taskBoxName = HiveConstants.taskBox;
-
-  /// [aiChatBox] Instance
-  // static const String aiChatBoxName = HiveConstants.aiChatBox;
-
-  /// [uTouChatBox] Instance
-  // static const String uTouChatBoxName = HiveConstants.uTouChatBox;
-
   /// [settingsBoxName] Instance
   static const String settingsBoxName = HiveConstants.settingsBoxName;
+
+  /// [userProfileBoxName] Instance
+  static const String userProfileBoxName = HiveConstants.userProfileBox;
+
+  /// [activitySessionBoxName] Instance
+  static const String activitySessionBoxName = HiveConstants.activitySessionBox;
 
   /// Hive Service Initialization
   Future<void> init() async {
     /// If all-ready initialized return nothing
     if (_initialized) return;
     try {
-      /// Teach Hive about [UToUChatModelAdapter] data model
-      // if (!Hive.isAdapterRegistered(2)) {
-      //   Hive.registerAdapter(UserModelAdapter());
-      // }
-
       /// Teach Hive about [AppSettings] data model
       if (!Hive.isAdapterRegistered(0)) {
         Hive.registerAdapter(AppSettingsAdapter());
       }
 
+      /// Teach Hive about [UserProfile] data model
+      if (!Hive.isAdapterRegistered(1)) {
+        Hive.registerAdapter(UserProfileAdapter());
+      }
+
+      /// Teach Hive about [Gender] data model
+      if (!Hive.isAdapterRegistered(2)) {
+        Hive.registerAdapter(GenderAdapter());
+      }
+
+      /// Teach Hive about [ActivitySession] data model
+      if (!Hive.isAdapterRegistered(3)) {
+        Hive.registerAdapter(ActivitySessionAdapter());
+      }
+
+      /// Teach Hive about [SessionStatus] data model
+      if (!Hive.isAdapterRegistered(4)) {
+        Hive.registerAdapter(SessionStatusAdapter());
+      }
+
+      /// Teach Hive about [MovementData] data model
+      if (!Hive.isAdapterRegistered(5)) {
+        Hive.registerAdapter(MovementDataAdapter());
+      }
+
+      /// Teach Hive about [Goals] data model
+      if (!Hive.isAdapterRegistered(6)) {
+        Hive.registerAdapter(GoalsAdapter());
+      }
+
+      /// Teach Hive about [ActivityType] data model
+      if (!Hive.isAdapterRegistered(7)) {
+        Hive.registerAdapter(ActivityTypeAdapter());
+      }
+
       /// Open The Database drawers to read/write data
       await Hive.openBox<AppSettings>(settingsBoxName);
+      await Hive.openBox<UserProfile>(userProfileBoxName);
+      await Hive.openBox<ActivitySession>(activitySessionBoxName);
 
       /// Set _initialized value true
       _initialized = true;
@@ -69,28 +98,22 @@ class HiveService {
     }
   }
 
-  /// Auth box initialized
-  // Box<UserModel> get authBox {
-  //   _checkInitialized();
-  //   return Hive.box<UserModel>(authBoxName);
-  // }
-
-  ///aiChatBox initialized
-  // Box<AiChatModel> get aiChatBoxInit {
-  //   _checkInitialized();
-  //   return Hive.box<AiChatModel>(aiChatBoxName);
-  // }
-
-  ///uTouBox initialized
-  // Box<UToUChatModel> get uTouChatBoxInit {
-  //   _checkInitialized();
-  //   return Hive.box<UToUChatModel>(uTouChatBoxName);
-  // }
-
   ///settingsBox initialized
   Box<AppSettings> get settingsBox {
     _checkInitialized();
     return Hive.box<AppSettings>(settingsBoxName);
+  }
+
+  ///userProfileBox initialized
+  Box<UserProfile> get userProfileBox {
+    _checkInitialized();
+    return Hive.box<UserProfile>(userProfileBoxName);
+  }
+
+  ///activitySessionBox initialized
+  Box<ActivitySession> get activitySessionBox {
+    _checkInitialized();
+    return Hive.box<ActivitySession>(activitySessionBoxName);
   }
 
   /// check are they initialized or not

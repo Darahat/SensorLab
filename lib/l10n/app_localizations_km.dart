@@ -891,6 +891,18 @@ class AppLocalizationsKm extends AppLocalizations {
   String get cycling => 'ជិះកង់';
 
   @override
+  String get sitting => 'អង្គុយ';
+
+  @override
+  String get standing => 'ឈរ';
+
+  @override
+  String get stairs => 'ជណ្តើរ';
+
+  @override
+  String get workout => 'ហាត់ប្រាណ';
+
+  @override
   String get environment => 'បរិស្ថាន';
 
   @override
@@ -1074,4 +1086,176 @@ class AppLocalizationsKm extends AppLocalizations {
   String generalError(String error) {
     return 'កំហុស: $error';
   }
+
+  @override
+  String currentMode(String mode) {
+    return 'របៀបបច្ចុប្បន្ន: $mode';
+  }
+
+  @override
+  String get noiseLevelGuide => 'មគ្គុទ្ទេសក៍កម្រិតសម្លេង';
+
+  @override
+  String get quiet => 'ស្ងាត់';
+
+  @override
+  String get moderate => 'មធ្យម';
+
+  @override
+  String get loud => 'ខ្លាំង';
+
+  @override
+  String get veryLoud => 'ខ្លាំងណាស់';
+
+  @override
+  String get dangerous => 'ថ្នាក់ថ្នម';
+
+  @override
+  String get whisperLibrary => 'សំឡេងខ្សឹប, បណ្ណាល័យ';
+
+  @override
+  String get normalConversation => 'ការសន្ទនាធម្មតា';
+
+  @override
+  String get trafficOffice => 'ចរាចរណ៍, ការិយាល័យ';
+
+  @override
+  String get motorcycleShouting => 'ម៉ូតូ, ការស្រែក';
+
+  @override
+  String get rockConcertChainsaw => 'ការប្រគុំតន្រ្តី rock, ម៉ាស៊ីនកាត់ឈើ';
+
+  @override
+  String get qrBarcodeScanner => 'ម៉ាស៊ីនស្កេន QR/បាកូដ';
+
+  @override
+  String get scannedData => 'ទិន្នន័យបានស្កេន';
+
+  @override
+  String get copy => 'ចម្លង';
+
+  @override
+  String get clear => 'លុប';
+
+  @override
+  String get pageNotFound => 'រកមិនឃើញទំព័រ';
+
+  @override
+  String get goHome => 'ត្រឡប់ទៅទំព័រដើម';
+
+  @override
+  String pageNotFoundMessage(String uri) {
+    return 'រកមិនឃើញទំព័រ: $uri';
+  }
+
+  @override
+  String get more => 'ច្រើនទៀត';
+
+  @override
+  String get theme => 'ធីម';
+
+  @override
+  String get about => 'អំពី';
+
+  @override
+  String get allSettings => 'ការកំណត់ទាំងអស់';
+
+  @override
+  String get getNotifiedAboutSensorReadings => 'ទទួលការជូនដំណឹងអំពីការអានឧបករណ៍ចាប់សញ្ញា';
+
+  @override
+  String get themeChangeRequiresRestart => 'ការផ្លាស់ប្តូរធីមត្រូវការចាប់ផ្តើមកម្មវិធីឡើងវិញ';
+
+  @override
+  String get quickSettings => 'ការកំណត់លឿន';
+
+  @override
+  String get darkModeActive => 'ម៉ូដងងឹតសកម្ម';
+
+  @override
+  String get lightModeActive => 'ម៉ូដភ្លឺសកម្ម';
+
+  @override
+  String get sensorData => 'ទិន្នន័យឧបករណ៍ចាប់សញ្ញា';
+
+  @override
+  String get stepsLabel => 'ជំហាន';
+
+  @override
+  String get accelX => 'បង្កើនល្បឿន X';
+
+  @override
+  String get accelY => 'បង្កើនល្បឿន Y';
+
+  @override
+  String get accelZ => 'បង្កើនល្បឿន Z';
+
+  @override
+  String get gyroX => 'ជីរ៉ូ X';
+
+  @override
+  String get gyroY => 'ជីរ៉ូ Y';
+
+  @override
+  String get gyroZ => 'ជីរ៉ូ Z';
+
+  @override
+  String get qrScannerSubtitle => 'ស្កែន QR កូដ, Data Matrix, PDF417, និងកូដ Aztec';
+
+  @override
+  String get barcodeScannerSubtitle => 'ស្កែនបាកូដផលិតផលដូចជា UPC, EAN, Code 128, និងច្រើនទៀត';
+
+  @override
+  String get activity => 'សកម្មភាព';
+
+  @override
+  String get startTracking => 'ចាប់ផ្តើមតាមដាន';
+
+  @override
+  String get stopTracking => 'បញ្ឈប់ការតាមដាន';
+
+  @override
+  String get trackingActive => 'ការតាមដានដំណើរការ';
+
+  @override
+  String get sessionPaused => 'សម័យបានផ្អាក';
+
+  @override
+  String get updateYourPersonalInformation => 'ធ្វើបច្ចុប្បន្នភាពព័ត៌មានផ្ទាល់ខ្លួនរបស់អ្នក';
+
+  @override
+  String get personalInformation => 'ព័ត៌មានផ្ទាល់ខ្លួន';
+
+  @override
+  String get physicalMeasurements => 'ការវាស់ផ្នែករាងកាយ';
+
+  @override
+  String get enterYourFullName => 'បញ្ចូលឈ្មោះពេញរបស់អ្នក';
+
+  @override
+  String get pleaseEnterYourName => 'សូមបញ្ចូលឈ្មោះរបស់អ្នក';
+
+  @override
+  String get enterYourAge => 'បញ្ចូលអាយុរបស់អ្នក';
+
+  @override
+  String get pleaseEnterYourAge => 'សូមបញ្ចូលអាយុរបស់អ្នក';
+
+  @override
+  String get pleaseEnterValidNumber => 'សូមបញ្ចូលលេខត្រឹមត្រូវ';
+
+  @override
+  String get selectYourGender => 'ជ្រើសរើសភេទរបស់អ្នក';
+
+  @override
+  String get enterYourWeightInKg => 'បញ្ចូលទម្ងន់របស់អ្នកជា kg';
+
+  @override
+  String get pleaseEnterYourWeight => 'សូមបញ្ចូលទម្ងន់របស់អ្នក';
+
+  @override
+  String get enterYourHeightInCm => 'បញ្ចូលកម្ពស់របស់អ្នកជា cm';
+
+  @override
+  String get pleaseEnterYourHeight => 'សូមបញ្ចូលកម្ពស់របស់អ្នក';
 }

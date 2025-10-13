@@ -2,90 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:sensorlab/l10n/app_localizations.dart';
+import 'package:sensorlab/src/features/health/presentation/widgets/profile_editor.dart';
+import 'package:sensorlab/src/features/health/providers/health_provider.dart';
 
 import '../../domain/entities/activity_type.dart';
-import '../../domain/entities/user_profile.dart' as domain;
 import '../../models/health_data.dart';
-
-// Provider for the health provider (we'll fix the import later)
-final healthProvider = StateNotifierProvider<HealthNotifier, HealthData>((ref) {
-  return HealthNotifier();
-});
-
-// Temporary simple notifier - we'll connect to the real one later
-class HealthNotifier extends StateNotifier<HealthData> {
-  HealthNotifier() : super(_createInitialState());
-
-  static HealthData _createInitialState() {
-    final defaultProfile = domain.UserProfile(
-      id: '1',
-      name: 'User',
-      age: 30,
-      weight: 70.0,
-      height: 175.0,
-      gender: domain.Gender.male,
-      createdAt: DateTime.now(),
-      updatedAt: DateTime.now(),
-    );
-
-    return HealthData(
-      profile: defaultProfile,
-      selectedActivity: ActivityType.walking,
-      sessionState: HealthSessionState.idle,
-      currentMovement: null,
-      movementHistory: [],
-      sessionStartTime: DateTime.now(),
-      sessionDuration: Duration.zero,
-      totalActiveTime: Duration.zero,
-      steps: 0,
-      distance: 0.0,
-      caloriesBurned: 0.0,
-      averageIntensity: 0.0,
-      peakIntensity: 0.0,
-      movementCount: 0,
-      targetSteps: 10000,
-      targetCalories: 300.0,
-      targetDuration: const Duration(hours: 1),
-      errorMessage: null,
-    );
-  }
-
-  void updateSelectedActivity(ActivityType activity) {
-    state = state.copyWith(selectedActivity: activity);
-  }
-
-  void startSession() {
-    state = state.copyWith(
-      sessionState: HealthSessionState.tracking,
-      sessionStartTime: DateTime.now(),
-    );
-  }
-
-  void stopSession() {
-    state = state.copyWith(sessionState: HealthSessionState.idle);
-  }
-
-  void pauseSession() {
-    state = state.copyWith(sessionState: HealthSessionState.paused);
-  }
-
-  void resetSession() {
-    state = state.copyWith(
-      sessionState: HealthSessionState.idle,
-      steps: 0,
-      distance: 0.0,
-      caloriesBurned: 0.0,
-      sessionDuration: Duration.zero,
-      totalActiveTime: Duration.zero,
-      movementHistory: [],
-      currentMovement: null,
-    );
-  }
-
-  void updateProfile(domain.UserProfile profile) {
-    state = state.copyWith(profile: profile);
-  }
-}
 
 class HealthScreen extends ConsumerStatefulWidget {
   const HealthScreen({super.key});
@@ -95,57 +16,88 @@ class HealthScreen extends ConsumerStatefulWidget {
 }
 
 class _HealthScreenState extends ConsumerState<HealthScreen> {
+  String _getLocalizedActivityName(
+    ActivityType activity,
+    AppLocalizations l10n,
+  ) {
+    switch (activity) {
+      case ActivityType.walking:
+        return l10n.walking;
+      case ActivityType.running:
+        return l10n.running;
+      case ActivityType.cycling:
+        return l10n.cycling;
+      case ActivityType.sitting:
+        return l10n.sitting;
+      case ActivityType.standing:
+        return l10n.standing;
+      case ActivityType.stairs:
+        return l10n.stairs;
+      case ActivityType.workout:
+        return l10n.workout;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final healthData = ref.watch(healthProvider);
     final colorScheme = Theme.of(context).colorScheme;
 
-    return Builder(builder: (context) {
-      final l10n = AppLocalizations.of(context)!;
-      return Scaffold(
-        backgroundColor: colorScheme.surface,
-        appBar: AppBar(
-          title: Text(
-            l10n.healthTracker,
-            style: const TextStyle(fontWeight: FontWeight.w600),
-          ),
+    return Builder(
+      builder: (context) {
+        final l10n = AppLocalizations.of(context)!;
+        return Scaffold(
           backgroundColor: colorScheme.surface,
-          elevation: 0,
-          actions: [
-            IconButton(
-              icon: Icon(Iconsax.user, color: colorScheme.primary),
-              onPressed: _showProfileEditor,
+          appBar: AppBar(
+            title: Text(
+              l10n.healthTracker,
+              style: const TextStyle(fontWeight: FontWeight.w600),
             ),
-          ],
-        ),
-        body: SafeArea(
-          child: SingleChildScrollView(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _buildWelcomeCard(healthData, colorScheme, l10n),
-                const SizedBox(height: 16),
-                _buildQuickStats(healthData, colorScheme, l10n),
-                const SizedBox(height: 24),
-                _buildActivitySelector(healthData, colorScheme, l10n),
-                const SizedBox(height: 16),
-                _buildTrackingControls(healthData, colorScheme, l10n),
-                const SizedBox(height: 16),
-                if (healthData.sessionState == HealthSessionState.tracking) ...[
-                  _buildSensorDisplay(healthData, colorScheme, l10n),
+            backgroundColor: colorScheme.surface,
+            elevation: 0,
+            actions: [
+              IconButton(
+                icon: Icon(Iconsax.user, color: colorScheme.primary),
+                onPressed: () => _showProfileEditor(healthData),
+              ),
+            ],
+          ),
+          body: SafeArea(
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _buildWelcomeCard(healthData, colorScheme, l10n),
                   const SizedBox(height: 16),
+                  _buildQuickStats(healthData, colorScheme, l10n),
+                  const SizedBox(height: 24),
+                  _buildActivitySelector(healthData, colorScheme, l10n),
+                  const SizedBox(height: 16),
+                  _buildSessionStatus(healthData, colorScheme, l10n),
+                  const SizedBox(height: 12),
+                  _buildTrackingControls(healthData, colorScheme, l10n),
+                  const SizedBox(height: 16),
+                  if (healthData.sessionState ==
+                      HealthSessionState.tracking) ...[
+                    _buildSensorDisplay(healthData, colorScheme, l10n),
+                    const SizedBox(height: 16),
+                  ],
+                  _buildCalorieDisplay(healthData, colorScheme, l10n),
                 ],
-                _buildCalorieDisplay(healthData, colorScheme, l10n),
-              ],
+              ),
             ),
           ),
-        ),
-      );
-    });
+        );
+      },
+    );
   }
 
-  Widget _buildWelcomeCard(HealthData healthData, ColorScheme colorScheme, AppLocalizations l10n) {
+  Widget _buildWelcomeCard(
+    HealthData healthData,
+    ColorScheme colorScheme,
+    AppLocalizations l10n,
+  ) {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(20),
@@ -170,7 +122,12 @@ class _HealthScreenState extends ConsumerState<HealthScreen> {
           ),
           const SizedBox(height: 8),
           Text(
-            l10n.readyToTrackSession(healthData.selectedActivity.displayName.toLowerCase()),
+            l10n.readyToTrackSession(
+              _getLocalizedActivityName(
+                healthData.selectedActivity,
+                l10n,
+              ).toLowerCase(),
+            ),
             style: TextStyle(
               color: colorScheme.onPrimary.withOpacity(0.9),
               fontSize: 16,
@@ -225,7 +182,11 @@ class _HealthScreenState extends ConsumerState<HealthScreen> {
     );
   }
 
-  Widget _buildQuickStats(HealthData healthData, ColorScheme colorScheme, AppLocalizations l10n) {
+  Widget _buildQuickStats(
+    HealthData healthData,
+    ColorScheme colorScheme,
+    AppLocalizations l10n,
+  ) {
     return Row(
       children: [
         Expanded(
@@ -278,15 +239,20 @@ class _HealthScreenState extends ConsumerState<HealthScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
+            mainAxisSize: MainAxisSize.min,
             children: [
               Icon(icon, size: 16, color: colorScheme.primary),
               const SizedBox(width: 4),
-              Text(
-                label,
-                style: TextStyle(
-                  color: colorScheme.onSurface.withOpacity(0.7),
-                  fontSize: 12,
-                  fontWeight: FontWeight.w500,
+              Flexible(
+                child: Text(
+                  label,
+                  style: TextStyle(
+                    color: colorScheme.onSurface.withOpacity(0.7),
+                    fontSize: 12,
+                    fontWeight: FontWeight.w500,
+                  ),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                 ),
               ),
             ],
@@ -294,22 +260,31 @@ class _HealthScreenState extends ConsumerState<HealthScreen> {
           const SizedBox(height: 8),
           Row(
             crossAxisAlignment: CrossAxisAlignment.end,
+            mainAxisSize: MainAxisSize.min,
             children: [
-              Text(
-                value,
-                style: TextStyle(
-                  color: colorScheme.onSurface,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
+              Flexible(
+                child: Text(
+                  value,
+                  style: TextStyle(
+                    color: colorScheme.onSurface,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                 ),
               ),
               if (suffix.isNotEmpty) ...[
                 const SizedBox(width: 2),
-                Text(
-                  suffix,
-                  style: TextStyle(
-                    color: colorScheme.onSurface.withOpacity(0.6),
-                    fontSize: 12,
+                Flexible(
+                  child: Text(
+                    suffix,
+                    style: TextStyle(
+                      color: colorScheme.onSurface.withOpacity(0.6),
+                      fontSize: 12,
+                    ),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                   ),
                 ),
               ],
@@ -346,44 +321,105 @@ class _HealthScreenState extends ConsumerState<HealthScreen> {
           Wrap(
             spacing: 8,
             runSpacing: 8,
-            children:
-                ActivityType.values.map((activity) {
-                  final isSelected = healthData.selectedActivity == activity;
-                  return GestureDetector(
-                    onTap: () => _onActivityChanged(activity),
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 16,
-                        vertical: 8,
-                      ),
-                      decoration: BoxDecoration(
-                        color:
-                            isSelected
-                                ? colorScheme.primary
-                                : colorScheme.surface,
-                        borderRadius: BorderRadius.circular(20),
-                        border: Border.all(
-                          color:
-                              isSelected
-                                  ? colorScheme.primary
-                                  : colorScheme.outline,
-                        ),
-                      ),
-                      child: Text(
-                        activity.displayName,
-                        style: TextStyle(
-                          color:
-                              isSelected
-                                  ? colorScheme.onPrimary
-                                  : colorScheme.onSurface,
-                          fontWeight:
-                              isSelected ? FontWeight.w600 : FontWeight.normal,
-                        ),
-                      ),
+            children: ActivityType.values.map((activity) {
+              final isSelected = healthData.selectedActivity == activity;
+              return GestureDetector(
+                onTap: () => _onActivityChanged(activity),
+                child: Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 8,
+                  ),
+                  decoration: BoxDecoration(
+                    color: isSelected
+                        ? colorScheme.primary
+                        : colorScheme.surface,
+                    borderRadius: BorderRadius.circular(20),
+                    border: Border.all(
+                      color: isSelected
+                          ? colorScheme.primary
+                          : colorScheme.outline,
                     ),
-                  );
-                }).toList(),
+                  ),
+                  child: Text(
+                    _getLocalizedActivityName(activity, l10n),
+                    style: TextStyle(
+                      color: isSelected
+                          ? colorScheme.onPrimary
+                          : colorScheme.onSurface,
+                      fontWeight: isSelected
+                          ? FontWeight.w600
+                          : FontWeight.normal,
+                    ),
+                  ),
+                ),
+              );
+            }).toList(),
           ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildSessionStatus(
+    HealthData healthData,
+    ColorScheme colorScheme,
+    AppLocalizations l10n,
+  ) {
+    final isTracking = healthData.sessionState == HealthSessionState.tracking;
+    final isPaused = healthData.sessionState == HealthSessionState.paused;
+
+    if (healthData.sessionState == HealthSessionState.idle) {
+      return const SizedBox.shrink(); // Don't show status when idle
+    }
+
+    String statusText;
+    Color statusColor;
+    IconData statusIcon;
+
+    if (isTracking) {
+      statusText = l10n.trackingActive;
+      statusColor = colorScheme.primary;
+      statusIcon = Iconsax.activity;
+    } else if (isPaused) {
+      statusText = l10n.sessionPaused;
+      statusColor = colorScheme.secondary;
+      statusIcon = Iconsax.pause;
+    } else {
+      return const SizedBox.shrink();
+    }
+
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      decoration: BoxDecoration(
+        color: statusColor.withOpacity(0.1),
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: statusColor.withOpacity(0.3), width: 1),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(statusIcon, size: 16, color: statusColor),
+          const SizedBox(width: 8),
+          Text(
+            statusText,
+            style: TextStyle(
+              color: statusColor,
+              fontWeight: FontWeight.w500,
+              fontSize: 14,
+            ),
+          ),
+          if (isTracking) ...[
+            const SizedBox(width: 8),
+            SizedBox(
+              width: 12,
+              height: 12,
+              child: CircularProgressIndicator(
+                strokeWidth: 2,
+                valueColor: AlwaysStoppedAnimation(statusColor),
+              ),
+            ),
+          ],
         ],
       ),
     );
@@ -398,59 +434,97 @@ class _HealthScreenState extends ConsumerState<HealthScreen> {
     final isPaused = healthData.sessionState == HealthSessionState.paused;
 
     return Container(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         color: colorScheme.surfaceContainerHighest,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(16),
       ),
-      child: Row(
+      child: Column(
         children: [
-          Expanded(
+          // Primary Action Button (Start/Stop/Resume)
+          SizedBox(
+            width: double.infinity,
+            height: 56,
             child: ElevatedButton.icon(
               onPressed: _onStartStopTracking,
-              icon: Icon(isTracking ? Iconsax.stop : Iconsax.play),
+              icon: Icon(isTracking ? Iconsax.stop : Iconsax.play, size: 24),
               label: Text(
                 isTracking ? l10n.stop : (isPaused ? l10n.resume : l10n.start),
+                style: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
               style: ElevatedButton.styleFrom(
-                backgroundColor:
-                    isTracking ? colorScheme.error : colorScheme.primary,
-                foregroundColor:
-                    isTracking ? colorScheme.onError : colorScheme.onPrimary,
-                padding: const EdgeInsets.symmetric(vertical: 12),
+                backgroundColor: isTracking
+                    ? colorScheme.error
+                    : colorScheme.primary,
+                foregroundColor: isTracking
+                    ? colorScheme.onError
+                    : colorScheme.onPrimary,
+                elevation: isTracking ? 4 : 8,
+                shadowColor: isTracking
+                    ? colorScheme.error.withOpacity(0.3)
+                    : colorScheme.primary.withOpacity(0.3),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
               ),
             ),
           ),
-          if (isTracking) ...[
-            const SizedBox(width: 12),
-            ElevatedButton.icon(
-              onPressed: _onPauseTracking,
-              icon: const Icon(Iconsax.pause),
-              label: Text(l10n.pause),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: colorScheme.secondary,
-                foregroundColor: colorScheme.onSecondary,
-                padding: const EdgeInsets.symmetric(vertical: 12),
+
+          // Secondary Action Buttons
+          const SizedBox(height: 16),
+          Row(
+            children: [
+              // Pause Button (only visible when tracking)
+              if (isTracking) ...[
+                Expanded(
+                  child: OutlinedButton.icon(
+                    onPressed: _onPauseTracking,
+                    icon: const Icon(Iconsax.pause, size: 20),
+                    label: Text(l10n.pause),
+                    style: OutlinedButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(vertical: 14),
+                      side: BorderSide(color: colorScheme.secondary, width: 2),
+                      foregroundColor: colorScheme.secondary,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 12),
+              ],
+
+              // Reset Button
+              Expanded(
+                child: OutlinedButton.icon(
+                  onPressed: _onResetSession,
+                  icon: const Icon(Iconsax.refresh, size: 20),
+                  label: Text(l10n.reset),
+                  style: OutlinedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(vertical: 14),
+                    side: BorderSide(color: colorScheme.outline, width: 1.5),
+                    foregroundColor: colorScheme.onSurfaceVariant,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                ),
               ),
-            ),
-          ],
-          const SizedBox(width: 12),
-          ElevatedButton.icon(
-            onPressed: _onResetSession,
-            icon: const Icon(Iconsax.refresh),
-            label: Text(l10n.reset),
-            style: ElevatedButton.styleFrom(
-              backgroundColor: colorScheme.outline,
-              foregroundColor: colorScheme.onSurface,
-              padding: const EdgeInsets.symmetric(vertical: 12),
-            ),
+            ],
           ),
         ],
       ),
     );
   }
 
-  Widget _buildSensorDisplay(HealthData healthData, ColorScheme colorScheme, AppLocalizations l10n) {
+  Widget _buildSensorDisplay(
+    HealthData healthData,
+    ColorScheme colorScheme,
+    AppLocalizations l10n,
+  ) {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -521,14 +595,17 @@ class _HealthScreenState extends ConsumerState<HealthScreen> {
     );
   }
 
-  Widget _buildCalorieDisplay(HealthData healthData, ColorScheme colorScheme, AppLocalizations l10n) {
-    final progress =
-        healthData.targetCalories > 0
-            ? (healthData.caloriesBurned / healthData.targetCalories).clamp(
-              0.0,
-              1.0,
-            )
-            : 0.0;
+  Widget _buildCalorieDisplay(
+    HealthData healthData,
+    ColorScheme colorScheme,
+    AppLocalizations l10n,
+  ) {
+    final progress = healthData.targetCalories > 0
+        ? (healthData.caloriesBurned / healthData.targetCalories).clamp(
+            0.0,
+            1.0,
+          )
+        : 0.0;
 
     return Container(
       padding: const EdgeInsets.all(20),
@@ -568,7 +645,9 @@ class _HealthScreenState extends ConsumerState<HealthScreen> {
           ),
           const SizedBox(height: 12),
           Text(
-            l10n.bmrPerDay(healthData.profile.basalMetabolicRate.toInt().toString()),
+            l10n.bmrPerDay(
+              healthData.profile.basalMetabolicRate.toInt().toString(),
+            ),
             style: TextStyle(
               fontSize: 14,
               color: colorScheme.onSurface.withOpacity(0.7),
@@ -589,56 +668,30 @@ class _HealthScreenState extends ConsumerState<HealthScreen> {
   }
 
   void _onActivityChanged(ActivityType activity) {
-    ref.read(healthProvider.notifier).updateSelectedActivity(activity);
+    ref.read(healthProvider.notifier).setActivity(activity);
   }
 
   void _onStartStopTracking() {
     final currentState = ref.read(healthProvider).sessionState;
     if (currentState == HealthSessionState.tracking) {
-      ref.read(healthProvider.notifier).stopSession();
+      ref.read(healthProvider.notifier).stopTracking();
     } else {
-      ref.read(healthProvider.notifier).startSession();
+      ref.read(healthProvider.notifier).startTracking();
     }
   }
 
   void _onPauseTracking() {
-    ref.read(healthProvider.notifier).pauseSession();
+    ref.read(healthProvider.notifier).pauseTracking();
   }
 
   void _onResetSession() {
     ref.read(healthProvider.notifier).resetSession();
   }
 
-  void _showProfileEditor() {
-    final l10n = AppLocalizations.of(context)!;
+  void _showProfileEditor(HealthData healthData) {
     showDialog(
       context: context,
-      builder:
-          (context) => AlertDialog(
-            title: Text(l10n.profileSettings),
-            content: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text('${l10n.name}: ${ref.read(healthProvider).profile.name}'),
-                Text('${l10n.age}: ${ref.read(healthProvider).profile.age}'),
-                Text(
-                  '${l10n.weight}: ${ref.read(healthProvider).profile.weight.toStringAsFixed(1)} kg',
-                ),
-                Text(
-                  '${l10n.height}: ${ref.read(healthProvider).profile.height.toStringAsFixed(1)} cm',
-                ),
-                Text(
-                  '${l10n.bmi}: ${ref.read(healthProvider).profile.bmi.toStringAsFixed(1)}',
-                ),
-              ],
-            ),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.of(context).pop(),
-                child: Text(l10n.ok),
-              ),
-            ],
-          ),
+      builder: (context) => ProfileEditor(profile: healthData.profile),
     );
   }
 }

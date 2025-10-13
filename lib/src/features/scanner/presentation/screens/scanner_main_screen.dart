@@ -50,8 +50,7 @@ class ScannerMainScreen extends StatelessWidget {
                   // QR Code Scanner Card
                   _ScannerCard(
                     title: l10n.qrCodeScanner,
-                    subtitle:
-                        'Scan QR codes, Data Matrix, PDF417, and Aztec codes',
+                    subtitle: l10n.qrScannerSubtitle,
                     icon: Iconsax.scan,
                     iconColor: colorScheme.primary,
                     gradientColors: [
@@ -80,8 +79,7 @@ class ScannerMainScreen extends StatelessWidget {
                   // Barcode Scanner Card
                   _ScannerCard(
                     title: l10n.barcodeScanner,
-                    subtitle:
-                        'Scan product barcodes like UPC, EAN, Code 128, and more',
+                    subtitle: l10n.barcodeScannerSubtitle,
                     icon: Iconsax.barcode,
                     iconColor: colorScheme.secondary,
                     gradientColors: [

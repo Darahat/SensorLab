@@ -891,6 +891,18 @@ class AppLocalizationsJa extends AppLocalizations {
   String get cycling => 'サイクリング';
 
   @override
+  String get sitting => '座る';
+
+  @override
+  String get standing => '立つ';
+
+  @override
+  String get stairs => '階段';
+
+  @override
+  String get workout => 'ワークアウト';
+
+  @override
   String get environment => '環境';
 
   @override
@@ -1074,4 +1086,176 @@ class AppLocalizationsJa extends AppLocalizations {
   String generalError(String error) {
     return 'エラー: $error';
   }
+
+  @override
+  String currentMode(String mode) {
+    return '現在のモード: $mode';
+  }
+
+  @override
+  String get noiseLevelGuide => '騒音レベルガイド';
+
+  @override
+  String get quiet => '静か';
+
+  @override
+  String get moderate => '適度';
+
+  @override
+  String get loud => '大きい';
+
+  @override
+  String get veryLoud => '非常に大きい';
+
+  @override
+  String get dangerous => '危険';
+
+  @override
+  String get whisperLibrary => '囁き声、図書館';
+
+  @override
+  String get normalConversation => '普通の会話';
+
+  @override
+  String get trafficOffice => '交通、オフィス';
+
+  @override
+  String get motorcycleShouting => 'オートバイ、叫び声';
+
+  @override
+  String get rockConcertChainsaw => 'ロックコンサート、チェーンソー';
+
+  @override
+  String get qrBarcodeScanner => 'QR/バーコードスキャナ';
+
+  @override
+  String get scannedData => 'スキャンデータ';
+
+  @override
+  String get copy => 'コピー';
+
+  @override
+  String get clear => 'クリア';
+
+  @override
+  String get pageNotFound => 'ページが見つかりません';
+
+  @override
+  String get goHome => 'ホームに戻る';
+
+  @override
+  String pageNotFoundMessage(String uri) {
+    return 'ページが見つかりません: $uri';
+  }
+
+  @override
+  String get more => '詳細';
+
+  @override
+  String get theme => 'テーマ';
+
+  @override
+  String get about => 'について';
+
+  @override
+  String get allSettings => 'すべての設定';
+
+  @override
+  String get getNotifiedAboutSensorReadings => 'センサー読み取り値の通知を受け取る';
+
+  @override
+  String get themeChangeRequiresRestart => 'テーマの変更にはアプリの再起動が必要です';
+
+  @override
+  String get quickSettings => 'クイック設定';
+
+  @override
+  String get darkModeActive => 'ダークモード有効';
+
+  @override
+  String get lightModeActive => 'ライトモード有効';
+
+  @override
+  String get sensorData => 'センサーデータ';
+
+  @override
+  String get stepsLabel => '歩数';
+
+  @override
+  String get accelX => '加速度X';
+
+  @override
+  String get accelY => '加速度Y';
+
+  @override
+  String get accelZ => '加速度Z';
+
+  @override
+  String get gyroX => 'ジャイロX';
+
+  @override
+  String get gyroY => 'ジャイロY';
+
+  @override
+  String get gyroZ => 'ジャイロZ';
+
+  @override
+  String get qrScannerSubtitle => 'QRコード、Data Matrix、PDF417、Aztecコードをスキャン';
+
+  @override
+  String get barcodeScannerSubtitle => 'UPC、EAN、Code 128などの商品バーコードをスキャン';
+
+  @override
+  String get activity => 'アクティビティ';
+
+  @override
+  String get startTracking => 'トラッキング開始';
+
+  @override
+  String get stopTracking => 'トラッキング停止';
+
+  @override
+  String get trackingActive => 'トラッキング中';
+
+  @override
+  String get sessionPaused => 'セッション一時停止';
+
+  @override
+  String get updateYourPersonalInformation => '個人情報を更新する';
+
+  @override
+  String get personalInformation => '個人情報';
+
+  @override
+  String get physicalMeasurements => '身体測定';
+
+  @override
+  String get enterYourFullName => 'フルネームを入力してください';
+
+  @override
+  String get pleaseEnterYourName => '名前を入力してください';
+
+  @override
+  String get enterYourAge => '年齢を入力してください';
+
+  @override
+  String get pleaseEnterYourAge => '年齢を入力してください';
+
+  @override
+  String get pleaseEnterValidNumber => '有効な数値を入力してください';
+
+  @override
+  String get selectYourGender => '性別を選択してください';
+
+  @override
+  String get enterYourWeightInKg => '体重をkgで入力してください';
+
+  @override
+  String get pleaseEnterYourWeight => '体重を入力してください';
+
+  @override
+  String get enterYourHeightInCm => '身長をcmで入力してください';
+
+  @override
+  String get pleaseEnterYourHeight => '身長を入力してください';
 }

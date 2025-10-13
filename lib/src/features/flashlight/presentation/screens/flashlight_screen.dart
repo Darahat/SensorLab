@@ -13,6 +13,20 @@ class FlashlightScreen extends ConsumerStatefulWidget {
 }
 
 class _FlashlightScreenState extends ConsumerState<FlashlightScreen> {
+  String _getLocalizedModeDescription(
+    FlashlightMode mode,
+    AppLocalizations l10n,
+  ) {
+    switch (mode) {
+      case FlashlightMode.normal:
+        return l10n.normal;
+      case FlashlightMode.strobe:
+        return l10n.strobe;
+      case FlashlightMode.sos:
+        return l10n.sos;
+    }
+  }
+
   @override
   void initState() {
     super.initState();
@@ -165,7 +179,7 @@ class _FlashlightScreenState extends ConsumerState<FlashlightScreen> {
                           const SizedBox(height: 24),
 
                           // Quick Action Buttons
-                          Row(
+                          Column(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               ElevatedButton.icon(
@@ -178,6 +192,7 @@ class _FlashlightScreenState extends ConsumerState<FlashlightScreen> {
                                   foregroundColor: Colors.white,
                                 ),
                               ),
+                              const SizedBox(width: 4),
                               ElevatedButton.icon(
                                 onPressed: () =>
                                     flashlightNotifier.toggleFlashlight(),
@@ -326,7 +341,12 @@ class _FlashlightScreenState extends ConsumerState<FlashlightScreen> {
                                 const SizedBox(width: 12),
                                 Expanded(
                                   child: Text(
-                                    'Current mode: ${flashlightData.modeDescription}',
+                                    l10n.currentMode(
+                                      _getLocalizedModeDescription(
+                                        flashlightData.mode,
+                                        l10n,
+                                      ),
+                                    ),
                                     style: const TextStyle(
                                       fontWeight: FontWeight.w500,
                                     ),
@@ -531,14 +551,20 @@ class _FlashlightScreenState extends ConsumerState<FlashlightScreen> {
       style: ElevatedButton.styleFrom(
         backgroundColor: isSelected ? Colors.blue : Colors.grey[200],
         foregroundColor: isSelected ? Colors.white : Colors.black87,
-        padding: const EdgeInsets.symmetric(vertical: 12),
+        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           Icon(icon, size: 20),
           const SizedBox(height: 4),
-          Text(label, style: const TextStyle(fontSize: 12)),
+          Text(
+            label,
+            style: const TextStyle(fontSize: 12),
+            textAlign: TextAlign.center,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
         ],
       ),
     );
@@ -558,6 +584,7 @@ class _FlashlightScreenState extends ConsumerState<FlashlightScreen> {
         border: Border.all(color: color.withOpacity(0.3)),
       ),
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
           Icon(icon, color: color, size: 20),
           const SizedBox(height: 4),
@@ -568,6 +595,9 @@ class _FlashlightScreenState extends ConsumerState<FlashlightScreen> {
               color: color,
               fontWeight: FontWeight.w500,
             ),
+            textAlign: TextAlign.center,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
           ),
           const SizedBox(height: 2),
           Text(
@@ -577,6 +607,9 @@ class _FlashlightScreenState extends ConsumerState<FlashlightScreen> {
               fontWeight: FontWeight.bold,
               color: color,
             ),
+            textAlign: TextAlign.center,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
           ),
         ],
       ),
@@ -587,12 +620,14 @@ class _FlashlightScreenState extends ConsumerState<FlashlightScreen> {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4),
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(emoji, style: const TextStyle(fontSize: 16)),
           const SizedBox(width: 12),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
                   title,
@@ -600,10 +635,14 @@ class _FlashlightScreenState extends ConsumerState<FlashlightScreen> {
                     fontWeight: FontWeight.w500,
                     fontSize: 14,
                   ),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
                 ),
                 Text(
                   description,
                   style: TextStyle(fontSize: 12, color: Colors.grey[600]),
+                  maxLines: 3,
+                  overflow: TextOverflow.ellipsis,
                 ),
               ],
             ),

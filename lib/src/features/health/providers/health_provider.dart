@@ -2,28 +2,45 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:sensorlab/src/features/health/domain/entities/activity_session.dart';
 import 'package:sensorlab/src/features/health/domain/entities/activity_type.dart';
 import 'package:sensorlab/src/features/health/domain/entities/user_profile.dart'
     as domain;
+import 'package:sensorlab/src/features/health/domain/repositories/activity_session_repository.dart';
+import 'package:sensorlab/src/features/health/domain/repositories/user_profile_repository.dart';
+import 'package:sensorlab/src/features/health/infrastructure/providers.dart';
 import 'package:sensorlab/src/features/health/models/health_data.dart';
 import 'package:sensors_plus/sensors_plus.dart';
 
+final healthProvider = StateNotifierProvider<HealthProvider, HealthData>((ref) {
+  final userProfileRepository = ref.watch(userProfileRepositoryProvider);
+  final activitySessionRepository = ref.watch(activitySessionRepositoryProvider);
+  return HealthProvider(userProfileRepository, activitySessionRepository);
+});
+
 class HealthProvider extends StateNotifier<HealthData> {
-  HealthProvider()
-    : super(
-        HealthData(
-          profile: domain.UserProfile(
-            id: '1',
-            name: 'User',
-            age: 30,
-            weight: 70.0,
-            height: 175.0,
-            gender: domain.Gender.male,
-            createdAt: DateTime.now(),
-            updatedAt: DateTime.now(),
+  final UserProfileRepository _userProfileRepository;
+  final ActivitySessionRepository _activitySessionRepository;
+
+  HealthProvider(
+    this._userProfileRepository,
+    this._activitySessionRepository,
+  ) : super(
+          HealthData(
+            profile: domain.UserProfile(
+              id: '1',
+              name: 'User',
+              age: 30,
+              weight: 70.0,
+              height: 175.0,
+              gender: domain.Gender.male,
+              createdAt: DateTime.now(),
+              updatedAt: DateTime.now(),
+            ),
           ),
-        ),
-      );
+        ) {
+    initialize();
+  }
 
   // Stream subscriptions
   StreamSubscription<UserAccelerometerEvent>? _accelerometerSubscription;
@@ -36,7 +53,7 @@ class HealthProvider extends StateNotifier<HealthData> {
   // Movement tracking
   DateTime? _lastMovementTime;
   double _lastIntensity = 0.0;
-  List<double> _intensityBuffer = [];
+  final List<double> _intensityBuffer = [];
   static const int _bufferSize = 10;
   static const double _movementThreshold = 0.1;
   static const Duration _activeTimeThreshold = Duration(seconds: 2);
@@ -48,16 +65,34 @@ class HealthProvider extends StateNotifier<HealthData> {
   }
 
   // Initialize health tracking
-  void initialize() {
-    state = state.copyWith(
-      isInitialized: true,
-      sessionStartTime: DateTime.now(),
-      errorMessage: null,
-    );
+  Future<void> initialize() async {
+    final profile = await _userProfileRepository.getCurrentUserProfile();
+    if (profile != null) {
+      state = state.copyWith(profile: profile, isInitialized: true);
+    } else {
+      final defaultProfile = await _userProfileRepository.createDefaultProfile(
+        'User',
+        30,
+        70.0,
+        175.0,
+        domain.Gender.male,
+      );
+      state = state.copyWith(profile: defaultProfile, isInitialized: true);
+    }
+
+    final activeSession = await _activitySessionRepository.getActiveSession();
+    if (activeSession != null) {
+      state = state.copyWith(
+        sessionState: HealthSessionState.tracking,
+        isTracking: true,
+      );
+      resumeTracking();
+    }
   }
 
   // Profile management
-  void updateProfile(domain.UserProfile profile) {
+  Future<void> updateProfile(domain.UserProfile profile) async {
+    await _userProfileRepository.updateUserProfile(profile);
     state = state.copyWith(profile: profile);
     _recalculateCalories();
   }
@@ -69,10 +104,23 @@ class HealthProvider extends StateNotifier<HealthData> {
   }
 
   // Session control
-  void startTracking() {
+  Future<void> startTracking() async {
     if (state.isTracking) return;
 
     try {
+      final session = ActivitySession(
+        id: DateTime.now().millisecondsSinceEpoch.toString(),
+        activityType: state.selectedActivity,
+        startTime: DateTime.now(),
+        status: SessionStatus.active,
+        goals: Goals(
+          targetSteps: state.targetSteps,
+          targetCalories: state.targetCalories,
+          targetDuration: state.targetDuration,
+        ),
+      );
+      await _activitySessionRepository.saveActivitySession(session);
+
       // Start sensor subscriptions
       _accelerometerSubscription = userAccelerometerEventStream().listen(
         _handleAccelerometerData,
@@ -89,7 +137,7 @@ class HealthProvider extends StateNotifier<HealthData> {
       );
 
       // Start session timer
-      _sessionTimer = Timer.periodic(Duration(seconds: 1), (_) {
+      _sessionTimer = Timer.periodic(const Duration(seconds: 1), (_) {
         _updateSessionDuration();
       });
 
@@ -104,26 +152,44 @@ class HealthProvider extends StateNotifier<HealthData> {
     }
   }
 
-  void pauseTracking() {
+  Future<void> pauseTracking() async {
     if (!state.isTracking) return;
 
     _stopSensors();
     _sessionTimer?.cancel();
     _activeTimeTimer?.cancel();
 
+    final activeSession = await _activitySessionRepository.getActiveSession();
+    if (activeSession != null) {
+      await _activitySessionRepository.updateActivitySession(
+        activeSession.copyWith(status: SessionStatus.paused),
+      );
+    }
+
     state = state.copyWith(sessionState: HealthSessionState.paused);
   }
 
-  void resumeTracking() {
+  Future<void> resumeTracking() async {
     if (state.sessionState != HealthSessionState.paused) return;
 
-    startTracking();
+    final activeSession = await _activitySessionRepository.getActiveSession();
+    if (activeSession != null) {
+      await _activitySessionRepository.updateActivitySession(
+        activeSession.copyWith(status: SessionStatus.active),
+      );
+      startTracking();
+    }
   }
 
-  void stopTracking() {
+  Future<void> stopTracking() async {
     _stopSensors();
     _sessionTimer?.cancel();
     _activeTimeTimer?.cancel();
+
+    final activeSession = await _activitySessionRepository.getActiveSession();
+    if (activeSession != null) {
+      await _activitySessionRepository.completeSession(activeSession.id);
+    }
 
     state = state.copyWith(
       isTracking: false,
@@ -131,8 +197,8 @@ class HealthProvider extends StateNotifier<HealthData> {
     );
   }
 
-  void resetSession() {
-    stopTracking();
+  Future<void> resetSession() async {
+    await stopTracking();
 
     state = HealthData(
       profile: state.profile,
@@ -194,9 +260,11 @@ class HealthProvider extends StateNotifier<HealthData> {
 
     // Update movement data
     final movementData = MovementData(
-      accelerometer: event,
-      movementIntensity: intensity,
       timestamp: DateTime.now(),
+      x: event.x,
+      y: event.y,
+      z: event.z,
+      intensity: intensity,
     );
 
     final updatedHistory = List<MovementData>.from(state.movementHistory);
@@ -224,12 +292,12 @@ class HealthProvider extends StateNotifier<HealthData> {
   }
 
   void _handleGyroscopeData(GyroscopeEvent event) {
-    if (!state.isTracking || state.currentMovement == null) return;
+    if (!state.isTracking) return;
 
     // Update current movement with gyroscope data
-    state = state.copyWith(
-      currentMovement: state.currentMovement!.copyWith(gyroscope: event),
-    );
+    // state = state.copyWith(
+    //   currentMovement: state.currentMovement!.copyWith(gyroscope: event),
+    // );
   }
 
   double _calculateMovementIntensity(UserAccelerometerEvent event) {
@@ -247,7 +315,7 @@ class HealthProvider extends StateNotifier<HealthData> {
     if (intensity > _movementThreshold) {
       final now = DateTime.now();
       if (_lastMovementTime == null ||
-          now.difference(_lastMovementTime!) > Duration(milliseconds: 500)) {
+          now.difference(_lastMovementTime!) > const Duration(milliseconds: 500)) {
         _lastMovementTime = now;
         return intensity > _lastIntensity * 1.2; // 20% increase threshold
       }
@@ -272,7 +340,7 @@ class HealthProvider extends StateNotifier<HealthData> {
       _activeTimeTimer = Timer(_activeTimeThreshold, () {
         // Add active time
         state = state.copyWith(
-          totalActiveTime: state.totalActiveTime + Duration(seconds: 1),
+          totalActiveTime: state.totalActiveTime + const Duration(seconds: 1),
         );
       });
     }
@@ -312,7 +380,7 @@ class HealthProvider extends StateNotifier<HealthData> {
     startTracking();
 
     // Simulate 5 minutes of activity
-    Timer.periodic(Duration(seconds: 1), (timer) {
+    Timer.periodic(const Duration(seconds: 1), (timer) {
       if (timer.tick > 300 || !state.isTracking) {
         timer.cancel();
         return;

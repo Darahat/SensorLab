@@ -1815,6 +1815,30 @@ abstract class AppLocalizations {
   /// **'Cycling'**
   String get cycling;
 
+  /// No description provided for @sitting.
+  ///
+  /// In en, this message translates to:
+  /// **'Sitting'**
+  String get sitting;
+
+  /// No description provided for @standing.
+  ///
+  /// In en, this message translates to:
+  /// **'Standing'**
+  String get standing;
+
+  /// No description provided for @stairs.
+  ///
+  /// In en, this message translates to:
+  /// **'Stairs'**
+  String get stairs;
+
+  /// No description provided for @workout.
+  ///
+  /// In en, this message translates to:
+  /// **'Workout'**
+  String get workout;
+
   /// No description provided for @environment.
   ///
   /// In en, this message translates to:
@@ -2180,6 +2204,342 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Error: {error}'**
   String generalError(String error);
+
+  /// No description provided for @currentMode.
+  ///
+  /// In en, this message translates to:
+  /// **'Current mode: {mode}'**
+  String currentMode(String mode);
+
+  /// No description provided for @noiseLevelGuide.
+  ///
+  /// In en, this message translates to:
+  /// **'Noise Level Guide'**
+  String get noiseLevelGuide;
+
+  /// No description provided for @quiet.
+  ///
+  /// In en, this message translates to:
+  /// **'Quiet'**
+  String get quiet;
+
+  /// No description provided for @moderate.
+  ///
+  /// In en, this message translates to:
+  /// **'Moderate'**
+  String get moderate;
+
+  /// No description provided for @loud.
+  ///
+  /// In en, this message translates to:
+  /// **'Loud'**
+  String get loud;
+
+  /// No description provided for @veryLoud.
+  ///
+  /// In en, this message translates to:
+  /// **'Very Loud'**
+  String get veryLoud;
+
+  /// No description provided for @dangerous.
+  ///
+  /// In en, this message translates to:
+  /// **'Dangerous'**
+  String get dangerous;
+
+  /// No description provided for @whisperLibrary.
+  ///
+  /// In en, this message translates to:
+  /// **'Whisper, library'**
+  String get whisperLibrary;
+
+  /// No description provided for @normalConversation.
+  ///
+  /// In en, this message translates to:
+  /// **'Normal conversation'**
+  String get normalConversation;
+
+  /// No description provided for @trafficOffice.
+  ///
+  /// In en, this message translates to:
+  /// **'Traffic, office'**
+  String get trafficOffice;
+
+  /// No description provided for @motorcycleShouting.
+  ///
+  /// In en, this message translates to:
+  /// **'Motorcycle, shouting'**
+  String get motorcycleShouting;
+
+  /// No description provided for @rockConcertChainsaw.
+  ///
+  /// In en, this message translates to:
+  /// **'Rock concert, chainsaw'**
+  String get rockConcertChainsaw;
+
+  /// No description provided for @qrBarcodeScanner.
+  ///
+  /// In en, this message translates to:
+  /// **'QR/Barcode Scanner'**
+  String get qrBarcodeScanner;
+
+  /// No description provided for @scannedData.
+  ///
+  /// In en, this message translates to:
+  /// **'Scanned Data'**
+  String get scannedData;
+
+  /// No description provided for @copy.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy'**
+  String get copy;
+
+  /// No description provided for @clear.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear'**
+  String get clear;
+
+  /// No description provided for @pageNotFound.
+  ///
+  /// In en, this message translates to:
+  /// **'Page Not Found'**
+  String get pageNotFound;
+
+  /// No description provided for @goHome.
+  ///
+  /// In en, this message translates to:
+  /// **'Go Home'**
+  String get goHome;
+
+  /// No description provided for @pageNotFoundMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Page not found: {uri}'**
+  String pageNotFoundMessage(String uri);
+
+  /// No description provided for @more.
+  ///
+  /// In en, this message translates to:
+  /// **'More'**
+  String get more;
+
+  /// No description provided for @theme.
+  ///
+  /// In en, this message translates to:
+  /// **'Theme'**
+  String get theme;
+
+  /// No description provided for @about.
+  ///
+  /// In en, this message translates to:
+  /// **'About'**
+  String get about;
+
+  /// No description provided for @allSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'All Settings'**
+  String get allSettings;
+
+  /// No description provided for @getNotifiedAboutSensorReadings.
+  ///
+  /// In en, this message translates to:
+  /// **'Get notified about sensor readings'**
+  String get getNotifiedAboutSensorReadings;
+
+  /// No description provided for @themeChangeRequiresRestart.
+  ///
+  /// In en, this message translates to:
+  /// **'Theme switching requires app restart'**
+  String get themeChangeRequiresRestart;
+
+  /// No description provided for @quickSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Quick Settings'**
+  String get quickSettings;
+
+  /// No description provided for @darkModeActive.
+  ///
+  /// In en, this message translates to:
+  /// **'Dark mode active'**
+  String get darkModeActive;
+
+  /// No description provided for @lightModeActive.
+  ///
+  /// In en, this message translates to:
+  /// **'Light mode active'**
+  String get lightModeActive;
+
+  /// No description provided for @sensorData.
+  ///
+  /// In en, this message translates to:
+  /// **'SENSOR DATA'**
+  String get sensorData;
+
+  /// No description provided for @stepsLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Steps'**
+  String get stepsLabel;
+
+  /// No description provided for @accelX.
+  ///
+  /// In en, this message translates to:
+  /// **'Accel X'**
+  String get accelX;
+
+  /// No description provided for @accelY.
+  ///
+  /// In en, this message translates to:
+  /// **'Accel Y'**
+  String get accelY;
+
+  /// No description provided for @accelZ.
+  ///
+  /// In en, this message translates to:
+  /// **'Accel Z'**
+  String get accelZ;
+
+  /// No description provided for @gyroX.
+  ///
+  /// In en, this message translates to:
+  /// **'Gyro X'**
+  String get gyroX;
+
+  /// No description provided for @gyroY.
+  ///
+  /// In en, this message translates to:
+  /// **'Gyro Y'**
+  String get gyroY;
+
+  /// No description provided for @gyroZ.
+  ///
+  /// In en, this message translates to:
+  /// **'Gyro Z'**
+  String get gyroZ;
+
+  /// No description provided for @qrScannerSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Scan QR codes, Data Matrix, PDF417, and Aztec codes'**
+  String get qrScannerSubtitle;
+
+  /// No description provided for @barcodeScannerSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Scan product barcodes like UPC, EAN, Code 128, and more'**
+  String get barcodeScannerSubtitle;
+
+  /// No description provided for @activity.
+  ///
+  /// In en, this message translates to:
+  /// **'Activity'**
+  String get activity;
+
+  /// No description provided for @startTracking.
+  ///
+  /// In en, this message translates to:
+  /// **'START TRACKING'**
+  String get startTracking;
+
+  /// No description provided for @stopTracking.
+  ///
+  /// In en, this message translates to:
+  /// **'STOP TRACKING'**
+  String get stopTracking;
+
+  /// No description provided for @trackingActive.
+  ///
+  /// In en, this message translates to:
+  /// **'Tracking Active'**
+  String get trackingActive;
+
+  /// No description provided for @sessionPaused.
+  ///
+  /// In en, this message translates to:
+  /// **'Session Paused'**
+  String get sessionPaused;
+
+  /// No description provided for @updateYourPersonalInformation.
+  ///
+  /// In en, this message translates to:
+  /// **'Update your personal information'**
+  String get updateYourPersonalInformation;
+
+  /// No description provided for @personalInformation.
+  ///
+  /// In en, this message translates to:
+  /// **'Personal Information'**
+  String get personalInformation;
+
+  /// No description provided for @physicalMeasurements.
+  ///
+  /// In en, this message translates to:
+  /// **'Physical Measurements'**
+  String get physicalMeasurements;
+
+  /// No description provided for @enterYourFullName.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your full name'**
+  String get enterYourFullName;
+
+  /// No description provided for @pleaseEnterYourName.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter your name'**
+  String get pleaseEnterYourName;
+
+  /// No description provided for @enterYourAge.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your age'**
+  String get enterYourAge;
+
+  /// No description provided for @pleaseEnterYourAge.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter your age'**
+  String get pleaseEnterYourAge;
+
+  /// No description provided for @pleaseEnterValidNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a valid number'**
+  String get pleaseEnterValidNumber;
+
+  /// No description provided for @selectYourGender.
+  ///
+  /// In en, this message translates to:
+  /// **'Select your gender'**
+  String get selectYourGender;
+
+  /// No description provided for @enterYourWeightInKg.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your weight in kg'**
+  String get enterYourWeightInKg;
+
+  /// No description provided for @pleaseEnterYourWeight.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter your weight'**
+  String get pleaseEnterYourWeight;
+
+  /// No description provided for @enterYourHeightInCm.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your height in cm'**
+  String get enterYourHeightInCm;
+
+  /// No description provided for @pleaseEnterYourHeight.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter your height'**
+  String get pleaseEnterYourHeight;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

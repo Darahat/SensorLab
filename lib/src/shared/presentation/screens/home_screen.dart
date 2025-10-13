@@ -348,6 +348,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
               return SensorGridItem(
                 sensor: sensorsToShow[index],
                 sensorStatus: "NEW",
+                fixedColumnWidth:
+                    MediaQuery.of(context).size.width *
+                    0.25, // Responsive width
                 onTap: () {
                   _animationController.forward(from: 0);
                   // Use the shared interstitial instance; if it's null, the
@@ -366,7 +369,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
               crossAxisCount: 2,
               mainAxisSpacing: 16,
               crossAxisSpacing: 16,
-              childAspectRatio: 1.1,
+              childAspectRatio: 1.2, // Increased from 1.1 to give more height
             ),
           ),
         ),

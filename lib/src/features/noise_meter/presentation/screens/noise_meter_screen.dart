@@ -362,42 +362,42 @@ class _NoiseMeterScreenState extends ConsumerState<NoiseMeterScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text(
-                            'Noise Level Guide',
-                            style: TextStyle(
+                          Text(
+                            l10n.noiseLevelGuide,
+                            style: const TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
                           const SizedBox(height: 12),
                           _buildNoiseGuideItem(
-                            'Quiet',
+                            l10n.quiet,
                             '0-30 dB',
-                            'Whisper, library',
+                            l10n.whisperLibrary,
                             Colors.green,
                           ),
                           _buildNoiseGuideItem(
-                            'Moderate',
+                            l10n.moderate,
                             '30-60 dB',
-                            'Normal conversation',
+                            l10n.normalConversation,
                             Colors.lightGreen,
                           ),
                           _buildNoiseGuideItem(
-                            'Loud',
+                            l10n.loud,
                             '60-85 dB',
-                            'Traffic, office',
+                            l10n.trafficOffice,
                             Colors.orange,
                           ),
                           _buildNoiseGuideItem(
-                            'Very Loud',
+                            l10n.veryLoud,
                             '85-100 dB',
-                            'Motorcycle, shouting',
+                            l10n.motorcycleShouting,
                             Colors.deepOrange,
                           ),
                           _buildNoiseGuideItem(
-                            'Dangerous',
+                            l10n.dangerous,
                             '100+ dB',
-                            'Rock concert, chainsaw',
+                            l10n.rockConcertChainsaw,
                             Colors.red,
                           ),
                         ],

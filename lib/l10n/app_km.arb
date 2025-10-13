@@ -370,6 +370,10 @@
   "walking": "ដើរ",
   "running": "រត់",
   "cycling": "ជិះកង់",
+  "sitting": "អង្គុយ",
+  "standing": "ឈរ",
+  "stairs": "ជណ្តើរ",
+  "workout": "ហាត់ប្រាណ",
   "environment": "បរិស្ថាន",
   "navigation": "ការរុករក",
   "motion": "ចលនា",
@@ -437,5 +441,82 @@
         "type": "String"
       }
     }
-  }
+  },
+  "currentMode": "របៀបបច្ចុប្បន្ន: {mode}",
+  "@currentMode": {
+    "placeholders": {
+      "mode": {
+        "type": "String"
+      }
+    }
+  },
+  "noiseLevelGuide": "មគ្គុទ្ទេសក៍កម្រិតសម្លេង",
+  "quiet": "ស្ងាត់",
+  "moderate": "មធ្យម",
+  "loud": "ខ្លាំង",
+  "veryLoud": "ខ្លាំងណាស់",
+  "dangerous": "ថ្នាក់ថ្នម",
+  "whisperLibrary": "សំឡេងខ្សឹប, បណ្ណាល័យ",
+  "normalConversation": "ការសន្ទនាធម្មតា",
+  "trafficOffice": "ចរាចរណ៍, ការិយាល័យ",
+  "motorcycleShouting": "ម៉ូតូ, ការស្រែក",
+  "rockConcertChainsaw": "ការប្រគុំតន្រ្តី rock, ម៉ាស៊ីនកាត់ឈើ",
+  "qrBarcodeScanner": "ម៉ាស៊ីនស្កេន QR/បាកូដ",
+  "scannedData": "ទិន្នន័យបានស្កេន",
+  "copy": "ចម្លង",
+  "clear": "លុប",
+  "pageNotFound": "រកមិនឃើញទំព័រ",
+  "goHome": "ត្រឡប់ទៅទំព័រដើម",
+  "pageNotFoundMessage": "រកមិនឃើញទំព័រ: {uri}",
+  "@pageNotFoundMessage": {
+    "placeholders": {
+      "uri": {
+        "type": "String"
+      }
+    }
+  },
+  "more": "ច្រើនទៀត",
+  "theme": "ធីម",
+  "about": "អំពី",
+  "allSettings": "ការកំណត់ទាំងអស់",
+  "getNotifiedAboutSensorReadings": "ទទួលការជូនដំណឹងអំពីការអានឧបករណ៍ចាប់សញ្ញា",
+  "themeChangeRequiresRestart": "ការផ្លាស់ប្តូរធីមត្រូវការចាប់ផ្តើមកម្មវិធីឡើងវិញ",
+  "quickSettings": "ការកំណត់លឿន",
+  "darkModeActive": "ម៉ូដងងឹតសកម្ម",
+  "lightModeActive": "ម៉ូដភ្លឺសកម្ម",
+  "sensorData": "ទិន្នន័យឧបករណ៍ចាប់សញ្ញា",
+  "stepsLabel": "ជំហាន",
+  "accelX": "បង្កើនល្បឿន X",
+  "accelY": "បង្កើនល្បឿន Y",
+  "accelZ": "បង្កើនល្បឿន Z",
+  "gyroX": "ជីរ៉ូ X",
+  "gyroY": "ជីរ៉ូ Y",
+  "gyroZ": "ជីរ៉ូ Z",
+  "activityWalking": "ដើរ",
+  "activityRunning": "រត់",
+  "activityCycling": "ជិះកង់",
+  "activitySitting": "អង្គុយ",
+  "activityStanding": "ឈរ",
+  "activityStairs": "ជណ្ដើរ",
+  "activityWorkout": "ហាត់ប្រាណ",
+  "qrScannerSubtitle": "ស្កែន QR កូដ, Data Matrix, PDF417, និងកូដ Aztec",
+  "barcodeScannerSubtitle": "ស្កែនបាកូដផលិតផលដូចជា UPC, EAN, Code 128, និងច្រើនទៀត",
+  "activity": "សកម្មភាព",
+  "startTracking": "ចាប់ផ្តើមតាមដាន",
+  "stopTracking": "បញ្ឈប់ការតាមដាន",
+  "trackingActive": "ការតាមដានដំណើរការ",
+  "sessionPaused": "សម័យបានផ្អាក",
+  "updateYourPersonalInformation": "ធ្វើបច្ចុប្បន្នភាពព័ត៌មានផ្ទាល់ខ្លួនរបស់អ្នក",
+  "personalInformation": "ព័ត៌មានផ្ទាល់ខ្លួន",
+  "physicalMeasurements": "ការវាស់ផ្នែករាងកាយ",
+  "enterYourFullName": "បញ្ចូលឈ្មោះពេញរបស់អ្នក",
+  "pleaseEnterYourName": "សូមបញ្ចូលឈ្មោះរបស់អ្នក",
+  "enterYourAge": "បញ្ចូលអាយុរបស់អ្នក",
+  "pleaseEnterYourAge": "សូមបញ្ចូលអាយុរបស់អ្នក",
+  "pleaseEnterValidNumber": "សូមបញ្ចូលលេខត្រឹមត្រូវ",
+  "selectYourGender": "ជ្រើសរើសភេទរបស់អ្នក",
+  "enterYourWeightInKg": "បញ្ចូលទម្ងន់របស់អ្នកជា kg",
+  "pleaseEnterYourWeight": "សូមបញ្ចូលទម្ងន់របស់អ្នក",
+  "enterYourHeightInCm": "បញ្ចូលកម្ពស់របស់អ្នកជា cm",
+  "pleaseEnterYourHeight": "សូមបញ្ចូលកម្ពស់របស់អ្នក"
 }

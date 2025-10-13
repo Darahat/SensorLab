@@ -1,12 +1,30 @@
+import 'package:hive/hive.dart';
+
+part 'activity_type.g.dart';
+
 /// Core business entity for Activity Types
 /// Contains no external dependencies - pure business logic
+@HiveType(typeId: 7)
 enum ActivityType {
+  @HiveField(0)
   walking,
+
+  @HiveField(1)
   running,
+
+  @HiveField(2)
   cycling,
+
+  @HiveField(3)
   sitting,
+
+  @HiveField(4)
   standing,
+
+  @HiveField(5)
   stairs,
+
+  @HiveField(6)
   workout;
 
   String get displayName {
