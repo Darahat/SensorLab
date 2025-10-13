@@ -18,19 +18,21 @@ String _getInterstitialAdUnitId() {
     return 'ca-app-pub-3940256099942544/1033173712';
   }
 
-  // Production ad unit IDs: prefer values from .env (AD_UNIT_INTERSTITIAL_ANDROID / AD_UNIT_INTERSTITIAL_IOS)
+  // Production ad unit IDs: Use values from .env file configured via key.properties
   if (Platform.isAndroid) {
     final fromEnv = dotenv.env['AD_UNIT_INTERSTITIAL_ANDROID'];
     if (fromEnv != null && fromEnv.isNotEmpty) return fromEnv;
-    return 'ca-app-pub-5150231094870616/1646738097';
+    // Fallback to test ad unit for safety
+    return 'ca-app-pub-3940256099942544/1033173712';
   }
   if (Platform.isIOS) {
     final fromEnv = dotenv.env['AD_UNIT_INTERSTITIAL_IOS'];
     if (fromEnv != null && fromEnv.isNotEmpty) return fromEnv;
-    return 'ca-app-pub-5150231094870616/XXXXXXXXXX';
+    // Fallback to test ad unit for safety
+    return 'ca-app-pub-3940256099942544/4411468910';
   }
-  return dotenv.env['AD_UNIT_INTERSTITIAL_ANDROID'] ??
-      'ca-app-pub-5150231094870616/1646738097';
+  // Default fallback to Android test ad unit
+  return 'ca-app-pub-3940256099942544/1033173712';
 }
 
 void createInterstitialAd() {

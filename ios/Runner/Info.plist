@@ -23,7 +23,15 @@
 	<key>CFBundleShortVersionString</key>
 	<string>$(FLUTTER_BUILD_NAME)</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-<string>We need your location to provide accurate temperature data</string>
+<string>We need your location to provide accurate GPS and compass data</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+<string>We need your location to provide accurate GPS and compass data</string>
+	<key>NSMotionUsageDescription</key>
+<string>We need access to motion sensors to measure acceleration and rotation</string>
+	<key>NSBluetoothAlwaysUsageDescription</key>
+<string>We need Bluetooth access for connecting to external sensors (optional)</string>
+	<key>NSBluetoothPeripheralUsageDescription</key>
+<string>We need Bluetooth access for connecting to external sensors (optional)</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
@@ -52,6 +60,11 @@
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>GADApplicationIdentifier</key>
-	<string>ca-app-pub-5150231094870616~6399537177</string>
+	<string>ca-app-pub-3940256099942544~3347511713</string>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
 </dict>
 </plist>
