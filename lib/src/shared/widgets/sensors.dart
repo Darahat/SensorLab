@@ -12,6 +12,7 @@ import 'package:sensorlab/src/features/heart_beat/presentation/screens/heart_bea
 import 'package:sensorlab/src/features/humidity/presentation/screens/humidity_screen.dart';
 import 'package:sensorlab/src/features/light_meter/presentation/screens/light_meter_screen.dart';
 import 'package:sensorlab/src/features/magnetometer/presentation/screens/magnetometer_screen.dart';
+import 'package:sensorlab/src/features/noise_meter/presentation/screens/noise_meter_screen.dart';
 import 'package:sensorlab/src/features/proximity/presentation/screens/proximity_screen.dart';
 import 'package:sensorlab/src/features/scanner/presentation/screens/scanner_main_screen.dart';
 import 'package:sensorlab/src/shared/models/sensor_card.dart';
@@ -31,6 +32,13 @@ List<SensorCard> getSensors(AppLocalizations l10n) {
       color: Colors.teal,
       screen: GeolocatorPage(),
       category: l10n.location,
+    ),
+    SensorCard(
+      icon: Iconsax.sound,
+      label: l10n.noiseMeter,
+      color: Colors.teal,
+      screen: NoiseMeterScreen(),
+      category: l10n.health,
     ),
     SensorCard(
       icon: Iconsax.sun_1,

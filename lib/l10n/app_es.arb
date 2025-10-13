@@ -370,6 +370,10 @@
   "walking": "Caminando",
   "running": "Corriendo",
   "cycling": "Ciclismo",
+  "sitting": "Sentado",
+  "standing": "De pie",
+  "stairs": "Escaleras",
+  "workout": "Ejercicio",
   "environment": "Entorno",
   "navigation": "Navegación",
   "motion": "Movimiento",
@@ -437,5 +441,82 @@
         "type": "String"
       }
     }
-  }
+  },
+  "currentMode": "Modo actual: {mode}",
+  "@currentMode": {
+    "placeholders": {
+      "mode": {
+        "type": "String"
+      }
+    }
+  },
+  "noiseLevelGuide": "Guía de Niveles de Ruido",
+  "quiet": "Silencioso",
+  "moderate": "Moderado",
+  "loud": "Fuerte",
+  "veryLoud": "Muy Fuerte",
+  "dangerous": "Peligroso",
+  "whisperLibrary": "Susurro, biblioteca",
+  "normalConversation": "Conversación normal",
+  "trafficOffice": "Tráfico, oficina",
+  "motorcycleShouting": "Motocicleta, gritos",
+  "rockConcertChainsaw": "Concierto de rock, motosierra",
+  "qrBarcodeScanner": "Escáner QR/Código de Barras",
+  "scannedData": "Datos Escaneados",
+  "copy": "Copiar",
+  "clear": "Limpiar",
+  "pageNotFound": "Página No Encontrada",
+  "goHome": "Ir al Inicio",
+  "pageNotFoundMessage": "Página no encontrada: {uri}",
+  "@pageNotFoundMessage": {
+    "placeholders": {
+      "uri": {
+        "type": "String"
+      }
+    }
+  },
+  "more": "Más",
+  "theme": "Tema",
+  "about": "Acerca de",
+  "allSettings": "Todas las Configuraciones",
+  "getNotifiedAboutSensorReadings": "Recibir notificaciones sobre lecturas de sensores",
+  "themeChangeRequiresRestart": "El cambio de tema requiere reiniciar la aplicación",
+  "quickSettings": "Configuración Rápida",
+  "darkModeActive": "Modo oscuro activo",
+  "lightModeActive": "Modo claro activo",
+  "sensorData": "DATOS DEL SENSOR",
+  "stepsLabel": "Pasos",
+  "accelX": "Acel X",
+  "accelY": "Acel Y",
+  "accelZ": "Acel Z",
+  "gyroX": "Giro X",
+  "gyroY": "Giro Y",
+  "gyroZ": "Giro Z",
+  "activityWalking": "Caminar",
+  "activityRunning": "Correr",
+  "activityCycling": "Ciclismo",
+  "activitySitting": "Sentado",
+  "activityStanding": "De pie",
+  "activityStairs": "Escaleras",
+  "activityWorkout": "Ejercicio",
+  "qrScannerSubtitle": "Escanear códigos QR, Data Matrix, PDF417 y códigos Azteca",
+  "barcodeScannerSubtitle": "Escanear códigos de barras de productos como UPC, EAN, Code 128 y más",
+  "activity": "Actividad",
+  "startTracking": "INICIAR SEGUIMIENTO",
+  "stopTracking": "DETENER SEGUIMIENTO",
+  "trackingActive": "Seguimiento Activo",
+  "sessionPaused": "Sesión Pausada",
+  "updateYourPersonalInformation": "Actualiza tu información personal",
+  "personalInformation": "Información Personal",
+  "physicalMeasurements": "Medidas Físicas",
+  "enterYourFullName": "Ingresa tu nombre completo",
+  "pleaseEnterYourName": "Por favor ingresa tu nombre",
+  "enterYourAge": "Ingresa tu edad",
+  "pleaseEnterYourAge": "Por favor ingresa tu edad",
+  "pleaseEnterValidNumber": "Por favor ingresa un número válido",
+  "selectYourGender": "Selecciona tu género",
+  "enterYourWeightInKg": "Ingresa tu peso en kg",
+  "pleaseEnterYourWeight": "Por favor ingresa tu peso",
+  "enterYourHeightInCm": "Ingresa tu altura en cm",
+  "pleaseEnterYourHeight": "Por favor ingresa tu altura"
 }

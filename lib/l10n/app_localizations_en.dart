@@ -891,6 +891,18 @@ class AppLocalizationsEn extends AppLocalizations {
   String get cycling => 'Cycling';
 
   @override
+  String get sitting => 'Sitting';
+
+  @override
+  String get standing => 'Standing';
+
+  @override
+  String get stairs => 'Stairs';
+
+  @override
+  String get workout => 'Workout';
+
+  @override
   String get environment => 'Environment';
 
   @override
@@ -1074,4 +1086,176 @@ class AppLocalizationsEn extends AppLocalizations {
   String generalError(String error) {
     return 'Error: $error';
   }
+
+  @override
+  String currentMode(String mode) {
+    return 'Current mode: $mode';
+  }
+
+  @override
+  String get noiseLevelGuide => 'Noise Level Guide';
+
+  @override
+  String get quiet => 'Quiet';
+
+  @override
+  String get moderate => 'Moderate';
+
+  @override
+  String get loud => 'Loud';
+
+  @override
+  String get veryLoud => 'Very Loud';
+
+  @override
+  String get dangerous => 'Dangerous';
+
+  @override
+  String get whisperLibrary => 'Whisper, library';
+
+  @override
+  String get normalConversation => 'Normal conversation';
+
+  @override
+  String get trafficOffice => 'Traffic, office';
+
+  @override
+  String get motorcycleShouting => 'Motorcycle, shouting';
+
+  @override
+  String get rockConcertChainsaw => 'Rock concert, chainsaw';
+
+  @override
+  String get qrBarcodeScanner => 'QR/Barcode Scanner';
+
+  @override
+  String get scannedData => 'Scanned Data';
+
+  @override
+  String get copy => 'Copy';
+
+  @override
+  String get clear => 'Clear';
+
+  @override
+  String get pageNotFound => 'Page Not Found';
+
+  @override
+  String get goHome => 'Go Home';
+
+  @override
+  String pageNotFoundMessage(String uri) {
+    return 'Page not found: $uri';
+  }
+
+  @override
+  String get more => 'More';
+
+  @override
+  String get theme => 'Theme';
+
+  @override
+  String get about => 'About';
+
+  @override
+  String get allSettings => 'All Settings';
+
+  @override
+  String get getNotifiedAboutSensorReadings => 'Get notified about sensor readings';
+
+  @override
+  String get themeChangeRequiresRestart => 'Theme switching requires app restart';
+
+  @override
+  String get quickSettings => 'Quick Settings';
+
+  @override
+  String get darkModeActive => 'Dark mode active';
+
+  @override
+  String get lightModeActive => 'Light mode active';
+
+  @override
+  String get sensorData => 'SENSOR DATA';
+
+  @override
+  String get stepsLabel => 'Steps';
+
+  @override
+  String get accelX => 'Accel X';
+
+  @override
+  String get accelY => 'Accel Y';
+
+  @override
+  String get accelZ => 'Accel Z';
+
+  @override
+  String get gyroX => 'Gyro X';
+
+  @override
+  String get gyroY => 'Gyro Y';
+
+  @override
+  String get gyroZ => 'Gyro Z';
+
+  @override
+  String get qrScannerSubtitle => 'Scan QR codes, Data Matrix, PDF417, and Aztec codes';
+
+  @override
+  String get barcodeScannerSubtitle => 'Scan product barcodes like UPC, EAN, Code 128, and more';
+
+  @override
+  String get activity => 'Activity';
+
+  @override
+  String get startTracking => 'START TRACKING';
+
+  @override
+  String get stopTracking => 'STOP TRACKING';
+
+  @override
+  String get trackingActive => 'Tracking Active';
+
+  @override
+  String get sessionPaused => 'Session Paused';
+
+  @override
+  String get updateYourPersonalInformation => 'Update your personal information';
+
+  @override
+  String get personalInformation => 'Personal Information';
+
+  @override
+  String get physicalMeasurements => 'Physical Measurements';
+
+  @override
+  String get enterYourFullName => 'Enter your full name';
+
+  @override
+  String get pleaseEnterYourName => 'Please enter your name';
+
+  @override
+  String get enterYourAge => 'Enter your age';
+
+  @override
+  String get pleaseEnterYourAge => 'Please enter your age';
+
+  @override
+  String get pleaseEnterValidNumber => 'Please enter a valid number';
+
+  @override
+  String get selectYourGender => 'Select your gender';
+
+  @override
+  String get enterYourWeightInKg => 'Enter your weight in kg';
+
+  @override
+  String get pleaseEnterYourWeight => 'Please enter your weight';
+
+  @override
+  String get enterYourHeightInCm => 'Enter your height in cm';
+
+  @override
+  String get pleaseEnterYourHeight => 'Please enter your height';
 }

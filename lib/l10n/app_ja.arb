@@ -370,6 +370,10 @@
   "walking": "歩く",
   "running": "走る",
   "cycling": "サイクリング",
+  "sitting": "座る",
+  "standing": "立つ",
+  "stairs": "階段",
+  "workout": "ワークアウト",
   "environment": "環境",
   "navigation": "ナビゲーション",
   "motion": "モーション",
@@ -437,5 +441,82 @@
         "type": "String"
       }
     }
-  }
+  },
+  "currentMode": "現在のモード: {mode}",
+  "@currentMode": {
+    "placeholders": {
+      "mode": {
+        "type": "String"
+      }
+    }
+  },
+  "noiseLevelGuide": "騒音レベルガイド",
+  "quiet": "静か",
+  "moderate": "適度",
+  "loud": "大きい",
+  "veryLoud": "非常に大きい",
+  "dangerous": "危険",
+  "whisperLibrary": "囁き声、図書館",
+  "normalConversation": "普通の会話",
+  "trafficOffice": "交通、オフィス",
+  "motorcycleShouting": "オートバイ、叫び声",
+  "rockConcertChainsaw": "ロックコンサート、チェーンソー",
+  "qrBarcodeScanner": "QR/バーコードスキャナ",
+  "scannedData": "スキャンデータ",
+  "copy": "コピー",
+  "clear": "クリア",
+  "pageNotFound": "ページが見つかりません",
+  "goHome": "ホームに戻る",
+  "pageNotFoundMessage": "ページが見つかりません: {uri}",
+  "@pageNotFoundMessage": {
+    "placeholders": {
+      "uri": {
+        "type": "String"
+      }
+    }
+  },
+  "more": "詳細",
+  "theme": "テーマ",
+  "about": "について",
+  "allSettings": "すべての設定",
+  "getNotifiedAboutSensorReadings": "センサー読み取り値の通知を受け取る",
+  "themeChangeRequiresRestart": "テーマの変更にはアプリの再起動が必要です",
+  "quickSettings": "クイック設定",
+  "darkModeActive": "ダークモード有効",
+  "lightModeActive": "ライトモード有効",
+  "sensorData": "センサーデータ",
+  "stepsLabel": "歩数",
+  "accelX": "加速度X",
+  "accelY": "加速度Y",
+  "accelZ": "加速度Z",
+  "gyroX": "ジャイロX",
+  "gyroY": "ジャイロY",
+  "gyroZ": "ジャイロZ",
+  "activityWalking": "ウォーキング",
+  "activityRunning": "ランニング",
+  "activityCycling": "サイクリング",
+  "activitySitting": "座る",
+  "activityStanding": "立つ",
+  "activityStairs": "階段",
+  "activityWorkout": "ワークアウト",
+  "qrScannerSubtitle": "QRコード、Data Matrix、PDF417、Aztecコードをスキャン",
+  "barcodeScannerSubtitle": "UPC、EAN、Code 128などの商品バーコードをスキャン",
+  "activity": "アクティビティ",
+  "startTracking": "トラッキング開始",
+  "stopTracking": "トラッキング停止",
+  "trackingActive": "トラッキング中",
+  "sessionPaused": "セッション一時停止",
+  "updateYourPersonalInformation": "個人情報を更新する",
+  "personalInformation": "個人情報",
+  "physicalMeasurements": "身体測定",
+  "enterYourFullName": "フルネームを入力してください",
+  "pleaseEnterYourName": "名前を入力してください",
+  "enterYourAge": "年齢を入力してください",
+  "pleaseEnterYourAge": "年齢を入力してください",
+  "pleaseEnterValidNumber": "有効な数値を入力してください",
+  "selectYourGender": "性別を選択してください",
+  "enterYourWeightInKg": "体重をkgで入力してください",
+  "pleaseEnterYourWeight": "体重を入力してください",
+  "enterYourHeightInCm": "身長をcmで入力してください",
+  "pleaseEnterYourHeight": "身長を入力してください"
 }

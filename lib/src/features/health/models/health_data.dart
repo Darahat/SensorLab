@@ -1,5 +1,6 @@
 import 'package:sensors_plus/sensors_plus.dart';
 
+import '../domain/entities/activity_session.dart';
 import '../domain/entities/activity_type.dart';
 import '../domain/entities/user_profile.dart' as domain;
 
@@ -70,51 +71,6 @@ enum HealthSessionState {
         return '⏸️';
     }
   }
-}
-
-class MovementData {
-  final UserAccelerometerEvent? accelerometer;
-  final GyroscopeEvent? gyroscope;
-  final double movementIntensity;
-  final DateTime timestamp;
-
-  const MovementData({
-    this.accelerometer,
-    this.gyroscope,
-    this.movementIntensity = 0.0,
-    required this.timestamp,
-  });
-
-  MovementData copyWith({
-    UserAccelerometerEvent? accelerometer,
-    GyroscopeEvent? gyroscope,
-    double? movementIntensity,
-    DateTime? timestamp,
-  }) {
-    return MovementData(
-      accelerometer: accelerometer ?? this.accelerometer,
-      gyroscope: gyroscope ?? this.gyroscope,
-      movementIntensity: movementIntensity ?? this.movementIntensity,
-      timestamp: timestamp ?? this.timestamp,
-    );
-  }
-
-  String get formattedAccelerometer {
-    if (accelerometer == null) return 'No data';
-    return 'X: ${accelerometer!.x.toStringAsFixed(2)}, '
-        'Y: ${accelerometer!.y.toStringAsFixed(2)}, '
-        'Z: ${accelerometer!.z.toStringAsFixed(2)}';
-  }
-
-  String get formattedGyroscope {
-    if (gyroscope == null) return 'No data';
-    return 'X: ${gyroscope!.x.toStringAsFixed(2)}, '
-        'Y: ${gyroscope!.y.toStringAsFixed(2)}, '
-        'Z: ${gyroscope!.z.toStringAsFixed(2)}';
-  }
-
-  String get formattedIntensity =>
-      '${(movementIntensity * 100).toStringAsFixed(1)}%';
 }
 
 class HealthData {

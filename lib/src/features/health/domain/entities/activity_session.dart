@@ -1,20 +1,50 @@
+import 'package:hive/hive.dart';
+
 import 'activity_type.dart';
+
+part 'activity_session.g.dart';
 
 /// Core business entity for Activity Session
 /// Contains pure business logic for health tracking
+@HiveType(typeId: 3)
 class ActivitySession {
+  @HiveField(0)
   final String id;
+
+  @HiveField(1)
   final ActivityType activityType;
+
+  @HiveField(2)
   final DateTime startTime;
+
+  @HiveField(3)
   final DateTime? endTime;
+
+  @HiveField(4)
   final SessionStatus status;
+
+  @HiveField(5)
   final int steps;
+
+  @HiveField(6)
   final double distance; // in meters
+
+  @HiveField(7)
   final double calories;
+
+  @HiveField(8)
   final Duration activeDuration;
+
+  @HiveField(9)
   final double averageIntensity;
+
+  @HiveField(10)
   final double peakIntensity;
+
+  @HiveField(11)
   final List<MovementData> movements;
+
+  @HiveField(12)
   final Goals goals;
 
   const ActivitySession({
@@ -157,10 +187,18 @@ class ActivitySession {
   }
 }
 
+@HiveType(typeId: 4)
 enum SessionStatus {
+  @HiveField(0)
   active,
+
+  @HiveField(1)
   paused,
+
+  @HiveField(2)
   completed,
+
+  @HiveField(3)
   cancelled;
 
   String get displayName {
@@ -190,10 +228,24 @@ enum SessionStatus {
   }
 }
 
+@HiveType(typeId: 5)
 class MovementData {
+  @HiveField(0)
   final DateTime timestamp;
-  final double x, y, z; // Accelerometer data
+
+  @HiveField(1)
+  final double x;
+
+  @HiveField(2)
+  final double y;
+
+  @HiveField(3)
+  final double z; // Accelerometer data
+
+  @HiveField(4)
   final double intensity;
+
+  @HiveField(5)
   final bool isStep;
 
   const MovementData({
@@ -237,10 +289,18 @@ class MovementData {
   int get hashCode => timestamp.hashCode;
 }
 
+@HiveType(typeId: 6)
 class Goals {
+  @HiveField(0)
   final int targetSteps;
+
+  @HiveField(1)
   final double targetCalories;
+
+  @HiveField(2)
   final Duration targetDuration;
+
+  @HiveField(3)
   final double targetDistance; // in meters
 
   const Goals({

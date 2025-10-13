@@ -39,24 +39,24 @@ class SensorGridItem extends StatelessWidget {
                   gradient: LinearGradient(
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
-                    colors:
-                        isDark
-                            ? [
-                              Colors.grey.shade800.withOpacity(0.8),
-                              Colors.grey.shade900.withOpacity(0.9),
-                            ]
-                            : [
-                              Colors.white.withOpacity(0.9),
-                              Colors.grey.shade50.withOpacity(0.9),
-                            ],
+                    colors: isDark
+                        ? [
+                            Colors.grey.shade800.withOpacity(0.8),
+                            Colors.grey.shade900.withOpacity(0.9),
+                          ]
+                        : [
+                            Colors.white.withOpacity(0.9),
+                            Colors.grey.shade50.withOpacity(0.9),
+                          ],
                   ),
                 ),
-                padding: const EdgeInsets.all(10),
+                padding: const EdgeInsets.all(8),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
                   children: [
                     Container(
-                      padding: const EdgeInsets.all(16),
+                      padding: const EdgeInsets.all(12),
                       decoration: BoxDecoration(
                         gradient: LinearGradient(
                           colors: [
@@ -68,27 +68,34 @@ class SensorGridItem extends StatelessWidget {
                       ),
                       child: Icon(sensor.icon, size: 28, color: sensor.color),
                     ),
-                    const SizedBox(height: 12),
-                    Text(
-                      sensor.label,
-                      style: theme.textTheme.titleMedium?.copyWith(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 12,
-                        color: isDark ? Colors.white : Colors.grey.shade800,
+                    const SizedBox(height: 8),
+                    Flexible(
+                      child: Text(
+                        sensor.label,
+                        style: theme.textTheme.titleMedium?.copyWith(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 12,
+                          color: isDark ? Colors.white : Colors.grey.shade800,
+                        ),
+                        textAlign: TextAlign.center,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
                       ),
-                      textAlign: TextAlign.center,
                     ),
                     const SizedBox(height: 4),
-                    Text(
-                      sensor.category,
-                      style: theme.textTheme.bodySmall?.copyWith(
-                        fontSize: 10,
-                        color:
-                            isDark
-                                ? Colors.white.withOpacity(0.7)
-                                : Colors.grey.shade600,
+                    Flexible(
+                      child: Text(
+                        sensor.category,
+                        style: theme.textTheme.bodySmall?.copyWith(
+                          fontSize: 10,
+                          color: isDark
+                              ? Colors.white.withOpacity(0.7)
+                              : Colors.grey.shade600,
+                        ),
+                        textAlign: TextAlign.center,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
                       ),
-                      textAlign: TextAlign.center,
                     ),
                   ],
                 ),

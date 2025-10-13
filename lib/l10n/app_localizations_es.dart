@@ -891,6 +891,18 @@ class AppLocalizationsEs extends AppLocalizations {
   String get cycling => 'Ciclismo';
 
   @override
+  String get sitting => 'Sentado';
+
+  @override
+  String get standing => 'De pie';
+
+  @override
+  String get stairs => 'Escaleras';
+
+  @override
+  String get workout => 'Ejercicio';
+
+  @override
   String get environment => 'Entorno';
 
   @override
@@ -1074,4 +1086,176 @@ class AppLocalizationsEs extends AppLocalizations {
   String generalError(String error) {
     return 'Error: $error';
   }
+
+  @override
+  String currentMode(String mode) {
+    return 'Modo actual: $mode';
+  }
+
+  @override
+  String get noiseLevelGuide => 'Guía de Niveles de Ruido';
+
+  @override
+  String get quiet => 'Silencioso';
+
+  @override
+  String get moderate => 'Moderado';
+
+  @override
+  String get loud => 'Fuerte';
+
+  @override
+  String get veryLoud => 'Muy Fuerte';
+
+  @override
+  String get dangerous => 'Peligroso';
+
+  @override
+  String get whisperLibrary => 'Susurro, biblioteca';
+
+  @override
+  String get normalConversation => 'Conversación normal';
+
+  @override
+  String get trafficOffice => 'Tráfico, oficina';
+
+  @override
+  String get motorcycleShouting => 'Motocicleta, gritos';
+
+  @override
+  String get rockConcertChainsaw => 'Concierto de rock, motosierra';
+
+  @override
+  String get qrBarcodeScanner => 'Escáner QR/Código de Barras';
+
+  @override
+  String get scannedData => 'Datos Escaneados';
+
+  @override
+  String get copy => 'Copiar';
+
+  @override
+  String get clear => 'Limpiar';
+
+  @override
+  String get pageNotFound => 'Página No Encontrada';
+
+  @override
+  String get goHome => 'Ir al Inicio';
+
+  @override
+  String pageNotFoundMessage(String uri) {
+    return 'Página no encontrada: $uri';
+  }
+
+  @override
+  String get more => 'Más';
+
+  @override
+  String get theme => 'Tema';
+
+  @override
+  String get about => 'Acerca de';
+
+  @override
+  String get allSettings => 'Todas las Configuraciones';
+
+  @override
+  String get getNotifiedAboutSensorReadings => 'Recibir notificaciones sobre lecturas de sensores';
+
+  @override
+  String get themeChangeRequiresRestart => 'El cambio de tema requiere reiniciar la aplicación';
+
+  @override
+  String get quickSettings => 'Configuración Rápida';
+
+  @override
+  String get darkModeActive => 'Modo oscuro activo';
+
+  @override
+  String get lightModeActive => 'Modo claro activo';
+
+  @override
+  String get sensorData => 'DATOS DEL SENSOR';
+
+  @override
+  String get stepsLabel => 'Pasos';
+
+  @override
+  String get accelX => 'Acel X';
+
+  @override
+  String get accelY => 'Acel Y';
+
+  @override
+  String get accelZ => 'Acel Z';
+
+  @override
+  String get gyroX => 'Giro X';
+
+  @override
+  String get gyroY => 'Giro Y';
+
+  @override
+  String get gyroZ => 'Giro Z';
+
+  @override
+  String get qrScannerSubtitle => 'Escanear códigos QR, Data Matrix, PDF417 y códigos Azteca';
+
+  @override
+  String get barcodeScannerSubtitle => 'Escanear códigos de barras de productos como UPC, EAN, Code 128 y más';
+
+  @override
+  String get activity => 'Actividad';
+
+  @override
+  String get startTracking => 'INICIAR SEGUIMIENTO';
+
+  @override
+  String get stopTracking => 'DETENER SEGUIMIENTO';
+
+  @override
+  String get trackingActive => 'Seguimiento Activo';
+
+  @override
+  String get sessionPaused => 'Sesión Pausada';
+
+  @override
+  String get updateYourPersonalInformation => 'Actualiza tu información personal';
+
+  @override
+  String get personalInformation => 'Información Personal';
+
+  @override
+  String get physicalMeasurements => 'Medidas Físicas';
+
+  @override
+  String get enterYourFullName => 'Ingresa tu nombre completo';
+
+  @override
+  String get pleaseEnterYourName => 'Por favor ingresa tu nombre';
+
+  @override
+  String get enterYourAge => 'Ingresa tu edad';
+
+  @override
+  String get pleaseEnterYourAge => 'Por favor ingresa tu edad';
+
+  @override
+  String get pleaseEnterValidNumber => 'Por favor ingresa un número válido';
+
+  @override
+  String get selectYourGender => 'Selecciona tu género';
+
+  @override
+  String get enterYourWeightInKg => 'Ingresa tu peso en kg';
+
+  @override
+  String get pleaseEnterYourWeight => 'Por favor ingresa tu peso';
+
+  @override
+  String get enterYourHeightInCm => 'Ingresa tu altura en cm';
+
+  @override
+  String get pleaseEnterYourHeight => 'Por favor ingresa tu altura';
 }

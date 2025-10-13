@@ -13,7 +13,9 @@
 migrate_working_dir/
 .env
 web
-
+linux
+macos
+windows
 # IntelliJ related
 *.iml
 *.ipr
