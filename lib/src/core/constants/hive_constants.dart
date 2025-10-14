@@ -28,4 +28,7 @@ class HiveConstants {
 
   /// hive box for activity session
   static const String activitySessionBox = "activity_session_box";
+
+  /// hive box for acoustic reports (noise meter)
+  static const String acousticReportBox = "acoustic_report_box";
 }

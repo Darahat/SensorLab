@@ -6,6 +6,7 @@ import 'package:sensorlab/src/features/app_settings/domain/models/app_settings.d
 import 'package:sensorlab/src/features/health/domain/entities/activity_session.dart';
 import 'package:sensorlab/src/features/health/domain/entities/activity_type.dart';
 import 'package:sensorlab/src/features/health/domain/entities/user_profile.dart';
+import 'package:sensorlab/src/features/noise_meter/models/acoustic_report.dart';
 
 import '../constants/hive_constants.dart';
 
@@ -34,6 +35,9 @@ class HiveService {
 
   /// [activitySessionBoxName] Instance
   static const String activitySessionBoxName = HiveConstants.activitySessionBox;
+
+  /// [acousticReportBoxName] Instance
+  static const String acousticReportBoxName = HiveConstants.acousticReportBox;
 
   /// Hive Service Initialization
   Future<void> init() async {
@@ -80,10 +84,21 @@ class HiveService {
         Hive.registerAdapter(ActivityTypeAdapter());
       }
 
+      /// Teach Hive about [AcousticEventHive] data model (typeId: 8)
+      if (!Hive.isAdapterRegistered(8)) {
+        Hive.registerAdapter(AcousticEventHiveAdapter());
+      }
+
+      /// Teach Hive about [AcousticReportHive] data model (typeId: 9)
+      if (!Hive.isAdapterRegistered(9)) {
+        Hive.registerAdapter(AcousticReportHiveAdapter());
+      }
+
       /// Open The Database drawers to read/write data
       await Hive.openBox<AppSettings>(settingsBoxName);
       await Hive.openBox<UserProfile>(userProfileBoxName);
       await Hive.openBox<ActivitySession>(activitySessionBoxName);
+      await Hive.openBox<AcousticReportHive>(acousticReportBoxName);
 
       /// Set _initialized value true
       _initialized = true;
@@ -114,6 +129,12 @@ class HiveService {
   Box<ActivitySession> get activitySessionBox {
     _checkInitialized();
     return Hive.box<ActivitySession>(activitySessionBoxName);
+  }
+
+  ///acousticReportBox initialized
+  Box<AcousticReportHive> get acousticReportBox {
+    _checkInitialized();
+    return Hive.box<AcousticReportHive>(acousticReportBoxName);
   }
 
   /// check are they initialized or not
