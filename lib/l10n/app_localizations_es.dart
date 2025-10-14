@@ -206,6 +206,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get proximity => 'Proximidad';
 
   @override
+  String get speedMeter => 'Velocímetro';
+
+  @override
   String get heartRate => 'Frecuencia cardíaca';
 
   @override
@@ -591,6 +594,18 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get ok => 'Aceptar';
+
+  @override
+  String get tracking => 'Rastreando';
+
+  @override
+  String get waitingForGps => 'Esperando GPS...';
+
+  @override
+  String get maxSpeed => 'Velocidad máxima';
+
+  @override
+  String get avgSpeed => 'Velocidad promedio';
 
   @override
   String get motionIntensity => 'Intensidad de movimiento';
@@ -1258,4 +1273,166 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get pleaseEnterYourHeight => 'Por favor ingresa tu altura';
+
+  @override
+  String get pedometer => 'Podómetro';
+
+  @override
+  String get dailyGoal => 'Meta Diaria';
+
+  @override
+  String get stepsToGo => 'por alcanzar';
+
+  @override
+  String get goalReached => '¡Meta Alcanzada!';
+
+  @override
+  String get calories => 'Calorías';
+
+  @override
+  String get pace => 'Ritmo';
+
+  @override
+  String get cadence => 'Cadencia';
+
+  @override
+  String get setDailyGoal => 'Establecer Meta Diaria';
+
+  @override
+  String get resetSessionConfirmation => '¿Estás seguro de que deseas reiniciar tu sesión actual? Todo el progreso se perderá.';
+
+  @override
+  String get barometer => 'Barómetro';
+
+  @override
+  String get waitingForSensor => 'Esperando sensor...';
+
+  @override
+  String get clearWeather => 'Clima Despejado';
+
+  @override
+  String get cloudyWeather => 'Clima Nublado';
+
+  @override
+  String get stableWeather => 'Clima Estable';
+
+  @override
+  String get pressureRising => 'Subiendo';
+
+  @override
+  String get pressureFalling => 'Bajando';
+
+  @override
+  String get pressureSteady => 'Estable';
+
+  @override
+  String get maximum => 'Máximo';
+
+  @override
+  String get minimum => 'Mínimo';
+
+  @override
+  String get altitude => 'Altitud';
+
+  @override
+  String get altimeter => 'Altimeter';
+
+  @override
+  String get altimeterWaiting => 'Waiting for GPS and barometer data...';
+
+  @override
+  String get aboveSeaLevel => 'Above Sea Level';
+
+  @override
+  String get climbing => 'Climbing';
+
+  @override
+  String get descending => 'Descending';
+
+  @override
+  String get stable => 'Stable';
+
+  @override
+  String get usingGpsOnly => 'Using GPS data only';
+
+  @override
+  String get usingBarometerOnly => 'Using barometer data only';
+
+  @override
+  String get usingFusedData => 'Combining GPS and barometer for accuracy';
+
+  @override
+  String get dataSource => 'Data Source';
+
+  @override
+  String get sensorReadings => 'Sensor Readings';
+
+  @override
+  String get gpsAltitude => 'GPS Altitude';
+
+  @override
+  String get baroAltitude => 'Baro Altitude';
+
+  @override
+  String get pressure => 'Pressure';
+
+  @override
+  String get statistics => 'Statistics';
+
+  @override
+  String get gain => 'Gain';
+
+  @override
+  String get loss => 'Loss';
+
+  @override
+  String get calibrateAltimeter => 'Calibrate Altimeter';
+
+  @override
+  String get calibrateDescription => 'Enter your current known altitude in meters to calibrate the barometric sensor for better accuracy.';
+
+  @override
+  String get knownAltitude => 'Known Altitude';
+
+  @override
+  String get calibrationComplete => 'Calibration complete!';
+
+  @override
+  String get statsReset => 'Statistics reset!';
+
+  @override
+  String get vibrationMeter => 'Vibration Meter';
+
+  @override
+  String get vibrationWaiting => 'Waiting for accelerometer data...';
+
+  @override
+  String get vibrationMagnitude => 'Vibration Magnitude';
+
+  @override
+  String get vibrationLevel => 'Vibration Level';
+
+  @override
+  String get realtimeWaveform => 'Real-time Waveform';
+
+  @override
+  String get pattern => 'Pattern';
+
+  @override
+  String get frequency => 'Frequency';
+
+  @override
+  String get axisBreakdown => 'Axis Breakdown';
+
+  @override
+  String get advancedMetrics => 'Advanced Metrics';
+
+  @override
+  String get rms => 'RMS';
+
+  @override
+  String get peakToPeak => 'Peak-to-Peak';
+
+  @override
+  String get crestFactor => 'Crest Factor';
 }

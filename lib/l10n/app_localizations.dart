@@ -489,6 +489,12 @@ abstract class AppLocalizations {
   /// **'Proximity'**
   String get proximity;
 
+  /// No description provided for @speedMeter.
+  ///
+  /// In en, this message translates to:
+  /// **'Speed Meter'**
+  String get speedMeter;
+
   /// No description provided for @heartRate.
   ///
   /// In en, this message translates to:
@@ -1238,6 +1244,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'OK'**
   String get ok;
+
+  /// No description provided for @tracking.
+  ///
+  /// In en, this message translates to:
+  /// **'Tracking'**
+  String get tracking;
+
+  /// No description provided for @waitingForGps.
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting for GPS...'**
+  String get waitingForGps;
+
+  /// No description provided for @maxSpeed.
+  ///
+  /// In en, this message translates to:
+  /// **'Max Speed'**
+  String get maxSpeed;
+
+  /// No description provided for @avgSpeed.
+  ///
+  /// In en, this message translates to:
+  /// **'Avg Speed'**
+  String get avgSpeed;
 
   /// No description provided for @motionIntensity.
   ///
@@ -2540,6 +2570,330 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Please enter your height'**
   String get pleaseEnterYourHeight;
+
+  /// No description provided for @pedometer.
+  ///
+  /// In en, this message translates to:
+  /// **'Pedometer'**
+  String get pedometer;
+
+  /// No description provided for @dailyGoal.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily Goal'**
+  String get dailyGoal;
+
+  /// No description provided for @stepsToGo.
+  ///
+  /// In en, this message translates to:
+  /// **'to go'**
+  String get stepsToGo;
+
+  /// No description provided for @goalReached.
+  ///
+  /// In en, this message translates to:
+  /// **'Goal Reached!'**
+  String get goalReached;
+
+  /// No description provided for @calories.
+  ///
+  /// In en, this message translates to:
+  /// **'Calories'**
+  String get calories;
+
+  /// No description provided for @pace.
+  ///
+  /// In en, this message translates to:
+  /// **'Pace'**
+  String get pace;
+
+  /// No description provided for @cadence.
+  ///
+  /// In en, this message translates to:
+  /// **'Cadence'**
+  String get cadence;
+
+  /// No description provided for @setDailyGoal.
+  ///
+  /// In en, this message translates to:
+  /// **'Set Daily Goal'**
+  String get setDailyGoal;
+
+  /// No description provided for @resetSessionConfirmation.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to reset your current session? All progress will be lost.'**
+  String get resetSessionConfirmation;
+
+  /// No description provided for @barometer.
+  ///
+  /// In en, this message translates to:
+  /// **'Barometer'**
+  String get barometer;
+
+  /// No description provided for @waitingForSensor.
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting for sensor...'**
+  String get waitingForSensor;
+
+  /// No description provided for @clearWeather.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear Weather'**
+  String get clearWeather;
+
+  /// No description provided for @cloudyWeather.
+  ///
+  /// In en, this message translates to:
+  /// **'Cloudy Weather'**
+  String get cloudyWeather;
+
+  /// No description provided for @stableWeather.
+  ///
+  /// In en, this message translates to:
+  /// **'Stable Weather'**
+  String get stableWeather;
+
+  /// No description provided for @pressureRising.
+  ///
+  /// In en, this message translates to:
+  /// **'Rising'**
+  String get pressureRising;
+
+  /// No description provided for @pressureFalling.
+  ///
+  /// In en, this message translates to:
+  /// **'Falling'**
+  String get pressureFalling;
+
+  /// No description provided for @pressureSteady.
+  ///
+  /// In en, this message translates to:
+  /// **'Steady'**
+  String get pressureSteady;
+
+  /// No description provided for @maximum.
+  ///
+  /// In en, this message translates to:
+  /// **'Maximum'**
+  String get maximum;
+
+  /// No description provided for @minimum.
+  ///
+  /// In en, this message translates to:
+  /// **'Minimum'**
+  String get minimum;
+
+  /// No description provided for @altitude.
+  ///
+  /// In en, this message translates to:
+  /// **'Altitude'**
+  String get altitude;
+
+  /// No description provided for @altimeter.
+  ///
+  /// In en, this message translates to:
+  /// **'Altimeter'**
+  String get altimeter;
+
+  /// No description provided for @altimeterWaiting.
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting for GPS and barometer data...'**
+  String get altimeterWaiting;
+
+  /// No description provided for @aboveSeaLevel.
+  ///
+  /// In en, this message translates to:
+  /// **'Above Sea Level'**
+  String get aboveSeaLevel;
+
+  /// No description provided for @climbing.
+  ///
+  /// In en, this message translates to:
+  /// **'Climbing'**
+  String get climbing;
+
+  /// No description provided for @descending.
+  ///
+  /// In en, this message translates to:
+  /// **'Descending'**
+  String get descending;
+
+  /// No description provided for @stable.
+  ///
+  /// In en, this message translates to:
+  /// **'Stable'**
+  String get stable;
+
+  /// No description provided for @usingGpsOnly.
+  ///
+  /// In en, this message translates to:
+  /// **'Using GPS data only'**
+  String get usingGpsOnly;
+
+  /// No description provided for @usingBarometerOnly.
+  ///
+  /// In en, this message translates to:
+  /// **'Using barometer data only'**
+  String get usingBarometerOnly;
+
+  /// No description provided for @usingFusedData.
+  ///
+  /// In en, this message translates to:
+  /// **'Combining GPS and barometer for accuracy'**
+  String get usingFusedData;
+
+  /// No description provided for @dataSource.
+  ///
+  /// In en, this message translates to:
+  /// **'Data Source'**
+  String get dataSource;
+
+  /// No description provided for @sensorReadings.
+  ///
+  /// In en, this message translates to:
+  /// **'Sensor Readings'**
+  String get sensorReadings;
+
+  /// No description provided for @gpsAltitude.
+  ///
+  /// In en, this message translates to:
+  /// **'GPS Altitude'**
+  String get gpsAltitude;
+
+  /// No description provided for @baroAltitude.
+  ///
+  /// In en, this message translates to:
+  /// **'Baro Altitude'**
+  String get baroAltitude;
+
+  /// No description provided for @pressure.
+  ///
+  /// In en, this message translates to:
+  /// **'Pressure'**
+  String get pressure;
+
+  /// No description provided for @statistics.
+  ///
+  /// In en, this message translates to:
+  /// **'Statistics'**
+  String get statistics;
+
+  /// No description provided for @gain.
+  ///
+  /// In en, this message translates to:
+  /// **'Gain'**
+  String get gain;
+
+  /// No description provided for @loss.
+  ///
+  /// In en, this message translates to:
+  /// **'Loss'**
+  String get loss;
+
+  /// No description provided for @calibrateAltimeter.
+  ///
+  /// In en, this message translates to:
+  /// **'Calibrate Altimeter'**
+  String get calibrateAltimeter;
+
+  /// No description provided for @calibrateDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your current known altitude in meters to calibrate the barometric sensor for better accuracy.'**
+  String get calibrateDescription;
+
+  /// No description provided for @knownAltitude.
+  ///
+  /// In en, this message translates to:
+  /// **'Known Altitude'**
+  String get knownAltitude;
+
+  /// No description provided for @calibrationComplete.
+  ///
+  /// In en, this message translates to:
+  /// **'Calibration complete!'**
+  String get calibrationComplete;
+
+  /// No description provided for @statsReset.
+  ///
+  /// In en, this message translates to:
+  /// **'Statistics reset!'**
+  String get statsReset;
+
+  /// No description provided for @vibrationMeter.
+  ///
+  /// In en, this message translates to:
+  /// **'Vibration Meter'**
+  String get vibrationMeter;
+
+  /// No description provided for @vibrationWaiting.
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting for accelerometer data...'**
+  String get vibrationWaiting;
+
+  /// No description provided for @vibrationMagnitude.
+  ///
+  /// In en, this message translates to:
+  /// **'Vibration Magnitude'**
+  String get vibrationMagnitude;
+
+  /// No description provided for @vibrationLevel.
+  ///
+  /// In en, this message translates to:
+  /// **'Vibration Level'**
+  String get vibrationLevel;
+
+  /// No description provided for @realtimeWaveform.
+  ///
+  /// In en, this message translates to:
+  /// **'Real-time Waveform'**
+  String get realtimeWaveform;
+
+  /// No description provided for @pattern.
+  ///
+  /// In en, this message translates to:
+  /// **'Pattern'**
+  String get pattern;
+
+  /// No description provided for @frequency.
+  ///
+  /// In en, this message translates to:
+  /// **'Frequency'**
+  String get frequency;
+
+  /// No description provided for @axisBreakdown.
+  ///
+  /// In en, this message translates to:
+  /// **'Axis Breakdown'**
+  String get axisBreakdown;
+
+  /// No description provided for @advancedMetrics.
+  ///
+  /// In en, this message translates to:
+  /// **'Advanced Metrics'**
+  String get advancedMetrics;
+
+  /// No description provided for @rms.
+  ///
+  /// In en, this message translates to:
+  /// **'RMS'**
+  String get rms;
+
+  /// No description provided for @peakToPeak.
+  ///
+  /// In en, this message translates to:
+  /// **'Peak-to-Peak'**
+  String get peakToPeak;
+
+  /// No description provided for @crestFactor.
+  ///
+  /// In en, this message translates to:
+  /// **'Crest Factor'**
+  String get crestFactor;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

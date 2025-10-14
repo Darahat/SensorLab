@@ -50,13 +50,13 @@ class SensorGridItem extends StatelessWidget {
                           ],
                   ),
                 ),
-                padding: const EdgeInsets.all(8),
+                padding: const EdgeInsets.all(9),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Container(
-                      padding: const EdgeInsets.all(12),
+                      padding: const EdgeInsets.all(0),
                       decoration: BoxDecoration(
                         gradient: LinearGradient(
                           colors: [

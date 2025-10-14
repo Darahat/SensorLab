@@ -206,6 +206,9 @@ class AppLocalizationsJa extends AppLocalizations {
   String get proximity => '近接';
 
   @override
+  String get speedMeter => '速度計';
+
+  @override
   String get heartRate => '心拍数';
 
   @override
@@ -591,6 +594,18 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get ok => 'OK';
+
+  @override
+  String get tracking => '追跡中';
+
+  @override
+  String get waitingForGps => 'GPS待機中...';
+
+  @override
+  String get maxSpeed => '最高速度';
+
+  @override
+  String get avgSpeed => '平均速度';
 
   @override
   String get motionIntensity => 'モーション強度';
@@ -1258,4 +1273,166 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get pleaseEnterYourHeight => '身長を入力してください';
+
+  @override
+  String get pedometer => '歩数計';
+
+  @override
+  String get dailyGoal => '1日の目標';
+
+  @override
+  String get stepsToGo => '残り';
+
+  @override
+  String get goalReached => '目標達成！';
+
+  @override
+  String get calories => 'カロリー';
+
+  @override
+  String get pace => 'ペース';
+
+  @override
+  String get cadence => 'ケイデンス';
+
+  @override
+  String get setDailyGoal => '1日の目標を設定';
+
+  @override
+  String get resetSessionConfirmation => '現在のセッションをリセットしてもよろしいですか？すべての進捗が失われます。';
+
+  @override
+  String get barometer => '気圧計';
+
+  @override
+  String get waitingForSensor => 'センサー待機中...';
+
+  @override
+  String get clearWeather => '晴天';
+
+  @override
+  String get cloudyWeather => '曇天';
+
+  @override
+  String get stableWeather => '安定天候';
+
+  @override
+  String get pressureRising => '上昇中';
+
+  @override
+  String get pressureFalling => '下降中';
+
+  @override
+  String get pressureSteady => '安定';
+
+  @override
+  String get maximum => '最大';
+
+  @override
+  String get minimum => '最小';
+
+  @override
+  String get altitude => '高度';
+
+  @override
+  String get altimeter => 'Altimeter';
+
+  @override
+  String get altimeterWaiting => 'Waiting for GPS and barometer data...';
+
+  @override
+  String get aboveSeaLevel => 'Above Sea Level';
+
+  @override
+  String get climbing => 'Climbing';
+
+  @override
+  String get descending => 'Descending';
+
+  @override
+  String get stable => 'Stable';
+
+  @override
+  String get usingGpsOnly => 'Using GPS data only';
+
+  @override
+  String get usingBarometerOnly => 'Using barometer data only';
+
+  @override
+  String get usingFusedData => 'Combining GPS and barometer for accuracy';
+
+  @override
+  String get dataSource => 'Data Source';
+
+  @override
+  String get sensorReadings => 'Sensor Readings';
+
+  @override
+  String get gpsAltitude => 'GPS Altitude';
+
+  @override
+  String get baroAltitude => 'Baro Altitude';
+
+  @override
+  String get pressure => 'Pressure';
+
+  @override
+  String get statistics => 'Statistics';
+
+  @override
+  String get gain => 'Gain';
+
+  @override
+  String get loss => 'Loss';
+
+  @override
+  String get calibrateAltimeter => 'Calibrate Altimeter';
+
+  @override
+  String get calibrateDescription => 'Enter your current known altitude in meters to calibrate the barometric sensor for better accuracy.';
+
+  @override
+  String get knownAltitude => 'Known Altitude';
+
+  @override
+  String get calibrationComplete => 'Calibration complete!';
+
+  @override
+  String get statsReset => 'Statistics reset!';
+
+  @override
+  String get vibrationMeter => 'Vibration Meter';
+
+  @override
+  String get vibrationWaiting => 'Waiting for accelerometer data...';
+
+  @override
+  String get vibrationMagnitude => 'Vibration Magnitude';
+
+  @override
+  String get vibrationLevel => 'Vibration Level';
+
+  @override
+  String get realtimeWaveform => 'Real-time Waveform';
+
+  @override
+  String get pattern => 'Pattern';
+
+  @override
+  String get frequency => 'Frequency';
+
+  @override
+  String get axisBreakdown => 'Axis Breakdown';
+
+  @override
+  String get advancedMetrics => 'Advanced Metrics';
+
+  @override
+  String get rms => 'RMS';
+
+  @override
+  String get peakToPeak => 'Peak-to-Peak';
+
+  @override
+  String get crestFactor => 'Crest Factor';
 }
