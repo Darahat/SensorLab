@@ -1,11 +1,13 @@
 import 'dart:async';
 
-import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:sensorlab/l10n/app_localizations.dart';
 import 'package:sensorlab/src/features/noise_meter/models/enhanced_noise_data.dart';
 import 'package:sensorlab/src/features/noise_meter/presentation/providers/enhanced_noise_meter_provider.dart';
+import 'package:sensorlab/src/features/noise_meter/presentation/widgets/index.dart';
+import 'package:sensorlab/src/shared/widgets/utility_widgets.dart';
 
 /// Real-time acoustic monitoring screen
 class AcousticMonitoringScreen extends ConsumerStatefulWidget {
@@ -59,9 +61,10 @@ class _AcousticMonitoringScreenState
 
     if (report != null && mounted) {
       // Show success and pop
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Report generated successfully!')),
-      );
+      final l10n = AppLocalizations.of(context)!;
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(l10n.reportGeneratedSuccess)));
       Navigator.pop(context, report);
     } else if (mounted) {
       Navigator.pop(context);
@@ -71,7 +74,7 @@ class _AcousticMonitoringScreenState
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final isDark = theme.brightness == Brightness.dark;
+    final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(enhancedNoiseMeterProvider);
 
     return WillPopScope(
@@ -88,7 +91,7 @@ class _AcousticMonitoringScreenState
       child: Scaffold(
         backgroundColor: theme.colorScheme.surface,
         appBar: AppBar(
-          title: Text(_getPresetTitle()),
+          title: Text(_getPresetTitle(l10n)),
           centerTitle: true,
           elevation: 0,
           actions: [
@@ -101,7 +104,7 @@ class _AcousticMonitoringScreenState
                     _stopRecording();
                   }
                 },
-                tooltip: 'Stop Recording',
+                tooltip: l10n.stopRecordingTooltip,
               ),
           ],
         ),
@@ -110,28 +113,75 @@ class _AcousticMonitoringScreenState
             padding: const EdgeInsets.all(16.0),
             child: Column(
               children: [
-                // Status Card
-                _buildStatusCard(theme, isDark, state),
+                // Status Card - Using reusable widget
+                StatusCard(
+                  isActive: state.isRecording,
+                  title: state.isRecording
+                      ? l10n.monitoringActive
+                      : l10n.monitoringStopped,
+                  subtitle: state.isRecording
+                      ? l10n.monitoringEnvironment
+                      : l10n.recordingCompleted,
+                ),
                 const SizedBox(height: 24),
 
-                // Current Decibel Display
-                _buildDecibelDisplay(theme, state),
+                // Current Decibel Display - Using specialized widget
+                DecibelDisplay(
+                  decibels: state.currentDecibels,
+                  noiseLevel: _getNoiseLevel(state.currentDecibels),
+                  unit: l10n.decibelUnit,
+                ),
                 const SizedBox(height: 24),
 
-                // Progress Indicator
-                _buildProgressIndicator(theme, state),
+                // Progress Indicator - Using specialized widget
+                SessionProgressIndicator(
+                  progress: state.progress,
+                  remainingTime: _formatDuration(
+                    state.remainingTime ?? Duration.zero,
+                    l10n,
+                  ),
+                  label: l10n.monitoringProgress,
+                  color: _getDecibelColor(state.averageDecibels),
+                ),
                 const SizedBox(height: 24),
 
-                // Real-time Chart
-                _buildRealtimeChart(theme, isDark, state),
+                // Real-time Chart - Using reusable chart widget
+                RealtimeLineChart(
+                  dataPoints: state.decibelHistory,
+                  title: l10n.monitoringLiveChart,
+                  lineColor: _getDecibelColor(state.averageDecibels),
+                  maxY: 100,
+                  horizontalInterval: 20,
+                ),
                 const SizedBox(height: 24),
 
-                // Statistics Cards
-                _buildStatisticsCards(theme, isDark, state),
+                // Statistics Cards - Using reusable StatCard
+                Row(
+                  children: [
+                    Expanded(
+                      child: StatCard(
+                        icon: Iconsax.chart,
+                        label: l10n.reportAverage,
+                        value:
+                            '${state.averageDecibels.toStringAsFixed(1)} ${l10n.decibelUnit}',
+                        color: Colors.blue,
+                      ),
+                    ),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: StatCard(
+                        icon: Iconsax.warning_2,
+                        label: l10n.reportEvents,
+                        value: '${state.events.length}',
+                        color: Colors.orange,
+                      ),
+                    ),
+                  ],
+                ),
                 const SizedBox(height: 24),
 
                 // Events List
-                _buildEventsList(theme, isDark, state),
+                _buildEventsList(theme, state, l10n),
               ],
             ),
           ),
@@ -140,358 +190,29 @@ class _AcousticMonitoringScreenState
     );
   }
 
-  String _getPresetTitle() {
+  String _getPresetTitle(AppLocalizations l10n) {
     switch (widget.preset) {
       case RecordingPreset.sleep:
-        return 'Sleep Analysis (8h)';
+        return l10n.presetSleepAnalysis;
       case RecordingPreset.work:
-        return 'Work Environment (1h)';
+        return l10n.presetWorkEnvironment;
       case RecordingPreset.focus:
-        return 'Focus Session (30m)';
+        return l10n.presetFocusSession;
       case RecordingPreset.custom:
-        return 'Custom Recording';
+        return l10n.presetCustomRecording;
     }
-  }
-
-  Widget _buildStatusCard(
-    ThemeData theme,
-    bool isDark,
-    EnhancedNoiseMeterData state,
-  ) {
-    final color = state.isRecording ? Colors.green : Colors.grey;
-
-    return Card(
-      elevation: 2,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-      child: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Row(
-          children: [
-            Container(
-              width: 12,
-              height: 12,
-              decoration: BoxDecoration(
-                color: color,
-                shape: BoxShape.circle,
-                boxShadow: [
-                  BoxShadow(
-                    color: color.withOpacity(0.5),
-                    blurRadius: 8,
-                    spreadRadius: 2,
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(width: 12),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    state.isRecording
-                        ? 'Recording Active'
-                        : 'Recording Stopped',
-                    style: theme.textTheme.titleMedium?.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    state.isRecording
-                        ? 'Monitoring acoustic environment...'
-                        : 'Recording completed',
-                    style: theme.textTheme.bodySmall?.copyWith(
-                      color: Colors.grey,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildDecibelDisplay(ThemeData theme, EnhancedNoiseMeterData state) {
-    final decibel = state.currentDecibels;
-    final color = _getDecibelColor(decibel);
-
-    return Card(
-      elevation: 4,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-      child: Container(
-        padding: const EdgeInsets.all(32),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [color.withOpacity(0.1), color.withOpacity(0.05)],
-          ),
-        ),
-        child: Column(
-          children: [
-            Text(
-              'Current Level',
-              style: theme.textTheme.titleMedium?.copyWith(color: Colors.grey),
-            ),
-            const SizedBox(height: 16),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Text(
-                  decibel.toStringAsFixed(1),
-                  style: theme.textTheme.displayLarge?.copyWith(
-                    fontSize: 72,
-                    fontWeight: FontWeight.bold,
-                    color: color,
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 16, left: 8),
-                  child: Text(
-                    'dB',
-                    style: theme.textTheme.headlineMedium?.copyWith(
-                      color: color,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 16),
-            Text(
-              _getNoiseLevel(decibel),
-              style: theme.textTheme.titleLarge?.copyWith(
-                color: color,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildProgressIndicator(
-    ThemeData theme,
-    EnhancedNoiseMeterData state,
-  ) {
-    final progress = state.progress;
-    final remaining = state.remainingTime ?? Duration.zero;
-
-    return Card(
-      elevation: 2,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-      child: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Progress',
-                  style: theme.textTheme.titleMedium?.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                Text(
-                  _formatDuration(remaining),
-                  style: theme.textTheme.titleMedium?.copyWith(
-                    color: Colors.grey,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 16),
-            ClipRRect(
-              borderRadius: BorderRadius.circular(8),
-              child: LinearProgressIndicator(
-                value: progress,
-                minHeight: 12,
-                backgroundColor: Colors.grey.withOpacity(0.2),
-                valueColor: AlwaysStoppedAnimation<Color>(
-                  _getDecibelColor(state.averageDecibels),
-                ),
-              ),
-            ),
-            const SizedBox(height: 8),
-            Text(
-              '${(progress * 100).toStringAsFixed(1)}% complete',
-              style: theme.textTheme.bodySmall?.copyWith(color: Colors.grey),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildRealtimeChart(
-    ThemeData theme,
-    bool isDark,
-    EnhancedNoiseMeterData state,
-  ) {
-    final dataPoints = state.decibelHistory;
-
-    return Card(
-      elevation: 2,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-      child: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Live Monitoring',
-              style: theme.textTheme.titleMedium?.copyWith(
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const SizedBox(height: 20),
-            SizedBox(
-              height: 200,
-              child: dataPoints.isEmpty
-                  ? Center(
-                      child: Text(
-                        'Collecting data...',
-                        style: theme.textTheme.bodyMedium?.copyWith(
-                          color: Colors.grey,
-                        ),
-                      ),
-                    )
-                  : LineChart(
-                      LineChartData(
-                        gridData: FlGridData(
-                          show: true,
-                          drawVerticalLine: false,
-                          horizontalInterval: 20,
-                          getDrawingHorizontalLine: (value) {
-                            return FlLine(
-                              color: Colors.grey.withOpacity(0.2),
-                              strokeWidth: 1,
-                            );
-                          },
-                        ),
-                        titlesData: FlTitlesData(
-                          leftTitles: AxisTitles(
-                            sideTitles: SideTitles(
-                              showTitles: true,
-                              reservedSize: 40,
-                              interval: 20,
-                              getTitlesWidget: (value, meta) {
-                                return Text(
-                                  '${value.toInt()}',
-                                  style: theme.textTheme.bodySmall,
-                                );
-                              },
-                            ),
-                          ),
-                          rightTitles: AxisTitles(
-                            sideTitles: SideTitles(showTitles: false),
-                          ),
-                          topTitles: AxisTitles(
-                            sideTitles: SideTitles(showTitles: false),
-                          ),
-                          bottomTitles: AxisTitles(
-                            sideTitles: SideTitles(showTitles: false),
-                          ),
-                        ),
-                        borderData: FlBorderData(show: false),
-                        minX: 0,
-                        maxX: dataPoints.length.toDouble(),
-                        minY: 0,
-                        maxY: 100,
-                        lineBarsData: [
-                          LineChartBarData(
-                            spots: List.generate(
-                              dataPoints.length,
-                              (index) =>
-                                  FlSpot(index.toDouble(), dataPoints[index]),
-                            ),
-                            isCurved: true,
-                            color: _getDecibelColor(state.averageDecibels),
-                            barWidth: 3,
-                            isStrokeCapRound: true,
-                            dotData: FlDotData(show: false),
-                            belowBarData: BarAreaData(
-                              show: true,
-                              color: _getDecibelColor(
-                                state.averageDecibels,
-                              ).withOpacity(0.1),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildStatisticsCards(
-    ThemeData theme,
-    bool isDark,
-    EnhancedNoiseMeterData state,
-  ) {
-    return Row(
-      children: [
-        Expanded(
-          child: _StatCard(
-            icon: Iconsax.chart,
-            label: 'Average',
-            value: '${state.averageDecibels.toStringAsFixed(1)} dB',
-            color: Colors.blue,
-          ),
-        ),
-        const SizedBox(width: 12),
-        Expanded(
-          child: _StatCard(
-            icon: Iconsax.warning_2,
-            label: 'Events',
-            value: '${state.events.length}',
-            color: Colors.orange,
-          ),
-        ),
-      ],
-    );
   }
 
   Widget _buildEventsList(
     ThemeData theme,
-    bool isDark,
     EnhancedNoiseMeterData state,
+    AppLocalizations l10n,
   ) {
     if (state.events.isEmpty) {
-      return Card(
-        elevation: 2,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-        child: Padding(
-          padding: const EdgeInsets.all(32),
-          child: Column(
-            children: [
-              Icon(Iconsax.tick_circle, size: 48, color: Colors.green),
-              const SizedBox(height: 16),
-              Text(
-                'No Interruptions',
-                style: theme.textTheme.titleMedium?.copyWith(
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const SizedBox(height: 8),
-              Text(
-                'Your environment has been quiet',
-                style: theme.textTheme.bodySmall?.copyWith(color: Colors.grey),
-                textAlign: TextAlign.center,
-              ),
-            ],
-          ),
-        ),
+      return EmptyStateWidget(
+        icon: Iconsax.tick_circle,
+        title: 'No Interruptions',
+        message: 'Your environment has been quiet',
       );
     }
 
@@ -517,7 +238,12 @@ class _AcousticMonitoringScreenState
               separatorBuilder: (context, index) => const Divider(height: 16),
               itemBuilder: (context, index) {
                 final event = state.events[index];
-                return _EventItem(event: event);
+                return NoiseEventItem(
+                  timestamp: event.timestamp,
+                  peakDecibels: event.peakDecibels,
+                  duration: event.duration,
+                  eventType: event.eventType,
+                );
               },
             ),
           ],
@@ -542,7 +268,7 @@ class _AcousticMonitoringScreenState
     return 'Very Loud';
   }
 
-  String _formatDuration(Duration duration) {
+  String _formatDuration(Duration duration, AppLocalizations l10n) {
     final hours = duration.inHours;
     final minutes = duration.inMinutes.remainder(60);
     final seconds = duration.inSeconds.remainder(60);
@@ -557,152 +283,24 @@ class _AcousticMonitoringScreenState
   }
 
   Future<bool> _showStopDialog() async {
+    final l10n = AppLocalizations.of(context)!;
     return await showDialog<bool>(
           context: context,
           builder: (context) => AlertDialog(
-            title: const Text('Stop Recording?'),
-            content: const Text(
-              'Are you sure you want to stop the recording? This will generate your acoustic environment report.',
-            ),
+            title: Text(l10n.stopRecordingConfirmTitle),
+            content: Text(l10n.stopRecordingConfirmMessage),
             actions: [
               TextButton(
                 onPressed: () => Navigator.pop(context, false),
-                child: const Text('Continue Recording'),
+                child: Text(l10n.continueRecording),
               ),
               ElevatedButton(
                 onPressed: () => Navigator.pop(context, true),
-                child: const Text('Stop & Generate Report'),
+                child: Text(l10n.recordingStop),
               ),
             ],
           ),
         ) ??
         false;
-  }
-}
-
-class _StatCard extends StatelessWidget {
-  final IconData icon;
-  final String label;
-  final String value;
-  final Color color;
-
-  const _StatCard({
-    required this.icon,
-    required this.label,
-    required this.value,
-    required this.color,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
-    return Card(
-      elevation: 2,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          children: [
-            Icon(icon, color: color, size: 28),
-            const SizedBox(height: 8),
-            Text(
-              label,
-              style: theme.textTheme.bodySmall?.copyWith(color: Colors.grey),
-            ),
-            const SizedBox(height: 4),
-            Text(
-              value,
-              style: theme.textTheme.titleMedium?.copyWith(
-                fontWeight: FontWeight.bold,
-                color: color,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _EventItem extends StatelessWidget {
-  final AcousticEvent event;
-
-  const _EventItem({required this.event});
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final color = _getEventColor(event.peakDecibels);
-
-    return Row(
-      children: [
-        Container(
-          width: 40,
-          height: 40,
-          decoration: BoxDecoration(
-            color: color.withOpacity(0.1),
-            borderRadius: BorderRadius.circular(8),
-          ),
-          child: Icon(_getEventIcon(event.eventType), color: color, size: 20),
-        ),
-        const SizedBox(width: 12),
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                event.eventType,
-                style: theme.textTheme.bodyMedium?.copyWith(
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-              const SizedBox(height: 2),
-              Text(
-                '${event.peakDecibels.toStringAsFixed(1)} dB • ${_formatTime(event.timestamp)}',
-                style: theme.textTheme.bodySmall?.copyWith(color: Colors.grey),
-              ),
-            ],
-          ),
-        ),
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-          decoration: BoxDecoration(
-            color: color.withOpacity(0.1),
-            borderRadius: BorderRadius.circular(6),
-          ),
-          child: Text(
-            '${event.duration.inSeconds}s',
-            style: theme.textTheme.bodySmall?.copyWith(
-              color: color,
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Color _getEventColor(double decibel) {
-    if (decibel < 70) return Colors.orange;
-    if (decibel < 80) return Colors.deepOrange;
-    return Colors.red;
-  }
-
-  IconData _getEventIcon(String type) {
-    switch (type.toLowerCase()) {
-      case 'spike':
-        return Iconsax.flash_1;
-      case 'sustained':
-        return Iconsax.chart_1;
-      case 'intermittent':
-        return Iconsax.sound;
-      default:
-        return Iconsax.warning_2;
-    }
-  }
-
-  String _formatTime(DateTime time) {
-    return '${time.hour.toString().padLeft(2, '0')}:${time.minute.toString().padLeft(2, '0')}';
   }
 }

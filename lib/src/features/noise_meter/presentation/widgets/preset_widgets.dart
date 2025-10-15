@@ -1,0 +1,166 @@
+import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
+import 'package:sensorlab/src/features/noise_meter/models/enhanced_noise_data.dart';
+
+/// Preset card for selection screen
+class PresetCard extends StatelessWidget {
+  final RecordingPreset preset;
+  final IconData icon;
+  final String title;
+  final String duration;
+  final String description;
+  final Color color;
+  final VoidCallback onTap;
+
+  const PresetCard({
+    super.key,
+    required this.preset,
+    required this.icon,
+    required this.title,
+    required this.duration,
+    required this.description,
+    required this.color,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
+    return Card(
+      elevation: 2,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16),
+        side: BorderSide(color: color.withOpacity(0.3), width: 1),
+      ),
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(16),
+        child: Padding(
+          padding: const EdgeInsets.all(20),
+          child: Row(
+            children: [
+              // Icon container
+              _PresetIcon(icon: icon, color: color),
+              const SizedBox(width: 16),
+
+              // Content
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      title,
+                      style: theme.textTheme.titleMedium?.copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    Row(
+                      children: [
+                        Icon(Iconsax.clock, size: 14, color: color),
+                        const SizedBox(width: 4),
+                        Text(
+                          duration,
+                          style: theme.textTheme.bodySmall?.copyWith(
+                            color: color,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      description,
+                      style: theme.textTheme.bodySmall?.copyWith(
+                        color: Colors.grey,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+
+              // Arrow
+              Icon(Iconsax.arrow_right_3, color: color),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _PresetIcon extends StatelessWidget {
+  final IconData icon;
+  final Color color;
+
+  const _PresetIcon({required this.icon, required this.color});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 64,
+      height: 64,
+      decoration: BoxDecoration(
+        color: color.withOpacity(0.1),
+        borderRadius: BorderRadius.circular(16),
+      ),
+      child: Icon(icon, color: color, size: 32),
+    );
+  }
+}
+
+/// Compact preset badge
+class PresetBadge extends StatelessWidget {
+  final RecordingPreset preset;
+  final String label;
+  final Color color;
+
+  const PresetBadge({
+    super.key,
+    required this.preset,
+    required this.label,
+    required this.color,
+  });
+
+  IconData _getIcon() {
+    switch (preset) {
+      case RecordingPreset.sleep:
+        return Iconsax.moon;
+      case RecordingPreset.work:
+        return Iconsax.briefcase;
+      case RecordingPreset.focus:
+        return Iconsax.lamp_charge;
+      case RecordingPreset.custom:
+        return Iconsax.setting_2;
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+      decoration: BoxDecoration(
+        color: color.withOpacity(0.1),
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: color.withOpacity(0.3)),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(_getIcon(), size: 14, color: color),
+          const SizedBox(width: 6),
+          Text(
+            label,
+            style: theme.textTheme.bodySmall?.copyWith(
+              color: color,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}

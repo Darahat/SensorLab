@@ -6,6 +6,7 @@ import 'package:sensorlab/src/features/app_settings/domain/models/app_settings.d
 import 'package:sensorlab/src/features/health/domain/entities/activity_session.dart';
 import 'package:sensorlab/src/features/health/domain/entities/activity_type.dart';
 import 'package:sensorlab/src/features/health/domain/entities/user_profile.dart';
+import 'package:sensorlab/src/features/light_meter/models/plant_tracking_session.dart';
 import 'package:sensorlab/src/features/noise_meter/models/acoustic_report.dart';
 
 import '../constants/hive_constants.dart';
@@ -38,6 +39,16 @@ class HiveService {
 
   /// [acousticReportBoxName] Instance
   static const String acousticReportBoxName = HiveConstants.acousticReportBox;
+
+  /// [plantTrackingBoxName] Instance
+  static const String plantTrackingBoxName = HiveConstants.plantTrackingBox;
+
+  /// [photoSessionBoxName] Instance
+  static const String photoSessionBoxName = HiveConstants.photoSessionBox;
+
+  /// [dailyLightSummaryBoxName] Instance
+  static const String dailyLightSummaryBoxName =
+      HiveConstants.dailyLightSummaryBox;
 
   /// Hive Service Initialization
   Future<void> init() async {
@@ -94,11 +105,39 @@ class HiveService {
         Hive.registerAdapter(AcousticReportHiveAdapter());
       }
 
+      /// Teach Hive about [PlantTrackingSession] data model (typeId: 10)
+      if (!Hive.isAdapterRegistered(10)) {
+        Hive.registerAdapter(PlantTrackingSessionAdapter());
+      }
+
+      /// Teach Hive about [LightReadingHive] data model (typeId: 11)
+      if (!Hive.isAdapterRegistered(11)) {
+        Hive.registerAdapter(LightReadingHiveAdapter());
+      }
+
+      /// Teach Hive about [PhotoSession] data model (typeId: 12)
+      if (!Hive.isAdapterRegistered(12)) {
+        Hive.registerAdapter(PhotoSessionAdapter());
+      }
+
+      /// Teach Hive about [DailyLightSummary] data model (typeId: 13)
+      if (!Hive.isAdapterRegistered(13)) {
+        Hive.registerAdapter(DailyLightSummaryAdapter());
+      }
+
+      /// Teach Hive about [HourlyLightData] data model (typeId: 14)
+      if (!Hive.isAdapterRegistered(14)) {
+        Hive.registerAdapter(HourlyLightDataAdapter());
+      }
+
       /// Open The Database drawers to read/write data
       await Hive.openBox<AppSettings>(settingsBoxName);
       await Hive.openBox<UserProfile>(userProfileBoxName);
       await Hive.openBox<ActivitySession>(activitySessionBoxName);
       await Hive.openBox<AcousticReportHive>(acousticReportBoxName);
+      await Hive.openBox<PlantTrackingSession>(plantTrackingBoxName);
+      await Hive.openBox<PhotoSession>(photoSessionBoxName);
+      await Hive.openBox<DailyLightSummary>(dailyLightSummaryBoxName);
 
       /// Set _initialized value true
       _initialized = true;
@@ -135,6 +174,24 @@ class HiveService {
   Box<AcousticReportHive> get acousticReportBox {
     _checkInitialized();
     return Hive.box<AcousticReportHive>(acousticReportBoxName);
+  }
+
+  ///plantTrackingBox initialized
+  Box<PlantTrackingSession> get plantTrackingBox {
+    _checkInitialized();
+    return Hive.box<PlantTrackingSession>(plantTrackingBoxName);
+  }
+
+  ///photoSessionBox initialized
+  Box<PhotoSession> get photoSessionBox {
+    _checkInitialized();
+    return Hive.box<PhotoSession>(photoSessionBoxName);
+  }
+
+  ///dailyLightSummaryBox initialized
+  Box<DailyLightSummary> get dailyLightSummaryBox {
+    _checkInitialized();
+    return Hive.box<DailyLightSummary>(dailyLightSummaryBoxName);
   }
 
   /// check are they initialized or not

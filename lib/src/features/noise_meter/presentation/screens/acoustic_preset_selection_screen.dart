@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:sensorlab/l10n/app_localizations.dart';
 import 'package:sensorlab/src/features/noise_meter/models/enhanced_noise_data.dart';
 import 'package:sensorlab/src/features/noise_meter/presentation/screens/acoustic_monitoring_screen.dart';
 
@@ -11,12 +12,12 @@ class AcousticPresetSelectionScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
-    final isDark = theme.brightness == Brightness.dark;
+    final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
       backgroundColor: theme.colorScheme.surface,
       appBar: AppBar(
-        title: const Text('Acoustic Environment Analyzer'),
+        title: Text(l10n.acousticAnalyzerTitle),
         centerTitle: true,
         elevation: 0,
       ),
@@ -28,14 +29,14 @@ class AcousticPresetSelectionScreen extends ConsumerWidget {
             children: [
               // Header
               Text(
-                'Choose Recording Preset',
+                l10n.presetSelectTitle,
                 style: theme.textTheme.headlineSmall?.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
               ),
               const SizedBox(height: 8),
               Text(
-                'Select a preset to analyze your acoustic environment over time',
+                l10n.presetSelectSubtitle,
                 style: theme.textTheme.bodyMedium?.copyWith(color: Colors.grey),
               ),
               const SizedBox(height: 32),
@@ -47,10 +48,9 @@ class AcousticPresetSelectionScreen extends ConsumerWidget {
                     _PresetCard(
                       preset: RecordingPreset.sleep,
                       icon: Iconsax.moon,
-                      title: 'Analyze Sleep Environment',
-                      duration: '8 hours',
-                      description:
-                          'Monitor bedroom noise throughout the night to improve sleep quality',
+                      title: l10n.presetSleepTitle,
+                      duration: l10n.presetSleepDuration,
+                      description: l10n.presetSleepDescription,
                       color: Colors.indigo,
                       onTap: () =>
                           _startRecording(context, RecordingPreset.sleep),
@@ -59,10 +59,9 @@ class AcousticPresetSelectionScreen extends ConsumerWidget {
                     _PresetCard(
                       preset: RecordingPreset.work,
                       icon: Iconsax.briefcase,
-                      title: 'Monitor Office Environment',
-                      duration: '1 hour',
-                      description:
-                          'Track workplace noise levels and identify distractions',
+                      title: l10n.presetWorkTitle,
+                      duration: l10n.presetWorkDuration,
+                      description: l10n.presetWorkDescription,
                       color: Colors.blue,
                       onTap: () =>
                           _startRecording(context, RecordingPreset.work),
@@ -71,10 +70,9 @@ class AcousticPresetSelectionScreen extends ConsumerWidget {
                     _PresetCard(
                       preset: RecordingPreset.focus,
                       icon: Iconsax.lamp_charge,
-                      title: 'Focus Session Analysis',
-                      duration: '30 minutes',
-                      description:
-                          'Analyze your study or focus session environment',
+                      title: l10n.presetFocusTitle,
+                      duration: l10n.presetFocusDuration,
+                      description: l10n.presetFocusDescription,
                       color: Colors.teal,
                       onTap: () =>
                           _startRecording(context, RecordingPreset.focus),
@@ -92,7 +90,7 @@ class AcousticPresetSelectionScreen extends ConsumerWidget {
                     Navigator.pushNamed(context, '/acoustic-reports');
                   },
                   icon: const Icon(Iconsax.document),
-                  label: const Text('View Historical Reports'),
+                  label: Text(l10n.viewHistoricalReports),
                   style: OutlinedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(vertical: 16),
                   ),

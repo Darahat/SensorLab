@@ -2894,6 +2894,618 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Crest Factor'**
   String get crestFactor;
+
+  /// No description provided for @acousticAnalyzer.
+  ///
+  /// In en, this message translates to:
+  /// **'Acoustic Analyzer'**
+  String get acousticAnalyzer;
+
+  /// No description provided for @acousticAnalyzerTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Acoustic Environment Analyzer'**
+  String get acousticAnalyzerTitle;
+
+  /// No description provided for @acousticEnvironment.
+  ///
+  /// In en, this message translates to:
+  /// **'Acoustic Environment'**
+  String get acousticEnvironment;
+
+  /// No description provided for @noiseLevel.
+  ///
+  /// In en, this message translates to:
+  /// **'Noise Level'**
+  String get noiseLevel;
+
+  /// No description provided for @decibelUnit.
+  ///
+  /// In en, this message translates to:
+  /// **'dB'**
+  String get decibelUnit;
+
+  /// No description provided for @presetSelectTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose Recording Preset'**
+  String get presetSelectTitle;
+
+  /// No description provided for @presetSelectSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Select a preset to analyze your acoustic environment over time'**
+  String get presetSelectSubtitle;
+
+  /// No description provided for @presetSleep.
+  ///
+  /// In en, this message translates to:
+  /// **'Sleep'**
+  String get presetSleep;
+
+  /// No description provided for @presetSleepTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Analyze Sleep Environment'**
+  String get presetSleepTitle;
+
+  /// No description provided for @presetSleepDuration.
+  ///
+  /// In en, this message translates to:
+  /// **'8 hours'**
+  String get presetSleepDuration;
+
+  /// No description provided for @presetSleepDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Monitor bedroom noise throughout the night to improve sleep quality'**
+  String get presetSleepDescription;
+
+  /// No description provided for @presetWork.
+  ///
+  /// In en, this message translates to:
+  /// **'Work'**
+  String get presetWork;
+
+  /// No description provided for @presetWorkTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Monitor Office Environment'**
+  String get presetWorkTitle;
+
+  /// No description provided for @presetWorkDuration.
+  ///
+  /// In en, this message translates to:
+  /// **'1 hour'**
+  String get presetWorkDuration;
+
+  /// No description provided for @presetWorkDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Track workplace noise levels and identify distractions'**
+  String get presetWorkDescription;
+
+  /// No description provided for @presetFocus.
+  ///
+  /// In en, this message translates to:
+  /// **'Focus'**
+  String get presetFocus;
+
+  /// No description provided for @presetFocusTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Focus Session Analysis'**
+  String get presetFocusTitle;
+
+  /// No description provided for @presetFocusDuration.
+  ///
+  /// In en, this message translates to:
+  /// **'30 minutes'**
+  String get presetFocusDuration;
+
+  /// No description provided for @presetFocusDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Analyze your study or focus session environment'**
+  String get presetFocusDescription;
+
+  /// No description provided for @presetCustom.
+  ///
+  /// In en, this message translates to:
+  /// **'Custom'**
+  String get presetCustom;
+
+  /// No description provided for @presetSleepAnalysis.
+  ///
+  /// In en, this message translates to:
+  /// **'Sleep Analysis (8h)'**
+  String get presetSleepAnalysis;
+
+  /// No description provided for @presetWorkEnvironment.
+  ///
+  /// In en, this message translates to:
+  /// **'Work Environment (1h)'**
+  String get presetWorkEnvironment;
+
+  /// No description provided for @presetFocusSession.
+  ///
+  /// In en, this message translates to:
+  /// **'Focus Session (30m)'**
+  String get presetFocusSession;
+
+  /// No description provided for @presetCustomRecording.
+  ///
+  /// In en, this message translates to:
+  /// **'Custom Recording'**
+  String get presetCustomRecording;
+
+  /// No description provided for @monitoringTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Monitoring'**
+  String get monitoringTitle;
+
+  /// No description provided for @monitoringActive.
+  ///
+  /// In en, this message translates to:
+  /// **'Recording Active'**
+  String get monitoringActive;
+
+  /// No description provided for @monitoringStopped.
+  ///
+  /// In en, this message translates to:
+  /// **'Recording Stopped'**
+  String get monitoringStopped;
+
+  /// No description provided for @monitoringProgress.
+  ///
+  /// In en, this message translates to:
+  /// **'Progress'**
+  String get monitoringProgress;
+
+  /// No description provided for @monitoringCurrentLevel.
+  ///
+  /// In en, this message translates to:
+  /// **'Current Level'**
+  String get monitoringCurrentLevel;
+
+  /// No description provided for @monitoringLiveChart.
+  ///
+  /// In en, this message translates to:
+  /// **'Live Monitoring'**
+  String get monitoringLiveChart;
+
+  /// No description provided for @monitoringEnvironment.
+  ///
+  /// In en, this message translates to:
+  /// **'Monitoring acoustic environment...'**
+  String get monitoringEnvironment;
+
+  /// No description provided for @recordingStart.
+  ///
+  /// In en, this message translates to:
+  /// **'Start Recording'**
+  String get recordingStart;
+
+  /// No description provided for @recordingStop.
+  ///
+  /// In en, this message translates to:
+  /// **'Stop Recording'**
+  String get recordingStop;
+
+  /// No description provided for @recordingCompleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Recording completed'**
+  String get recordingCompleted;
+
+  /// No description provided for @reportGeneratedSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Report generated successfully!'**
+  String get reportGeneratedSuccess;
+
+  /// No description provided for @stopRecordingTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Stop Recording'**
+  String get stopRecordingTooltip;
+
+  /// No description provided for @stopRecordingConfirmTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Stop Recording?'**
+  String get stopRecordingConfirmTitle;
+
+  /// No description provided for @stopRecordingConfirmMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to stop the recording? The report will be generated with the current data.'**
+  String get stopRecordingConfirmMessage;
+
+  /// No description provided for @continueRecording.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue'**
+  String get continueRecording;
+
+  /// No description provided for @reportsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Acoustic Reports'**
+  String get reportsTitle;
+
+  /// No description provided for @reportsEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No Reports Yet'**
+  String get reportsEmpty;
+
+  /// No description provided for @reportsEmptyDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Start an acoustic analysis session to generate your first report'**
+  String get reportsEmptyDescription;
+
+  /// No description provided for @reportsSelectedCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} Selected'**
+  String reportsSelectedCount(int count);
+
+  /// No description provided for @reportExportCSV.
+  ///
+  /// In en, this message translates to:
+  /// **'Export as CSV'**
+  String get reportExportCSV;
+
+  /// No description provided for @reportExportAll.
+  ///
+  /// In en, this message translates to:
+  /// **'Export All'**
+  String get reportExportAll;
+
+  /// No description provided for @reportDelete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get reportDelete;
+
+  /// No description provided for @reportDeleteSelected.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Selected'**
+  String get reportDeleteSelected;
+
+  /// No description provided for @reportDeleteConfirmTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Reports?'**
+  String get reportDeleteConfirmTitle;
+
+  /// No description provided for @reportDeleteConfirmMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete {count} report(s)? This action cannot be undone.'**
+  String reportDeleteConfirmMessage(int count);
+
+  /// No description provided for @reportDeleteSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Reports deleted'**
+  String get reportDeleteSuccess;
+
+  /// No description provided for @reportFilterByPreset.
+  ///
+  /// In en, this message translates to:
+  /// **'Filter by Preset'**
+  String get reportFilterByPreset;
+
+  /// No description provided for @reportFilterAll.
+  ///
+  /// In en, this message translates to:
+  /// **'All Presets'**
+  String get reportFilterAll;
+
+  /// No description provided for @reportStartAnalysis.
+  ///
+  /// In en, this message translates to:
+  /// **'Start Analysis'**
+  String get reportStartAnalysis;
+
+  /// No description provided for @csvCopiedToClipboard.
+  ///
+  /// In en, this message translates to:
+  /// **'CSV data copied to clipboard!'**
+  String get csvCopiedToClipboard;
+
+  /// No description provided for @reportDetailTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Acoustic Report'**
+  String get reportDetailTitle;
+
+  /// No description provided for @reportQualityTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Environment Quality'**
+  String get reportQualityTitle;
+
+  /// No description provided for @reportQualityScore.
+  ///
+  /// In en, this message translates to:
+  /// **'Quality Score'**
+  String get reportQualityScore;
+
+  /// No description provided for @reportAverage.
+  ///
+  /// In en, this message translates to:
+  /// **'Average'**
+  String get reportAverage;
+
+  /// No description provided for @reportPeak.
+  ///
+  /// In en, this message translates to:
+  /// **'Peak'**
+  String get reportPeak;
+
+  /// No description provided for @reportHourlyBreakdown.
+  ///
+  /// In en, this message translates to:
+  /// **'Hourly Breakdown'**
+  String get reportHourlyBreakdown;
+
+  /// No description provided for @reportNoiseEvents.
+  ///
+  /// In en, this message translates to:
+  /// **'Noise Events'**
+  String get reportNoiseEvents;
+
+  /// No description provided for @reportNoEventsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'No Interruptions Detected'**
+  String get reportNoEventsTitle;
+
+  /// No description provided for @reportNoEventsMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Your environment was consistently quiet'**
+  String get reportNoEventsMessage;
+
+  /// No description provided for @reportShare.
+  ///
+  /// In en, this message translates to:
+  /// **'Share Report'**
+  String get reportShare;
+
+  /// No description provided for @reportRecommendations.
+  ///
+  /// In en, this message translates to:
+  /// **'Recommendations'**
+  String get reportRecommendations;
+
+  /// No description provided for @reportDuration.
+  ///
+  /// In en, this message translates to:
+  /// **'Duration'**
+  String get reportDuration;
+
+  /// No description provided for @reportEvents.
+  ///
+  /// In en, this message translates to:
+  /// **'events'**
+  String get reportEvents;
+
+  /// No description provided for @durationHours.
+  ///
+  /// In en, this message translates to:
+  /// **'{hours}h'**
+  String durationHours(int hours);
+
+  /// No description provided for @durationMinutes.
+  ///
+  /// In en, this message translates to:
+  /// **'{minutes}m'**
+  String durationMinutes(int minutes);
+
+  /// No description provided for @durationSeconds.
+  ///
+  /// In en, this message translates to:
+  /// **'{seconds}s'**
+  String durationSeconds(int seconds);
+
+  /// No description provided for @durationHoursMinutes.
+  ///
+  /// In en, this message translates to:
+  /// **'{hours}h {minutes}m'**
+  String durationHoursMinutes(int hours, int minutes);
+
+  /// No description provided for @qualityExcellent.
+  ///
+  /// In en, this message translates to:
+  /// **'Excellent'**
+  String get qualityExcellent;
+
+  /// No description provided for @qualityGood.
+  ///
+  /// In en, this message translates to:
+  /// **'Good'**
+  String get qualityGood;
+
+  /// No description provided for @qualityFair.
+  ///
+  /// In en, this message translates to:
+  /// **'Fair'**
+  String get qualityFair;
+
+  /// No description provided for @qualityPoor.
+  ///
+  /// In en, this message translates to:
+  /// **'Poor'**
+  String get qualityPoor;
+
+  /// No description provided for @unitDecibels.
+  ///
+  /// In en, this message translates to:
+  /// **'dB'**
+  String get unitDecibels;
+
+  /// No description provided for @unitHours.
+  ///
+  /// In en, this message translates to:
+  /// **'hours'**
+  String get unitHours;
+
+  /// No description provided for @unitMinutes.
+  ///
+  /// In en, this message translates to:
+  /// **'minutes'**
+  String get unitMinutes;
+
+  /// No description provided for @unitSeconds.
+  ///
+  /// In en, this message translates to:
+  /// **'seconds'**
+  String get unitSeconds;
+
+  /// No description provided for @actionOk.
+  ///
+  /// In en, this message translates to:
+  /// **'OK'**
+  String get actionOk;
+
+  /// No description provided for @actionContinue.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue'**
+  String get actionContinue;
+
+  /// No description provided for @actionStop.
+  ///
+  /// In en, this message translates to:
+  /// **'Stop'**
+  String get actionStop;
+
+  /// No description provided for @actionStart.
+  ///
+  /// In en, this message translates to:
+  /// **'Start'**
+  String get actionStart;
+
+  /// No description provided for @actionView.
+  ///
+  /// In en, this message translates to:
+  /// **'View'**
+  String get actionView;
+
+  /// No description provided for @actionExport.
+  ///
+  /// In en, this message translates to:
+  /// **'Export'**
+  String get actionExport;
+
+  /// No description provided for @actionShare.
+  ///
+  /// In en, this message translates to:
+  /// **'Share'**
+  String get actionShare;
+
+  /// No description provided for @viewHistoricalReports.
+  ///
+  /// In en, this message translates to:
+  /// **'View Historical Reports'**
+  String get viewHistoricalReports;
+
+  /// No description provided for @csvHeaderID.
+  ///
+  /// In en, this message translates to:
+  /// **'ID'**
+  String get csvHeaderID;
+
+  /// No description provided for @csvHeaderStartTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Start Time'**
+  String get csvHeaderStartTime;
+
+  /// No description provided for @csvHeaderEndTime.
+  ///
+  /// In en, this message translates to:
+  /// **'End Time'**
+  String get csvHeaderEndTime;
+
+  /// No description provided for @csvHeaderDuration.
+  ///
+  /// In en, this message translates to:
+  /// **'Duration (min)'**
+  String get csvHeaderDuration;
+
+  /// No description provided for @csvHeaderPreset.
+  ///
+  /// In en, this message translates to:
+  /// **'Preset'**
+  String get csvHeaderPreset;
+
+  /// No description provided for @csvHeaderAverageDB.
+  ///
+  /// In en, this message translates to:
+  /// **'Average dB'**
+  String get csvHeaderAverageDB;
+
+  /// No description provided for @csvHeaderMinDB.
+  ///
+  /// In en, this message translates to:
+  /// **'Min dB'**
+  String get csvHeaderMinDB;
+
+  /// No description provided for @csvHeaderMaxDB.
+  ///
+  /// In en, this message translates to:
+  /// **'Max dB'**
+  String get csvHeaderMaxDB;
+
+  /// No description provided for @csvHeaderEvents.
+  ///
+  /// In en, this message translates to:
+  /// **'Events'**
+  String get csvHeaderEvents;
+
+  /// No description provided for @csvHeaderQualityScore.
+  ///
+  /// In en, this message translates to:
+  /// **'Quality Score'**
+  String get csvHeaderQualityScore;
+
+  /// No description provided for @csvHeaderQuality.
+  ///
+  /// In en, this message translates to:
+  /// **'Quality'**
+  String get csvHeaderQuality;
+
+  /// No description provided for @csvHeaderRecommendation.
+  ///
+  /// In en, this message translates to:
+  /// **'Recommendation'**
+  String get csvHeaderRecommendation;
+
+  /// No description provided for @sleepAnalysis.
+  ///
+  /// In en, this message translates to:
+  /// **'Sleep Analysis'**
+  String get sleepAnalysis;
+
+  /// No description provided for @workEnvironment.
+  ///
+  /// In en, this message translates to:
+  /// **'Work Environment'**
+  String get workEnvironment;
+
+  /// No description provided for @focusSession.
+  ///
+  /// In en, this message translates to:
+  /// **'Focus Session'**
+  String get focusSession;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

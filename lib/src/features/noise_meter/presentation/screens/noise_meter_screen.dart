@@ -1,7 +1,8 @@
-import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sensorlab/l10n/app_localizations.dart';
+import 'package:sensorlab/src/shared/widgets/common_cards.dart';
+import 'package:sensorlab/src/shared/widgets/utility_widgets.dart';
 
 import '../../../../core/providers.dart';
 
@@ -212,20 +213,21 @@ class _NoiseMeterScreenState extends ConsumerState<NoiseMeterScreen> {
                           Row(
                             children: [
                               Expanded(
-                                child: _buildStatCard(
-                                  l10n.duration,
-                                  noiseMeterData.formattedSessionDuration,
-                                  Icons.timer,
-                                  Colors.blue,
+                                child: StatCard(
+                                  icon: Icons.timer,
+                                  label: l10n.duration,
+                                  value:
+                                      noiseMeterData.formattedSessionDuration,
+                                  color: Colors.blue,
                                 ),
                               ),
                               const SizedBox(width: 8),
                               Expanded(
-                                child: _buildStatCard(
-                                  l10n.readings,
-                                  '${noiseMeterData.totalReadings}',
-                                  Icons.analytics,
-                                  Colors.purple,
+                                child: StatCard(
+                                  icon: Icons.analytics,
+                                  label: l10n.readings,
+                                  value: '${noiseMeterData.totalReadings}',
+                                  color: Colors.purple,
                                 ),
                               ),
                             ],
@@ -236,29 +238,30 @@ class _NoiseMeterScreenState extends ConsumerState<NoiseMeterScreen> {
                           Row(
                             children: [
                               Expanded(
-                                child: _buildStatCard(
-                                  l10n.minStat,
-                                  noiseMeterData.formattedMinDecibels,
-                                  Icons.keyboard_arrow_down,
-                                  Colors.green,
+                                child: StatCard(
+                                  icon: Icons.keyboard_arrow_down,
+                                  label: l10n.minStat,
+                                  value: noiseMeterData.formattedMinDecibels,
+                                  color: Colors.green,
                                 ),
                               ),
                               const SizedBox(width: 8),
                               Expanded(
-                                child: _buildStatCard(
-                                  l10n.average,
-                                  noiseMeterData.formattedAverageDecibels,
-                                  Icons.remove,
-                                  Colors.orange,
+                                child: StatCard(
+                                  icon: Icons.remove,
+                                  label: l10n.average,
+                                  value:
+                                      noiseMeterData.formattedAverageDecibels,
+                                  color: Colors.orange,
                                 ),
                               ),
                               const SizedBox(width: 8),
                               Expanded(
-                                child: _buildStatCard(
-                                  l10n.maxStat,
-                                  noiseMeterData.formattedMaxDecibels,
-                                  Icons.keyboard_arrow_up,
-                                  Colors.red,
+                                child: StatCard(
+                                  icon: Icons.keyboard_arrow_up,
+                                  label: l10n.maxStat,
+                                  value: noiseMeterData.formattedMaxDecibels,
+                                  color: Colors.red,
                                 ),
                               ),
                             ],
@@ -272,85 +275,11 @@ class _NoiseMeterScreenState extends ConsumerState<NoiseMeterScreen> {
 
                   // Real-time Chart
                   if (noiseMeterData.recentReadings.isNotEmpty)
-                    Card(
-                      child: Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Text(
-                              'Real-time Noise Levels',
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            const SizedBox(height: 16),
-                            SizedBox(
-                              height: 200,
-                              child: LineChart(
-                                LineChartData(
-                                  gridData: const FlGridData(show: true),
-                                  titlesData: FlTitlesData(
-                                    leftTitles: AxisTitles(
-                                      sideTitles: SideTitles(
-                                        showTitles: true,
-                                        reservedSize: 40,
-                                        getTitlesWidget: (value, meta) {
-                                          return Text(
-                                            '${value.toInt()}',
-                                            style: const TextStyle(
-                                              fontSize: 10,
-                                            ),
-                                          );
-                                        },
-                                      ),
-                                    ),
-                                    bottomTitles: const AxisTitles(
-                                      sideTitles: SideTitles(showTitles: false),
-                                    ),
-                                    topTitles: const AxisTitles(
-                                      sideTitles: SideTitles(showTitles: false),
-                                    ),
-                                    rightTitles: const AxisTitles(
-                                      sideTitles: SideTitles(showTitles: false),
-                                    ),
-                                  ),
-                                  borderData: FlBorderData(show: true),
-                                  lineBarsData: [
-                                    LineChartBarData(
-                                      spots: noiseMeterData.recentReadings
-                                          .asMap()
-                                          .entries
-                                          .map((entry) {
-                                            return FlSpot(
-                                              entry.key.toDouble(),
-                                              entry.value,
-                                            );
-                                          })
-                                          .toList(),
-                                      isCurved: true,
-                                      color: Color(
-                                        noiseMeterData.noiseLevelColor,
-                                      ),
-                                      barWidth: 2,
-                                      dotData: const FlDotData(show: false),
-                                      belowBarData: BarAreaData(
-                                        show: true,
-                                        color: Color(
-                                          noiseMeterData.noiseLevelColor,
-                                        ).withOpacity(0.1),
-                                      ),
-                                    ),
-                                  ],
-                                  minY: 0,
-                                  maxY: 120,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
+                    RealtimeLineChart(
+                      title: 'Real-time Noise Levels',
+                      dataPoints: noiseMeterData.recentReadings,
+                      lineColor: Color(noiseMeterData.noiseLevelColor),
+                      maxY: 120,
                     ),
 
                   const SizedBox(height: 16),
@@ -431,45 +360,6 @@ class _NoiseMeterScreenState extends ConsumerState<NoiseMeterScreen> {
           ),
         );
       },
-    );
-  }
-
-  Widget _buildStatCard(
-    String label,
-    String value,
-    IconData icon,
-    Color color,
-  ) {
-    return Container(
-      padding: const EdgeInsets.all(12),
-      decoration: BoxDecoration(
-        color: color.withOpacity(0.1),
-        borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: color.withOpacity(0.3)),
-      ),
-      child: Column(
-        children: [
-          Icon(icon, color: color, size: 20),
-          const SizedBox(height: 4),
-          Text(
-            label,
-            style: TextStyle(
-              fontSize: 12,
-              color: color,
-              fontWeight: FontWeight.w500,
-            ),
-          ),
-          const SizedBox(height: 2),
-          Text(
-            value,
-            style: TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.bold,
-              color: color,
-            ),
-          ),
-        ],
-      ),
     );
   }
 

@@ -570,5 +570,152 @@
   "advancedMetrics": "Advanced Metrics",
   "rms": "RMS",
   "peakToPeak": "Peak-to-Peak",
-  "crestFactor": "Crest Factor"
+  "crestFactor": "Crest Factor",
+  "acousticAnalyzer": "Acoustic Analyzer",
+  "acousticAnalyzerTitle": "Acoustic Environment Analyzer",
+  "acousticEnvironment": "Acoustic Environment",
+  "noiseLevel": "Noise Level",
+  "decibelUnit": "dB",
+  "presetSelectTitle": "Choose Recording Preset",
+  "presetSelectSubtitle": "Select a preset to analyze your acoustic environment over time",
+  "presetSleep": "Sleep",
+  "presetSleepTitle": "Analyze Sleep Environment",
+  "presetSleepDuration": "8 hours",
+  "presetSleepDescription": "Monitor bedroom noise throughout the night to improve sleep quality",
+  "presetWork": "Work",
+  "presetWorkTitle": "Monitor Office Environment",
+  "presetWorkDuration": "1 hour",
+  "presetWorkDescription": "Track workplace noise levels and identify distractions",
+  "presetFocus": "Focus",
+  "presetFocusTitle": "Focus Session Analysis",
+  "presetFocusDuration": "30 minutes",
+  "presetFocusDescription": "Analyze your study or focus session environment",
+  "presetCustom": "Custom",
+  "presetSleepAnalysis": "Sleep Analysis (8h)",
+  "presetWorkEnvironment": "Work Environment (1h)",
+  "presetFocusSession": "Focus Session (30m)",
+  "presetCustomRecording": "Custom Recording",
+  "monitoringTitle": "Monitoring",
+  "monitoringActive": "Recording Active",
+  "monitoringStopped": "Recording Stopped",
+  "monitoringProgress": "Progress",
+  "monitoringCurrentLevel": "Current Level",
+  "monitoringLiveChart": "Live Monitoring",
+  "monitoringEnvironment": "Monitoring acoustic environment...",
+  "recordingStart": "Start Recording",
+  "recordingStop": "Stop Recording",
+  "recordingCompleted": "Recording completed",
+  "reportGeneratedSuccess": "Report generated successfully!",
+  "stopRecordingTooltip": "Stop Recording",
+  "stopRecordingConfirmTitle": "Stop Recording?",
+  "stopRecordingConfirmMessage": "Are you sure you want to stop the recording? The report will be generated with the current data.",
+  "continueRecording": "Continue",
+  "reportsTitle": "Acoustic Reports",
+  "reportsEmpty": "No Reports Yet",
+  "reportsEmptyDescription": "Start an acoustic analysis session to generate your first report",
+  "reportsSelectedCount": "{count} Selected",
+  "@reportsSelectedCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "reportExportCSV": "Export as CSV",
+  "reportExportAll": "Export All",
+  "reportDelete": "Delete",
+  "reportDeleteSelected": "Delete Selected",
+  "reportDeleteConfirmTitle": "Delete Reports?",
+  "reportDeleteConfirmMessage": "Are you sure you want to delete {count} report(s)? This action cannot be undone.",
+  "@reportDeleteConfirmMessage": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "reportDeleteSuccess": "Reports deleted",
+  "reportFilterByPreset": "Filter by Preset",
+  "reportFilterAll": "All Presets",
+  "reportStartAnalysis": "Start Analysis",
+  "csvCopiedToClipboard": "CSV data copied to clipboard!",
+  "reportDetailTitle": "Acoustic Report",
+  "reportQualityTitle": "Environment Quality",
+  "reportQualityScore": "Quality Score",
+  "reportAverage": "Average",
+  "reportPeak": "Peak",
+  "reportHourlyBreakdown": "Hourly Breakdown",
+  "reportNoiseEvents": "Noise Events",
+  "reportNoEventsTitle": "No Interruptions Detected",
+  "reportNoEventsMessage": "Your environment was consistently quiet",
+  "reportShare": "Share Report",
+  "reportRecommendations": "Recommendations",
+  "reportDuration": "Duration",
+  "reportEvents": "events",
+  "durationHours": "{hours}h",
+  "@durationHours": {
+    "placeholders": {
+      "hours": {
+        "type": "int"
+      }
+    }
+  },
+  "durationMinutes": "{minutes}m",
+  "@durationMinutes": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "durationSeconds": "{seconds}s",
+  "@durationSeconds": {
+    "placeholders": {
+      "seconds": {
+        "type": "int"
+      }
+    }
+  },
+  "durationHoursMinutes": "{hours}h {minutes}m",
+  "@durationHoursMinutes": {
+    "placeholders": {
+      "hours": {
+        "type": "int"
+      },
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "qualityExcellent": "Excellent",
+  "qualityGood": "Good",
+  "qualityFair": "Fair",
+  "qualityPoor": "Poor",
+  "unitDecibels": "dB",
+  "unitHours": "hours",
+  "unitMinutes": "minutes",
+  "unitSeconds": "seconds",
+  "actionOk": "OK",
+  "actionContinue": "Continue",
+  "actionStop": "Stop",
+  "actionStart": "Start",
+  "actionView": "View",
+  "actionExport": "Export",
+  "actionShare": "Share",
+  "viewHistoricalReports": "View Historical Reports",
+  "csvHeaderID": "ID",
+  "csvHeaderStartTime": "Start Time",
+  "csvHeaderEndTime": "End Time",
+  "csvHeaderDuration": "Duration (min)",
+  "csvHeaderPreset": "Preset",
+  "csvHeaderAverageDB": "Average dB",
+  "csvHeaderMinDB": "Min dB",
+  "csvHeaderMaxDB": "Max dB",
+  "csvHeaderEvents": "Events",
+  "csvHeaderQualityScore": "Quality Score",
+  "csvHeaderQuality": "Quality",
+  "csvHeaderRecommendation": "Recommendation",
+  "sleepAnalysis": "Sleep Analysis",
+  "workEnvironment": "Work Environment",
+  "focusSession": "Focus Session"
 }

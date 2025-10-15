@@ -5,6 +5,7 @@ import 'package:iconsax/iconsax.dart';
 import 'package:sensorlab/src/features/noise_meter/models/enhanced_noise_data.dart';
 import 'package:sensorlab/src/features/noise_meter/presentation/providers/enhanced_noise_meter_provider.dart';
 import 'package:sensorlab/src/features/noise_meter/presentation/screens/acoustic_report_detail_screen.dart';
+import 'package:sensorlab/src/features/noise_meter/presentation/widgets/index.dart';
 
 /// Historical Acoustic Reports List with Multi-Select and CSV Export
 class AcousticReportsListScreen extends ConsumerStatefulWidget {
@@ -115,7 +116,17 @@ class _AcousticReportsListScreenState
       ),
       body: SafeArea(
         child: reports.isEmpty
-            ? _buildEmptyState(theme)
+            ? EmptyStateWidget(
+                icon: Iconsax.document,
+                title: 'No Reports Yet',
+                message:
+                    'Start an acoustic analysis session to generate your first report',
+                action: ElevatedButton.icon(
+                  onPressed: () => Navigator.pop(context),
+                  icon: const Icon(Iconsax.add_circle),
+                  label: const Text('Start Analysis'),
+                ),
+              )
             : Column(
                 children: [
                   if (_filterPreset != null)
@@ -132,14 +143,45 @@ class _AcousticReportsListScreenState
                         final isSelected = _selectedReportIds.contains(
                           report.id,
                         );
-                        return Padding(
-                          padding: const EdgeInsets.only(bottom: 12),
-                          child: _ReportCard(
-                            report: report,
-                            isSelected: isSelected,
-                            isSelectionMode: _isSelectionMode,
-                            onTap: () => _onReportTap(report),
-                            onLongPress: () => _onReportLongPress(report),
+
+                        // Use ReportSummaryCard widget
+                        return GestureDetector(
+                          onLongPress: () => _onReportLongPress(report),
+                          child: Stack(
+                            children: [
+                              ReportSummaryCard(
+                                title: _getPresetName(report.preset),
+                                date: _formatDate(report.startTime),
+                                avgDecibels: report.averageDecibels,
+                                qualityScore: report.qualityScore.toDouble(),
+                                eventCount: report.events.length,
+                                presetName: _getPresetName(report.preset),
+                                onTap: () => _onReportTap(report),
+                              ),
+                              if (_isSelectionMode)
+                                Positioned(
+                                  top: 8,
+                                  right: 8,
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      color: isSelected
+                                          ? Theme.of(
+                                              context,
+                                            ).colorScheme.primary
+                                          : Colors.grey.withOpacity(0.3),
+                                      shape: BoxShape.circle,
+                                    ),
+                                    padding: const EdgeInsets.all(4),
+                                    child: Icon(
+                                      isSelected
+                                          ? Iconsax.tick_circle5
+                                          : Iconsax.record_circle,
+                                      color: Colors.white,
+                                      size: 20,
+                                    ),
+                                  ),
+                                ),
+                            ],
                           ),
                         );
                       },
@@ -155,44 +197,6 @@ class _AcousticReportsListScreenState
               label: const Text('Export All'),
             )
           : null,
-    );
-  }
-
-  Widget _buildEmptyState(ThemeData theme) {
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.all(32.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              Iconsax.document,
-              size: 80,
-              color: Colors.grey.withOpacity(0.5),
-            ),
-            const SizedBox(height: 24),
-            Text(
-              'No Reports Yet',
-              style: theme.textTheme.headlineSmall?.copyWith(
-                fontWeight: FontWeight.bold,
-                color: Colors.grey,
-              ),
-            ),
-            const SizedBox(height: 12),
-            Text(
-              'Start an acoustic analysis session to generate your first report',
-              style: theme.textTheme.bodyMedium?.copyWith(color: Colors.grey),
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: 32),
-            ElevatedButton.icon(
-              onPressed: () => Navigator.pop(context),
-              icon: const Icon(Iconsax.add_circle),
-              label: const Text('Start Analysis'),
-            ),
-          ],
-        ),
-      ),
     );
   }
 
@@ -361,190 +365,6 @@ class _AcousticReportsListScreenState
         return 'Custom';
     }
   }
-}
-
-class _ReportCard extends StatelessWidget {
-  final AcousticReport report;
-  final bool isSelected;
-  final bool isSelectionMode;
-  final VoidCallback onTap;
-  final VoidCallback onLongPress;
-
-  const _ReportCard({
-    required this.report,
-    required this.isSelected,
-    required this.isSelectionMode,
-    required this.onTap,
-    required this.onLongPress,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final color = _getQualityColor(report.qualityScore);
-
-    return Card(
-      elevation: isSelected ? 4 : 2,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
-        side: BorderSide(
-          color: isSelected ? theme.colorScheme.primary : Colors.transparent,
-          width: 2,
-        ),
-      ),
-      child: InkWell(
-        onTap: onTap,
-        onLongPress: onLongPress,
-        borderRadius: BorderRadius.circular(16),
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  if (isSelectionMode)
-                    Padding(
-                      padding: const EdgeInsets.only(right: 12),
-                      child: Icon(
-                        isSelected
-                            ? Iconsax.tick_circle5
-                            : Iconsax.record_circle,
-                        color: isSelected
-                            ? theme.colorScheme.primary
-                            : Colors.grey,
-                      ),
-                    ),
-                  Container(
-                    padding: const EdgeInsets.all(8),
-                    decoration: BoxDecoration(
-                      color: _getPresetColor(report.preset).withOpacity(0.1),
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: Icon(
-                      _getPresetIcon(report.preset),
-                      color: _getPresetColor(report.preset),
-                      size: 20,
-                    ),
-                  ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          _getPresetName(report.preset),
-                          style: theme.textTheme.titleMedium?.copyWith(
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        const SizedBox(height: 4),
-                        Text(
-                          _formatDate(report.startTime),
-                          style: theme.textTheme.bodySmall?.copyWith(
-                            color: Colors.grey,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  // Quality Badge
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 12,
-                      vertical: 6,
-                    ),
-                    decoration: BoxDecoration(
-                      color: color.withOpacity(0.1),
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Text(
-                      '${report.qualityScore}',
-                      style: theme.textTheme.titleMedium?.copyWith(
-                        color: color,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 16),
-              Row(
-                children: [
-                  Expanded(
-                    child: _InfoChip(
-                      icon: Iconsax.clock,
-                      label: report.formattedDuration,
-                    ),
-                  ),
-                  const SizedBox(width: 8),
-                  Expanded(
-                    child: _InfoChip(
-                      icon: Iconsax.chart,
-                      label: '${report.averageDecibels.toStringAsFixed(1)} dB',
-                    ),
-                  ),
-                  const SizedBox(width: 8),
-                  Expanded(
-                    child: _InfoChip(
-                      icon: Iconsax.warning_2,
-                      label: '${report.interruptionCount} events',
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  Color _getQualityColor(int score) {
-    if (score >= 80) return Colors.green;
-    if (score >= 60) return Colors.lightGreen;
-    if (score >= 40) return Colors.orange;
-    return Colors.red;
-  }
-
-  Color _getPresetColor(RecordingPreset preset) {
-    switch (preset) {
-      case RecordingPreset.sleep:
-        return Colors.indigo;
-      case RecordingPreset.work:
-        return Colors.blue;
-      case RecordingPreset.focus:
-        return Colors.teal;
-      case RecordingPreset.custom:
-        return Colors.purple;
-    }
-  }
-
-  IconData _getPresetIcon(RecordingPreset preset) {
-    switch (preset) {
-      case RecordingPreset.sleep:
-        return Iconsax.moon;
-      case RecordingPreset.work:
-        return Iconsax.briefcase;
-      case RecordingPreset.focus:
-        return Iconsax.lamp_charge;
-      case RecordingPreset.custom:
-        return Iconsax.setting_2;
-    }
-  }
-
-  String _getPresetName(RecordingPreset preset) {
-    switch (preset) {
-      case RecordingPreset.sleep:
-        return 'Sleep Analysis';
-      case RecordingPreset.work:
-        return 'Work Environment';
-      case RecordingPreset.focus:
-        return 'Focus Session';
-      case RecordingPreset.custom:
-        return 'Custom';
-    }
-  }
 
   String _formatDate(DateTime date) {
     final now = DateTime.now();
@@ -558,39 +378,5 @@ class _ReportCard extends StatelessWidget {
     } else {
       return '${date.day}/${date.month}/${date.year} ${date.hour.toString().padLeft(2, '0')}:${date.minute.toString().padLeft(2, '0')}';
     }
-  }
-}
-
-class _InfoChip extends StatelessWidget {
-  final IconData icon;
-  final String label;
-
-  const _InfoChip({required this.icon, required this.label});
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
-      decoration: BoxDecoration(
-        color: Colors.grey.withOpacity(0.1),
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(icon, size: 14, color: Colors.grey[600]),
-          const SizedBox(width: 4),
-          Flexible(
-            child: Text(
-              label,
-              style: theme.textTheme.bodySmall?.copyWith(fontSize: 11),
-              overflow: TextOverflow.ellipsis,
-            ),
-          ),
-        ],
-      ),
-    );
   }
 }

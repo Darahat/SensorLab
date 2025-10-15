@@ -1,9 +1,13 @@
-import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:sensorlab/src/features/noise_meter/models/enhanced_noise_data.dart';
+import 'package:sensorlab/src/features/noise_meter/presentation/widgets/index.dart'
+    hide StatCard;
+import 'package:sensorlab/src/shared/widgets/common_cards.dart'
+    hide EmptyStateWidget;
+import 'package:sensorlab/src/shared/widgets/utility_widgets.dart';
 
 /// Acoustic Report Detail Screen - Shows comprehensive report with charts
 class AcousticReportDetailScreen extends ConsumerWidget {
@@ -40,12 +44,32 @@ class AcousticReportDetailScreen extends ConsumerWidget {
               const SizedBox(height: 24),
 
               // Statistics Grid
-              _buildStatisticsGrid(theme),
+              Row(
+                children: [
+                  Expanded(
+                    child: StatCard(
+                      icon: Iconsax.chart,
+                      label: 'Average',
+                      value: '${report.averageDecibels.toStringAsFixed(1)} dB',
+                      color: _getDecibelColor(report.averageDecibels),
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: StatCard(
+                      icon: Iconsax.arrow_up,
+                      label: 'Peak',
+                      value: '${report.maxDecibels.toStringAsFixed(1)} dB',
+                      color: Colors.red,
+                    ),
+                  ),
+                ],
+              ),
               const SizedBox(height: 24),
 
               // Hourly Chart
               if (report.hourlyAverages.isNotEmpty) ...[
-                _buildHourlyChart(theme),
+                HourlyBreakdownChart(hourlyAverages: report.hourlyAverages),
                 const SizedBox(height: 24),
               ],
 
@@ -140,31 +164,7 @@ class AcousticReportDetailScreen extends ConsumerWidget {
     );
   }
 
-  Widget _buildStatisticsGrid(ThemeData theme) {
-    return Row(
-      children: [
-        Expanded(
-          child: _StatCard(
-            icon: Iconsax.chart,
-            label: 'Average',
-            value: '${report.averageDecibels.toStringAsFixed(1)} dB',
-            color: _getDecibelColor(report.averageDecibels),
-          ),
-        ),
-        const SizedBox(width: 12),
-        Expanded(
-          child: _StatCard(
-            icon: Iconsax.arrow_up,
-            label: 'Peak',
-            value: '${report.maxDecibels.toStringAsFixed(1)} dB',
-            color: Colors.red,
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildHourlyChart(ThemeData theme) {
+  Widget _buildSessionInfo(ThemeData theme) {
     return Card(
       elevation: 2,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
@@ -174,88 +174,49 @@ class AcousticReportDetailScreen extends ConsumerWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Hourly Breakdown',
+              'Session Details',
               style: theme.textTheme.titleMedium?.copyWith(
                 fontWeight: FontWeight.bold,
               ),
             ),
-            const SizedBox(height: 20),
-            SizedBox(
-              height: 200,
-              child: BarChart(
-                BarChartData(
-                  alignment: BarChartAlignment.spaceAround,
-                  maxY: 100,
-                  barTouchData: BarTouchData(
-                    touchTooltipData: BarTouchTooltipData(
-                      getTooltipColor: (group) => Colors.black87,
-                      getTooltipItem: (group, groupIndex, rod, rodIndex) {
-                        return BarTooltipItem(
-                          '${rod.toY.toStringAsFixed(1)} dB',
-                          const TextStyle(color: Colors.white),
-                        );
-                      },
-                    ),
-                  ),
-                  titlesData: FlTitlesData(
-                    show: true,
-                    bottomTitles: AxisTitles(
-                      sideTitles: SideTitles(
-                        showTitles: true,
-                        getTitlesWidget: (value, meta) {
-                          return Text(
-                            'H${value.toInt() + 1}',
-                            style: theme.textTheme.bodySmall,
-                          );
-                        },
-                      ),
-                    ),
-                    leftTitles: AxisTitles(
-                      sideTitles: SideTitles(
-                        showTitles: true,
-                        reservedSize: 40,
-                        getTitlesWidget: (value, meta) {
-                          return Text(
-                            '${value.toInt()}',
-                            style: theme.textTheme.bodySmall,
-                          );
-                        },
-                      ),
-                    ),
-                    topTitles: AxisTitles(
-                      sideTitles: SideTitles(showTitles: false),
-                    ),
-                    rightTitles: AxisTitles(
-                      sideTitles: SideTitles(showTitles: false),
-                    ),
-                  ),
-                  gridData: FlGridData(show: true, drawVerticalLine: false),
-                  borderData: FlBorderData(show: false),
-                  barGroups: report.hourlyAverages
-                      .asMap()
-                      .entries
-                      .map(
-                        (entry) => BarChartGroupData(
-                          x: entry.key,
-                          barRods: [
-                            BarChartRodData(
-                              toY: entry.value,
-                              color: _getDecibelColor(entry.value),
-                              width: 16,
-                              borderRadius: const BorderRadius.vertical(
-                                top: Radius.circular(4),
-                              ),
-                            ),
-                          ],
-                        ),
-                      )
-                      .toList(),
-                ),
-              ),
+            const SizedBox(height: 16),
+            InfoRow(
+              icon: Iconsax.calendar,
+              label: 'Date',
+              value: _formatDate(report.startTime),
+            ),
+            const SizedBox(height: 12),
+            InfoRow(
+              icon: Iconsax.clock,
+              label: 'Duration',
+              value: report.formattedDuration,
+            ),
+            const SizedBox(height: 12),
+            InfoRow(
+              icon: Iconsax.setting_2,
+              label: 'Preset',
+              value: _getPresetName(report.preset),
             ),
           ],
         ),
       ),
+    );
+  }
+
+  void _shareReport(BuildContext context) {
+    final reportText =
+        'Acoustic Environment Report\n\n'
+        'Quality Score: ${report.qualityScore}/100 (${report.environmentQuality})\n'
+        'Average: ${report.averageDecibels.toStringAsFixed(1)} dB\n'
+        'Peak: ${report.maxDecibels.toStringAsFixed(1)} dB\n'
+        'Events: ${report.interruptionCount}\n'
+        'Duration: ${report.formattedDuration}\n\n'
+        'Recommendation: ${report.recommendation}';
+
+    Clipboard.setData(ClipboardData(text: reportText));
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Report copied to clipboard!')),
     );
   }
 
@@ -316,7 +277,7 @@ class AcousticReportDetailScreen extends ConsumerWidget {
                   ),
                   child: Text(
                     '${report.interruptionCount}',
-                    style: theme.textTheme.titleMedium?.copyWith(
+                    style: theme.textTheme.titleSmall?.copyWith(
                       color: Colors.orange,
                       fontWeight: FontWeight.bold,
                     ),
@@ -325,15 +286,42 @@ class AcousticReportDetailScreen extends ConsumerWidget {
               ],
             ),
             const SizedBox(height: 16),
-            ListView.separated(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: report.events.length,
-              separatorBuilder: (context, index) => const Divider(height: 16),
-              itemBuilder: (context, index) {
-                final event = report.events[index];
-                return _EventItem(event: event);
-              },
+            ...report.events.map(
+              (event) => Padding(
+                padding: const EdgeInsets.only(bottom: 12),
+                child: Row(
+                  children: [
+                    Container(
+                      width: 4,
+                      height: 40,
+                      decoration: BoxDecoration(
+                        color: _getDecibelColor(event.peakDecibels),
+                        borderRadius: BorderRadius.circular(2),
+                      ),
+                    ),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            '${event.peakDecibels.toStringAsFixed(1)} dB',
+                            style: theme.textTheme.titleSmall?.copyWith(
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Text(
+                            _formatEventTime(event.timestamp),
+                            style: theme.textTheme.bodySmall?.copyWith(
+                              color: Colors.grey,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ),
           ],
         ),
@@ -373,60 +361,8 @@ class AcousticReportDetailScreen extends ConsumerWidget {
     );
   }
 
-  Widget _buildSessionInfo(ThemeData theme) {
-    return Card(
-      elevation: 2,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-      child: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Session Details',
-              style: theme.textTheme.titleMedium?.copyWith(
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const SizedBox(height: 16),
-            _InfoRow(
-              icon: Iconsax.calendar,
-              label: 'Date',
-              value: _formatDate(report.startTime),
-            ),
-            const SizedBox(height: 12),
-            _InfoRow(
-              icon: Iconsax.clock,
-              label: 'Duration',
-              value: report.formattedDuration,
-            ),
-            const SizedBox(height: 12),
-            _InfoRow(
-              icon: Iconsax.setting_2,
-              label: 'Preset',
-              value: _getPresetName(report.preset),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  void _shareReport(BuildContext context) {
-    final reportText =
-        'Acoustic Environment Report\n\n'
-        'Quality Score: ${report.qualityScore}/100 (${report.environmentQuality})\n'
-        'Average: ${report.averageDecibels.toStringAsFixed(1)} dB\n'
-        'Peak: ${report.maxDecibels.toStringAsFixed(1)} dB\n'
-        'Events: ${report.interruptionCount}\n'
-        'Duration: ${report.formattedDuration}\n\n'
-        'Recommendation: ${report.recommendation}';
-
-    Clipboard.setData(ClipboardData(text: reportText));
-
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Report copied to clipboard!')),
-    );
+  String _formatEventTime(DateTime time) {
+    return '${time.hour.toString().padLeft(2, '0')}:${time.minute.toString().padLeft(2, '0')}:${time.second.toString().padLeft(2, '0')}';
   }
 
   Color _getQualityColor(int score) {
@@ -459,168 +395,5 @@ class AcousticReportDetailScreen extends ConsumerWidget {
       case RecordingPreset.custom:
         return 'Custom';
     }
-  }
-}
-
-class _StatCard extends StatelessWidget {
-  final IconData icon;
-  final String label;
-  final String value;
-  final Color color;
-
-  const _StatCard({
-    required this.icon,
-    required this.label,
-    required this.value,
-    required this.color,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
-    return Card(
-      elevation: 2,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          children: [
-            Icon(icon, color: color, size: 28),
-            const SizedBox(height: 8),
-            Text(
-              label,
-              style: theme.textTheme.bodySmall?.copyWith(color: Colors.grey),
-            ),
-            const SizedBox(height: 4),
-            Text(
-              value,
-              style: theme.textTheme.titleMedium?.copyWith(
-                fontWeight: FontWeight.bold,
-                color: color,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _EventItem extends StatelessWidget {
-  final AcousticEvent event;
-
-  const _EventItem({required this.event});
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final color = _getEventColor(event.peakDecibels);
-
-    return Row(
-      children: [
-        Container(
-          width: 40,
-          height: 40,
-          decoration: BoxDecoration(
-            color: color.withOpacity(0.1),
-            borderRadius: BorderRadius.circular(8),
-          ),
-          child: Icon(_getEventIcon(event.eventType), color: color, size: 20),
-        ),
-        const SizedBox(width: 12),
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                event.eventType.toUpperCase(),
-                style: theme.textTheme.bodyMedium?.copyWith(
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-              const SizedBox(height: 2),
-              Text(
-                '${event.peakDecibels.toStringAsFixed(1)} dB • ${_formatTime(event.timestamp)}',
-                style: theme.textTheme.bodySmall?.copyWith(color: Colors.grey),
-              ),
-            ],
-          ),
-        ),
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-          decoration: BoxDecoration(
-            color: color.withOpacity(0.1),
-            borderRadius: BorderRadius.circular(6),
-          ),
-          child: Text(
-            '${event.duration.inSeconds}s',
-            style: theme.textTheme.bodySmall?.copyWith(
-              color: color,
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Color _getEventColor(double decibel) {
-    if (decibel < 70) return Colors.orange;
-    if (decibel < 80) return Colors.deepOrange;
-    return Colors.red;
-  }
-
-  IconData _getEventIcon(String type) {
-    switch (type.toLowerCase()) {
-      case 'spike':
-        return Iconsax.flash_1;
-      case 'sustained':
-        return Iconsax.chart_1;
-      case 'intermittent':
-        return Iconsax.sound;
-      default:
-        return Iconsax.warning_2;
-    }
-  }
-
-  String _formatTime(DateTime time) {
-    return '${time.hour.toString().padLeft(2, '0')}:${time.minute.toString().padLeft(2, '0')}';
-  }
-}
-
-class _InfoRow extends StatelessWidget {
-  final IconData icon;
-  final String label;
-  final String value;
-
-  const _InfoRow({
-    required this.icon,
-    required this.label,
-    required this.value,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
-    return Row(
-      children: [
-        Icon(icon, size: 20, color: Colors.grey),
-        const SizedBox(width: 12),
-        Expanded(
-          child: Text(
-            label,
-            style: theme.textTheme.bodyMedium?.copyWith(color: Colors.grey),
-          ),
-        ),
-        Text(
-          value,
-          style: theme.textTheme.bodyMedium?.copyWith(
-            fontWeight: FontWeight.w600,
-          ),
-        ),
-      ],
-    );
   }
 }
