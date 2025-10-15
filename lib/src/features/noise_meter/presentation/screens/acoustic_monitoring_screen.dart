@@ -4,9 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:sensorlab/l10n/app_localizations.dart';
-import 'package:sensorlab/src/features/noise_meter/presentation/state/enhanced_noise_data.dart';
 import 'package:sensorlab/src/features/noise_meter/presentation/providers/enhanced_noise_meter_provider.dart';
+import 'package:sensorlab/src/features/noise_meter/presentation/state/enhanced_noise_data.dart';
 import 'package:sensorlab/src/features/noise_meter/presentation/widgets/index.dart';
+import 'package:sensorlab/src/shared/widgets/common_cards.dart'
+    hide EmptyStateWidget, StatusCard;
 import 'package:sensorlab/src/shared/widgets/utility_widgets.dart';
 
 /// Real-time acoustic monitoring screen - now a stateless ConsumerWidget.
@@ -40,8 +42,10 @@ class AcousticMonitoringScreen extends ConsumerWidget {
       }
     });
 
-    ref.listen<EnhancedNoiseMeterData>(enhancedNoiseMeterProvider,
-        (previous, next) {
+    ref.listen<EnhancedNoiseMeterData>(enhancedNoiseMeterProvider, (
+      previous,
+      next,
+    ) {
       if (next.lastGeneratedReport != null &&
           previous?.lastGeneratedReport == null) {
         final l10n = AppLocalizations.of(context)!;
@@ -60,8 +64,9 @@ class AcousticMonitoringScreen extends ConsumerWidget {
     final isCustomPreset = totalDuration == Duration.zero;
 
     final Duration elapsedDuration = state.sessionDuration;
-    final Duration remainingTime =
-        isCustomPreset ? Duration.zero : totalDuration - elapsedDuration;
+    final Duration remainingTime = isCustomPreset
+        ? Duration.zero
+        : totalDuration - elapsedDuration;
 
     double progress = 0.0;
     if (!isCustomPreset && totalDuration.inSeconds > 0) {
@@ -149,10 +154,7 @@ class AcousticMonitoringScreen extends ConsumerWidget {
                 if (!isCustomPreset)
                   SessionProgressIndicator(
                     progress: progress,
-                    remainingTime: _formatDuration(
-                      remainingTime,
-                      l10n,
-                    ),
+                    remainingTime: _formatDuration(remainingTime, l10n),
                     label: l10n.monitoringProgress,
                     color: _getDecibelColor(state.averageDecibels),
                   ),

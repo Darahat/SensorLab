@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:sensorlab/l10n/app_localizations.dart';
-import 'package:sensorlab/src/features/noise_meter/presentation/state/enhanced_noise_data.dart';
 import 'package:sensorlab/src/features/noise_meter/presentation/providers/enhanced_noise_meter_provider.dart';
+import 'package:sensorlab/src/features/noise_meter/presentation/state/enhanced_noise_data.dart';
+import 'package:sensorlab/src/features/noise_meter/presentation/widgets/index.dart';
 import 'package:sensorlab/src/shared/widgets/common_cards.dart';
 import 'package:sensorlab/src/shared/widgets/utility_widgets.dart';
 
-// Note: The old `providers.dart` import is removed as it's no longer needed.
-
 class NoiseMeterScreen extends ConsumerWidget {
   const NoiseMeterScreen({super.key});
-
-  // --- Helper methods for formatting and colors (moved from old NoiseMeterData) ---
 
   String _getFormattedDuration(Duration duration) {
     final minutes = duration.inMinutes.remainder(60);
@@ -51,7 +49,6 @@ class NoiseMeterScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // Use the enhanced provider
     final noiseMeterData = ref.watch(enhancedNoiseMeterProvider);
     final noiseMeterNotifier = ref.read(enhancedNoiseMeterProvider.notifier);
 
@@ -64,7 +61,6 @@ class NoiseMeterScreen extends ConsumerWidget {
         actions: [
           IconButton(
             icon: const Icon(Icons.refresh),
-            // Reset now stops the recording, which clears the session data.
             onPressed: () => noiseMeterNotifier.stopRecording(),
             tooltip: l10n.resetData,
           ),
@@ -75,7 +71,6 @@ class NoiseMeterScreen extends ConsumerWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            // Permission Status
             if (!noiseMeterData.hasPermission)
               Card(
                 color: Colors.orange.shade100,
@@ -85,16 +80,20 @@ class NoiseMeterScreen extends ConsumerWidget {
                     children: [
                       const Icon(Icons.mic_off, size: 48, color: Colors.orange),
                       const SizedBox(height: 8),
-                      Text(l10n.permissionRequired,
-                          style: const TextStyle(
-                              fontSize: 18, fontWeight: FontWeight.bold)),
+                      Text(
+                        l10n.permissionRequired,
+                        style: const TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                       const SizedBox(height: 8),
                       const Text(
-                          'Grant microphone permission to measure noise levels',
-                          textAlign: TextAlign.center),
+                        'Grant microphone permission to measure noise levels',
+                        textAlign: TextAlign.center,
+                      ),
                       const SizedBox(height: 16),
                       ElevatedButton(
-                        // Starting a recording will trigger the permission request.
                         onPressed: () => noiseMeterNotifier
                             .startRecordingWithPreset(RecordingPreset.custom),
                         child: Text(l10n.grantPermission),
@@ -104,9 +103,7 @@ class NoiseMeterScreen extends ConsumerWidget {
                 ),
               ),
 
-            // Main content
             if (noiseMeterData.hasPermission) ...[
-              // Current Reading Card
               Card(
                 child: Padding(
                   padding: const EdgeInsets.all(20.0),
@@ -130,13 +127,13 @@ class NoiseMeterScreen extends ConsumerWidget {
                                 ? l10n.measuring
                                 : l10n.stopped,
                             style: const TextStyle(
-                                fontSize: 18, fontWeight: FontWeight.bold),
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ],
                       ),
                       const SizedBox(height: 20),
-
-                      // Current Decibel Reading
                       Container(
                         width: 200,
                         height: 200,
@@ -151,66 +148,74 @@ class NoiseMeterScreen extends ConsumerWidget {
                             Text(
                               '${noiseMeterData.currentDecibels.toStringAsFixed(1)} dB',
                               style: TextStyle(
-                                  fontSize: 28,
-                                  fontWeight: FontWeight.bold,
-                                  color: noiseColor),
+                                fontSize: 28,
+                                fontWeight: FontWeight.bold,
+                                color: noiseColor,
+                              ),
                             ),
                             const SizedBox(height: 8),
                             Text(
                               _getNoiseLevelDescription(
-                                  noiseMeterData.noiseLevel),
+                                noiseMeterData.noiseLevel,
+                              ),
                               style: TextStyle(
-                                  fontSize: 14,
-                                  color: noiseColor,
-                                  fontWeight: FontWeight.w500),
+                                fontSize: 14,
+                                color: noiseColor,
+                                fontWeight: FontWeight.w500,
+                              ),
                               textAlign: TextAlign.center,
                             ),
                           ],
                         ),
                       ),
                       const SizedBox(height: 20),
-
-                      // Control Button
                       ElevatedButton.icon(
                         onPressed: () {
                           if (noiseMeterData.isRecording) {
                             noiseMeterNotifier.stopRecording();
                           } else {
-                            noiseMeterNotifier
-                                .startRecordingWithPreset(RecordingPreset.custom);
+                            noiseMeterNotifier.startRecordingWithPreset(
+                              RecordingPreset.custom,
+                            );
                           }
                         },
-                        icon: Icon(noiseMeterData.isRecording
-                            ? Icons.stop
-                            : Icons.play_arrow),
+                        icon: Icon(
+                          noiseMeterData.isRecording
+                              ? Icons.stop
+                              : Icons.play_arrow,
+                        ),
                         label: Text(
-                            noiseMeterData.isRecording ? l10n.stop : l10n.start),
+                          noiseMeterData.isRecording ? l10n.stop : l10n.start,
+                        ),
                         style: ElevatedButton.styleFrom(
                           backgroundColor: noiseMeterData.isRecording
                               ? Colors.red
                               : Colors.green,
                           foregroundColor: Colors.white,
                           padding: const EdgeInsets.symmetric(
-                              horizontal: 24, vertical: 12),
+                            horizontal: 24,
+                            vertical: 12,
+                          ),
                         ),
                       ),
                     ],
                   ),
                 ),
               ),
-
               const SizedBox(height: 16),
-
-              // Statistics Card
               Card(
                 child: Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(l10n.sessionStatistics,
-                          style: const TextStyle(
-                              fontSize: 18, fontWeight: FontWeight.bold)),
+                      Text(
+                        l10n.sessionStatistics,
+                        style: const TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                       const SizedBox(height: 16),
                       Row(
                         children: [
@@ -219,7 +224,8 @@ class NoiseMeterScreen extends ConsumerWidget {
                               icon: Icons.timer,
                               label: l10n.duration,
                               value: _getFormattedDuration(
-                                  noiseMeterData.sessionDuration),
+                                noiseMeterData.sessionDuration,
+                              ),
                               color: Colors.blue,
                             ),
                           ),
@@ -241,8 +247,8 @@ class NoiseMeterScreen extends ConsumerWidget {
                             child: StatCard(
                               icon: Icons.keyboard_arrow_down,
                               label: l10n.minStat,
-                              value: noiseMeterData.minDecibels ==
-                                      double.infinity
+                              value:
+                                  noiseMeterData.minDecibels == double.infinity
                                   ? '--'
                                   : '${noiseMeterData.minDecibels.toStringAsFixed(1)} dB',
                               color: Colors.green,
@@ -261,9 +267,10 @@ class NoiseMeterScreen extends ConsumerWidget {
                           const SizedBox(width: 8),
                           Expanded(
                             child: StatCard(
-                              icon: Icons.keyboard_arrow_up,
+                              icon: Iconsax.arrow_up,
                               label: l10n.maxStat,
-                              value: noiseMeterData.maxDecibels ==
+                              value:
+                                  noiseMeterData.maxDecibels ==
                                       double.negativeInfinity
                                   ? '--'
                                   : '${noiseMeterData.maxDecibels.toStringAsFixed(1)} dB',
@@ -276,10 +283,7 @@ class NoiseMeterScreen extends ConsumerWidget {
                   ),
                 ),
               ),
-
               const SizedBox(height: 16),
-
-              // Real-time Chart
               if (noiseMeterData.decibelHistory.isNotEmpty)
                 RealtimeLineChart(
                   title: 'Real-time Noise Levels',
@@ -287,37 +291,56 @@ class NoiseMeterScreen extends ConsumerWidget {
                   lineColor: noiseColor,
                   maxY: 120,
                 ),
-
               const SizedBox(height: 16),
-
-              // Noise Level Guide (This part is unchanged)
               Card(
                 child: Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(l10n.noiseLevelGuide,
-                          style: const TextStyle(
-                              fontSize: 18, fontWeight: FontWeight.bold)),
+                      Text(
+                        l10n.noiseLevelGuide,
+                        style: const TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                       const SizedBox(height: 12),
-                      _buildNoiseGuideItem(l10n.quiet, '0-30 dB',
-                          l10n.whisperLibrary, Colors.green),
-                      _buildNoiseGuideItem(l10n.moderate, '30-60 dB',
-                          l10n.normalConversation, Colors.lightGreen),
-                      _buildNoiseGuideItem(l10n.loud, '60-85 dB',
-                          l10n.trafficOffice, Colors.orange),
-                      _buildNoiseGuideItem(l10n.veryLoud, '85-100 dB',
-                          l10n.motorcycleShouting, Colors.deepOrange),
-                      _buildNoiseGuideItem(l10n.dangerous, '100+ dB',
-                          l10n.rockConcertChainsaw, Colors.red),
+                      NoiseGuideItem(
+                        level: l10n.quiet,
+                        range: '0-30 dB',
+                        examples: l10n.whisperLibrary,
+                        color: Colors.green,
+                      ),
+                      NoiseGuideItem(
+                        level: l10n.moderate,
+                        range: '30-60 dB',
+                        examples: l10n.normalConversation,
+                        color: Colors.lightGreen,
+                      ),
+                      NoiseGuideItem(
+                        level: l10n.loud,
+                        range: '60-85 dB',
+                        examples: l10n.trafficOffice,
+                        color: Colors.orange,
+                      ),
+                      NoiseGuideItem(
+                        level: l10n.veryLoud,
+                        range: '85-100 dB',
+                        examples: l10n.motorcycleShouting,
+                        color: Colors.deepOrange,
+                      ),
+                      NoiseGuideItem(
+                        level: l10n.dangerous,
+                        range: '100+ dB',
+                        examples: l10n.rockConcertChainsaw,
+                        color: Colors.red,
+                      ),
                     ],
                   ),
                 ),
               ),
             ],
-
-            // Error Message
             if (noiseMeterData.errorMessage != null)
               Card(
                 color: Colors.red.shade100,
@@ -328,42 +351,17 @@ class NoiseMeterScreen extends ConsumerWidget {
                       const Icon(Icons.error, color: Colors.red),
                       const SizedBox(width: 12),
                       Expanded(
-                          child: Text(noiseMeterData.errorMessage!,
-                              style: const TextStyle(color: Colors.red))),
+                        child: Text(
+                          noiseMeterData.errorMessage!,
+                          style: const TextStyle(color: Colors.red),
+                        ),
+                      ),
                     ],
                   ),
                 ),
               ),
           ],
         ),
-      ),
-    );
-  }
-
-  Widget _buildNoiseGuideItem(
-      String level, String range, String examples, Color color) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4),
-      child: Row(
-        children: [
-          Container(
-              width: 16,
-              height: 16,
-              decoration:
-                  BoxDecoration(color: color, shape: BoxShape.circle)),
-          const SizedBox(width: 12),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text('$level ($range)',
-                    style: const TextStyle(fontWeight: FontWeight.w500)),
-                Text(examples,
-                    style: TextStyle(fontSize: 12, color: Colors.grey[600])),
-              ],
-            ),
-          ),
-        ],
       ),
     );
   }

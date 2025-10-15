@@ -1,14 +1,13 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:sensorlab/src/features/noise_meter/domain/entities/acoustic_report_entity.dart';
-import 'package:sensorlab/src/features/noise_meter/presentation/state/enhanced_noise_data.dart';
 import 'package:sensorlab/src/features/noise_meter/presentation/providers/acoustic_reports_list_controller.dart';
 import 'package:sensorlab/src/features/noise_meter/presentation/screens/acoustic_report_detail_screen.dart';
+import 'package:sensorlab/src/features/noise_meter/presentation/state/enhanced_noise_data.dart';
 import 'package:sensorlab/src/features/noise_meter/presentation/widgets/index.dart';
-import 'package:sensorlab/src/shared/widgets/utility_widgets.dart';
+import 'package:sensorlab/src/features/noise_meter/presentation/widgets/report/report_summary_card.dart';
 
 class AcousticReportsListScreen extends ConsumerWidget {
   const AcousticReportsListScreen({super.key});
@@ -41,7 +40,13 @@ class AcousticReportsListScreen extends ConsumerWidget {
             IconButton(
               icon: const Icon(Iconsax.document_download),
               onPressed: state.selectedReportIds.isNotEmpty
-                  ? () => _exportReports(context, notifier, filteredReports.where((r) => state.selectedReportIds.contains(r.id)).toList())
+                  ? () => _exportReports(
+                      context,
+                      notifier,
+                      filteredReports
+                          .where((r) => state.selectedReportIds.contains(r.id))
+                          .toList(),
+                    )
                   : null,
               tooltip: 'Export as CSV',
             ),
@@ -60,9 +65,21 @@ class AcousticReportsListScreen extends ConsumerWidget {
               itemBuilder: (context) => [
                 const PopupMenuItem(value: null, child: Text('All Presets')),
                 const PopupMenuDivider(),
-                _buildPresetMenuItem(RecordingPreset.sleep, 'Sleep', Iconsax.moon),
-                _buildPresetMenuItem(RecordingPreset.work, 'Work', Iconsax.briefcase),
-                _buildPresetMenuItem(RecordingPreset.focus, 'Focus', Iconsax.lamp_charge),
+                _buildPresetMenuItem(
+                  RecordingPreset.sleep,
+                  'Sleep',
+                  Iconsax.moon,
+                ),
+                _buildPresetMenuItem(
+                  RecordingPreset.work,
+                  'Work',
+                  Iconsax.briefcase,
+                ),
+                _buildPresetMenuItem(
+                  RecordingPreset.focus,
+                  'Focus',
+                  Iconsax.lamp_charge,
+                ),
               ],
             ),
           ],
@@ -72,31 +89,40 @@ class AcousticReportsListScreen extends ConsumerWidget {
         child: state.isLoading
             ? const Center(child: CircularProgressIndicator())
             : filteredReports.isEmpty
-                ? _buildEmptyState(context)
-                : Column(
-                    children: [
-                      if (state.filterPreset != null)
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
-                          child: _buildFilterChip(notifier, state.filterPreset!),
-                        ),
-                      Expanded(
-                        child: ListView.builder(
-                          padding: const EdgeInsets.all(16.0),
-                          itemCount: filteredReports.length,
-                          itemBuilder: (context, index) {
-                            final report = filteredReports[index];
-                            final isSelected = state.selectedReportIds.contains(report.id);
-                            return _buildReportItem(context, notifier, report, isSelected, state.isSelectionMode);
-                          },
-                        ),
-                      ),
-                    ],
+            ? _buildEmptyState(context)
+            : Column(
+                children: [
+                  if (state.filterPreset != null)
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
+                      child: _buildFilterChip(notifier, state.filterPreset!),
+                    ),
+                  Expanded(
+                    child: ListView.builder(
+                      padding: const EdgeInsets.all(16.0),
+                      itemCount: filteredReports.length,
+                      itemBuilder: (context, index) {
+                        final report = filteredReports[index];
+                        final isSelected = state.selectedReportIds.contains(
+                          report.id,
+                        );
+                        return _buildReportItem(
+                          context,
+                          notifier,
+                          report,
+                          isSelected,
+                          state.isSelectionMode,
+                        );
+                      },
+                    ),
                   ),
+                ],
+              ),
       ),
       floatingActionButton: !state.isSelectionMode && filteredReports.isNotEmpty
           ? FloatingActionButton.extended(
-              onPressed: () => _exportReports(context, notifier, filteredReports),
+              onPressed: () =>
+                  _exportReports(context, notifier, filteredReports),
               icon: const Icon(Iconsax.document_download),
               label: const Text('Export All'),
             )
@@ -104,15 +130,15 @@ class AcousticReportsListScreen extends ConsumerWidget {
     );
   }
 
-  PopupMenuItem<RecordingPreset> _buildPresetMenuItem(RecordingPreset preset, String text, IconData icon) {
+  PopupMenuItem<RecordingPreset> _buildPresetMenuItem(
+    RecordingPreset preset,
+    String text,
+    IconData icon,
+  ) {
     return PopupMenuItem(
       value: preset,
       child: Row(
-        children: [
-          Icon(icon, size: 18),
-          const SizedBox(width: 8),
-          Text(text),
-        ],
+        children: [Icon(icon, size: 18), const SizedBox(width: 8), Text(text)],
       ),
     );
   }
@@ -121,7 +147,8 @@ class AcousticReportsListScreen extends ConsumerWidget {
     return EmptyStateWidget(
       icon: Iconsax.document,
       title: 'No Reports Yet',
-      message: 'Start an acoustic analysis session to generate your first report',
+      message:
+          'Start an acoustic analysis session to generate your first report',
       action: ElevatedButton.icon(
         onPressed: () => Navigator.pop(context),
         icon: const Icon(Iconsax.add_circle),
@@ -130,7 +157,10 @@ class AcousticReportsListScreen extends ConsumerWidget {
     );
   }
 
-  Widget _buildFilterChip(AcousticReportsListController notifier, RecordingPreset preset) {
+  Widget _buildFilterChip(
+    AcousticReportsListController notifier,
+    RecordingPreset preset,
+  ) {
     return Chip(
       avatar: Icon(_getPresetIcon(preset), size: 18),
       label: Text(_getPresetName(preset)),
@@ -139,7 +169,13 @@ class AcousticReportsListScreen extends ConsumerWidget {
     );
   }
 
-  Widget _buildReportItem(BuildContext context, AcousticReportsListController notifier, AcousticReport report, bool isSelected, bool isSelectionMode) {
+  Widget _buildReportItem(
+    BuildContext context,
+    AcousticReportsListController notifier,
+    AcousticReport report,
+    bool isSelected,
+    bool isSelectionMode,
+  ) {
     return GestureDetector(
       onLongPress: () => notifier.onReportLongPress(report),
       child: Stack(
@@ -158,7 +194,8 @@ class AcousticReportsListScreen extends ConsumerWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => AcousticReportDetailScreen(report: report),
+                    builder: (context) =>
+                        AcousticReportDetailScreen(report: report),
                   ),
                 );
               }
@@ -188,7 +225,10 @@ class AcousticReportsListScreen extends ConsumerWidget {
     );
   }
 
-  void _deleteSelected(BuildContext context, AcousticReportsListController notifier) async {
+  void _deleteSelected(
+    BuildContext context,
+    AcousticReportsListController notifier,
+  ) async {
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
@@ -220,7 +260,11 @@ class AcousticReportsListScreen extends ConsumerWidget {
     }
   }
 
-  void _exportReports(BuildContext context, AcousticReportsListController notifier, List<AcousticReport> reports) {
+  void _exportReports(
+    BuildContext context,
+    AcousticReportsListController notifier,
+    List<AcousticReport> reports,
+  ) {
     final csvData = notifier.exportReportsAsCSV(reports);
     Clipboard.setData(ClipboardData(text: csvData));
     ScaffoldMessenger.of(context)
@@ -236,19 +280,27 @@ class AcousticReportsListScreen extends ConsumerWidget {
   // Helper methods for formatting (can be moved to an extension or kept here)
   IconData _getPresetIcon(RecordingPreset preset) {
     switch (preset) {
-      case RecordingPreset.sleep: return Iconsax.moon;
-      case RecordingPreset.work: return Iconsax.briefcase;
-      case RecordingPreset.focus: return Iconsax.lamp_charge;
-      case RecordingPreset.custom: return Iconsax.setting_2;
+      case RecordingPreset.sleep:
+        return Iconsax.moon;
+      case RecordingPreset.work:
+        return Iconsax.briefcase;
+      case RecordingPreset.focus:
+        return Iconsax.lamp_charge;
+      case RecordingPreset.custom:
+        return Iconsax.setting_2;
     }
   }
 
   String _getPresetName(RecordingPreset preset) {
     switch (preset) {
-      case RecordingPreset.sleep: return 'Sleep';
-      case RecordingPreset.work: return 'Work';
-      case RecordingPreset.focus: return 'Focus';
-      case RecordingPreset.custom: return 'Custom';
+      case RecordingPreset.sleep:
+        return 'Sleep';
+      case RecordingPreset.work:
+        return 'Work';
+      case RecordingPreset.focus:
+        return 'Focus';
+      case RecordingPreset.custom:
+        return 'Custom';
     }
   }
 

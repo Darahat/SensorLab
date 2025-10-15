@@ -4,8 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:sensorlab/src/features/noise_meter/domain/entities/acoustic_report_entity.dart';
 import 'package:sensorlab/src/features/noise_meter/presentation/state/enhanced_noise_data.dart';
-import 'package:sensorlab/src/features/noise_meter/presentation/widgets/index.dart'
-    hide StatCard;
+import 'package:sensorlab/src/features/noise_meter/presentation/widgets/report/hourly_breakdown_chart.dart';
 import 'package:sensorlab/src/shared/widgets/common_cards.dart'
     hide EmptyStateWidget;
 import 'package:sensorlab/src/shared/widgets/utility_widgets.dart';
@@ -227,7 +226,7 @@ class AcousticReportDetailScreen extends ConsumerWidget {
     Clipboard.setData(ClipboardData(text: reportText));
 
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Report copied to clipboard!')), 
+      const SnackBar(content: Text('Report copied to clipboard!')),
     );
   }
 
