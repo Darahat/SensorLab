@@ -44,7 +44,7 @@ class PedometerNotifier extends StateNotifier<PedometerData> {
     state = state.updateSteps(event.steps);
   }
 
-  void _onStepCountError(error) {
+  void _onStepCountError(dynamic error) {
     // Handle errors (e.g., permission denied, sensor not available)
     state = state.copyWith(isActive: false);
   }
@@ -58,7 +58,7 @@ class PedometerNotifier extends StateNotifier<PedometerData> {
     }
   }
 
-  void _onPedestrianStatusError(error) {
+  void _onPedestrianStatusError(dynamic error) {
     // Handle pedestrian status errors silently
   }
 
