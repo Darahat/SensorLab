@@ -1,198 +1,102 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:sensorlab/src/features/noise_meter/models/enhanced_noise_data.dart';
-import 'package:sensorlab/src/features/noise_meter/presentation/providers/enhanced_noise_meter_provider.dart';
+import 'package:sensorlab/src/features/noise_meter/domain/entities/acoustic_report_entity.dart';
+import 'package:sensorlab/src/features/noise_meter/presentation/state/enhanced_noise_data.dart';
+import 'package:sensorlab/src/features/noise_meter/presentation/providers/acoustic_reports_list_controller.dart';
 import 'package:sensorlab/src/features/noise_meter/presentation/screens/acoustic_report_detail_screen.dart';
 import 'package:sensorlab/src/features/noise_meter/presentation/widgets/index.dart';
+import 'package:sensorlab/src/shared/widgets/utility_widgets.dart';
 
-/// Historical Acoustic Reports List with Multi-Select and CSV Export
-class AcousticReportsListScreen extends ConsumerStatefulWidget {
+class AcousticReportsListScreen extends ConsumerWidget {
   const AcousticReportsListScreen({super.key});
 
   @override
-  ConsumerState<AcousticReportsListScreen> createState() =>
-      _AcousticReportsListScreenState();
-}
-
-class _AcousticReportsListScreenState
-    extends ConsumerState<AcousticReportsListScreen> {
-  RecordingPreset? _filterPreset;
-  final Set<String> _selectedReportIds = {};
-  bool _isSelectionMode = false;
-
-  @override
-  void initState() {
-    super.initState();
-    // Load saved reports
-    Future.microtask(() {
-      ref.read(enhancedNoiseMeterProvider.notifier).loadSavedReports();
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
-    final state = ref.watch(enhancedNoiseMeterProvider);
-    final reports = _filterReports(state.savedReports);
+    final state = ref.watch(acousticReportsListProvider);
+    final notifier = ref.read(acousticReportsListProvider.notifier);
+    final filteredReports = state.filteredReports;
 
     return Scaffold(
       backgroundColor: theme.colorScheme.surface,
       appBar: AppBar(
         title: Text(
-          _isSelectionMode
-              ? '${_selectedReportIds.length} Selected'
+          state.isSelectionMode
+              ? '${state.selectedReportIds.length} Selected'
               : 'Acoustic Reports',
         ),
         centerTitle: true,
         elevation: 0,
-        leading: _isSelectionMode
+        leading: state.isSelectionMode
             ? IconButton(
                 icon: const Icon(Iconsax.close_circle),
-                onPressed: _cancelSelection,
+                onPressed: notifier.cancelSelection,
               )
             : null,
         actions: [
-          if (_isSelectionMode) ...[
+          if (state.isSelectionMode) ...[
             IconButton(
               icon: const Icon(Iconsax.document_download),
-              onPressed: _selectedReportIds.isNotEmpty
-                  ? () => _exportSelectedAsCSV(reports)
+              onPressed: state.selectedReportIds.isNotEmpty
+                  ? () => _exportReports(context, notifier, filteredReports.where((r) => state.selectedReportIds.contains(r.id)).toList())
                   : null,
               tooltip: 'Export as CSV',
             ),
             IconButton(
               icon: const Icon(Iconsax.trash),
-              onPressed: _selectedReportIds.isNotEmpty ? _deleteSelected : null,
+              onPressed: state.selectedReportIds.isNotEmpty
+                  ? () => _deleteSelected(context, notifier)
+                  : null,
               tooltip: 'Delete Selected',
             ),
           ] else ...[
             PopupMenuButton<RecordingPreset?>(
               icon: const Icon(Iconsax.filter),
               tooltip: 'Filter by Preset',
-              onSelected: (preset) {
-                setState(() {
-                  _filterPreset = preset;
-                });
-              },
+              onSelected: notifier.setFilter,
               itemBuilder: (context) => [
                 const PopupMenuItem(value: null, child: Text('All Presets')),
                 const PopupMenuDivider(),
-                PopupMenuItem(
-                  value: RecordingPreset.sleep,
-                  child: Row(
-                    children: [
-                      Icon(Iconsax.moon, size: 18),
-                      const SizedBox(width: 8),
-                      Text('Sleep'),
-                    ],
-                  ),
-                ),
-                PopupMenuItem(
-                  value: RecordingPreset.work,
-                  child: Row(
-                    children: [
-                      Icon(Iconsax.briefcase, size: 18),
-                      const SizedBox(width: 8),
-                      Text('Work'),
-                    ],
-                  ),
-                ),
-                PopupMenuItem(
-                  value: RecordingPreset.focus,
-                  child: Row(
-                    children: [
-                      Icon(Iconsax.lamp_charge, size: 18),
-                      const SizedBox(width: 8),
-                      Text('Focus'),
-                    ],
-                  ),
-                ),
+                _buildPresetMenuItem(RecordingPreset.sleep, 'Sleep', Iconsax.moon),
+                _buildPresetMenuItem(RecordingPreset.work, 'Work', Iconsax.briefcase),
+                _buildPresetMenuItem(RecordingPreset.focus, 'Focus', Iconsax.lamp_charge),
               ],
             ),
           ],
         ],
       ),
       body: SafeArea(
-        child: reports.isEmpty
-            ? EmptyStateWidget(
-                icon: Iconsax.document,
-                title: 'No Reports Yet',
-                message:
-                    'Start an acoustic analysis session to generate your first report',
-                action: ElevatedButton.icon(
-                  onPressed: () => Navigator.pop(context),
-                  icon: const Icon(Iconsax.add_circle),
-                  label: const Text('Start Analysis'),
-                ),
-              )
-            : Column(
-                children: [
-                  if (_filterPreset != null)
-                    Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: _buildFilterChip(),
-                    ),
-                  Expanded(
-                    child: ListView.builder(
-                      padding: const EdgeInsets.all(16.0),
-                      itemCount: reports.length,
-                      itemBuilder: (context, index) {
-                        final report = reports[index];
-                        final isSelected = _selectedReportIds.contains(
-                          report.id,
-                        );
-
-                        // Use ReportSummaryCard widget
-                        return GestureDetector(
-                          onLongPress: () => _onReportLongPress(report),
-                          child: Stack(
-                            children: [
-                              ReportSummaryCard(
-                                title: _getPresetName(report.preset),
-                                date: _formatDate(report.startTime),
-                                avgDecibels: report.averageDecibels,
-                                qualityScore: report.qualityScore.toDouble(),
-                                eventCount: report.events.length,
-                                presetName: _getPresetName(report.preset),
-                                onTap: () => _onReportTap(report),
-                              ),
-                              if (_isSelectionMode)
-                                Positioned(
-                                  top: 8,
-                                  right: 8,
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      color: isSelected
-                                          ? Theme.of(
-                                              context,
-                                            ).colorScheme.primary
-                                          : Colors.grey.withOpacity(0.3),
-                                      shape: BoxShape.circle,
-                                    ),
-                                    padding: const EdgeInsets.all(4),
-                                    child: Icon(
-                                      isSelected
-                                          ? Iconsax.tick_circle5
-                                          : Iconsax.record_circle,
-                                      color: Colors.white,
-                                      size: 20,
-                                    ),
-                                  ),
-                                ),
-                            ],
-                          ),
-                        );
-                      },
-                    ),
+        child: state.isLoading
+            ? const Center(child: CircularProgressIndicator())
+            : filteredReports.isEmpty
+                ? _buildEmptyState(context)
+                : Column(
+                    children: [
+                      if (state.filterPreset != null)
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
+                          child: _buildFilterChip(notifier, state.filterPreset!),
+                        ),
+                      Expanded(
+                        child: ListView.builder(
+                          padding: const EdgeInsets.all(16.0),
+                          itemCount: filteredReports.length,
+                          itemBuilder: (context, index) {
+                            final report = filteredReports[index];
+                            final isSelected = state.selectedReportIds.contains(report.id);
+                            return _buildReportItem(context, notifier, report, isSelected, state.isSelectionMode);
+                          },
+                        ),
+                      ),
+                    ],
                   ),
-                ],
-              ),
       ),
-      floatingActionButton: !_isSelectionMode && reports.isNotEmpty
+      floatingActionButton: !state.isSelectionMode && filteredReports.isNotEmpty
           ? FloatingActionButton.extended(
-              onPressed: () => _exportAllAsCSV(reports),
+              onPressed: () => _exportReports(context, notifier, filteredReports),
               icon: const Icon(Iconsax.document_download),
               label: const Text('Export All'),
             )
@@ -200,64 +104,97 @@ class _AcousticReportsListScreenState
     );
   }
 
-  Widget _buildFilterChip() {
+  PopupMenuItem<RecordingPreset> _buildPresetMenuItem(RecordingPreset preset, String text, IconData icon) {
+    return PopupMenuItem(
+      value: preset,
+      child: Row(
+        children: [
+          Icon(icon, size: 18),
+          const SizedBox(width: 8),
+          Text(text),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildEmptyState(BuildContext context) {
+    return EmptyStateWidget(
+      icon: Iconsax.document,
+      title: 'No Reports Yet',
+      message: 'Start an acoustic analysis session to generate your first report',
+      action: ElevatedButton.icon(
+        onPressed: () => Navigator.pop(context),
+        icon: const Icon(Iconsax.add_circle),
+        label: const Text('Start Analysis'),
+      ),
+    );
+  }
+
+  Widget _buildFilterChip(AcousticReportsListController notifier, RecordingPreset preset) {
     return Chip(
-      avatar: Icon(_getPresetIcon(_filterPreset!), size: 18),
-      label: Text(_getPresetName(_filterPreset!)),
-      onDeleted: () {
-        setState(() {
-          _filterPreset = null;
-        });
-      },
+      avatar: Icon(_getPresetIcon(preset), size: 18),
+      label: Text(_getPresetName(preset)),
+      onDeleted: () => notifier.setFilter(null),
       deleteIcon: const Icon(Iconsax.close_circle, size: 18),
     );
   }
 
-  void _onReportTap(AcousticReport report) {
-    if (_isSelectionMode) {
-      setState(() {
-        if (_selectedReportIds.contains(report.id)) {
-          _selectedReportIds.remove(report.id);
-          if (_selectedReportIds.isEmpty) {
-            _isSelectionMode = false;
-          }
-        } else {
-          _selectedReportIds.add(report.id);
-        }
-      });
-    } else {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => AcousticReportDetailScreen(report: report),
-        ),
-      );
-    }
+  Widget _buildReportItem(BuildContext context, AcousticReportsListController notifier, AcousticReport report, bool isSelected, bool isSelectionMode) {
+    return GestureDetector(
+      onLongPress: () => notifier.onReportLongPress(report),
+      child: Stack(
+        children: [
+          ReportSummaryCard(
+            title: _getPresetName(report.preset),
+            date: _formatDate(context, report.startTime),
+            avgDecibels: report.averageDecibels,
+            qualityScore: report.qualityScore.toDouble(),
+            eventCount: report.events.length,
+            presetName: _getPresetName(report.preset),
+            onTap: () {
+              if (isSelectionMode) {
+                notifier.onReportTap(report);
+              } else {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => AcousticReportDetailScreen(report: report),
+                  ),
+                );
+              }
+            },
+          ),
+          if (isSelectionMode)
+            Positioned(
+              top: 8,
+              right: 8,
+              child: Container(
+                decoration: BoxDecoration(
+                  color: isSelected
+                      ? Theme.of(context).colorScheme.primary
+                      : Colors.grey.withOpacity(0.3),
+                  shape: BoxShape.circle,
+                ),
+                padding: const EdgeInsets.all(4),
+                child: Icon(
+                  isSelected ? Iconsax.tick_circle5 : Iconsax.record_circle,
+                  color: Colors.white,
+                  size: 20,
+                ),
+              ),
+            ),
+        ],
+      ),
+    );
   }
 
-  void _onReportLongPress(AcousticReport report) {
-    if (!_isSelectionMode) {
-      setState(() {
-        _isSelectionMode = true;
-        _selectedReportIds.add(report.id);
-      });
-    }
-  }
-
-  void _cancelSelection() {
-    setState(() {
-      _isSelectionMode = false;
-      _selectedReportIds.clear();
-    });
-  }
-
-  void _deleteSelected() async {
+  void _deleteSelected(BuildContext context, AcousticReportsListController notifier) async {
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('Delete Reports?'),
-        content: Text(
-          'Are you sure you want to delete ${_selectedReportIds.length} report(s)? This action cannot be undone.',
+        content: const Text(
+          'Are you sure you want to delete the selected report(s)? This action cannot be undone.',
         ),
         actions: [
           TextButton(
@@ -274,109 +211,58 @@ class _AcousticReportsListScreenState
     );
 
     if (confirmed == true) {
-      for (final id in _selectedReportIds) {
-        await ref.read(enhancedNoiseMeterProvider.notifier).deleteReport(id);
-      }
-      _cancelSelection();
-      if (mounted) {
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(const SnackBar(content: Text('Reports deleted')));
+      await notifier.deleteSelected();
+      if (context.mounted) {
+        ScaffoldMessenger.of(context)
+          ..hideCurrentSnackBar()
+          ..showSnackBar(const SnackBar(content: Text('Reports deleted')));
       }
     }
   }
 
-  void _exportSelectedAsCSV(List<AcousticReport> allReports) {
-    final selectedReports = allReports
-        .where((r) => _selectedReportIds.contains(r.id))
-        .toList();
-    _exportReportsAsCSV(selectedReports);
-  }
-
-  void _exportAllAsCSV(List<AcousticReport> reports) {
-    _exportReportsAsCSV(reports);
-  }
-
-  void _exportReportsAsCSV(List<AcousticReport> reports) {
-    if (reports.isEmpty) return;
-
-    // CSV Header
-    final csv = StringBuffer();
-    csv.writeln(
-      'ID,Start Time,End Time,Duration (min),Preset,Average dB,Min dB,Max dB,Events,Quality Score,Quality,Recommendation',
-    );
-
-    // CSV Rows
-    for (final report in reports) {
-      csv.writeln(
-        '${report.id},'
-        '${report.startTime.toIso8601String()},'
-        '${report.endTime.toIso8601String()},'
-        '${report.duration.inMinutes},'
-        '${report.preset.name},'
-        '${report.averageDecibels.toStringAsFixed(1)},'
-        '${report.minDecibels.toStringAsFixed(1)},'
-        '${report.maxDecibels.toStringAsFixed(1)},'
-        '${report.interruptionCount},'
-        '${report.qualityScore},'
-        '${report.environmentQuality},'
-        '"${report.recommendation.replaceAll('"', '""')}"',
+  void _exportReports(BuildContext context, AcousticReportsListController notifier, List<AcousticReport> reports) {
+    final csvData = notifier.exportReportsAsCSV(reports);
+    Clipboard.setData(ClipboardData(text: csvData));
+    ScaffoldMessenger.of(context)
+      ..hideCurrentSnackBar()
+      ..showSnackBar(
+        SnackBar(
+          content: const Text('CSV data copied to clipboard!'),
+          action: SnackBarAction(label: 'OK', onPressed: () {}),
+        ),
       );
-    }
-
-    // Copy CSV to clipboard
-    Clipboard.setData(ClipboardData(text: csv.toString()));
-
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: const Text('CSV data copied to clipboard!'),
-        action: SnackBarAction(label: 'OK', onPressed: () {}),
-      ),
-    );
   }
 
-  List<AcousticReport> _filterReports(List<AcousticReport> reports) {
-    if (_filterPreset == null) return reports;
-    return reports.where((r) => r.preset == _filterPreset).toList();
-  }
-
+  // Helper methods for formatting (can be moved to an extension or kept here)
   IconData _getPresetIcon(RecordingPreset preset) {
     switch (preset) {
-      case RecordingPreset.sleep:
-        return Iconsax.moon;
-      case RecordingPreset.work:
-        return Iconsax.briefcase;
-      case RecordingPreset.focus:
-        return Iconsax.lamp_charge;
-      case RecordingPreset.custom:
-        return Iconsax.setting_2;
+      case RecordingPreset.sleep: return Iconsax.moon;
+      case RecordingPreset.work: return Iconsax.briefcase;
+      case RecordingPreset.focus: return Iconsax.lamp_charge;
+      case RecordingPreset.custom: return Iconsax.setting_2;
     }
   }
 
   String _getPresetName(RecordingPreset preset) {
     switch (preset) {
-      case RecordingPreset.sleep:
-        return 'Sleep';
-      case RecordingPreset.work:
-        return 'Work';
-      case RecordingPreset.focus:
-        return 'Focus';
-      case RecordingPreset.custom:
-        return 'Custom';
+      case RecordingPreset.sleep: return 'Sleep';
+      case RecordingPreset.work: return 'Work';
+      case RecordingPreset.focus: return 'Focus';
+      case RecordingPreset.custom: return 'Custom';
     }
   }
 
-  String _formatDate(DateTime date) {
+  String _formatDate(BuildContext context, DateTime date) {
     final now = DateTime.now();
     final today = DateTime(now.year, now.month, now.day);
     final sessionDate = DateTime(date.year, date.month, date.day);
 
     if (sessionDate == today) {
-      return 'Today ${date.hour.toString().padLeft(2, '0')}:${date.minute.toString().padLeft(2, '0')}';
+      return 'Today at ${TimeOfDay.fromDateTime(date).format(context)}';
     } else if (sessionDate == today.subtract(const Duration(days: 1))) {
-      return 'Yesterday ${date.hour.toString().padLeft(2, '0')}:${date.minute.toString().padLeft(2, '0')}';
+      return 'Yesterday at ${TimeOfDay.fromDateTime(date).format(context)}';
     } else {
-      return '${date.day}/${date.month}/${date.year} ${date.hour.toString().padLeft(2, '0')}:${date.minute.toString().padLeft(2, '0')}';
+      return '${date.day}/${date.month}/${date.year}';
     }
   }
 }

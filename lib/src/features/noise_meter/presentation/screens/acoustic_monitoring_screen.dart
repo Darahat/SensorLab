@@ -4,85 +4,100 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:sensorlab/l10n/app_localizations.dart';
-import 'package:sensorlab/src/features/noise_meter/models/enhanced_noise_data.dart';
+import 'package:sensorlab/src/features/noise_meter/presentation/state/enhanced_noise_data.dart';
 import 'package:sensorlab/src/features/noise_meter/presentation/providers/enhanced_noise_meter_provider.dart';
 import 'package:sensorlab/src/features/noise_meter/presentation/widgets/index.dart';
 import 'package:sensorlab/src/shared/widgets/utility_widgets.dart';
 
-/// Real-time acoustic monitoring screen
-class AcousticMonitoringScreen extends ConsumerStatefulWidget {
+/// Real-time acoustic monitoring screen - now a stateless ConsumerWidget.
+class AcousticMonitoringScreen extends ConsumerWidget {
   final RecordingPreset preset;
 
   const AcousticMonitoringScreen({super.key, required this.preset});
 
-  @override
-  ConsumerState<AcousticMonitoringScreen> createState() =>
-      _AcousticMonitoringScreenState();
-}
-
-class _AcousticMonitoringScreenState
-    extends ConsumerState<AcousticMonitoringScreen> {
-  bool _isRecording = false;
-  Timer? _timer;
-
-  @override
-  void initState() {
-    super.initState();
-    // Start recording automatically
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _startRecording();
-    });
-  }
-
-  @override
-  void dispose() {
-    _timer?.cancel();
-    super.dispose();
-  }
-
-  void _startRecording() {
-    ref
-        .read(enhancedNoiseMeterProvider.notifier)
-        .startRecordingWithPreset(widget.preset);
-    setState(() {
-      _isRecording = true;
-    });
-  }
-
-  void _stopRecording() async {
-    _timer?.cancel();
-    final report = await ref
-        .read(enhancedNoiseMeterProvider.notifier)
-        .stopRecording();
-
-    setState(() {
-      _isRecording = false;
-    });
-
-    if (report != null && mounted) {
-      // Show success and pop
-      final l10n = AppLocalizations.of(context)!;
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text(l10n.reportGeneratedSuccess)));
-      Navigator.pop(context, report);
-    } else if (mounted) {
-      Navigator.pop(context);
+  // Helper to get the total duration for a preset.
+  Duration _getPresetDuration(RecordingPreset preset) {
+    switch (preset) {
+      case RecordingPreset.sleep:
+        return const Duration(hours: 8);
+      case RecordingPreset.work:
+        return const Duration(hours: 1);
+      case RecordingPreset.focus:
+        return const Duration(minutes: 30);
+      case RecordingPreset.custom:
+        return Duration.zero; // Indicates indefinite duration
     }
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final notifier = ref.read(enhancedNoiseMeterProvider.notifier);
+    final state = ref.watch(enhancedNoiseMeterProvider);
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!state.isRecording && state.lastGeneratedReport == null) {
+        notifier.startRecordingWithPreset(preset);
+      }
+    });
+
+    ref.listen<EnhancedNoiseMeterData>(enhancedNoiseMeterProvider,
+        (previous, next) {
+      if (next.lastGeneratedReport != null &&
+          previous?.lastGeneratedReport == null) {
+        final l10n = AppLocalizations.of(context)!;
+        ScaffoldMessenger.of(context)
+          ..hideCurrentSnackBar()
+          ..showSnackBar(SnackBar(content: Text(l10n.reportGeneratedSuccess)));
+        Navigator.of(context).pop(next.lastGeneratedReport);
+      }
+    });
+
     final theme = Theme.of(context);
     final l10n = AppLocalizations.of(context)!;
-    final state = ref.watch(enhancedNoiseMeterProvider);
+
+    // --- Calculate Progress and Remaining Time ---
+    final totalDuration = _getPresetDuration(preset);
+    final isCustomPreset = totalDuration == Duration.zero;
+
+    final Duration elapsedDuration = state.sessionDuration;
+    final Duration remainingTime =
+        isCustomPreset ? Duration.zero : totalDuration - elapsedDuration;
+
+    double progress = 0.0;
+    if (!isCustomPreset && totalDuration.inSeconds > 0) {
+      progress = elapsedDuration.inSeconds / totalDuration.inSeconds;
+      if (progress > 1.0) progress = 1.0;
+      if (progress < 0.0) progress = 0.0;
+    }
+    // --- End Calculation ---
+
+    Future<bool> showStopDialog() async {
+      return await showDialog<bool>(
+            context: context,
+            builder: (context) => AlertDialog(
+              title: Text(l10n.stopRecordingConfirmTitle),
+              content: Text(l10n.stopRecordingConfirmMessage),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.pop(context, false),
+                  child: Text(l10n.continueRecording),
+                ),
+                ElevatedButton(
+                  onPressed: () => Navigator.pop(context, true),
+                  child: Text(l10n.recordingStop),
+                ),
+              ],
+            ),
+          ) ??
+          false;
+    }
 
     return WillPopScope(
       onWillPop: () async {
-        if (_isRecording) {
-          final shouldStop = await _showStopDialog();
+        if (state.isRecording) {
+          final shouldStop = await showStopDialog();
           if (shouldStop) {
-            _stopRecording();
+            notifier.stopRecording();
           }
           return false;
         }
@@ -91,17 +106,17 @@ class _AcousticMonitoringScreenState
       child: Scaffold(
         backgroundColor: theme.colorScheme.surface,
         appBar: AppBar(
-          title: Text(_getPresetTitle(l10n)),
+          title: Text(_getPresetTitle(l10n, preset)),
           centerTitle: true,
           elevation: 0,
           actions: [
-            if (_isRecording)
+            if (state.isRecording)
               IconButton(
                 icon: const Icon(Iconsax.pause_circle),
                 onPressed: () async {
-                  final shouldStop = await _showStopDialog();
+                  final shouldStop = await showStopDialog();
                   if (shouldStop) {
-                    _stopRecording();
+                    notifier.stopRecording();
                   }
                 },
                 tooltip: l10n.stopRecordingTooltip,
@@ -113,7 +128,6 @@ class _AcousticMonitoringScreenState
             padding: const EdgeInsets.all(16.0),
             child: Column(
               children: [
-                // Status Card - Using reusable widget
                 StatusCard(
                   isActive: state.isRecording,
                   title: state.isRecording
@@ -124,8 +138,6 @@ class _AcousticMonitoringScreenState
                       : l10n.recordingCompleted,
                 ),
                 const SizedBox(height: 24),
-
-                // Current Decibel Display - Using specialized widget
                 DecibelDisplay(
                   decibels: state.currentDecibels,
                   noiseLevel: _getNoiseLevel(state.currentDecibels),
@@ -133,19 +145,19 @@ class _AcousticMonitoringScreenState
                 ),
                 const SizedBox(height: 24),
 
-                // Progress Indicator - Using specialized widget
-                SessionProgressIndicator(
-                  progress: state.progress,
-                  remainingTime: _formatDuration(
-                    state.remainingTime ?? Duration.zero,
-                    l10n,
+                // Only show progress for presets with a defined duration
+                if (!isCustomPreset)
+                  SessionProgressIndicator(
+                    progress: progress,
+                    remainingTime: _formatDuration(
+                      remainingTime,
+                      l10n,
+                    ),
+                    label: l10n.monitoringProgress,
+                    color: _getDecibelColor(state.averageDecibels),
                   ),
-                  label: l10n.monitoringProgress,
-                  color: _getDecibelColor(state.averageDecibels),
-                ),
-                const SizedBox(height: 24),
 
-                // Real-time Chart - Using reusable chart widget
+                const SizedBox(height: 24),
                 RealtimeLineChart(
                   dataPoints: state.decibelHistory,
                   title: l10n.monitoringLiveChart,
@@ -154,8 +166,6 @@ class _AcousticMonitoringScreenState
                   horizontalInterval: 20,
                 ),
                 const SizedBox(height: 24),
-
-                // Statistics Cards - Using reusable StatCard
                 Row(
                   children: [
                     Expanded(
@@ -179,8 +189,6 @@ class _AcousticMonitoringScreenState
                   ],
                 ),
                 const SizedBox(height: 24),
-
-                // Events List
                 _buildEventsList(theme, state, l10n),
               ],
             ),
@@ -190,8 +198,8 @@ class _AcousticMonitoringScreenState
     );
   }
 
-  String _getPresetTitle(AppLocalizations l10n) {
-    switch (widget.preset) {
+  String _getPresetTitle(AppLocalizations l10n, RecordingPreset preset) {
+    switch (preset) {
       case RecordingPreset.sleep:
         return l10n.presetSleepAnalysis;
       case RecordingPreset.work:
@@ -269,6 +277,8 @@ class _AcousticMonitoringScreenState
   }
 
   String _formatDuration(Duration duration, AppLocalizations l10n) {
+    if (duration.isNegative) return 'Finished';
+
     final hours = duration.inHours;
     final minutes = duration.inMinutes.remainder(60);
     final seconds = duration.inSeconds.remainder(60);
@@ -280,27 +290,5 @@ class _AcousticMonitoringScreenState
     } else {
       return '${seconds}s remaining';
     }
-  }
-
-  Future<bool> _showStopDialog() async {
-    final l10n = AppLocalizations.of(context)!;
-    return await showDialog<bool>(
-          context: context,
-          builder: (context) => AlertDialog(
-            title: Text(l10n.stopRecordingConfirmTitle),
-            content: Text(l10n.stopRecordingConfirmMessage),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.pop(context, false),
-                child: Text(l10n.continueRecording),
-              ),
-              ElevatedButton(
-                onPressed: () => Navigator.pop(context, true),
-                child: Text(l10n.recordingStop),
-              ),
-            ],
-          ),
-        ) ??
-        false;
   }
 }

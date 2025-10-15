@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:sensorlab/src/features/noise_meter/models/enhanced_noise_data.dart';
+import 'package:sensorlab/src/features/noise_meter/domain/entities/acoustic_report_entity.dart';
+import 'package:sensorlab/src/features/noise_meter/presentation/state/enhanced_noise_data.dart';
 import 'package:sensorlab/src/features/noise_meter/presentation/widgets/index.dart'
     hide StatCard;
 import 'package:sensorlab/src/shared/widgets/common_cards.dart'
@@ -14,6 +15,16 @@ class AcousticReportDetailScreen extends ConsumerWidget {
   final AcousticReport report;
 
   const AcousticReportDetailScreen({super.key, required this.report});
+
+  // --- Helper method for formatting duration ---
+  String _formatDuration(Duration duration) {
+    final hours = duration.inHours;
+    final minutes = duration.inMinutes.remainder(60);
+    if (hours > 0) {
+      return '${hours}h ${minutes}m';
+    }
+    return '${minutes}m';
+  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -189,7 +200,7 @@ class AcousticReportDetailScreen extends ConsumerWidget {
             InfoRow(
               icon: Iconsax.clock,
               label: 'Duration',
-              value: report.formattedDuration,
+              value: _formatDuration(report.duration),
             ),
             const SizedBox(height: 12),
             InfoRow(
@@ -210,13 +221,13 @@ class AcousticReportDetailScreen extends ConsumerWidget {
         'Average: ${report.averageDecibels.toStringAsFixed(1)} dB\n'
         'Peak: ${report.maxDecibels.toStringAsFixed(1)} dB\n'
         'Events: ${report.interruptionCount}\n'
-        'Duration: ${report.formattedDuration}\n\n'
+        'Duration: ${_formatDuration(report.duration)}\n\n'
         'Recommendation: ${report.recommendation}';
 
     Clipboard.setData(ClipboardData(text: reportText));
 
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Report copied to clipboard!')),
+      const SnackBar(content: Text('Report copied to clipboard!')), 
     );
   }
 

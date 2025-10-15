@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:sensorlab/src/features/noise_meter/models/enhanced_noise_data.dart';
+import 'package:sensorlab/src/features/noise_meter/presentation/state/enhanced_noise_data.dart';
 
 /// Preset card for selection screen
 class PresetCard extends StatelessWidget {

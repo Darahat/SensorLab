@@ -7,7 +7,7 @@ import 'package:sensorlab/src/features/health/domain/entities/activity_session.d
 import 'package:sensorlab/src/features/health/domain/entities/activity_type.dart';
 import 'package:sensorlab/src/features/health/domain/entities/user_profile.dart';
 import 'package:sensorlab/src/features/light_meter/models/plant_tracking_session.dart';
-import 'package:sensorlab/src/features/noise_meter/models/acoustic_report.dart';
+import 'package:sensorlab/src/features/noise_meter/data/models/acoustic_report_hive.dart';
 
 import '../constants/hive_constants.dart';
 

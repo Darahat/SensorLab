@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'acoustic_report.dart';
+part of 'acoustic_report_hive.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
@@ -60,11 +60,11 @@ class AcousticReportHiveAdapter extends TypeAdapter<AcousticReportHive> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return AcousticReportHive(
-      id: fields[0] as String?,
+      id: fields[0] as String,
       startTime: fields[1] as DateTime,
       endTime: fields[2] as DateTime,
-      duration: Duration(seconds: fields[3] as int),
-      preset: RecordingPreset.values[fields[4] as int],
+      durationSeconds: fields[3] as int,
+      presetIndex: fields[4] as int,
       averageDecibels: fields[5] as double,
       minDecibels: fields[6] as double,
       maxDecibels: fields[7] as double,
