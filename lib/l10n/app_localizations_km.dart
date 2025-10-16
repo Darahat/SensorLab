@@ -57,7 +57,8 @@ class AppLocalizationsKm extends AppLocalizations {
   String get darkMode => 'របៀបងងឹត';
 
   @override
-  String get switchBetweenLightAndDarkThemes => 'ប្ដូរវាងអេឡិចត្រូនិច‌លើពន្លឺ និង ភ្នែកងងឹត';
+  String get switchBetweenLightAndDarkThemes =>
+      'ប្ដូរវាងអេឡិចត្រូនិច‌លើពន្លឺ និង ភ្នែកងងឹត';
 
   @override
   String get system => 'ប្រព័ន្ធ';
@@ -102,7 +103,8 @@ class AppLocalizationsKm extends AppLocalizations {
   String get autoScan => 'ស្កេនស្វ័យប្រវត្តិ';
 
   @override
-  String get automaticallyScanWhenOpeningScanner => 'ស្កេនដោយស្វ័យប្រវត្តិពេលបើកកម្មវិធីស្កេន';
+  String get automaticallyScanWhenOpeningScanner =>
+      'ស្កេនដោយស្វ័យប្រវត្តិពេលបើកកម្មវិធីស្កេន';
 
   @override
   String get sensorUpdateFrequency => 'សម្រង់ភាពតម្រូវការអាប់ដេតឧបករណ៍សន្សើម';
@@ -119,7 +121,8 @@ class AppLocalizationsKm extends AppLocalizations {
   String get dataCollection => 'ការប្រមូលទិន្នន័យ';
 
   @override
-  String get allowAnonymousUsageAnalytics => 'អនុញ្ញាតវិភាគប្រើប្រាស់ដោយកម្រិតអនាមិក';
+  String get allowAnonymousUsageAnalytics =>
+      'អនុញ្ញាតវិភាគប្រើប្រាស់ដោយកម្រិតអនាមិក';
 
   @override
   String get privacyMode => 'របៀបភាពឯកជន';
@@ -140,13 +143,15 @@ class AppLocalizationsKm extends AppLocalizations {
   String get resetSettings => 'កំណត់ឡើងវិញ';
 
   @override
-  String get resetAllSettingsToDefaultValues => 'កំណត់ឡើងវិញគ្រប់កំណត់ទៅតម្លៃលំនាំដើម។ សកម្មភាពនេះមិនអាចកែបញ្ចូលវិញបាន។';
+  String get resetAllSettingsToDefaultValues =>
+      'កំណត់ឡើងវិញគ្រប់កំណត់ទៅតម្លៃលំនាំដើម។ សកម្មភាពនេះមិនអាចកែបញ្ចូលវិញបាន។';
 
   @override
   String get resetToDefaults => 'កំណត់ឡើងវិញទៅលំនាំដើម';
 
   @override
-  String get chooseSensorUpdateFrequency => 'ជ្រើសរើសចំនួនដងដែលឧបករណ៍សន្សើមត្រូវធ្វើបច្ចុប្បន្នភាព៖';
+  String get chooseSensorUpdateFrequency =>
+      'ជ្រើសរើសចំនួនដងដែលឧបករណ៍សន្សើមត្រូវធ្វើបច្ចុប្បន្នភាព៖';
 
   @override
   String get fastUpdate => '50ms (លឿន)';
@@ -167,7 +172,8 @@ class AppLocalizationsKm extends AppLocalizations {
   String get confirmReset => 'បញ្ជាក់ ការកំណត់ឡើងវិញ';
 
   @override
-  String get areYouSureResetSettings => 'តើអ្នកប្រាកដថាចង់កំណត់ឡើងវិញគ្រប់ការកំណត់ទៅតម្លៃលំនាំដើម?';
+  String get areYouSureResetSettings =>
+      'តើអ្នកប្រាកដថាចង់កំណត់ឡើងវិញគ្រប់ការកំណត់ទៅតម្លៃលំនាំដើម?';
 
   @override
   String get thisActionCannotBeUndone => 'សកម្មភាពនេះមិនអាចត្រឡប់វិញបានទេ។';
@@ -320,7 +326,8 @@ class AppLocalizationsKm extends AppLocalizations {
   String get failedToDisableTorch => 'បរាជ័យក្នុងការបិទភ្លើងថ្ម';
 
   @override
-  String get intensityControlNotSupported => 'ការគ្រប់គ្រងកម្រិតមិនគាំទ្រដោយកញ្ចប់ torch_light';
+  String get intensityControlNotSupported =>
+      'ការគ្រប់គ្រងកម្រិតមិនគាំទ្រដោយកញ្ចប់ torch_light';
 
   @override
   String get failedToSetMode => 'បរាជ័យក្នុងការកំណត់របៀប';
@@ -344,7 +351,8 @@ class AppLocalizationsKm extends AppLocalizations {
   String get pressFingerFirmlyOnCamera => 'ចុចម្រាមដៃយ៉ាងមាំលើកាមេរ៉ា';
 
   @override
-  String get fingerMovedPlaceFirmlyOnCamera => 'ម្រាមដៃផ្លាស់ -> ដាក់ឱ្យម៉ាំលើកាមេរ៉ា';
+  String get fingerMovedPlaceFirmlyOnCamera =>
+      'ម្រាមដៃផ្លាស់ -> ដាក់ឱ្យម៉ាំលើកាមេរ៉ា';
 
   @override
   String heartRateBpm(int bpm) {
@@ -388,7 +396,8 @@ class AppLocalizationsKm extends AppLocalizations {
   String get initializationFailed => 'ការចាប់ផ្ដើមបរាជ័យ';
 
   @override
-  String get allYourSensorsInOnePlace => 'ឧបករណ៍សន្សើមរបស់អ្នកទាំងអស់នៅកន្លែងតែមួយ';
+  String get allYourSensorsInOnePlace =>
+      'ឧបករណ៍សន្សើមរបស់អ្នកទាំងអស់នៅកន្លែងតែមួយ';
 
   @override
   String get noSensorsAvailable => 'មិនមានឧបករណ៍សន្សើមណាបង្ហាញ';
@@ -445,7 +454,8 @@ class AppLocalizationsKm extends AppLocalizations {
   String get initializingFlashlight => 'កំពុងចាប់ផ្ដើមភ្លើងថ្ម...';
 
   @override
-  String get deviceDoesNotHaveFlashlight => 'ឧបករណ៍មិនមានភ្លើងថ្ម ឬ មិនអាចចូលប្រើបាន';
+  String get deviceDoesNotHaveFlashlight =>
+      'ឧបករណ៍មិនមានភ្លើងថ្ម ឬ មិនអាចចូលប្រើបាន';
 
   @override
   String get tryAgain => 'ព្យាយាមម្តងទៀត';
@@ -548,7 +558,8 @@ class AppLocalizationsKm extends AppLocalizations {
   String get locationPermissionDenied => 'ការអនុញ្ញាតទីតាំងត្រូវបានបដិសេធ';
 
   @override
-  String get locationPermissionsPermanentlyDenied => 'ការអនុញ្ញាតទីតាំងត្រូវបានបដិសេធជាអចិន្រ្តៃយ៍';
+  String get locationPermissionsPermanentlyDenied =>
+      'ការអនុញ្ញាតទីតាំងត្រូវបានបដិសេធជាអចិន្រ្តៃយ៍';
 
   @override
   String errorGettingLocation(String error) {
@@ -590,7 +601,8 @@ class AppLocalizationsKm extends AppLocalizations {
   String get aboutGeolocator => 'អំពី Geolocator';
 
   @override
-  String get geolocatorDescription => 'ឧបករណ៍នេះបង្ហាញទីតាំងបច្ចុប្បន្នរបស់អ្នកដោយប្រើ GPS ក្នុងឧបករណ៍របស់អ្នក។\n\nមុខងារ៖\n• កូអរដោនេត latitude/longitude យ៉ាងត្រឹមត្រូវ\n• ការវាស់ភាពត្រឹមត្រូវ\n• ការបំលែងវិញទៅអាសយដ្ឋាន\n• បើកទីតាំងនៅលើផែនទី\n\nដើម្បីទទួលលទ្ធផលល្អ៖\n• បើកសេវាកម្មទីតាំង\n• រកទីតាំងដែលមានទំហំមេឃស្អាត\n• តភ្ជាប់អ៊ីនធឺណិតសម្រាប់ស្វែងរកអាសយដ្ឋាន';
+  String get geolocatorDescription =>
+      'ឧបករណ៍នេះបង្ហាញទីតាំងបច្ចុប្បន្នរបស់អ្នកដោយប្រើ GPS ក្នុងឧបករណ៍របស់អ្នក។\n\nមុខងារ៖\n• កូអរដោនេត latitude/longitude យ៉ាងត្រឹមត្រូវ\n• ការវាស់ភាពត្រឹមត្រូវ\n• ការបំលែងវិញទៅអាសយដ្ឋាន\n• បើកទីតាំងនៅលើផែនទី\n\nដើម្បីទទួលលទ្ធផលល្អ៖\n• បើកសេវាកម្មទីតាំង\n• រកទីតាំងដែលមានទំហំមេឃស្អាត\n• តភ្ជាប់អ៊ីនធឺណិតសម្រាប់ស្វែងរកអាសយដ្ឋាន';
 
   @override
   String get ok => 'យល់ព្រម';
@@ -611,7 +623,8 @@ class AppLocalizationsKm extends AppLocalizations {
   String get motionIntensity => 'កម្រិតចលនា';
 
   @override
-  String get liveSensorGraph => 'ក្រาฟិកឧបករណ៍សន្សើមបន្ត (X – ក្រហម, Y – បៃតង, Z – ខៀវ)';
+  String get liveSensorGraph =>
+      'ក្រาฟិកឧបករណ៍សន្សើមបន្ត (X – ក្រហម, Y – បៃតង, Z – ខៀវ)';
 
   @override
   String get angularVelocity => 'ល្បឿនមុំ (rad/s)';
@@ -724,7 +737,8 @@ class AppLocalizationsKm extends AppLocalizations {
   String get noHumiditySensor => 'មិនរកឃើញឧបករណ៍សំណើម';
 
   @override
-  String get noHumiditySensorDescription => 'ទូរស័ព្ទច្រើនមិនមានឧបករណ៍សំណើម។ បង្ហាញទិន្នន័យប្រមាណសម្រាប់ការសាកល្បង។';
+  String get noHumiditySensorDescription =>
+      'ទូរស័ព្ទច្រើនមិនមានឧបករណ៍សំណើម។ បង្ហាញទិន្នន័យប្រមាណសម្រាប់ការសាកល្បង។';
 
   @override
   String get checkAgain => 'ពិនិត្យម្ដងទៀត';
@@ -811,7 +825,8 @@ class AppLocalizationsKm extends AppLocalizations {
   String get positionBarcodeInFrame => 'ដាក់កូដក្នុងស៊្នស៍';
 
   @override
-  String get scanningForBarcodes => 'កំពុងស្កេន UPC, EAN, កូដ 128, 39 និងអន្ដរូ';
+  String get scanningForBarcodes =>
+      'កំពុងស្កេន UPC, EAN, កូដ 128, 39 និងអន្ដរូ';
 
   @override
   String get scanQrCode => 'ស្កេន QR ឃូដ';
@@ -882,7 +897,8 @@ class AppLocalizationsKm extends AppLocalizations {
   String get scanningTips => 'គន្លឹះស្កេន';
 
   @override
-  String get scanningTipsDescription => 'សូមដាក់ឧបករណ៍របស់អ្នកឱ្យស្ថិតស្ថេរ និងធ្វើឱ្យកូដមានពន្លឺល្អក្នុងស៊្នស៍។';
+  String get scanningTipsDescription =>
+      'សូមដាក់ឧបករណ៍របស់អ្នកឱ្យស្ថិតស្ថេរ និងធ្វើឱ្យកូដមានពន្លឺល្អក្នុងស៊្នស៍។';
 
   @override
   String get minStat => 'អប្បបរមា';
@@ -990,7 +1006,8 @@ class AppLocalizationsKm extends AppLocalizations {
   String get objectDetectedClose => 'វត្ថុត្រូវបានរកឃើញនៅជិតឧបករណ៍ចាប់សញ្ញា';
 
   @override
-  String get usuallyWithin5cm => 'ជាធម្មតានៅពេលមានអ្វីមួយនៅក្នុងរយៈ 5 សង់ទីម៉ែត្រពីឧបករណ៍ចាប់សញ្ញា';
+  String get usuallyWithin5cm =>
+      'ជាធម្មតានៅពេលមានអ្វីមួយនៅក្នុងរយៈ 5 សង់ទីម៉ែត្រពីឧបករណ៍ចាប់សញ្ញា';
 
   @override
   String get farDetection => 'ការរកឃើញនៅឆ្ងាយ';
@@ -1005,7 +1022,8 @@ class AppLocalizationsKm extends AppLocalizations {
   String get tooDryIrritation => 'ស្ងួតពេក - អាចបណ្តាលឱ្យស្បែកនិងដង្ហើមរលាក';
 
   @override
-  String get somewhatDryHumidifier => 'ស្ងួតបន្តិច - គួរពិចារណាប្រើម៉ាស៊ីនបន្ថែមសំណើម';
+  String get somewhatDryHumidifier =>
+      'ស្ងួតបន្តិច - គួរពិចារណាប្រើម៉ាស៊ីនបន្ថែមសំណើម';
 
   @override
   String get idealHumidityLevel => 'កម្រិតសំណើមល្អសម្រាប់ការងាយស្រួលនិងសុខភាព';
@@ -1086,13 +1104,15 @@ class AppLocalizationsKm extends AppLocalizations {
   String get daylightExample => 'ពន្លឺព្រះអាទិត្យផ្ទាល់';
 
   @override
-  String get grantSensorPermission => 'ផ្តល់ការអនុញ្ញាតឧបករណ៍ចាប់សញ្ញាដើម្បីចូលប្រើឧបករណ៍ចាប់សញ្ញាភាពជិត';
+  String get grantSensorPermission =>
+      'ផ្តល់ការអនុញ្ញាតឧបករណ៍ចាប់សញ្ញាដើម្បីចូលប្រើឧបករណ៍ចាប់សញ្ញាភាពជិត';
 
   @override
   String get deviceNoProximitySensor => 'ឧបករណ៍មិនមានឧបករណ៍ចាប់សញ្ញាភាពជិត';
 
   @override
-  String get proximitySensorLocation => 'ឧបករណ៍ចាប់សញ្ញាភាពជិតធម្មតាស្ថិតនៅក្បែរកាសឆ្នាំ និងប្រើសម្រាប់បិទអេក្រង់កំឡុងពេលហៅទូរស័ព្ទ។';
+  String get proximitySensorLocation =>
+      'ឧបករណ៍ចាប់សញ្ញាភាពជិតធម្មតាស្ថិតនៅក្បែរកាសឆ្នាំ និងប្រើសម្រាប់បិទអេក្រង់កំឡុងពេលហៅទូរស័ព្ទ។';
 
   @override
   String get pausedCameraInUse => 'បានផ្អាក - ម៉ាស៊ីនថតកំពុងប្រើដោយមុខងារផ្សេង';
@@ -1176,10 +1196,12 @@ class AppLocalizationsKm extends AppLocalizations {
   String get allSettings => 'ការកំណត់ទាំងអស់';
 
   @override
-  String get getNotifiedAboutSensorReadings => 'ទទួលការជូនដំណឹងអំពីការអានឧបករណ៍ចាប់សញ្ញា';
+  String get getNotifiedAboutSensorReadings =>
+      'ទទួលការជូនដំណឹងអំពីការអានឧបករណ៍ចាប់សញ្ញា';
 
   @override
-  String get themeChangeRequiresRestart => 'ការផ្លាស់ប្តូរធីមត្រូវការចាប់ផ្តើមកម្មវិធីឡើងវិញ';
+  String get themeChangeRequiresRestart =>
+      'ការផ្លាស់ប្តូរធីមត្រូវការចាប់ផ្តើមកម្មវិធីឡើងវិញ';
 
   @override
   String get quickSettings => 'ការកំណត់លឿន';
@@ -1215,10 +1237,12 @@ class AppLocalizationsKm extends AppLocalizations {
   String get gyroZ => 'ជីរ៉ូ Z';
 
   @override
-  String get qrScannerSubtitle => 'ស្កែន QR កូដ, Data Matrix, PDF417, និងកូដ Aztec';
+  String get qrScannerSubtitle =>
+      'ស្កែន QR កូដ, Data Matrix, PDF417, និងកូដ Aztec';
 
   @override
-  String get barcodeScannerSubtitle => 'ស្កែនបាកូដផលិតផលដូចជា UPC, EAN, Code 128, និងច្រើនទៀត';
+  String get barcodeScannerSubtitle =>
+      'ស្កែនបាកូដផលិតផលដូចជា UPC, EAN, Code 128, និងច្រើនទៀត';
 
   @override
   String get activity => 'សកម្មភាព';
@@ -1236,7 +1260,8 @@ class AppLocalizationsKm extends AppLocalizations {
   String get sessionPaused => 'សម័យបានផ្អាក';
 
   @override
-  String get updateYourPersonalInformation => 'ធ្វើបច្ចុប្បន្នភាពព័ត៌មានផ្ទាល់ខ្លួនរបស់អ្នក';
+  String get updateYourPersonalInformation =>
+      'ធ្វើបច្ចុប្បន្នភាពព័ត៌មានផ្ទាល់ខ្លួនរបស់អ្នក';
 
   @override
   String get personalInformation => 'ព័ត៌មានផ្ទាល់ខ្លួន';
@@ -1299,7 +1324,8 @@ class AppLocalizationsKm extends AppLocalizations {
   String get setDailyGoal => 'កំណត់គោលដៅប្រចាំថ្ងៃ';
 
   @override
-  String get resetSessionConfirmation => 'តើអ្នកប្រាកដថាចង់កំណត់សម័យឡើងវិញទេ? ដំណើរការទាំងអស់នឹងត្រូវបាត់បង់។';
+  String get resetSessionConfirmation =>
+      'តើអ្នកប្រាកដថាចង់កំណត់សម័យឡើងវិញទេ? ដំណើរការទាំងអស់នឹងត្រូវបាត់បង់។';
 
   @override
   String get barometer => 'ឧបករណ៍វាស់សម្ពាធ';
@@ -1335,127 +1361,128 @@ class AppLocalizationsKm extends AppLocalizations {
   String get altitude => 'កម្ពស់';
 
   @override
-  String get altimeter => 'Altimeter';
+  String get altimeter => 'ឧបករណ៍វាស់កម្ពស់';
 
   @override
-  String get altimeterWaiting => 'Waiting for GPS and barometer data...';
+  String get altimeterWaiting => 'កំពុងរង់ចាំទិន្នន័យកម្ពស់...';
 
   @override
-  String get aboveSeaLevel => 'Above Sea Level';
+  String get aboveSeaLevel => 'លើកម្រិតទឹកសមុទ្រ';
 
   @override
-  String get climbing => 'Climbing';
+  String get climbing => 'កំពុងឡើង';
 
   @override
-  String get descending => 'Descending';
+  String get descending => 'កំពុងចុះ';
 
   @override
-  String get stable => 'Stable';
+  String get stable => 'ស្ថេរភាព';
 
   @override
-  String get usingGpsOnly => 'Using GPS data only';
+  String get usingGpsOnly => 'ប្រើតែ GPS';
 
   @override
-  String get usingBarometerOnly => 'Using barometer data only';
+  String get usingBarometerOnly => 'ប្រើតែបារ៉ូម៉ែត្រ';
 
   @override
-  String get usingFusedData => 'Combining GPS and barometer for accuracy';
+  String get usingFusedData => 'ប្រើទិន្នន័យរួមបញ្ចូលគ្នា';
 
   @override
-  String get dataSource => 'Data Source';
+  String get dataSource => 'ប្រភពទិន្នន័យ';
 
   @override
-  String get sensorReadings => 'Sensor Readings';
+  String get sensorReadings => 'ការអានសេន្សួរ';
 
   @override
-  String get gpsAltitude => 'GPS Altitude';
+  String get gpsAltitude => 'កម្ពស់ GPS';
 
   @override
-  String get baroAltitude => 'Baro Altitude';
+  String get baroAltitude => 'កម្ពស់បារ៉ូម៉ែត្រ';
 
   @override
-  String get pressure => 'Pressure';
+  String get pressure => 'សម្ពាធ';
 
   @override
-  String get statistics => 'Statistics';
+  String get statistics => 'ស្ថិតិ';
 
   @override
-  String get gain => 'Gain';
+  String get gain => 'ការកើនឡើង';
 
   @override
-  String get loss => 'Loss';
+  String get loss => 'ការថយចុះ';
 
   @override
-  String get calibrateAltimeter => 'Calibrate Altimeter';
+  String get calibrateAltimeter => 'ក្រិត​កម្ពស់​ស្តង់ដារ';
 
   @override
-  String get calibrateDescription => 'Enter your current known altitude in meters to calibrate the barometric sensor for better accuracy.';
+  String get calibrateDescription =>
+      'បញ្ចូលកម្ពស់ដែលស្គាល់បច្ចុប្បន្នរបស់អ្នកដើម្បីក្រិតស្តង់ដារ';
 
   @override
-  String get knownAltitude => 'Known Altitude';
+  String get knownAltitude => 'កម្ពស់ដែលស្គាល់';
 
   @override
-  String get calibrationComplete => 'Calibration complete!';
+  String get calibrationComplete => 'ការក្រិតស្តង់ដារបានបញ្ចប់';
 
   @override
-  String get statsReset => 'Statistics reset!';
+  String get statsReset => 'កំណត់ស្ថិតិឡើងវិញ';
 
   @override
-  String get vibrationMeter => 'Vibration Meter';
+  String get vibrationMeter => 'ឧបករណ៍វាស់ការរំញ័រ';
 
   @override
-  String get vibrationWaiting => 'Waiting for accelerometer data...';
+  String get vibrationWaiting => 'កំពុងរង់ចាំទិន្នន័យការរំញ័រ...';
 
   @override
-  String get vibrationMagnitude => 'Vibration Magnitude';
+  String get vibrationMagnitude => 'ទំហំនៃការរំញ័រ';
 
   @override
-  String get vibrationLevel => 'Vibration Level';
+  String get vibrationLevel => 'កម្រិតការរំញ័រ';
 
   @override
-  String get realtimeWaveform => 'Real-time Waveform';
+  String get realtimeWaveform => 'រូបរលកតាមពេលវេលាជាក់ស្តែង';
 
   @override
-  String get pattern => 'Pattern';
+  String get pattern => 'លំនាំ';
 
   @override
-  String get frequency => 'Frequency';
+  String get frequency => 'ប្រេកង់';
 
   @override
-  String get axisBreakdown => 'Axis Breakdown';
+  String get axisBreakdown => 'ការបំបែកតាមអ័ក្ស';
 
   @override
-  String get advancedMetrics => 'Advanced Metrics';
+  String get advancedMetrics => 'ម៉ែត្រកម្រិតខ្ពស់';
 
   @override
   String get rms => 'RMS';
 
   @override
-  String get peakToPeak => 'Peak-to-Peak';
+  String get peakToPeak => 'កំពូលទៅកំពូល';
 
   @override
-  String get crestFactor => 'Crest Factor';
+  String get crestFactor => 'កត្តាកំពូល';
 
   @override
-  String get acousticAnalyzer => 'Acoustic Analyzer';
+  String get acousticAnalyzer => 'ឧបករណ៍វិភាគសូរស័ព្ទ';
 
   @override
-  String get acousticAnalyzerTitle => 'Acoustic Environment Analyzer';
+  String get acousticAnalyzerTitle => 'ឧបករណ៍វិភាគសូរស័ព្ទ';
 
   @override
-  String get acousticEnvironment => 'Acoustic Environment';
+  String get acousticEnvironment => 'បរិយាកាសសូរស័ព្ទ';
 
   @override
-  String get noiseLevel => 'Noise Level';
+  String get noiseLevel => 'កម្រិតសំឡេង';
 
   @override
   String get decibelUnit => 'dB';
 
   @override
-  String get presetSelectTitle => 'Choose Recording Preset';
+  String get presetSelectTitle => 'ជ្រើសរើសការកំណត់ជាមុន';
 
   @override
-  String get presetSelectSubtitle => 'Select a preset to analyze your acoustic environment over time';
+  String get presetSelectSubtitle => 'ជ្រើសរើសប្រភេទវិភាគសូរស័ព្ទ';
 
   @override
   String get presetSleep => 'ដេក';
@@ -1467,7 +1494,8 @@ class AppLocalizationsKm extends AppLocalizations {
   String get presetSleepDuration => '៨ ម៉ោង';
 
   @override
-  String get presetSleepDescription => 'តាមដានសំឡេងក្នុងបន្ទប់គេងពេញមួយយប់ ដើម្បីកែលម្អគុណភាពនៃការគេង';
+  String get presetSleepDescription =>
+      'តាមដានសំឡេងក្នុងបន្ទប់គេងពេញមួយយប់ ដើម្បីកែលម្អគុណភាពនៃការគេង';
 
   @override
   String get presetWork => 'ការងារ';
@@ -1479,7 +1507,8 @@ class AppLocalizationsKm extends AppLocalizations {
   String get presetWorkDuration => '១ ម៉ោង';
 
   @override
-  String get presetWorkDescription => 'តាមដានកម្រិតសំឡេងនៅកន្លែងធ្វើការ និងកំណត់អត្តសញ្ញាណរបស់វត្ថុរំខាន';
+  String get presetWorkDescription =>
+      'តាមដានកម្រិតសំឡេងនៅកន្លែងធ្វើការ និងកំណត់អត្តសញ្ញាណរបស់វត្ថុរំខាន';
 
   @override
   String get presetFocus => 'ការផ្តោតអារម្មណ៍';
@@ -1491,284 +1520,288 @@ class AppLocalizationsKm extends AppLocalizations {
   String get presetFocusDuration => '៣០ នាទី';
 
   @override
-  String get presetFocusDescription => 'វិភាគបរិយាកាសសិក្សា ឬសម័យផ្តោតអារម្មណ៍របស់អ្នក';
+  String get presetFocusDescription =>
+      'វិភាគបរិយាកាសសិក្សា ឬសម័យផ្តោតអារម្មណ៍របស់អ្នក';
 
   @override
-  String get presetCustom => 'Custom';
+  String get presetCustom => 'ផ្ទាល់ខ្លួន';
 
   @override
-  String get presetSleepAnalysis => 'Sleep Analysis (8h)';
+  String get presetSleepAnalysis => 'វិភាគការគេង';
 
   @override
-  String get presetWorkEnvironment => 'Work Environment (1h)';
+  String get presetWorkEnvironment => 'បរិយាកាសការងារ';
 
   @override
-  String get presetFocusSession => 'Focus Session (30m)';
+  String get presetFocusSession => 'សម័យផ្តោតអារម្មណ៍';
 
   @override
-  String get presetCustomRecording => 'Custom Recording';
+  String get presetCustomRecording => 'ការថតផ្ទាល់ខ្លួន';
 
   @override
-  String get monitoringTitle => 'Monitoring';
+  String get monitoringTitle => 'ការតាមដាន';
 
   @override
-  String get monitoringActive => 'Recording Active';
+  String get monitoringActive => 'ការតាមដានសកម្ម';
 
   @override
-  String get monitoringStopped => 'Recording Stopped';
+  String get monitoringStopped => 'ការតាមដានបានបញ្ឈប់';
 
   @override
-  String get monitoringProgress => 'Progress';
+  String get monitoringProgress => 'វឌ្ឍនភាពការតាមដាន';
 
   @override
-  String get monitoringCurrentLevel => 'Current Level';
+  String get monitoringCurrentLevel => 'កម្រិតបច្ចុប្បន្ន';
 
   @override
-  String get monitoringLiveChart => 'Live Monitoring';
+  String get monitoringLiveChart => 'គំនូសតាងផ្ទាល់';
 
   @override
-  String get monitoringEnvironment => 'Monitoring acoustic environment...';
+  String get monitoringEnvironment => 'កំពុងតាមដានបរិយាកាស';
 
   @override
   String get recordingStart => 'ចាប់ផ្តើមថត';
 
   @override
-  String get recordingStop => 'Stop Recording';
+  String get recordingStop => 'បញ្ឈប់ការថត';
 
   @override
-  String get recordingCompleted => 'Recording completed';
+  String get recordingCompleted => 'ការថតបានបញ្ចប់';
 
   @override
-  String get reportGeneratedSuccess => 'Report generated successfully!';
+  String get reportGeneratedSuccess => 'របាយការណ៍ត្រូវបានបង្កើតដោយជោគជ័យ';
 
   @override
-  String get stopRecordingTooltip => 'Stop Recording';
+  String get stopRecordingTooltip => 'បញ្ឈប់ការថត';
 
   @override
-  String get stopRecordingConfirmTitle => 'Stop Recording?';
+  String get stopRecordingConfirmTitle => 'បញ្ឈប់ការថត?';
 
   @override
-  String get stopRecordingConfirmMessage => 'Are you sure you want to stop the recording? The report will be generated with the current data.';
+  String get stopRecordingConfirmMessage =>
+      'តើអ្នកពិតជាចង់បញ្ឈប់ការថតបច្ចុប្បន្នមែនទេ?';
 
   @override
-  String get continueRecording => 'Continue';
+  String get continueRecording => 'បន្តការថត';
 
   @override
-  String get reportsTitle => 'Acoustic Reports';
+  String get reportsTitle => 'របាយការណ៍';
 
   @override
-  String get reportsEmpty => 'No Reports Yet';
+  String get reportsEmpty => 'គ្មានរបាយការណ៍';
 
   @override
-  String get reportsEmptyDescription => 'Start an acoustic analysis session to generate your first report';
+  String get reportsEmptyDescription =>
+      'រកមិនឃើញរបាយការណ៍ទេ។ ចាប់ផ្តើមការវិភាគដើម្បីបង្កើតមួយ។';
 
   @override
   String reportsSelectedCount(int count) {
-    return '$count Selected';
+    return '$count បានជ្រើសរើស';
   }
 
   @override
-  String get reportExportCSV => 'Export as CSV';
+  String get reportExportCSV => 'នាំចេញជា CSV';
 
   @override
-  String get reportExportAll => 'Export All';
+  String get reportExportAll => 'នាំចេញទាំងអស់';
 
   @override
-  String get reportDelete => 'Delete';
+  String get reportDelete => 'លុប';
 
   @override
-  String get reportDeleteSelected => 'Delete Selected';
+  String get reportDeleteSelected => 'លុបអ្វីដែលបានជ្រើសរើស';
 
   @override
-  String get reportDeleteConfirmTitle => 'Delete Reports?';
+  String get reportDeleteConfirmTitle => 'លុបរបាយការណ៍?';
 
   @override
   String reportDeleteConfirmMessage(int count) {
-    return 'Are you sure you want to delete $count report(s)? This action cannot be undone.';
+    return 'តើអ្នកពិតជាចង់លុបរបាយការណ៍ដែលបានជ្រើសរើសមែនទេ?';
   }
 
   @override
-  String get reportDeleteSuccess => 'Reports deleted';
+  String get reportDeleteSuccess => 'របាយការណ៍ត្រូវបានលុបដោយជោគជ័យ';
 
   @override
-  String get reportFilterByPreset => 'Filter by Preset';
+  String get reportFilterByPreset => 'ច្រោះតាមការកំណត់ជាមុន';
 
   @override
-  String get reportFilterAll => 'All Presets';
+  String get reportFilterAll => 'ទាំងអស់';
 
   @override
-  String get reportStartAnalysis => 'Start Analysis';
+  String get reportStartAnalysis => 'ចាប់ផ្តើមការវិភាគ';
 
   @override
-  String get csvCopiedToClipboard => 'CSV data copied to clipboard!';
+  String get csvCopiedToClipboard => 'CSV ត្រូវបានចម្លងទៅក្តារតម្បៀតខ្ទាស់';
 
   @override
-  String get reportDetailTitle => 'Acoustic Report';
+  String get reportDetailTitle => 'ព័ត៌មានលម្អិតរបាយការណ៍';
 
   @override
-  String get reportQualityTitle => 'Environment Quality';
+  String get reportQualityTitle => 'គុណភាព';
 
   @override
-  String get reportQualityScore => 'Quality Score';
+  String get reportQualityScore => 'ពិន្ទុគុណភាព';
 
   @override
-  String get reportAverage => 'Average';
+  String get reportAverage => 'មធ្យម';
 
   @override
-  String get reportPeak => 'Peak';
+  String get reportPeak => 'កំពូល';
 
   @override
-  String get reportHourlyBreakdown => 'Hourly Breakdown';
+  String get reportHourlyBreakdown => 'ការបំបែកតាមម៉ោង';
 
   @override
-  String get reportNoiseEvents => 'Noise Events';
+  String get reportNoiseEvents => 'ព្រឹត្តិការណ៍សំឡេង';
 
   @override
-  String get reportNoEventsTitle => 'No Interruptions Detected';
+  String get reportNoEventsTitle => 'គ្មានព្រឹត្តិការណ៍';
 
   @override
-  String get reportNoEventsMessage => 'Your environment was consistently quiet';
+  String get reportNoEventsMessage =>
+      'មិនរកឃើញព្រឹត្តិការណ៍សំឡេងក្នុងអំឡុងសម័យនេះទេ';
 
   @override
-  String get reportShare => 'Share Report';
+  String get reportShare => 'ចែករំលែក';
 
   @override
-  String get reportRecommendations => 'Recommendations';
+  String get reportRecommendations => 'អនុសាសន៍';
 
   @override
-  String get reportDuration => 'Duration';
+  String get reportDuration => 'រយៈពេល';
 
   @override
-  String get reportEvents => 'events';
+  String get reportEvents => 'ព្រឹត្តិការណ៍';
 
   @override
   String durationHours(int hours) {
-    return '${hours}h';
+    return 'ម៉ោង';
   }
 
   @override
   String durationMinutes(int minutes) {
-    return '${minutes}m';
+    return 'នាទី';
   }
 
   @override
   String durationSeconds(int seconds) {
-    return '${seconds}s';
+    return 'វិនាទី';
   }
 
   @override
   String durationHoursMinutes(int hours, int minutes) {
-    return '${hours}h ${minutes}m';
+    return '$hours ម៉ោង $minutes នាទី';
   }
 
   @override
-  String get qualityExcellent => 'Excellent';
+  String get qualityExcellent => 'ល្អបំផុត';
 
   @override
-  String get qualityGood => 'Good';
+  String get qualityGood => 'ល្អ';
 
   @override
-  String get qualityFair => 'Fair';
+  String get qualityFair => 'ជាមធ្យម';
 
   @override
-  String get qualityPoor => 'Poor';
+  String get qualityPoor => 'ខ្សោយ';
 
   @override
   String get unitDecibels => 'dB';
 
   @override
-  String get unitHours => 'hours';
+  String get unitHours => 'ម៉ោង';
 
   @override
-  String get unitMinutes => 'minutes';
+  String get unitMinutes => 'នាទី';
 
   @override
-  String get unitSeconds => 'seconds';
+  String get unitSeconds => 'វិនាទី';
 
   @override
-  String get actionOk => 'OK';
+  String get actionOk => 'យល់ព្រម';
 
   @override
-  String get actionContinue => 'Continue';
+  String get actionContinue => 'បន្ត';
 
   @override
-  String get actionStop => 'Stop';
+  String get actionStop => 'បញ្ឈប់';
 
   @override
-  String get actionStart => 'Start';
+  String get actionStart => 'ចាប់ផ្តើម';
 
   @override
-  String get actionView => 'View';
+  String get actionView => 'មើល';
 
   @override
-  String get actionExport => 'Export';
+  String get actionExport => 'នាំចេញ';
 
   @override
-  String get actionShare => 'Share';
+  String get actionShare => 'ចែករំលែក';
 
   @override
-  String get viewHistoricalReports => 'View Historical Reports';
+  String get viewHistoricalReports => 'មើលរបាយការណ៍ប្រវត្តិសាស្ត្រ';
 
   @override
-  String get csvHeaderID => 'ID';
+  String get csvHeaderID => 'លេខសម្គាល់';
 
   @override
-  String get csvHeaderStartTime => 'Start Time';
+  String get csvHeaderStartTime => 'ពេលចាប់ផ្តើម';
 
   @override
-  String get csvHeaderEndTime => 'End Time';
+  String get csvHeaderEndTime => 'ពេលបញ្ចប់';
 
   @override
-  String get csvHeaderDuration => 'Duration (min)';
+  String get csvHeaderDuration => 'រយៈពេល (នាទី)';
 
   @override
-  String get csvHeaderPreset => 'Preset';
+  String get csvHeaderPreset => 'ការកំណត់ជាមុន';
 
   @override
-  String get csvHeaderAverageDB => 'Average dB';
+  String get csvHeaderAverageDB => 'dB មធ្យម';
 
   @override
-  String get csvHeaderMinDB => 'Min dB';
+  String get csvHeaderMinDB => 'dB អប្បបរមា';
 
   @override
-  String get csvHeaderMaxDB => 'Max dB';
+  String get csvHeaderMaxDB => 'dB អតិបរមា';
 
   @override
-  String get csvHeaderEvents => 'Events';
+  String get csvHeaderEvents => 'ព្រឹត្តិការណ៍';
 
   @override
-  String get csvHeaderQualityScore => 'Quality Score';
+  String get csvHeaderQualityScore => 'ពិន្ទុគុណភាព';
 
   @override
-  String get csvHeaderQuality => 'Quality';
+  String get csvHeaderQuality => 'គុណភាព';
 
   @override
-  String get csvHeaderRecommendation => 'Recommendation';
+  String get csvHeaderRecommendation => 'អនុសាសន៍';
 
   @override
-  String get sleepAnalysis => 'Sleep Analysis';
+  String get sleepAnalysis => 'វិភាគការគេង';
 
   @override
-  String get workEnvironment => 'Work Environment';
+  String get workEnvironment => 'បរិយាកាសការងារ';
 
   @override
-  String get focusSession => 'Focus Session';
+  String get focusSession => 'សម័យផ្តោតអារម្មណ៍';
 
   @override
-  String get recordingComplete => 'Recording Complete';
+  String get recordingComplete => 'ការថតបានបញ្ចប់';
 
   @override
-  String get presetName => 'Preset Name';
+  String get presetName => 'ឈ្មោះការកំណត់ជាមុន';
 
   @override
-  String get averageDecibels => 'Average Decibels';
+  String get averageDecibels => 'ដេស៊ីបែលមធ្យម';
 
   @override
-  String get peakDecibels => 'Peak Decibels';
+  String get peakDecibels => 'ដេស៊ីបែលកំពូល';
 
   @override
-  String get environmentQuality => 'Environment Quality';
+  String get environmentQuality => 'គុណភាពបរិយាកាស';
 
   @override
-  String get viewReport => 'View Report';
+  String get viewReport => 'មើលរបាយការណ៍';
 }

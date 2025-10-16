@@ -60,7 +60,11 @@ class AcousticReportDetailScreen extends ConsumerWidget {
                     child: StatCard(
                       icon: Iconsax.chart,
                       label: 'Average',
-                      value: '${report.averageDecibels.toStringAsFixed(1)} dB',
+                      value:
+                          report.averageDecibels.isNaN ||
+                              report.averageDecibels.isInfinite
+                          ? '--'
+                          : '${report.averageDecibels.toStringAsFixed(1)} dB',
                       color: _getDecibelColor(report.averageDecibels),
                     ),
                   ),
@@ -69,7 +73,11 @@ class AcousticReportDetailScreen extends ConsumerWidget {
                     child: StatCard(
                       icon: Iconsax.arrow_up,
                       label: 'Peak',
-                      value: '${report.maxDecibels.toStringAsFixed(1)} dB',
+                      value:
+                          report.maxDecibels == double.negativeInfinity ||
+                              report.maxDecibels.isNaN
+                          ? '--'
+                          : '${report.maxDecibels.toStringAsFixed(1)} dB',
                       color: Colors.red,
                     ),
                   ),
@@ -103,7 +111,7 @@ class AcousticReportDetailScreen extends ConsumerWidget {
   Widget _buildQualityScoreCard(ThemeData theme) {
     final score = report.qualityScore;
     final color = _getQualityColor(score);
-    final quality = report.environmentQuality;
+    final qualityLabel = _getQualityLabel(score);
 
     return Card(
       elevation: 4,
@@ -156,7 +164,7 @@ class AcousticReportDetailScreen extends ConsumerWidget {
                         ),
                       ),
                       Text(
-                        quality.toUpperCase(),
+                        qualityLabel,
                         style: theme.textTheme.titleMedium?.copyWith(
                           color: color,
                           fontWeight: FontWeight.w600,
@@ -214,11 +222,22 @@ class AcousticReportDetailScreen extends ConsumerWidget {
   }
 
   void _shareReport(BuildContext context) {
+    final avgValue =
+        report.averageDecibels.isNaN || report.averageDecibels.isInfinite
+        ? '--'
+        : report.averageDecibels.toStringAsFixed(1);
+
+    final peakValue =
+        report.maxDecibels == double.negativeInfinity ||
+            report.maxDecibels.isNaN
+        ? '--'
+        : report.maxDecibels.toStringAsFixed(1);
+
     final reportText =
         'Acoustic Environment Report\n\n'
         'Quality Score: ${report.qualityScore}/100 (${report.environmentQuality})\n'
-        'Average: ${report.averageDecibels.toStringAsFixed(1)} dB\n'
-        'Peak: ${report.maxDecibels.toStringAsFixed(1)} dB\n'
+        'Average: $avgValue dB\n'
+        'Peak: $peakValue dB\n'
         'Events: ${report.interruptionCount}\n'
         'Duration: ${_formatDuration(report.duration)}\n\n'
         'Recommendation: ${report.recommendation}';
@@ -380,6 +399,13 @@ class AcousticReportDetailScreen extends ConsumerWidget {
     if (score >= 60) return Colors.lightGreen;
     if (score >= 40) return Colors.orange;
     return Colors.red;
+  }
+
+  String _getQualityLabel(int score) {
+    if (score >= 80) return 'EXCELLENT';
+    if (score >= 60) return 'GOOD';
+    if (score >= 40) return 'FAIR';
+    return 'POOR';
   }
 
   Color _getDecibelColor(double decibel) {

@@ -7,7 +7,6 @@ import 'package:sensorlab/src/features/noise_meter/presentation/providers/acoust
 import 'package:sensorlab/src/features/noise_meter/presentation/screens/acoustic_report_detail_screen.dart';
 import 'package:sensorlab/src/features/noise_meter/presentation/state/enhanced_noise_data.dart';
 import 'package:sensorlab/src/features/noise_meter/presentation/widgets/index.dart';
-import 'package:sensorlab/src/features/noise_meter/presentation/widgets/report/report_summary_card.dart';
 
 class AcousticReportsListScreen extends ConsumerWidget {
   const AcousticReportsListScreen({super.key});
