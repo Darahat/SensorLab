@@ -29,6 +29,8 @@ mixin _$EnhancedNoiseMeterData {
   Duration get sessionDuration => throw _privateConstructorUsedError;
   DateTime? get sessionStartTime => throw _privateConstructorUsedError;
   RecordingPreset? get activePreset => throw _privateConstructorUsedError;
+  Duration? get customPresetDuration =>
+      throw _privateConstructorUsedError; // For custom presets
   List<AcousticEvent> get events => throw _privateConstructorUsedError;
   Map<String, int> get timeInLevels => throw _privateConstructorUsedError;
   List<double> get allReadings =>
@@ -64,6 +66,7 @@ abstract class $EnhancedNoiseMeterDataCopyWith<$Res> {
       Duration sessionDuration,
       DateTime? sessionStartTime,
       RecordingPreset? activePreset,
+      Duration? customPresetDuration,
       List<AcousticEvent> events,
       Map<String, int> timeInLevels,
       List<double> allReadings,
@@ -102,6 +105,7 @@ class _$EnhancedNoiseMeterDataCopyWithImpl<$Res,
     Object? sessionDuration = null,
     Object? sessionStartTime = freezed,
     Object? activePreset = freezed,
+    Object? customPresetDuration = freezed,
     Object? events = null,
     Object? timeInLevels = null,
     Object? allReadings = null,
@@ -163,6 +167,10 @@ class _$EnhancedNoiseMeterDataCopyWithImpl<$Res,
           ? _value.activePreset
           : activePreset // ignore: cast_nullable_to_non_nullable
               as RecordingPreset?,
+      customPresetDuration: freezed == customPresetDuration
+          ? _value.customPresetDuration
+          : customPresetDuration // ignore: cast_nullable_to_non_nullable
+              as Duration?,
       events: null == events
           ? _value.events
           : events // ignore: cast_nullable_to_non_nullable
@@ -230,6 +238,7 @@ abstract class _$$EnhancedNoiseMeterDataImplCopyWith<$Res>
       Duration sessionDuration,
       DateTime? sessionStartTime,
       RecordingPreset? activePreset,
+      Duration? customPresetDuration,
       List<AcousticEvent> events,
       Map<String, int> timeInLevels,
       List<double> allReadings,
@@ -268,6 +277,7 @@ class __$$EnhancedNoiseMeterDataImplCopyWithImpl<$Res>
     Object? sessionDuration = null,
     Object? sessionStartTime = freezed,
     Object? activePreset = freezed,
+    Object? customPresetDuration = freezed,
     Object? events = null,
     Object? timeInLevels = null,
     Object? allReadings = null,
@@ -329,6 +339,10 @@ class __$$EnhancedNoiseMeterDataImplCopyWithImpl<$Res>
           ? _value.activePreset
           : activePreset // ignore: cast_nullable_to_non_nullable
               as RecordingPreset?,
+      customPresetDuration: freezed == customPresetDuration
+          ? _value.customPresetDuration
+          : customPresetDuration // ignore: cast_nullable_to_non_nullable
+              as Duration?,
       events: null == events
           ? _value._events
           : events // ignore: cast_nullable_to_non_nullable
@@ -378,6 +392,7 @@ class _$EnhancedNoiseMeterDataImpl implements _EnhancedNoiseMeterData {
       this.sessionDuration = Duration.zero,
       this.sessionStartTime,
       this.activePreset,
+      this.customPresetDuration,
       final List<AcousticEvent> events = const [],
       final Map<String, int> timeInLevels = const {},
       final List<double> allReadings = const [],
@@ -434,7 +449,11 @@ class _$EnhancedNoiseMeterDataImpl implements _EnhancedNoiseMeterData {
   final DateTime? sessionStartTime;
   @override
   final RecordingPreset? activePreset;
+  @override
+  final Duration? customPresetDuration;
+// For custom presets
   final List<AcousticEvent> _events;
+// For custom presets
   @override
   @JsonKey()
   List<AcousticEvent> get events {
@@ -490,7 +509,7 @@ class _$EnhancedNoiseMeterDataImpl implements _EnhancedNoiseMeterData {
 
   @override
   String toString() {
-    return 'EnhancedNoiseMeterData(currentDecibels: $currentDecibels, minDecibels: $minDecibels, maxDecibels: $maxDecibels, averageDecibels: $averageDecibels, isRecording: $isRecording, noiseLevel: $noiseLevel, recentReadings: $recentReadings, errorMessage: $errorMessage, hasPermission: $hasPermission, totalReadings: $totalReadings, sessionDuration: $sessionDuration, sessionStartTime: $sessionStartTime, activePreset: $activePreset, events: $events, timeInLevels: $timeInLevels, allReadings: $allReadings, savedReports: $savedReports, isAnalyzing: $isAnalyzing, decibelHistory: $decibelHistory, lastGeneratedReport: $lastGeneratedReport)';
+    return 'EnhancedNoiseMeterData(currentDecibels: $currentDecibels, minDecibels: $minDecibels, maxDecibels: $maxDecibels, averageDecibels: $averageDecibels, isRecording: $isRecording, noiseLevel: $noiseLevel, recentReadings: $recentReadings, errorMessage: $errorMessage, hasPermission: $hasPermission, totalReadings: $totalReadings, sessionDuration: $sessionDuration, sessionStartTime: $sessionStartTime, activePreset: $activePreset, customPresetDuration: $customPresetDuration, events: $events, timeInLevels: $timeInLevels, allReadings: $allReadings, savedReports: $savedReports, isAnalyzing: $isAnalyzing, decibelHistory: $decibelHistory, lastGeneratedReport: $lastGeneratedReport)';
   }
 
   @override
@@ -524,6 +543,8 @@ class _$EnhancedNoiseMeterDataImpl implements _EnhancedNoiseMeterData {
                 other.sessionStartTime == sessionStartTime) &&
             (identical(other.activePreset, activePreset) ||
                 other.activePreset == activePreset) &&
+            (identical(other.customPresetDuration, customPresetDuration) ||
+                other.customPresetDuration == customPresetDuration) &&
             const DeepCollectionEquality().equals(other._events, _events) &&
             const DeepCollectionEquality()
                 .equals(other._timeInLevels, _timeInLevels) &&
@@ -555,6 +576,7 @@ class _$EnhancedNoiseMeterDataImpl implements _EnhancedNoiseMeterData {
         sessionDuration,
         sessionStartTime,
         activePreset,
+        customPresetDuration,
         const DeepCollectionEquality().hash(_events),
         const DeepCollectionEquality().hash(_timeInLevels),
         const DeepCollectionEquality().hash(_allReadings),
@@ -587,6 +609,7 @@ abstract class _EnhancedNoiseMeterData implements EnhancedNoiseMeterData {
           final Duration sessionDuration,
           final DateTime? sessionStartTime,
           final RecordingPreset? activePreset,
+          final Duration? customPresetDuration,
           final List<AcousticEvent> events,
           final Map<String, int> timeInLevels,
           final List<double> allReadings,
@@ -623,6 +646,8 @@ abstract class _EnhancedNoiseMeterData implements EnhancedNoiseMeterData {
   @override
   RecordingPreset? get activePreset;
   @override
+  Duration? get customPresetDuration;
+  @override // For custom presets
   List<AcousticEvent> get events;
   @override
   Map<String, int> get timeInLevels;

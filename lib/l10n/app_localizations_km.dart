@@ -1458,40 +1458,40 @@ class AppLocalizationsKm extends AppLocalizations {
   String get presetSelectSubtitle => 'Select a preset to analyze your acoustic environment over time';
 
   @override
-  String get presetSleep => 'Sleep';
+  String get presetSleep => 'ដេក';
 
   @override
-  String get presetSleepTitle => 'Analyze Sleep Environment';
+  String get presetSleepTitle => 'វិភាគបរិយាកាសដេក';
 
   @override
-  String get presetSleepDuration => '8 hours';
+  String get presetSleepDuration => '៨ ម៉ោង';
 
   @override
-  String get presetSleepDescription => 'Monitor bedroom noise throughout the night to improve sleep quality';
+  String get presetSleepDescription => 'តាមដានសំឡេងក្នុងបន្ទប់គេងពេញមួយយប់ ដើម្បីកែលម្អគុណភាពនៃការគេង';
 
   @override
-  String get presetWork => 'Work';
+  String get presetWork => 'ការងារ';
 
   @override
-  String get presetWorkTitle => 'Monitor Office Environment';
+  String get presetWorkTitle => 'តាមដានបរិយាកាសការិយាល័យ';
 
   @override
-  String get presetWorkDuration => '1 hour';
+  String get presetWorkDuration => '១ ម៉ោង';
 
   @override
-  String get presetWorkDescription => 'Track workplace noise levels and identify distractions';
+  String get presetWorkDescription => 'តាមដានកម្រិតសំឡេងនៅកន្លែងធ្វើការ និងកំណត់អត្តសញ្ញាណរបស់វត្ថុរំខាន';
 
   @override
-  String get presetFocus => 'Focus';
+  String get presetFocus => 'ការផ្តោតអារម្មណ៍';
 
   @override
-  String get presetFocusTitle => 'Focus Session Analysis';
+  String get presetFocusTitle => 'វិភាគសម័យផ្តោតអារម្មណ៍';
 
   @override
-  String get presetFocusDuration => '30 minutes';
+  String get presetFocusDuration => '៣០ នាទី';
 
   @override
-  String get presetFocusDescription => 'Analyze your study or focus session environment';
+  String get presetFocusDescription => 'វិភាគបរិយាកាសសិក្សា ឬសម័យផ្តោតអារម្មណ៍របស់អ្នក';
 
   @override
   String get presetCustom => 'Custom';
@@ -1530,7 +1530,7 @@ class AppLocalizationsKm extends AppLocalizations {
   String get monitoringEnvironment => 'Monitoring acoustic environment...';
 
   @override
-  String get recordingStart => 'Start Recording';
+  String get recordingStart => 'ចាប់ផ្តើមថត';
 
   @override
   String get recordingStop => 'Stop Recording';
@@ -1753,4 +1753,22 @@ class AppLocalizationsKm extends AppLocalizations {
 
   @override
   String get focusSession => 'Focus Session';
+
+  @override
+  String get recordingComplete => 'Recording Complete';
+
+  @override
+  String get presetName => 'Preset Name';
+
+  @override
+  String get averageDecibels => 'Average Decibels';
+
+  @override
+  String get peakDecibels => 'Peak Decibels';
+
+  @override
+  String get environmentQuality => 'Environment Quality';
+
+  @override
+  String get viewReport => 'View Report';
 }

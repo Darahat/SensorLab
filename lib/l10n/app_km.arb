@@ -543,5 +543,18 @@
   "pressureSteady": "ថេរ",
   "maximum": "អតិបរមា",
   "minimum": "អប្បបរមា",
-  "altitude": "កម្ពស់"
+  "altitude": "កម្ពស់",
+  "presetSleep": "ដេក",
+  "presetSleepTitle": "វិភាគបរិយាកាសដេក",
+  "presetSleepDuration": "៨ ម៉ោង",
+  "presetSleepDescription": "តាមដានសំឡេងក្នុងបន្ទប់គេងពេញមួយយប់ ដើម្បីកែលម្អគុណភាពនៃការគេង",
+  "presetWork": "ការងារ",
+  "presetWorkTitle": "តាមដានបរិយាកាសការិយាល័យ",
+  "presetWorkDuration": "១ ម៉ោង",
+  "presetWorkDescription": "តាមដានកម្រិតសំឡេងនៅកន្លែងធ្វើការ និងកំណត់អត្តសញ្ញាណរបស់វត្ថុរំខាន",
+  "presetFocus": "ការផ្តោតអារម្មណ៍",
+  "presetFocusTitle": "វិភាគសម័យផ្តោតអារម្មណ៍",
+  "presetFocusDuration": "៣០ នាទី",
+  "presetFocusDescription": "វិភាគបរិយាកាសសិក្សា ឬសម័យផ្តោតអារម្មណ៍របស់អ្នក",
+  "recordingStart": "ចាប់ផ្តើមថត"
 }

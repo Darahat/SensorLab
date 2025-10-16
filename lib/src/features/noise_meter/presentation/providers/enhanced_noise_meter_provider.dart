@@ -48,7 +48,10 @@ class EnhancedNoiseMeterNotifier extends StateNotifier<EnhancedNoiseMeterData> {
     state = state.copyWith(hasPermission: hasPermission);
   }
 
-  Future<void> startRecordingWithPreset(RecordingPreset preset) async {
+  Future<void> startRecordingWithPreset(
+    RecordingPreset preset, {
+    Duration? customDuration,
+  }) async {
     if (!state.hasPermission) {
       final hasPermission = await _repository.requestPermission();
       if (!hasPermission) {
@@ -68,6 +71,7 @@ class EnhancedNoiseMeterNotifier extends StateNotifier<EnhancedNoiseMeterData> {
         hasPermission: true,
         isRecording: true,
         activePreset: preset,
+        customPresetDuration: customDuration,
         sessionStartTime: DateTime.now(),
         savedReports: state.savedReports, // Preserve existing reports
       );
@@ -81,8 +85,15 @@ class EnhancedNoiseMeterNotifier extends StateNotifier<EnhancedNoiseMeterData> {
       _sessionTimer = Timer.periodic(const Duration(seconds: 1), (_) {
         final newDuration = state.sessionDuration + const Duration(seconds: 1);
         state = state.copyWith(sessionDuration: newDuration);
-        if (preset != RecordingPreset.custom &&
-            newDuration >= _getPresetDuration(preset)) {
+
+        // Check if we should stop based on preset duration
+        final targetDuration =
+            preset == RecordingPreset.custom && customDuration != null
+            ? customDuration
+            : _getPresetDuration(preset);
+
+        // Stop if we have a valid duration and reached it
+        if (targetDuration != Duration.zero && newDuration >= targetDuration) {
           stopRecording();
         }
       });
@@ -262,9 +273,17 @@ class EnhancedNoiseMeterNotifier extends StateNotifier<EnhancedNoiseMeterData> {
       }
     }
 
+    final now = DateTime.now();
+    final customPresetTitle =
+        state.activePreset == RecordingPreset.custom &&
+            state.customPresetDuration != null
+        ? (state.savedReports.isNotEmpty
+              ? state.savedReports.last.preset.name
+              : 'Custom')
+        : state.activePreset?.name ?? 'Unknown';
     return AcousticReport(
-      startTime: state.sessionStartTime ?? DateTime.now(),
-      endTime: DateTime.now(),
+      startTime: state.sessionStartTime ?? now,
+      endTime: now,
       duration: state.sessionDuration,
       preset: state.activePreset ?? RecordingPreset.custom,
       averageDecibels: state.averageDecibels,
@@ -275,7 +294,7 @@ class EnhancedNoiseMeterNotifier extends StateNotifier<EnhancedNoiseMeterData> {
       hourlyAverages: hourlyAvgs,
       environmentQuality: _environmentQuality,
       recommendation: _getRecommendation(),
-      id: ' ',
+      id: now.millisecondsSinceEpoch.toString(),
     );
   }
 

@@ -3506,6 +3506,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Focus Session'**
   String get focusSession;
+
+  /// No description provided for @recordingComplete.
+  ///
+  /// In en, this message translates to:
+  /// **'Recording Complete'**
+  String get recordingComplete;
+
+  /// No description provided for @presetName.
+  ///
+  /// In en, this message translates to:
+  /// **'Preset Name'**
+  String get presetName;
+
+  /// No description provided for @averageDecibels.
+  ///
+  /// In en, this message translates to:
+  /// **'Average Decibels'**
+  String get averageDecibels;
+
+  /// No description provided for @peakDecibels.
+  ///
+  /// In en, this message translates to:
+  /// **'Peak Decibels'**
+  String get peakDecibels;
+
+  /// No description provided for @environmentQuality.
+  ///
+  /// In en, this message translates to:
+  /// **'Environment Quality'**
+  String get environmentQuality;
+
+  /// No description provided for @viewReport.
+  ///
+  /// In en, this message translates to:
+  /// **'View Report'**
+  String get viewReport;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

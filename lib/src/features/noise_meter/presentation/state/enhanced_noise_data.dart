@@ -32,6 +32,7 @@ class EnhancedNoiseMeterData with _$EnhancedNoiseMeterData {
     @Default(Duration.zero) Duration sessionDuration,
     DateTime? sessionStartTime,
     RecordingPreset? activePreset,
+    Duration? customPresetDuration, // For custom presets
     @Default([]) List<AcousticEvent> events,
     @Default({}) Map<String, int> timeInLevels,
     @Default([]) List<double> allReadings, // Store all readings for report

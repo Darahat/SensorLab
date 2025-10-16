@@ -543,5 +543,18 @@
   "pressureSteady": "Estable",
   "maximum": "Máximo",
   "minimum": "Mínimo",
-  "altitude": "Altitud"
+  "altitude": "Altitud",
+  "presetSleep": "Dormir",
+  "presetSleepTitle": "Analizar Entorno de Sueño",
+  "presetSleepDuration": "8 horas",
+  "presetSleepDescription": "Monitorea el ruido del dormitorio durante la noche para mejorar la calidad del sueño",
+  "presetWork": "Trabajo",
+  "presetWorkTitle": "Monitorear Entorno de Oficina",
+  "presetWorkDuration": "1 hora",
+  "presetWorkDescription": "Rastrea los niveles de ruido en el lugar de trabajo e identifica distracciones",
+  "presetFocus": "Concentración",
+  "presetFocusTitle": "Análisis de Sesión de Concentración",
+  "presetFocusDuration": "30 minutos",
+  "presetFocusDescription": "Analiza tu entorno de estudio o sesión de concentración",
+  "recordingStart": "Iniciar Grabación"
 }

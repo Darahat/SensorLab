@@ -543,5 +543,18 @@
   "pressureSteady": "安定",
   "maximum": "最大",
   "minimum": "最小",
-  "altitude": "高度"
+  "altitude": "高度",
+  "presetSleep": "睡眠",
+  "presetSleepTitle": "睡眠環境を分析",
+  "presetSleepDuration": "8時間",
+  "presetSleepDescription": "睡眠の質を改善するために夜間の寝室のノイズを監視",
+  "presetWork": "作業",
+  "presetWorkTitle": "オフィス環境を監視",
+  "presetWorkDuration": "1時間",
+  "presetWorkDescription": "職場の騒音レベルを追跡し、気を散らすものを特定",
+  "presetFocus": "集中",
+  "presetFocusTitle": "集中セッション分析",
+  "presetFocusDuration": "30分",
+  "presetFocusDescription": "学習または集中セッションの環境を分析",
+  "recordingStart": "録音開始"
 }

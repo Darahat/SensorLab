@@ -717,5 +717,13 @@
   "csvHeaderRecommendation": "Recommendation",
   "sleepAnalysis": "Sleep Analysis",
   "workEnvironment": "Work Environment",
-  "focusSession": "Focus Session"
+  "focusSession": "Focus Session",
+  "recordingComplete": "Recording Complete",
+  "presetName": "Preset Name",
+  "duration": "Duration",
+  "averageDecibels": "Average Decibels",
+  "peakDecibels": "Peak Decibels",
+  "environmentQuality": "Environment Quality",
+  "viewReport": "View Report",
+  "ok": "OK"
 }

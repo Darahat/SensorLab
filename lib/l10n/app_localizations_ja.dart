@@ -1458,40 +1458,40 @@ class AppLocalizationsJa extends AppLocalizations {
   String get presetSelectSubtitle => 'Select a preset to analyze your acoustic environment over time';
 
   @override
-  String get presetSleep => 'Sleep';
+  String get presetSleep => '睡眠';
 
   @override
-  String get presetSleepTitle => 'Analyze Sleep Environment';
+  String get presetSleepTitle => '睡眠環境を分析';
 
   @override
-  String get presetSleepDuration => '8 hours';
+  String get presetSleepDuration => '8時間';
 
   @override
-  String get presetSleepDescription => 'Monitor bedroom noise throughout the night to improve sleep quality';
+  String get presetSleepDescription => '睡眠の質を改善するために夜間の寝室のノイズを監視';
 
   @override
-  String get presetWork => 'Work';
+  String get presetWork => '作業';
 
   @override
-  String get presetWorkTitle => 'Monitor Office Environment';
+  String get presetWorkTitle => 'オフィス環境を監視';
 
   @override
-  String get presetWorkDuration => '1 hour';
+  String get presetWorkDuration => '1時間';
 
   @override
-  String get presetWorkDescription => 'Track workplace noise levels and identify distractions';
+  String get presetWorkDescription => '職場の騒音レベルを追跡し、気を散らすものを特定';
 
   @override
-  String get presetFocus => 'Focus';
+  String get presetFocus => '集中';
 
   @override
-  String get presetFocusTitle => 'Focus Session Analysis';
+  String get presetFocusTitle => '集中セッション分析';
 
   @override
-  String get presetFocusDuration => '30 minutes';
+  String get presetFocusDuration => '30分';
 
   @override
-  String get presetFocusDescription => 'Analyze your study or focus session environment';
+  String get presetFocusDescription => '学習または集中セッションの環境を分析';
 
   @override
   String get presetCustom => 'Custom';
@@ -1530,7 +1530,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get monitoringEnvironment => 'Monitoring acoustic environment...';
 
   @override
-  String get recordingStart => 'Start Recording';
+  String get recordingStart => '録音開始';
 
   @override
   String get recordingStop => 'Stop Recording';
@@ -1753,4 +1753,22 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get focusSession => 'Focus Session';
+
+  @override
+  String get recordingComplete => 'Recording Complete';
+
+  @override
+  String get presetName => 'Preset Name';
+
+  @override
+  String get averageDecibels => 'Average Decibels';
+
+  @override
+  String get peakDecibels => 'Peak Decibels';
+
+  @override
+  String get environmentQuality => 'Environment Quality';
+
+  @override
+  String get viewReport => 'View Report';
 }

@@ -8,6 +8,7 @@ import 'package:sensorlab/src/features/health/domain/entities/activity_type.dart
 import 'package:sensorlab/src/features/health/domain/entities/user_profile.dart';
 import 'package:sensorlab/src/features/light_meter/models/plant_tracking_session.dart';
 import 'package:sensorlab/src/features/noise_meter/data/models/acoustic_report_hive.dart';
+import 'package:sensorlab/src/features/noise_meter/data/models/custom_preset_hive.dart';
 
 import '../constants/hive_constants.dart';
 
@@ -39,6 +40,9 @@ class HiveService {
 
   /// [acousticReportBoxName] Instance
   static const String acousticReportBoxName = HiveConstants.acousticReportBox;
+
+  /// [customPresetsBoxName] Instance
+  static const String customPresetsBoxName = HiveConstants.customPresetsBox;
 
   /// [plantTrackingBoxName] Instance
   static const String plantTrackingBoxName = HiveConstants.plantTrackingBox;
@@ -130,11 +134,19 @@ class HiveService {
         Hive.registerAdapter(HourlyLightDataAdapter());
       }
 
+      /// Teach Hive about [CustomPresetHive] data model (typeId: 15)
+      if (!Hive.isAdapterRegistered(15)) {
+        Hive.registerAdapter(CustomPresetHiveAdapter());
+        _appLogger.info('✅ CustomPresetHiveAdapter registered (typeId: 15)');
+      }
+
       /// Open The Database drawers to read/write data
       await Hive.openBox<AppSettings>(settingsBoxName);
       await Hive.openBox<UserProfile>(userProfileBoxName);
       await Hive.openBox<ActivitySession>(activitySessionBoxName);
       await Hive.openBox<AcousticReportHive>(acousticReportBoxName);
+      await Hive.openBox<CustomPresetHive>(customPresetsBoxName);
+      _appLogger.info('✅ Custom presets box opened: $customPresetsBoxName');
       await Hive.openBox<PlantTrackingSession>(plantTrackingBoxName);
       await Hive.openBox<PhotoSession>(photoSessionBoxName);
       await Hive.openBox<DailyLightSummary>(dailyLightSummaryBoxName);
@@ -174,6 +186,12 @@ class HiveService {
   Box<AcousticReportHive> get acousticReportBox {
     _checkInitialized();
     return Hive.box<AcousticReportHive>(acousticReportBoxName);
+  }
+
+  ///customPresetsBox initialized
+  Box<CustomPresetHive> get customPresetsBox {
+    _checkInitialized();
+    return Hive.box<CustomPresetHive>(customPresetsBoxName);
   }
 
   ///plantTrackingBox initialized

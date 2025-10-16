@@ -1753,4 +1753,22 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get focusSession => 'Focus Session';
+
+  @override
+  String get recordingComplete => 'Recording Complete';
+
+  @override
+  String get presetName => 'Preset Name';
+
+  @override
+  String get averageDecibels => 'Average Decibels';
+
+  @override
+  String get peakDecibels => 'Peak Decibels';
+
+  @override
+  String get environmentQuality => 'Environment Quality';
+
+  @override
+  String get viewReport => 'View Report';
 }

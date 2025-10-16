@@ -11,6 +11,7 @@ class PresetCard extends StatelessWidget {
   final String description;
   final Color color;
   final VoidCallback onTap;
+  final VoidCallback? onLongPress;
 
   const PresetCard({
     super.key,
@@ -21,6 +22,7 @@ class PresetCard extends StatelessWidget {
     required this.description,
     required this.color,
     required this.onTap,
+    this.onLongPress,
   });
 
   @override
@@ -35,6 +37,7 @@ class PresetCard extends StatelessWidget {
       ),
       child: InkWell(
         onTap: onTap,
+        onLongPress: onLongPress,
         borderRadius: BorderRadius.circular(16),
         child: Padding(
           padding: const EdgeInsets.all(20),
