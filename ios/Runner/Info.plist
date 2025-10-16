@@ -61,6 +61,9 @@
 	<true/>
 	<key>GADApplicationIdentifier</key>
 	<string>ca-app-pub-3940256099942544~3347511713</string>
+	<!-- WARNING: This is Google's test AdMob App ID for development only -->
+	<!-- For production, replace with your actual AdMob App ID -->
+	<!-- Or better yet, use build configuration to inject this value -->
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>

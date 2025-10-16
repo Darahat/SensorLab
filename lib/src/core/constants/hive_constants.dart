@@ -28,4 +28,16 @@ class HiveConstants {
 
   /// hive box for activity session
   static const String activitySessionBox = "activity_session_box";
+
+  /// hive box for acoustic reports (noise meter)
+  static const String acousticReportBox = "acoustic_report_box";
+
+  /// hive box for plant tracking sessions (light meter)
+  static const String plantTrackingBox = "plant_tracking_box";
+
+  /// hive box for photo sessions (light meter)
+  static const String photoSessionBox = "photo_session_box";
+
+  /// hive box for daily light summaries (light meter)
+  static const String dailyLightSummaryBox = "daily_light_summary_box";
 }

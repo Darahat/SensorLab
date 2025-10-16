@@ -54,8 +54,8 @@ class MagnetometerData {
   String get maxStrengthFormatted => maxStrength.toStringAsFixed(2);
 
   /// Get strength with unit
-  String get strengthWithUnit => '${strengthFormatted} μT';
-  String get maxStrengthWithUnit => 'Max: ${maxStrengthFormatted} μT';
+  String get strengthWithUnit => '$strengthFormatted μT';
+  String get maxStrengthWithUnit => 'Max: $maxStrengthFormatted μT';
 
   /// Check if magnetic field is strong
   bool get hasStrongField => strength > 100; // μT threshold

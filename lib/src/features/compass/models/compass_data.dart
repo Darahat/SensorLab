@@ -51,7 +51,7 @@ class CompassData {
   String get headingDisplay => heading?.toStringAsFixed(1) ?? '--';
 
   /// Get heading with degree symbol
-  String get headingWithUnit => '${headingDisplay}°';
+  String get headingWithUnit => '$headingDisplay°';
 
   /// Check if compass has valid reading
   bool get hasValidReading => heading != null && !hasError;

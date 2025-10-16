@@ -4,6 +4,8 @@ import 'dart:math' as math;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sensors_plus/sensors_plus.dart';
 
+// import 'package:state_notifier/state_notifier.dart';
+
 import '../../models/accelerometer_data.dart';
 
 class AccelerometerNotifier extends StateNotifier<AccelerometerData> {

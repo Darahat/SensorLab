@@ -206,6 +206,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get proximity => 'Proximidad';
 
   @override
+  String get speedMeter => 'Velocímetro';
+
+  @override
   String get heartRate => 'Frecuencia cardíaca';
 
   @override
@@ -591,6 +594,18 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get ok => 'Aceptar';
+
+  @override
+  String get tracking => 'Rastreando';
+
+  @override
+  String get waitingForGps => 'Esperando GPS...';
+
+  @override
+  String get maxSpeed => 'Velocidad máxima';
+
+  @override
+  String get avgSpeed => 'Velocidad promedio';
 
   @override
   String get motionIntensity => 'Intensidad de movimiento';
@@ -1258,4 +1273,484 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get pleaseEnterYourHeight => 'Por favor ingresa tu altura';
+
+  @override
+  String get pedometer => 'Podómetro';
+
+  @override
+  String get dailyGoal => 'Meta Diaria';
+
+  @override
+  String get stepsToGo => 'por alcanzar';
+
+  @override
+  String get goalReached => '¡Meta Alcanzada!';
+
+  @override
+  String get calories => 'Calorías';
+
+  @override
+  String get pace => 'Ritmo';
+
+  @override
+  String get cadence => 'Cadencia';
+
+  @override
+  String get setDailyGoal => 'Establecer Meta Diaria';
+
+  @override
+  String get resetSessionConfirmation => '¿Estás seguro de que deseas reiniciar tu sesión actual? Todo el progreso se perderá.';
+
+  @override
+  String get barometer => 'Barómetro';
+
+  @override
+  String get waitingForSensor => 'Esperando sensor...';
+
+  @override
+  String get clearWeather => 'Clima Despejado';
+
+  @override
+  String get cloudyWeather => 'Clima Nublado';
+
+  @override
+  String get stableWeather => 'Clima Estable';
+
+  @override
+  String get pressureRising => 'Subiendo';
+
+  @override
+  String get pressureFalling => 'Bajando';
+
+  @override
+  String get pressureSteady => 'Estable';
+
+  @override
+  String get maximum => 'Máximo';
+
+  @override
+  String get minimum => 'Mínimo';
+
+  @override
+  String get altitude => 'Altitud';
+
+  @override
+  String get altimeter => 'Altimeter';
+
+  @override
+  String get altimeterWaiting => 'Waiting for GPS and barometer data...';
+
+  @override
+  String get aboveSeaLevel => 'Above Sea Level';
+
+  @override
+  String get climbing => 'Climbing';
+
+  @override
+  String get descending => 'Descending';
+
+  @override
+  String get stable => 'Stable';
+
+  @override
+  String get usingGpsOnly => 'Using GPS data only';
+
+  @override
+  String get usingBarometerOnly => 'Using barometer data only';
+
+  @override
+  String get usingFusedData => 'Combining GPS and barometer for accuracy';
+
+  @override
+  String get dataSource => 'Data Source';
+
+  @override
+  String get sensorReadings => 'Sensor Readings';
+
+  @override
+  String get gpsAltitude => 'GPS Altitude';
+
+  @override
+  String get baroAltitude => 'Baro Altitude';
+
+  @override
+  String get pressure => 'Pressure';
+
+  @override
+  String get statistics => 'Statistics';
+
+  @override
+  String get gain => 'Gain';
+
+  @override
+  String get loss => 'Loss';
+
+  @override
+  String get calibrateAltimeter => 'Calibrate Altimeter';
+
+  @override
+  String get calibrateDescription => 'Enter your current known altitude in meters to calibrate the barometric sensor for better accuracy.';
+
+  @override
+  String get knownAltitude => 'Known Altitude';
+
+  @override
+  String get calibrationComplete => 'Calibration complete!';
+
+  @override
+  String get statsReset => 'Statistics reset!';
+
+  @override
+  String get vibrationMeter => 'Vibration Meter';
+
+  @override
+  String get vibrationWaiting => 'Waiting for accelerometer data...';
+
+  @override
+  String get vibrationMagnitude => 'Vibration Magnitude';
+
+  @override
+  String get vibrationLevel => 'Vibration Level';
+
+  @override
+  String get realtimeWaveform => 'Real-time Waveform';
+
+  @override
+  String get pattern => 'Pattern';
+
+  @override
+  String get frequency => 'Frequency';
+
+  @override
+  String get axisBreakdown => 'Axis Breakdown';
+
+  @override
+  String get advancedMetrics => 'Advanced Metrics';
+
+  @override
+  String get rms => 'RMS';
+
+  @override
+  String get peakToPeak => 'Peak-to-Peak';
+
+  @override
+  String get crestFactor => 'Crest Factor';
+
+  @override
+  String get acousticAnalyzer => 'Acoustic Analyzer';
+
+  @override
+  String get acousticAnalyzerTitle => 'Acoustic Environment Analyzer';
+
+  @override
+  String get acousticEnvironment => 'Acoustic Environment';
+
+  @override
+  String get noiseLevel => 'Noise Level';
+
+  @override
+  String get decibelUnit => 'dB';
+
+  @override
+  String get presetSelectTitle => 'Choose Recording Preset';
+
+  @override
+  String get presetSelectSubtitle => 'Select a preset to analyze your acoustic environment over time';
+
+  @override
+  String get presetSleep => 'Sleep';
+
+  @override
+  String get presetSleepTitle => 'Analyze Sleep Environment';
+
+  @override
+  String get presetSleepDuration => '8 hours';
+
+  @override
+  String get presetSleepDescription => 'Monitor bedroom noise throughout the night to improve sleep quality';
+
+  @override
+  String get presetWork => 'Work';
+
+  @override
+  String get presetWorkTitle => 'Monitor Office Environment';
+
+  @override
+  String get presetWorkDuration => '1 hour';
+
+  @override
+  String get presetWorkDescription => 'Track workplace noise levels and identify distractions';
+
+  @override
+  String get presetFocus => 'Focus';
+
+  @override
+  String get presetFocusTitle => 'Focus Session Analysis';
+
+  @override
+  String get presetFocusDuration => '30 minutes';
+
+  @override
+  String get presetFocusDescription => 'Analyze your study or focus session environment';
+
+  @override
+  String get presetCustom => 'Custom';
+
+  @override
+  String get presetSleepAnalysis => 'Sleep Analysis (8h)';
+
+  @override
+  String get presetWorkEnvironment => 'Work Environment (1h)';
+
+  @override
+  String get presetFocusSession => 'Focus Session (30m)';
+
+  @override
+  String get presetCustomRecording => 'Custom Recording';
+
+  @override
+  String get monitoringTitle => 'Monitoring';
+
+  @override
+  String get monitoringActive => 'Recording Active';
+
+  @override
+  String get monitoringStopped => 'Recording Stopped';
+
+  @override
+  String get monitoringProgress => 'Progress';
+
+  @override
+  String get monitoringCurrentLevel => 'Current Level';
+
+  @override
+  String get monitoringLiveChart => 'Live Monitoring';
+
+  @override
+  String get monitoringEnvironment => 'Monitoring acoustic environment...';
+
+  @override
+  String get recordingStart => 'Start Recording';
+
+  @override
+  String get recordingStop => 'Stop Recording';
+
+  @override
+  String get recordingCompleted => 'Recording completed';
+
+  @override
+  String get reportGeneratedSuccess => 'Report generated successfully!';
+
+  @override
+  String get stopRecordingTooltip => 'Stop Recording';
+
+  @override
+  String get stopRecordingConfirmTitle => 'Stop Recording?';
+
+  @override
+  String get stopRecordingConfirmMessage => 'Are you sure you want to stop the recording? The report will be generated with the current data.';
+
+  @override
+  String get continueRecording => 'Continue';
+
+  @override
+  String get reportsTitle => 'Acoustic Reports';
+
+  @override
+  String get reportsEmpty => 'No Reports Yet';
+
+  @override
+  String get reportsEmptyDescription => 'Start an acoustic analysis session to generate your first report';
+
+  @override
+  String reportsSelectedCount(int count) {
+    return '$count Selected';
+  }
+
+  @override
+  String get reportExportCSV => 'Export as CSV';
+
+  @override
+  String get reportExportAll => 'Export All';
+
+  @override
+  String get reportDelete => 'Delete';
+
+  @override
+  String get reportDeleteSelected => 'Delete Selected';
+
+  @override
+  String get reportDeleteConfirmTitle => 'Delete Reports?';
+
+  @override
+  String reportDeleteConfirmMessage(int count) {
+    return 'Are you sure you want to delete $count report(s)? This action cannot be undone.';
+  }
+
+  @override
+  String get reportDeleteSuccess => 'Reports deleted';
+
+  @override
+  String get reportFilterByPreset => 'Filter by Preset';
+
+  @override
+  String get reportFilterAll => 'All Presets';
+
+  @override
+  String get reportStartAnalysis => 'Start Analysis';
+
+  @override
+  String get csvCopiedToClipboard => 'CSV data copied to clipboard!';
+
+  @override
+  String get reportDetailTitle => 'Acoustic Report';
+
+  @override
+  String get reportQualityTitle => 'Environment Quality';
+
+  @override
+  String get reportQualityScore => 'Quality Score';
+
+  @override
+  String get reportAverage => 'Average';
+
+  @override
+  String get reportPeak => 'Peak';
+
+  @override
+  String get reportHourlyBreakdown => 'Hourly Breakdown';
+
+  @override
+  String get reportNoiseEvents => 'Noise Events';
+
+  @override
+  String get reportNoEventsTitle => 'No Interruptions Detected';
+
+  @override
+  String get reportNoEventsMessage => 'Your environment was consistently quiet';
+
+  @override
+  String get reportShare => 'Share Report';
+
+  @override
+  String get reportRecommendations => 'Recommendations';
+
+  @override
+  String get reportDuration => 'Duration';
+
+  @override
+  String get reportEvents => 'events';
+
+  @override
+  String durationHours(int hours) {
+    return '${hours}h';
+  }
+
+  @override
+  String durationMinutes(int minutes) {
+    return '${minutes}m';
+  }
+
+  @override
+  String durationSeconds(int seconds) {
+    return '${seconds}s';
+  }
+
+  @override
+  String durationHoursMinutes(int hours, int minutes) {
+    return '${hours}h ${minutes}m';
+  }
+
+  @override
+  String get qualityExcellent => 'Excellent';
+
+  @override
+  String get qualityGood => 'Good';
+
+  @override
+  String get qualityFair => 'Fair';
+
+  @override
+  String get qualityPoor => 'Poor';
+
+  @override
+  String get unitDecibels => 'dB';
+
+  @override
+  String get unitHours => 'hours';
+
+  @override
+  String get unitMinutes => 'minutes';
+
+  @override
+  String get unitSeconds => 'seconds';
+
+  @override
+  String get actionOk => 'OK';
+
+  @override
+  String get actionContinue => 'Continue';
+
+  @override
+  String get actionStop => 'Stop';
+
+  @override
+  String get actionStart => 'Start';
+
+  @override
+  String get actionView => 'View';
+
+  @override
+  String get actionExport => 'Export';
+
+  @override
+  String get actionShare => 'Share';
+
+  @override
+  String get viewHistoricalReports => 'View Historical Reports';
+
+  @override
+  String get csvHeaderID => 'ID';
+
+  @override
+  String get csvHeaderStartTime => 'Start Time';
+
+  @override
+  String get csvHeaderEndTime => 'End Time';
+
+  @override
+  String get csvHeaderDuration => 'Duration (min)';
+
+  @override
+  String get csvHeaderPreset => 'Preset';
+
+  @override
+  String get csvHeaderAverageDB => 'Average dB';
+
+  @override
+  String get csvHeaderMinDB => 'Min dB';
+
+  @override
+  String get csvHeaderMaxDB => 'Max dB';
+
+  @override
+  String get csvHeaderEvents => 'Events';
+
+  @override
+  String get csvHeaderQualityScore => 'Quality Score';
+
+  @override
+  String get csvHeaderQuality => 'Quality';
+
+  @override
+  String get csvHeaderRecommendation => 'Recommendation';
+
+  @override
+  String get sleepAnalysis => 'Sleep Analysis';
+
+  @override
+  String get workEnvironment => 'Work Environment';
+
+  @override
+  String get focusSession => 'Focus Session';
 }

@@ -157,7 +157,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
     final adsEnabled = settingsAsync.when(
       data: (settings) => settings.adsEnabled,
       loading: () => true, // Default to true while loading
-      error: (_, __) => true, // Default to true on error
+      error: (_, _) => true, // Default to true on error
     );
 
     // Manage ads based on settings

@@ -8,7 +8,7 @@ import 'package:sensorlab/src/features/app_settings/provider/settings_provider.d
 /// App is Main material app which called to main and assigned themes router configuration and debug show checked mode value
 class App extends ConsumerWidget {
   /// Creates an instance of [App]
-  App({super.key});
+  const App({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

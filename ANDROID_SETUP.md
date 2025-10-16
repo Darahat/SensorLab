@@ -41,7 +41,7 @@ storePassword=YOUR_ACTUAL_STORE_PASSWORD
 keyPassword=YOUR_ACTUAL_KEY_PASSWORD
 keyAlias=upload
 storeFile=../release-key.jks
-ADMOB_APP_ID=ca-app-pub-3940256099942544~3347511713
+ADMOB_APP_ID=YOUR_ADMOB_APP_ID_HERE
 ```
 
 ### Step 3: Secure Your Keystore
@@ -63,11 +63,13 @@ mv release-key.jks ~/.android/release-key.jks
 3. Get your App ID from AdMob console
 4. Update `ADMOB_APP_ID` in `android/key.properties`
 
-For development/testing, keep the default test App ID:
+For development/testing, you can use Google's test App ID:
 
 ```properties
-ADMOB_APP_ID=ca-app-pub-3940256099942544~3347511713
+ADMOB_APP_ID=YOUR_ADMOB_APP_ID_HERE
 ```
+
+**Note**: This is Google's official test ID for development only. Replace with your actual AdMob App ID for production releases.
 
 ### Step 2: Configure Ad Unit IDs (Optional)
 
@@ -104,9 +106,11 @@ flutter build appbundle --release
 
 - **NEVER** commit your `key.properties` file to version control
 - **NEVER** share your keystore file publicly
+- **NEVER** share your actual AdMob App ID or Ad Unit IDs publicly
 - Keep backups of your keystore in a secure location
 - If you lose your keystore, you cannot update your app on Play Store
 - Use the same keystore for all versions of your app
+- Always use placeholder values in documentation and example files
 
 ## 🆘 Troubleshooting
 
