@@ -1,5 +1,5 @@
 buildscript {
-    val kotlinVersion = "2.0.0"  // Note: camelCase variable name
+    val kotlinVersion = "2.1.0"  // Note: camelCase variable name
     val workmanagerVersion = "2.9.0"
 
     repositories {
@@ -13,7 +13,7 @@ buildscript {
 }
 
 extra.apply {
-    set("kotlinVersion", "1.9.22")
+    set("kotlinVersion", "2.1.0")
     set("workmanagerVersion", "2.9.0")
 }
 
@@ -26,11 +26,16 @@ allprojects {
 
 subprojects {
     afterEvaluate {
-        tasks.withType<JavaCompile> {
-            sourceCompatibility = "17"
-            targetCompatibility = "17"
+        // Force Java compatibility
+        extensions.findByType<com.android.build.gradle.BaseExtension>()?.apply {
+            compileOptions {
+                sourceCompatibility = JavaVersion.VERSION_17
+                targetCompatibility = JavaVersion.VERSION_17
+            }
         }
-        tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+
+        // Force Kotlin compatibility
+        tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
             kotlinOptions {
                 jvmTarget = "17"
             }

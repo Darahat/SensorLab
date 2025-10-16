@@ -1,5 +1,6 @@
 import java.util.Properties
 import java.io.FileInputStream
+import org.gradle.jvm.toolchain.JavaLanguageVersion
 
 // Get versions from root project (must be after plugins block)
 val kotlinVersion by extra(rootProject.extra["kotlinVersion"] as String)
@@ -20,7 +21,7 @@ val keystoreProperties = Properties().apply {
 
 android {
     namespace = "com.darahat.sensorlab"
-    compileSdk = 35
+    compileSdk = 36
     ndkVersion = "28.0.13004108"
 
     compileOptions {
@@ -78,6 +79,9 @@ dependencies {
     implementation("androidx.multidex:multidex:2.0.1")
     implementation("com.google.android.material:material:1.12.0") // Add this line
 
+}
+ java {
+    toolchain { languageVersion.set(JavaLanguageVersion.of(17)) }
 }
  kotlin {
         jvmToolchain(17)

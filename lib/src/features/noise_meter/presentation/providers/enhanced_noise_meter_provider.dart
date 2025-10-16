@@ -1,23 +1,22 @@
-
 import 'dart:async';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sensorlab/src/features/noise_meter/data/repositories/acoustic_repository_impl.dart';
 import 'package:sensorlab/src/features/noise_meter/domain/entities/acoustic_report_entity.dart';
-import 'package:sensorlab/src/features/noise_meter/domain/repositories/acoustic_repository.dart';
-
 import 'package:sensorlab/src/features/noise_meter/domain/entities/noise_data.dart';
+import 'package:sensorlab/src/features/noise_meter/domain/repositories/acoustic_repository.dart';
 import 'package:sensorlab/src/features/noise_meter/presentation/state/enhanced_noise_data.dart';
+
 import '../../services/acoustic_report_service.dart';
 
 /// Provider for the enhanced noise meter notifier
 final enhancedNoiseMeterProvider =
-    StateNotifierProvider<EnhancedNoiseMeterNotifier, EnhancedNoiseMeterData>(
-  (ref) {
-    final repository = ref.watch(acousticRepositoryProvider);
-    return EnhancedNoiseMeterNotifier(repository);
-  },
-);
+    StateNotifierProvider<EnhancedNoiseMeterNotifier, EnhancedNoiseMeterData>((
+      ref,
+    ) {
+      final repository = ref.watch(acousticRepositoryProvider);
+      return EnhancedNoiseMeterNotifier(repository);
+    });
 
 /// Controller for the entire noise meter feature.
 /// This class orchestrates the data flow from the repository and applies business logic
@@ -27,6 +26,7 @@ class EnhancedNoiseMeterNotifier extends StateNotifier<EnhancedNoiseMeterData> {
   StreamSubscription<NoiseData>? _noiseSubscription;
   Timer? _sessionTimer;
   Timer? _eventDetectionTimer;
+  Timer? _uiUpdateTimer;
 
   // Event detection state
   double? _previousReading;
@@ -34,11 +34,15 @@ class EnhancedNoiseMeterNotifier extends StateNotifier<EnhancedNoiseMeterData> {
   double? _eventPeakDb;
   bool _isInEvent = false;
 
+  // Performance optimization: cache values between UI updates
+  double _runningSum = 0.0;
+  int _readingsSinceLastUpdate = 0;
+  DateTime? _lastUiUpdate;
+
   EnhancedNoiseMeterNotifier(this._repository)
-      : super(const EnhancedNoiseMeterData()) {
+    : super(const EnhancedNoiseMeterData()) {
     _checkPermission();
   }
-
   Future<void> _checkPermission() async {
     final hasPermission = await _repository.checkPermission();
     state = state.copyWith(hasPermission: hasPermission);
@@ -55,6 +59,11 @@ class EnhancedNoiseMeterNotifier extends StateNotifier<EnhancedNoiseMeterData> {
     }
 
     try {
+      // Reset performance counters
+      _runningSum = 0.0;
+      _readingsSinceLastUpdate = 0;
+      _lastUiUpdate = null;
+
       state = EnhancedNoiseMeterData(
         hasPermission: true,
         isRecording: true,
@@ -78,8 +87,10 @@ class EnhancedNoiseMeterNotifier extends StateNotifier<EnhancedNoiseMeterData> {
         }
       });
 
-      _eventDetectionTimer =
-          Timer.periodic(const Duration(milliseconds: 500), _detectEvents);
+      _eventDetectionTimer = Timer.periodic(
+        const Duration(milliseconds: 500),
+        _detectEvents,
+      );
     } catch (e) {
       state = state.copyWith(errorMessage: 'Failed to start: $e');
     }
@@ -87,21 +98,72 @@ class EnhancedNoiseMeterNotifier extends StateNotifier<EnhancedNoiseMeterData> {
 
   void _onNoiseReading(NoiseData data) {
     final db = data.meanDecibel;
-    final allReadings = [...state.allReadings, db];
-    final totalReadings = allReadings.length;
+    final now = DateTime.now();
+
+    // Update running statistics (always tracked)
+    final totalReadings = state.totalReadings + 1;
+    _runningSum += db;
+    _readingsSinceLastUpdate++;
+
+    // Update min/max immediately (lightweight operation)
+    final newMin = totalReadings == 1
+        ? db
+        : (db < state.minDecibels ? db : state.minDecibels);
+    final newMax = totalReadings == 1
+        ? db
+        : (db > state.maxDecibels ? db : state.maxDecibels);
+
+    // Throttle UI updates to max 10 times per second to prevent performance issues
+    final shouldUpdateUi =
+        _lastUiUpdate == null ||
+        now.difference(_lastUiUpdate!).inMilliseconds >= 100;
+
+    if (!shouldUpdateUi) {
+      // Just update critical stats without triggering full UI rebuild
+      return;
+    }
+
+    _lastUiUpdate = now;
+
+    // Calculate average efficiently (O(1) instead of O(n))
+    final newAverage = _runningSum / totalReadings;
+
+    // Keep limited history for chart (only add every 5th reading to reduce memory)
+    final updatedHistory = _readingsSinceLastUpdate >= 5
+        ? [...state.decibelHistory, db]
+        : state.decibelHistory;
+
+    if (updatedHistory.length > 100) {
+      updatedHistory.removeRange(0, updatedHistory.length - 100);
+    }
+
+    // Store samples for report (keep every 10th reading, max 1000)
+    final shouldStoreSample = totalReadings % 10 == 0;
+    final allReadings = shouldStoreSample
+        ? [...state.allReadings, db]
+        : state.allReadings;
+
+    if (allReadings.length > 1000) {
+      allReadings.removeRange(0, allReadings.length - 1000);
+    }
+
+    if (_readingsSinceLastUpdate >= 5) {
+      _readingsSinceLastUpdate = 0;
+    }
 
     state = state.copyWith(
       currentDecibels: db,
-      minDecibels: totalReadings == 1 ? db : (db < state.minDecibels ? db : state.minDecibels),
-      maxDecibels: totalReadings == 1 ? db : (db > state.maxDecibels ? db : state.maxDecibels),
-      averageDecibels: totalReadings > 0 ? allReadings.reduce((a, b) => a + b) / totalReadings : 0,
+      minDecibels: newMin,
+      maxDecibels: newMax,
+      averageDecibels: newAverage,
       noiseLevel: _getNoiseLevel(db),
-      decibelHistory: [...state.decibelHistory, db]..removeWhere((e) => state.decibelHistory.length > 100),
+      decibelHistory: updatedHistory,
       allReadings: allReadings,
       totalReadings: totalReadings,
       timeInLevels: {
         ...state.timeInLevels,
-        _getNoiseLevel(db).name: (state.timeInLevels[_getNoiseLevel(db).name] ?? 0) + 1,
+        _getNoiseLevel(db).name:
+            (state.timeInLevels[_getNoiseLevel(db).name] ?? 0) + 1,
       },
     );
     _previousReading = db;
@@ -119,15 +181,17 @@ class EnhancedNoiseMeterNotifier extends StateNotifier<EnhancedNoiseMeterData> {
       if (currentDb < loudThreshold) {
         final duration = DateTime.now().difference(_eventStartTime!);
         if (duration.inSeconds >= 1) {
-          state = state.copyWith(events: [
-            ...state.events,
-            AcousticEvent(
-              timestamp: _eventStartTime!,
-              peakDecibels: _eventPeakDb!,
-              duration: duration,
-              eventType: _determineEventType(duration),
-            )
-          ]);
+          state = state.copyWith(
+            events: [
+              ...state.events,
+              AcousticEvent(
+                timestamp: _eventStartTime!,
+                peakDecibels: _eventPeakDb!,
+                duration: duration,
+                eventType: _determineEventType(duration),
+              ),
+            ],
+          );
         }
         _isInEvent = false;
       }
@@ -142,10 +206,17 @@ class EnhancedNoiseMeterNotifier extends StateNotifier<EnhancedNoiseMeterData> {
     try {
       await _repository.saveReport(report);
       final reports = await _repository.getReports();
-      state = state.copyWith(savedReports: reports, isAnalyzing: false, lastGeneratedReport: report);
+      state = state.copyWith(
+        savedReports: reports,
+        isAnalyzing: false,
+        lastGeneratedReport: report,
+      );
       return report;
     } catch (e) {
-      state = state.copyWith(errorMessage: 'Failed to save report: $e', isAnalyzing: false);
+      state = state.copyWith(
+        errorMessage: 'Failed to save report: $e',
+        isAnalyzing: false,
+      );
       return null;
     }
   }
@@ -162,7 +233,11 @@ class EnhancedNoiseMeterNotifier extends StateNotifier<EnhancedNoiseMeterData> {
   Future<void> deleteReport(String reportId) async {
     try {
       await _repository.deleteReport(reportId);
-      state = state.copyWith(savedReports: state.savedReports.where((r) => r.id != reportId).toList());
+      state = state.copyWith(
+        savedReports: state.savedReports
+            .where((r) => r.id != reportId)
+            .toList(),
+      );
     } catch (e) {
       state = state.copyWith(errorMessage: 'Failed to delete report: $e');
     }
@@ -173,13 +248,15 @@ class EnhancedNoiseMeterNotifier extends StateNotifier<EnhancedNoiseMeterData> {
   AcousticReport _generateReport() {
     final hourlyAvgs = <double>[];
     if (state.allReadings.isNotEmpty && state.sessionDuration.inHours > 0) {
-      final readingsPerHour = state.allReadings.length / state.sessionDuration.inHours;
+      final readingsPerHour =
+          state.allReadings.length / state.sessionDuration.inHours;
       for (int h = 0; h < state.sessionDuration.inHours; h++) {
         final start = (h * readingsPerHour).toInt();
         final end = ((h + 1) * readingsPerHour).toInt();
         if (end <= state.allReadings.length) {
           final hourReadings = state.allReadings.sublist(start, end);
-          final avg = hourReadings.reduce((a, b) => a + b) / hourReadings.length;
+          final avg =
+              hourReadings.reduce((a, b) => a + b) / hourReadings.length;
           hourlyAvgs.add(avg);
         }
       }
@@ -197,7 +274,8 @@ class EnhancedNoiseMeterNotifier extends StateNotifier<EnhancedNoiseMeterData> {
       timeInLevels: state.timeInLevels,
       hourlyAverages: hourlyAvgs,
       environmentQuality: _environmentQuality,
-      recommendation: _getRecommendation(), id: ' ',
+      recommendation: _getRecommendation(),
+      id: ' ',
     );
   }
 
@@ -213,7 +291,8 @@ class EnhancedNoiseMeterNotifier extends StateNotifier<EnhancedNoiseMeterData> {
       if (state.averageDecibels <= 30) return 'Perfect sleep environment!';
       if (state.averageDecibels <= 40) return 'Good sleep environment.';
       return 'Too noisy for quality sleep.';
-    } else if (state.activePreset == RecordingPreset.work || state.activePreset == RecordingPreset.focus) {
+    } else if (state.activePreset == RecordingPreset.work ||
+        state.activePreset == RecordingPreset.focus) {
       if (state.averageDecibels <= 45) return 'Ideal for focus work!';
       if (state.averageDecibels <= 55) return 'Good for most work.';
       return 'Too loud for focused work.';
@@ -223,10 +302,14 @@ class EnhancedNoiseMeterNotifier extends StateNotifier<EnhancedNoiseMeterData> {
 
   Duration _getPresetDuration(RecordingPreset preset) {
     switch (preset) {
-      case RecordingPreset.sleep: return const Duration(hours: 8);
-      case RecordingPreset.work: return const Duration(hours: 1);
-      case RecordingPreset.focus: return const Duration(minutes: 30);
-      case RecordingPreset.custom: return Duration.zero;
+      case RecordingPreset.sleep:
+        return const Duration(hours: 8);
+      case RecordingPreset.work:
+        return const Duration(hours: 1);
+      case RecordingPreset.focus:
+        return const Duration(minutes: 30);
+      case RecordingPreset.custom:
+        return Duration.zero;
     }
   }
 
@@ -248,10 +331,17 @@ class EnhancedNoiseMeterNotifier extends StateNotifier<EnhancedNoiseMeterData> {
     _noiseSubscription?.cancel();
     _sessionTimer?.cancel();
     _eventDetectionTimer?.cancel();
+    _uiUpdateTimer?.cancel();
     _noiseSubscription = null;
     _sessionTimer = null;
     _eventDetectionTimer = null;
+    _uiUpdateTimer = null;
     _isInEvent = false;
+
+    // Reset performance counters
+    _runningSum = 0.0;
+    _readingsSinceLastUpdate = 0;
+    _lastUiUpdate = null;
   }
 
   @override
@@ -268,8 +358,14 @@ final reportStatisticsProvider = Provider<Map<String, dynamic>>((ref) {
   return {
     'total': AcousticReportService.reportCount,
     'averageQuality': AcousticReportService.averageQualityScore.toInt(),
-    'sleepStats': AcousticReportService.getPresetStatistics(RecordingPreset.sleep),
-    'workStats': AcousticReportService.getPresetStatistics(RecordingPreset.work),
-    'focusStats': AcousticReportService.getPresetStatistics(RecordingPreset.focus),
+    'sleepStats': AcousticReportService.getPresetStatistics(
+      RecordingPreset.sleep,
+    ),
+    'workStats': AcousticReportService.getPresetStatistics(
+      RecordingPreset.work,
+    ),
+    'focusStats': AcousticReportService.getPresetStatistics(
+      RecordingPreset.focus,
+    ),
   };
 });
