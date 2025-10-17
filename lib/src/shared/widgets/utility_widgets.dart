@@ -130,6 +130,11 @@ class ActionButton extends StatelessWidget {
   final VoidCallback onPressed;
   final Color? color;
   final bool isOutlined;
+  final double? iconSize;
+  final double? fontSize;
+  final EdgeInsetsGeometry? padding;
+  final double? height;
+  final bool compact;
 
   const ActionButton({
     super.key,
@@ -138,39 +143,104 @@ class ActionButton extends StatelessWidget {
     required this.onPressed,
     this.color,
     this.isOutlined = false,
+    this.iconSize,
+    this.fontSize,
+    this.padding,
+    this.height,
+    this.compact = false,
   });
+
+  // Compact constructor for smaller buttons
+  const ActionButton.compact({
+    super.key,
+    required this.icon,
+    required this.label,
+    required this.onPressed,
+    this.color,
+    this.isOutlined = false,
+  }) : iconSize = 16,
+       fontSize = 12,
+       padding = const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+       height = 36,
+       compact = true;
+
+  // Icon-only constructor
+  const ActionButton.iconOnly({
+    super.key,
+    required this.icon,
+    required this.onPressed,
+    this.color,
+    this.isOutlined = false,
+  }) : label = '',
+       iconSize = 20,
+       padding = const EdgeInsets.all(12),
+       height = 44,
+       fontSize = null,
+       compact = false;
 
   @override
   Widget build(BuildContext context) {
     final buttonColor = color ?? Theme.of(context).colorScheme.primary;
+    final effectivePadding = padding ?? _getDefaultPadding();
+    final effectiveIconSize = iconSize ?? _getDefaultIconSize();
+    final effectiveFontSize = fontSize ?? _getDefaultFontSize();
 
     if (isOutlined) {
-      return OutlinedButton.icon(
-        onPressed: onPressed,
-        icon: Icon(icon, size: 20),
-        label: Text(label),
-        style: OutlinedButton.styleFrom(
-          foregroundColor: buttonColor,
-          side: BorderSide(color: buttonColor),
-          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
+      return SizedBox(
+        height: height,
+        child: OutlinedButton.icon(
+          onPressed: onPressed,
+          icon: Icon(icon, size: effectiveIconSize),
+          label: label.isNotEmpty
+              ? Text(label, style: TextStyle(fontSize: effectiveFontSize))
+              : const SizedBox.shrink(),
+          style: OutlinedButton.styleFrom(
+            foregroundColor: buttonColor,
+            side: BorderSide(color: buttonColor),
+            padding: effectivePadding,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(compact ? 8 : 12),
+            ),
           ),
         ),
       );
     }
 
-    return ElevatedButton.icon(
-      onPressed: onPressed,
-      icon: Icon(icon, size: 20),
-      label: Text(label),
-      style: ElevatedButton.styleFrom(
-        backgroundColor: buttonColor,
-        foregroundColor: Colors.white,
-        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+    return SizedBox(
+      height: height,
+      child: ElevatedButton.icon(
+        onPressed: onPressed,
+        icon: Icon(icon, size: effectiveIconSize),
+        label: label.isNotEmpty
+            ? Text(label, style: TextStyle(fontSize: effectiveFontSize))
+            : const SizedBox.shrink(),
+        style: ElevatedButton.styleFrom(
+          backgroundColor: buttonColor,
+          foregroundColor: Colors.white,
+          padding: effectivePadding,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(compact ? 8 : 12),
+          ),
+        ),
       ),
     );
+  }
+
+  EdgeInsetsGeometry _getDefaultPadding() {
+    if (compact) {
+      return const EdgeInsets.symmetric(horizontal: 12, vertical: 8);
+    }
+    return const EdgeInsets.symmetric(horizontal: 20, vertical: 12);
+  }
+
+  double _getDefaultIconSize() {
+    if (compact) return 16;
+    return 20;
+  }
+
+  double _getDefaultFontSize() {
+    if (compact) return 12;
+    return 14;
   }
 }
 
