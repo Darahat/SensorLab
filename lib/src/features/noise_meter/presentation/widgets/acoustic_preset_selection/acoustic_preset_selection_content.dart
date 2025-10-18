@@ -16,12 +16,27 @@ class AcousticPresetSelectionContent extends ConsumerStatefulWidget {
 
 class _AcousticPresetSelectionContentState
     extends ConsumerState<AcousticPresetSelectionContent> {
-  final _presetUtils = PresetSelectionUtils();
+  late final PresetSelectionUtils _presetUtils;
 
   @override
   void initState() {
     super.initState();
+    _presetUtils = PresetSelectionUtils();
+    _presetUtils.addListener(_onPresetUtilsChanged);
     _presetUtils.loadCustomPresets(context);
+  }
+
+  @override
+  void dispose() {
+    _presetUtils.removeListener(_onPresetUtilsChanged);
+    _presetUtils.dispose();
+    super.dispose();
+  }
+
+  void _onPresetUtilsChanged() {
+    if (mounted) {
+      setState(() {});
+    }
   }
 
   @override

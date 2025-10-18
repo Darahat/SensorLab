@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sensorlab/src/features/noise_meter/domain/entities/acoustic_report_entity.dart';
 import 'package:sensorlab/src/features/noise_meter/domain/repositories/acoustic_repository.dart';
-import 'package:sensorlab/src/features/noise_meter/presentation/state/enhanced_noise_data.dart';
 
 import '../../data/repositories/acoustic_repository_impl.dart';
 import 'package:sensorlab/src/features/noise_meter/presentation/state/acoustic_reports_list_state.dart';

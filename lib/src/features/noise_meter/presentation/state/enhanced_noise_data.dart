@@ -3,14 +3,6 @@ import 'package:sensorlab/src/features/noise_meter/domain/entities/acoustic_repo
 
 part 'enhanced_noise_data.freezed.dart';
 
-/// Recording preset types
-enum RecordingPreset {
-  sleep, // 8 hours
-  work, // 1 hour
-  focus, // 30 minutes
-  custom,
-}
-
 /// Noise levels enum
 enum NoiseLevel { quiet, moderate, loud, veryLoud, dangerous }
 

@@ -1,11 +1,14 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_file_dialog/flutter_file_dialog.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:sensorlab/src/features/noise_meter/domain/entities/acoustic_report_entity.dart';
 import 'package:sensorlab/src/features/noise_meter/presentation/providers/acoustic_reports_list_controller.dart';
 import 'package:sensorlab/src/features/noise_meter/presentation/screens/acoustic_report_detail_screen.dart';
-import 'package:sensorlab/src/features/noise_meter/presentation/state/enhanced_noise_data.dart';
 import 'package:sensorlab/src/features/noise_meter/presentation/widgets/index.dart';
 
 class AcousticReportsListScreen extends ConsumerWidget {
@@ -259,22 +262,159 @@ class AcousticReportsListScreen extends ConsumerWidget {
     }
   }
 
-  void _exportReports(
+  Future<void> _exportReports(
     BuildContext context,
     AcousticReportsListController notifier,
     List<AcousticReport> reports,
-  ) {
+  ) async {
+    // Show export options dialog
+    final exportOption = await showDialog<String>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Export Reports'),
+        content: const Text('Choose how you want to export the reports:'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context, 'clipboard'),
+            child: const Text('Copy to Clipboard'),
+          ),
+          ElevatedButton.icon(
+            onPressed: () => Navigator.pop(context, 'file'),
+            icon: const Icon(Iconsax.document_download, size: 18),
+            label: const Text('Save as File'),
+          ),
+        ],
+      ),
+    );
+
+    if (exportOption == null) return;
+
     final csvData = notifier.exportReportsAsCSV(reports);
-    Clipboard.setData(ClipboardData(text: csvData));
-    ScaffoldMessenger.of(context)
-      ..hideCurrentSnackBar()
-      ..showSnackBar(
-        SnackBar(
-          content: const Text('CSV data copied to clipboard!'),
-          action: SnackBarAction(label: 'OK', onPressed: () {}),
-        ),
-      );
+
+    if (exportOption == 'clipboard') {
+      // Copy to clipboard (existing functionality)
+      Clipboard.setData(ClipboardData(text: csvData));
+      if (context.mounted) {
+        ScaffoldMessenger.of(context)
+          ..hideCurrentSnackBar()
+          ..showSnackBar(
+            const SnackBar(
+              content: Text('CSV data copied to clipboard!'),
+              backgroundColor: Colors.green,
+            ),
+          );
+      }
+    } else if (exportOption == 'file') {
+      // Save to file
+      await _saveCSVToFile(context, csvData, reports.length);
+    }
   }
+
+  Future<void> _saveCSVToFile(
+    BuildContext context,
+    String csvData,
+    int reportCount,
+  ) async {
+    try {
+      // Generate filename with timestamp
+      final timestamp = DateTime.now();
+      final filename =
+          'acoustic_reports_${timestamp.year}${timestamp.month.toString().padLeft(2, '0')}${timestamp.day.toString().padLeft(2, '0')}_${timestamp.hour.toString().padLeft(2, '0')}${timestamp.minute.toString().padLeft(2, '0')}.csv';
+
+      String? savedPath;
+      if (Platform.isAndroid || Platform.isIOS) {
+        // Use Storage Access Framework / native saver. This opens a system dialog
+        // where the user picks the folder (Downloads by default on Android).
+        try {
+          final params = SaveFileDialogParams(
+            fileName: filename,
+            data: Uint8List.fromList(csvData.codeUnits),
+          );
+          savedPath = await FlutterFileDialog.saveFile(params: params);
+          if (savedPath == null) {
+            // User cancelled
+            return;
+          }
+        } on MissingPluginException {
+          // Fallback to app documents directory if plugin channel not registered
+          final dir = await getApplicationDocumentsDirectory();
+          final file = File('${dir.path}/$filename');
+          await file.writeAsString(csvData);
+          savedPath = file.path;
+        }
+      } else {
+        final dir = await getApplicationDocumentsDirectory();
+        final file = File('${dir.path}/$filename');
+        await file.writeAsString(csvData);
+        savedPath = file.path;
+      }
+
+      if (context.mounted) {
+        // Show success dialog with file location
+        showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: Row(
+              children: [
+                Icon(Iconsax.tick_circle, color: Colors.green, size: 28),
+                const SizedBox(width: 12),
+                const Text('Export Successful'),
+              ],
+            ),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('$reportCount report(s) exported successfully!'),
+                const SizedBox(height: 12),
+                Container(
+                  padding: const EdgeInsets.all(12),
+                  decoration: BoxDecoration(
+                    color: const Color.fromARGB(255, 68, 68, 68),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        'Saved to:',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 12,
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        savedPath ?? '',
+                        style: const TextStyle(fontSize: 11),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: const Text('OK'),
+              ),
+            ],
+          ),
+        );
+      }
+    } catch (e) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Failed to save file: $e'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    }
+  }
+
+  // With Storage Access Framework-based saving, explicit storage permissions are not needed.
 
   // Helper methods for formatting (can be moved to an extension or kept here)
   IconData _getPresetIcon(RecordingPreset preset) {

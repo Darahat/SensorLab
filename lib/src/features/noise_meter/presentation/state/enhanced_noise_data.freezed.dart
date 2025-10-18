@@ -74,8 +74,6 @@ abstract class $EnhancedNoiseMeterDataCopyWith<$Res> {
       bool isAnalyzing,
       List<double> decibelHistory,
       AcousticReport? lastGeneratedReport});
-
-  $AcousticReportCopyWith<$Res>? get lastGeneratedReport;
 }
 
 /// @nodoc
@@ -201,18 +199,6 @@ class _$EnhancedNoiseMeterDataCopyWithImpl<$Res,
               as AcousticReport?,
     ) as $Val);
   }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $AcousticReportCopyWith<$Res>? get lastGeneratedReport {
-    if (_value.lastGeneratedReport == null) {
-      return null;
-    }
-
-    return $AcousticReportCopyWith<$Res>(_value.lastGeneratedReport!, (value) {
-      return _then(_value.copyWith(lastGeneratedReport: value) as $Val);
-    });
-  }
 }
 
 /// @nodoc
@@ -246,9 +232,6 @@ abstract class _$$EnhancedNoiseMeterDataImplCopyWith<$Res>
       bool isAnalyzing,
       List<double> decibelHistory,
       AcousticReport? lastGeneratedReport});
-
-  @override
-  $AcousticReportCopyWith<$Res>? get lastGeneratedReport;
 }
 
 /// @nodoc

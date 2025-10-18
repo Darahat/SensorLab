@@ -2,7 +2,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:sensorlab/src/core/services/hive_service.dart';
 import 'package:sensorlab/src/features/noise_meter/data/models/acoustic_report_hive.dart';
 import 'package:sensorlab/src/features/noise_meter/domain/entities/acoustic_report_entity.dart';
-import 'package:sensorlab/src/features/noise_meter/presentation/state/enhanced_noise_data.dart';
+
 
 /// Service for managing acoustic reports in Hive database.
 ///
