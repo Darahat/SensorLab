@@ -49,7 +49,8 @@ android {
             ?: "ca-app-pub-3940256099942544~3347511713" // Google's official test app id for development
     }
 
-    signingConfigs {
+   signingConfigs {
+    if (keystoreProperties["storeFile"] != null) {
         create("release") {
             storeFile = file(keystoreProperties["storeFile"] as String)
             storePassword = keystoreProperties["storePassword"] as String
@@ -57,13 +58,18 @@ android {
             keyPassword = keystoreProperties["keyPassword"] as String
         }
     }
+}
+
 
     buildTypes {
         getByName("release") {
             isMinifyEnabled = true
             isShrinkResources = true
+        // Only assign signing config if available
+        if (signingConfigs.findByName("release") != null) {
             signingConfig = signingConfigs.getByName("release")
-            proguardFiles(
+        }            
+        proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )

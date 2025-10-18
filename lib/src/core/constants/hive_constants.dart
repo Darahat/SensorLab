@@ -32,6 +32,9 @@ class HiveConstants {
   /// hive box for acoustic reports (noise meter)
   static const String acousticReportBox = "acoustic_report_box";
 
+  /// hive box for custom acoustic presets (noise meter)
+  static const String customPresetsBox = "custom_presets_box";
+
   /// hive box for plant tracking sessions (light meter)
   static const String plantTrackingBox = "plant_tracking_box";
 

@@ -57,7 +57,8 @@ class AppLocalizationsEs extends AppLocalizations {
   String get darkMode => 'Modo oscuro';
 
   @override
-  String get switchBetweenLightAndDarkThemes => 'Alternar entre temas claro y oscuro';
+  String get switchBetweenLightAndDarkThemes =>
+      'Alternar entre temas claro y oscuro';
 
   @override
   String get system => 'Sistema';
@@ -81,19 +82,22 @@ class AppLocalizationsEs extends AppLocalizations {
   String get notifications => 'Notificaciones';
 
   @override
-  String get receiveAppNotifications => 'Recibir notificaciones de la aplicación';
+  String get receiveAppNotifications =>
+      'Recibir notificaciones de la aplicación';
 
   @override
   String get vibration => 'Vibración';
 
   @override
-  String get hapticFeedbackForInteractions => 'Retroalimentación háptica para las interacciones';
+  String get hapticFeedbackForInteractions =>
+      'Retroalimentación háptica para las interacciones';
 
   @override
   String get soundEffects => 'Efectos de sonido';
 
   @override
-  String get audioFeedbackForAppActions => 'Retroalimentación de audio para acciones de la app';
+  String get audioFeedbackForAppActions =>
+      'Retroalimentación de audio para acciones de la app';
 
   @override
   String get sensorSettings => 'Configuración de sensores';
@@ -102,7 +106,8 @@ class AppLocalizationsEs extends AppLocalizations {
   String get autoScan => 'Escaneo automático';
 
   @override
-  String get automaticallyScanWhenOpeningScanner => 'Escanear automáticamente al abrir el escáner';
+  String get automaticallyScanWhenOpeningScanner =>
+      'Escanear automáticamente al abrir el escáner';
 
   @override
   String get sensorUpdateFrequency => 'Frecuencia de actualización del sensor';
@@ -140,13 +145,15 @@ class AppLocalizationsEs extends AppLocalizations {
   String get resetSettings => 'Restablecer ajustes';
 
   @override
-  String get resetAllSettingsToDefaultValues => 'Restablecer todos los ajustes a sus valores predeterminados. Esta acción no puede deshacerse.';
+  String get resetAllSettingsToDefaultValues =>
+      'Restablecer todos los ajustes a sus valores predeterminados. Esta acción no puede deshacerse.';
 
   @override
   String get resetToDefaults => 'Restablecer a los valores predeterminados';
 
   @override
-  String get chooseSensorUpdateFrequency => 'Elige con qué frecuencia deben actualizarse los sensores:';
+  String get chooseSensorUpdateFrequency =>
+      'Elige con qué frecuencia deben actualizarse los sensores:';
 
   @override
   String get fastUpdate => '50 ms (Rápido)';
@@ -167,7 +174,8 @@ class AppLocalizationsEs extends AppLocalizations {
   String get confirmReset => 'Confirmar restablecimiento';
 
   @override
-  String get areYouSureResetSettings => '¿Estás seguro de que deseas restablecer todos los ajustes a sus valores predeterminados?';
+  String get areYouSureResetSettings =>
+      '¿Estás seguro de que deseas restablecer todos los ajustes a sus valores predeterminados?';
 
   @override
   String get thisActionCannotBeUndone => 'Esta acción no puede deshacerse.';
@@ -266,16 +274,19 @@ class AppLocalizationsEs extends AppLocalizations {
   String get quickResponseCode => 'Código de respuesta rápida';
 
   @override
-  String get europeanArticleNumber13 => 'Número de artículo europeo (13 dígitos)';
+  String get europeanArticleNumber13 =>
+      'Número de artículo europeo (13 dígitos)';
 
   @override
   String get europeanArticleNumber8 => 'Número de artículo europeo (8 dígitos)';
 
   @override
-  String get universalProductCode12 => 'Código universal de producto (12 dígitos)';
+  String get universalProductCode12 =>
+      'Código universal de producto (12 dígitos)';
 
   @override
-  String get universalProductCode8 => 'Código universal de producto (8 dígitos)';
+  String get universalProductCode8 =>
+      'Código universal de producto (8 dígitos)';
 
   @override
   String get code128 => 'Código 128 (longitud variable)';
@@ -299,13 +310,15 @@ class AppLocalizationsEs extends AppLocalizations {
   String get aztecCode => 'Código Azteca (2D)';
 
   @override
-  String get torchNotAvailableOnDevice => 'Linterna no disponible en este dispositivo';
+  String get torchNotAvailableOnDevice =>
+      'Linterna no disponible en este dispositivo';
 
   @override
   String get failedToInitializeFlashlight => 'Error al inicializar la linterna';
 
   @override
-  String get failedToToggleFlashlight => 'Error al activar/desactivar la linterna';
+  String get failedToToggleFlashlight =>
+      'Error al activar/desactivar la linterna';
 
   @override
   String get cameraIsInUse => 'La cámara está en uso';
@@ -320,7 +333,8 @@ class AppLocalizationsEs extends AppLocalizations {
   String get failedToDisableTorch => 'Error al deshabilitar la linterna';
 
   @override
-  String get intensityControlNotSupported => 'Control de intensidad no compatible con el paquete torch_light';
+  String get intensityControlNotSupported =>
+      'Control de intensidad no compatible con el paquete torch_light';
 
   @override
   String get failedToSetMode => 'Error al establecer el modo';
@@ -332,19 +346,23 @@ class AppLocalizationsEs extends AppLocalizations {
   String get noCamerasFound => 'No se encontraron cámaras';
 
   @override
-  String get readyCoverCameraWithFinger => 'Listo — cubre la cámara con el dedo';
+  String get readyCoverCameraWithFinger =>
+      'Listo — cubre la cámara con el dedo';
 
   @override
   String get cameraError => 'Error de cámara';
 
   @override
-  String get placeFingerFirmlyOnCamera => 'Coloca el dedo firmemente sobre la cámara';
+  String get placeFingerFirmlyOnCamera =>
+      'Coloca el dedo firmemente sobre la cámara';
 
   @override
-  String get pressFingerFirmlyOnCamera => 'Presiona el dedo firmemente sobre la cámara';
+  String get pressFingerFirmlyOnCamera =>
+      'Presiona el dedo firmemente sobre la cámara';
 
   @override
-  String get fingerMovedPlaceFirmlyOnCamera => 'El dedo se movió — colócalo firmemente en la cámara';
+  String get fingerMovedPlaceFirmlyOnCamera =>
+      'El dedo se movió — colócalo firmemente en la cámara';
 
   @override
   String heartRateBpm(int bpm) {
@@ -445,7 +463,8 @@ class AppLocalizationsEs extends AppLocalizations {
   String get initializingFlashlight => 'Inicializando linterna…';
 
   @override
-  String get deviceDoesNotHaveFlashlight => 'El dispositivo no tiene linterna o no es accesible';
+  String get deviceDoesNotHaveFlashlight =>
+      'El dispositivo no tiene linterna o no es accesible';
 
   @override
   String get tryAgain => 'Intenta de nuevo';
@@ -536,19 +555,22 @@ class AppLocalizationsEs extends AppLocalizations {
   String get intensityTip => 'Ajusta el brillo para ahorrar energía';
 
   @override
-  String get pressButtonToGetLocation => 'Presiona el botón para obtener ubicación';
+  String get pressButtonToGetLocation =>
+      'Presiona el botón para obtener ubicación';
 
   @override
   String get addressWillAppearHere => 'La dirección aparecerá aquí';
 
   @override
-  String get locationServicesDisabled => 'Los servicios de ubicación están desactivados';
+  String get locationServicesDisabled =>
+      'Los servicios de ubicación están desactivados';
 
   @override
   String get locationPermissionDenied => 'Permiso de ubicación denegado';
 
   @override
-  String get locationPermissionsPermanentlyDenied => 'Permisos de ubicación permanentemente denegados';
+  String get locationPermissionsPermanentlyDenied =>
+      'Permisos de ubicación permanentemente denegados';
 
   @override
   String errorGettingLocation(String error) {
@@ -572,10 +594,12 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
-  String get pleaseEnableLocationServices => 'Por favor, activa los servicios de ubicación';
+  String get pleaseEnableLocationServices =>
+      'Por favor, activa los servicios de ubicación';
 
   @override
-  String get pleaseGrantLocationPermissions => 'Por favor, concede los permisos de ubicación';
+  String get pleaseGrantLocationPermissions =>
+      'Por favor, concede los permisos de ubicación';
 
   @override
   String get locating => 'Localizando...';
@@ -590,7 +614,8 @@ class AppLocalizationsEs extends AppLocalizations {
   String get aboutGeolocator => 'Acerca del geolocalizador';
 
   @override
-  String get geolocatorDescription => 'Esta herramienta muestra tu ubicación actual usando el GPS del dispositivo.\n\nCaracterísticas:\n• Coordenadas precisas de latitud/longitud\n• Estimación de precisión\n• Geocodificación inversa para obtener dirección\n• Abrir ubicación en mapas\n\nPara mejores resultados, asegúrate de:\n• Tener activados los servicios de ubicación\n• Tener una vista despejada del cielo\n• Estar conectado a Internet para buscar dirección';
+  String get geolocatorDescription =>
+      'Esta herramienta muestra tu ubicación actual usando el GPS del dispositivo.\n\nCaracterísticas:\n• Coordenadas precisas de latitud/longitud\n• Estimación de precisión\n• Geocodificación inversa para obtener dirección\n• Abrir ubicación en mapas\n\nPara mejores resultados, asegúrate de:\n• Tener activados los servicios de ubicación\n• Tener una vista despejada del cielo\n• Estar conectado a Internet para buscar dirección';
 
   @override
   String get ok => 'Aceptar';
@@ -611,7 +636,8 @@ class AppLocalizationsEs extends AppLocalizations {
   String get motionIntensity => 'Intensidad de movimiento';
 
   @override
-  String get liveSensorGraph => 'Gráfico de sensores en vivo (X – Rojo, Y – Verde, Z – Azul)';
+  String get liveSensorGraph =>
+      'Gráfico de sensores en vivo (X – Rojo, Y – Verde, Z – Azul)';
 
   @override
   String get angularVelocity => 'Velocidad angular (rad/s)';
@@ -724,7 +750,8 @@ class AppLocalizationsEs extends AppLocalizations {
   String get noHumiditySensor => 'No se detectó sensor de humedad';
 
   @override
-  String get noHumiditySensorDescription => 'La mayoría de los smartphones no tienen sensores de humedad. Mostrando datos simulados para demostración.';
+  String get noHumiditySensorDescription =>
+      'La mayoría de los smartphones no tienen sensores de humedad. Mostrando datos simulados para demostración.';
 
   @override
   String get checkAgain => 'Comprobar de nuevo';
@@ -799,7 +826,8 @@ class AppLocalizationsEs extends AppLocalizations {
   String get far => 'Lejos';
 
   @override
-  String get proximityActivityTimeline => 'Cronología de actividad de proximidad';
+  String get proximityActivityTimeline =>
+      'Cronología de actividad de proximidad';
 
   @override
   String get howProximitySensorWorks => 'Cómo funciona el sensor de proximidad';
@@ -811,7 +839,8 @@ class AppLocalizationsEs extends AppLocalizations {
   String get positionBarcodeInFrame => 'Coloca el código dentro del marco';
 
   @override
-  String get scanningForBarcodes => 'Escaneando UPC, EAN, Código 128, Código 39 y otros códigos lineales';
+  String get scanningForBarcodes =>
+      'Escaneando UPC, EAN, Código 128, Código 39 y otros códigos lineales';
 
   @override
   String get scanQrCode => 'Escanear código QR';
@@ -820,7 +849,8 @@ class AppLocalizationsEs extends AppLocalizations {
   String get positionQrCodeInFrame => 'Coloca el QR dentro del marco';
 
   @override
-  String get scanningForQrCodes => 'Escaneando códigos QR, Data Matrix, PDF417 y códigos Azteca';
+  String get scanningForQrCodes =>
+      'Escaneando códigos QR, Data Matrix, PDF417 y códigos Azteca';
 
   @override
   String scannedOn(String timestamp) {
@@ -864,7 +894,8 @@ class AppLocalizationsEs extends AppLocalizations {
   String get copiedToClipboard => 'Copiado al portapapeles';
 
   @override
-  String get contentCopied => 'Contenido copiado al portapapeles para compartir';
+  String get contentCopied =>
+      'Contenido copiado al portapapeles para compartir';
 
   @override
   String get cannotOpenUrl => 'No se puede abrir la URL';
@@ -873,7 +904,8 @@ class AppLocalizationsEs extends AppLocalizations {
   String get chooseScannerType => 'Elige tipo de escáner';
 
   @override
-  String get selectScannerDescription => 'Selecciona el tipo de código que deseas escanear';
+  String get selectScannerDescription =>
+      'Selecciona el tipo de código que deseas escanear';
 
   @override
   String get commonUses => 'Usos comunes:';
@@ -882,7 +914,8 @@ class AppLocalizationsEs extends AppLocalizations {
   String get scanningTips => 'Consejos de escaneo';
 
   @override
-  String get scanningTipsDescription => 'Mantén tu dispositivo estable y asegúrate de que el código esté bien iluminado y claramente visible dentro del marco del escáner.';
+  String get scanningTipsDescription =>
+      'Mantén tu dispositivo estable y asegúrate de que el código esté bien iluminado y claramente visible dentro del marco del escáner.';
 
   @override
   String get minStat => 'Mín';
@@ -990,7 +1023,8 @@ class AppLocalizationsEs extends AppLocalizations {
   String get objectDetectedClose => 'Objeto detectado cerca del sensor';
 
   @override
-  String get usuallyWithin5cm => 'Generalmente cuando algo está dentro de 5cm del sensor';
+  String get usuallyWithin5cm =>
+      'Generalmente cuando algo está dentro de 5cm del sensor';
 
   @override
   String get farDetection => 'Detección Lejana';
@@ -1002,19 +1036,23 @@ class AppLocalizationsEs extends AppLocalizations {
   String get clearAreaAroundSensor => 'Área despejada alrededor del sensor';
 
   @override
-  String get tooDryIrritation => 'Demasiado seco - puede causar irritación en la piel y respiración';
+  String get tooDryIrritation =>
+      'Demasiado seco - puede causar irritación en la piel y respiración';
 
   @override
-  String get somewhatDryHumidifier => 'Algo seco - considera usar un humidificador';
+  String get somewhatDryHumidifier =>
+      'Algo seco - considera usar un humidificador';
 
   @override
-  String get idealHumidityLevel => 'Nivel de humedad ideal para comodidad y salud';
+  String get idealHumidityLevel =>
+      'Nivel de humedad ideal para comodidad y salud';
 
   @override
   String get somewhatHumidSticky => 'Algo húmedo - puede sentirse pegajoso';
 
   @override
-  String get tooHumidMold => 'Demasiado húmedo - puede favorecer el crecimiento de moho';
+  String get tooHumidMold =>
+      'Demasiado húmedo - puede favorecer el crecimiento de moho';
 
   @override
   String get flashlightOn => 'Linterna ENCENDIDA';
@@ -1086,13 +1124,16 @@ class AppLocalizationsEs extends AppLocalizations {
   String get daylightExample => 'Luz solar directa';
 
   @override
-  String get grantSensorPermission => 'Conceder permisos de sensor para acceder al sensor de proximidad';
+  String get grantSensorPermission =>
+      'Conceder permisos de sensor para acceder al sensor de proximidad';
 
   @override
-  String get deviceNoProximitySensor => 'El dispositivo no tiene un sensor de proximidad';
+  String get deviceNoProximitySensor =>
+      'El dispositivo no tiene un sensor de proximidad';
 
   @override
-  String get proximitySensorLocation => 'El sensor de proximidad se encuentra típicamente cerca del auricular y se usa para apagar la pantalla durante las llamadas telefónicas.';
+  String get proximitySensorLocation =>
+      'El sensor de proximidad se encuentra típicamente cerca del auricular y se usa para apagar la pantalla durante las llamadas telefónicas.';
 
   @override
   String get pausedCameraInUse => 'Pausado - Cámara en uso por otra función';
@@ -1176,10 +1217,12 @@ class AppLocalizationsEs extends AppLocalizations {
   String get allSettings => 'Todas las Configuraciones';
 
   @override
-  String get getNotifiedAboutSensorReadings => 'Recibir notificaciones sobre lecturas de sensores';
+  String get getNotifiedAboutSensorReadings =>
+      'Recibir notificaciones sobre lecturas de sensores';
 
   @override
-  String get themeChangeRequiresRestart => 'El cambio de tema requiere reiniciar la aplicación';
+  String get themeChangeRequiresRestart =>
+      'El cambio de tema requiere reiniciar la aplicación';
 
   @override
   String get quickSettings => 'Configuración Rápida';
@@ -1215,10 +1258,12 @@ class AppLocalizationsEs extends AppLocalizations {
   String get gyroZ => 'Giro Z';
 
   @override
-  String get qrScannerSubtitle => 'Escanear códigos QR, Data Matrix, PDF417 y códigos Azteca';
+  String get qrScannerSubtitle =>
+      'Escanear códigos QR, Data Matrix, PDF417 y códigos Azteca';
 
   @override
-  String get barcodeScannerSubtitle => 'Escanear códigos de barras de productos como UPC, EAN, Code 128 y más';
+  String get barcodeScannerSubtitle =>
+      'Escanear códigos de barras de productos como UPC, EAN, Code 128 y más';
 
   @override
   String get activity => 'Actividad';
@@ -1236,7 +1281,8 @@ class AppLocalizationsEs extends AppLocalizations {
   String get sessionPaused => 'Sesión Pausada';
 
   @override
-  String get updateYourPersonalInformation => 'Actualiza tu información personal';
+  String get updateYourPersonalInformation =>
+      'Actualiza tu información personal';
 
   @override
   String get personalInformation => 'Información Personal';
@@ -1299,7 +1345,8 @@ class AppLocalizationsEs extends AppLocalizations {
   String get setDailyGoal => 'Establecer Meta Diaria';
 
   @override
-  String get resetSessionConfirmation => '¿Estás seguro de que deseas reiniciar tu sesión actual? Todo el progreso se perderá.';
+  String get resetSessionConfirmation =>
+      '¿Estás seguro de que deseas reiniciar tu sesión actual? Todo el progreso se perderá.';
 
   @override
   String get barometer => 'Barómetro';
@@ -1335,325 +1382,332 @@ class AppLocalizationsEs extends AppLocalizations {
   String get altitude => 'Altitud';
 
   @override
-  String get altimeter => 'Altimeter';
+  String get altimeter => 'Altímetro';
 
   @override
-  String get altimeterWaiting => 'Waiting for GPS and barometer data...';
+  String get altimeterWaiting => 'Esperando datos del altímetro...';
 
   @override
-  String get aboveSeaLevel => 'Above Sea Level';
+  String get aboveSeaLevel => 'Sobre el nivel del mar';
 
   @override
-  String get climbing => 'Climbing';
+  String get climbing => 'Subiendo';
 
   @override
-  String get descending => 'Descending';
+  String get descending => 'Bajando';
 
   @override
-  String get stable => 'Stable';
+  String get stable => 'Estable';
 
   @override
-  String get usingGpsOnly => 'Using GPS data only';
+  String get usingGpsOnly => 'Usando solo GPS';
 
   @override
-  String get usingBarometerOnly => 'Using barometer data only';
+  String get usingBarometerOnly => 'Usando solo barómetro';
 
   @override
-  String get usingFusedData => 'Combining GPS and barometer for accuracy';
+  String get usingFusedData => 'Usando datos combinados';
 
   @override
-  String get dataSource => 'Data Source';
+  String get dataSource => 'Fuente de datos';
 
   @override
-  String get sensorReadings => 'Sensor Readings';
+  String get sensorReadings => 'Lecturas del sensor';
 
   @override
-  String get gpsAltitude => 'GPS Altitude';
+  String get gpsAltitude => 'Altitud GPS';
 
   @override
-  String get baroAltitude => 'Baro Altitude';
+  String get baroAltitude => 'Altitud Barométrica';
 
   @override
-  String get pressure => 'Pressure';
+  String get pressure => 'Presión';
 
   @override
-  String get statistics => 'Statistics';
+  String get statistics => 'Estadísticas';
 
   @override
-  String get gain => 'Gain';
+  String get gain => 'Ganancia';
 
   @override
-  String get loss => 'Loss';
+  String get loss => 'Pérdida';
 
   @override
-  String get calibrateAltimeter => 'Calibrate Altimeter';
+  String get calibrateAltimeter => 'Calibrar Altímetro';
 
   @override
-  String get calibrateDescription => 'Enter your current known altitude in meters to calibrate the barometric sensor for better accuracy.';
+  String get calibrateDescription =>
+      'Ingrese su altitud conocida actual para calibrar';
 
   @override
-  String get knownAltitude => 'Known Altitude';
+  String get knownAltitude => 'Altitud conocida';
 
   @override
-  String get calibrationComplete => 'Calibration complete!';
+  String get calibrationComplete => 'Calibración completada';
 
   @override
-  String get statsReset => 'Statistics reset!';
+  String get statsReset => 'Estadísticas restablecidas';
 
   @override
-  String get vibrationMeter => 'Vibration Meter';
+  String get vibrationMeter => 'Medidor de vibración';
 
   @override
-  String get vibrationWaiting => 'Waiting for accelerometer data...';
+  String get vibrationWaiting => 'Esperando datos de vibración...';
 
   @override
-  String get vibrationMagnitude => 'Vibration Magnitude';
+  String get vibrationMagnitude => 'Magnitud de vibración';
 
   @override
-  String get vibrationLevel => 'Vibration Level';
+  String get vibrationLevel => 'Nivel de vibración';
 
   @override
-  String get realtimeWaveform => 'Real-time Waveform';
+  String get realtimeWaveform => 'Forma de onda en tiempo real';
 
   @override
-  String get pattern => 'Pattern';
+  String get pattern => 'Patrón';
 
   @override
-  String get frequency => 'Frequency';
+  String get frequency => 'Frecuencia';
 
   @override
-  String get axisBreakdown => 'Axis Breakdown';
+  String get axisBreakdown => 'Desglose por eje';
 
   @override
-  String get advancedMetrics => 'Advanced Metrics';
+  String get advancedMetrics => 'Métricas avanzadas';
 
   @override
   String get rms => 'RMS';
 
   @override
-  String get peakToPeak => 'Peak-to-Peak';
+  String get peakToPeak => 'Pico a pico';
 
   @override
-  String get crestFactor => 'Crest Factor';
+  String get crestFactor => 'Factor de cresta';
 
   @override
-  String get acousticAnalyzer => 'Acoustic Analyzer';
+  String get acousticAnalyzer => 'Analizador acústico';
 
   @override
-  String get acousticAnalyzerTitle => 'Acoustic Environment Analyzer';
+  String get acousticAnalyzerTitle => 'Analizador Acústico';
 
   @override
-  String get acousticEnvironment => 'Acoustic Environment';
+  String get acousticEnvironment => 'Entorno acústico';
 
   @override
-  String get noiseLevel => 'Noise Level';
+  String get noiseLevel => 'Nivel de ruido';
 
   @override
   String get decibelUnit => 'dB';
 
   @override
-  String get presetSelectTitle => 'Choose Recording Preset';
+  String get presetSelectTitle => 'Seleccione un Preajuste';
 
   @override
-  String get presetSelectSubtitle => 'Select a preset to analyze your acoustic environment over time';
+  String get presetSelectSubtitle => 'Elija el tipo de análisis acústico';
 
   @override
-  String get presetSleep => 'Sleep';
+  String get presetSleep => 'Dormir';
 
   @override
-  String get presetSleepTitle => 'Analyze Sleep Environment';
+  String get presetSleepTitle => 'Analizar Entorno de Sueño';
 
   @override
-  String get presetSleepDuration => '8 hours';
+  String get presetSleepDuration => '8 horas';
 
   @override
-  String get presetSleepDescription => 'Monitor bedroom noise throughout the night to improve sleep quality';
+  String get presetSleepDescription =>
+      'Monitorea el ruido del dormitorio durante la noche para mejorar la calidad del sueño';
 
   @override
-  String get presetWork => 'Work';
+  String get presetWork => 'Trabajo';
 
   @override
-  String get presetWorkTitle => 'Monitor Office Environment';
+  String get presetWorkTitle => 'Monitorear Entorno de Oficina';
 
   @override
-  String get presetWorkDuration => '1 hour';
+  String get presetWorkDuration => '1 hora';
 
   @override
-  String get presetWorkDescription => 'Track workplace noise levels and identify distractions';
+  String get presetWorkDescription =>
+      'Rastrea los niveles de ruido en el lugar de trabajo e identifica distracciones';
 
   @override
-  String get presetFocus => 'Focus';
+  String get presetFocus => 'Concentración';
 
   @override
-  String get presetFocusTitle => 'Focus Session Analysis';
+  String get presetFocusTitle => 'Análisis de Sesión de Concentración';
 
   @override
-  String get presetFocusDuration => '30 minutes';
+  String get presetFocusDuration => '30 minutos';
 
   @override
-  String get presetFocusDescription => 'Analyze your study or focus session environment';
+  String get presetFocusDescription =>
+      'Analiza tu entorno de estudio o sesión de concentración';
 
   @override
-  String get presetCustom => 'Custom';
+  String get presetCustom => 'Personalizado';
 
   @override
-  String get presetSleepAnalysis => 'Sleep Analysis (8h)';
+  String get presetSleepAnalysis => 'Análisis de sueño';
 
   @override
-  String get presetWorkEnvironment => 'Work Environment (1h)';
+  String get presetWorkEnvironment => 'Entorno de trabajo';
 
   @override
-  String get presetFocusSession => 'Focus Session (30m)';
+  String get presetFocusSession => 'Sesión de concentración';
 
   @override
-  String get presetCustomRecording => 'Custom Recording';
+  String get presetCustomRecording => 'Grabación personalizada';
 
   @override
-  String get monitoringTitle => 'Monitoring';
+  String get monitoringTitle => 'Monitoreo';
 
   @override
-  String get monitoringActive => 'Recording Active';
+  String get monitoringActive => 'Monitoreo activo';
 
   @override
-  String get monitoringStopped => 'Recording Stopped';
+  String get monitoringStopped => 'Monitoreo detenido';
 
   @override
-  String get monitoringProgress => 'Progress';
+  String get monitoringProgress => 'Progreso del monitoreo';
 
   @override
-  String get monitoringCurrentLevel => 'Current Level';
+  String get monitoringCurrentLevel => 'Nivel actual';
 
   @override
-  String get monitoringLiveChart => 'Live Monitoring';
+  String get monitoringLiveChart => 'Gráfico en vivo';
 
   @override
-  String get monitoringEnvironment => 'Monitoring acoustic environment...';
+  String get monitoringEnvironment => 'Monitoreando Entorno';
 
   @override
-  String get recordingStart => 'Start Recording';
+  String get recordingStart => 'Iniciar Grabación';
 
   @override
-  String get recordingStop => 'Stop Recording';
+  String get recordingStop => 'Detener grabación';
 
   @override
-  String get recordingCompleted => 'Recording completed';
+  String get recordingCompleted => 'Grabación completada';
 
   @override
-  String get reportGeneratedSuccess => 'Report generated successfully!';
+  String get reportGeneratedSuccess => 'Informe generado exitosamente';
 
   @override
-  String get stopRecordingTooltip => 'Stop Recording';
+  String get stopRecordingTooltip => 'Detener grabación';
 
   @override
-  String get stopRecordingConfirmTitle => 'Stop Recording?';
+  String get stopRecordingConfirmTitle => '¿Detener grabación?';
 
   @override
-  String get stopRecordingConfirmMessage => 'Are you sure you want to stop the recording? The report will be generated with the current data.';
+  String get stopRecordingConfirmMessage =>
+      '¿Está seguro de que desea detener la grabación actual?';
 
   @override
-  String get continueRecording => 'Continue';
+  String get continueRecording => 'Continuar grabación';
 
   @override
-  String get reportsTitle => 'Acoustic Reports';
+  String get reportsTitle => 'Informes';
 
   @override
-  String get reportsEmpty => 'No Reports Yet';
+  String get reportsEmpty => 'Sin informes';
 
   @override
-  String get reportsEmptyDescription => 'Start an acoustic analysis session to generate your first report';
+  String get reportsEmptyDescription =>
+      'No se encontraron informes. Inicie un análisis para crear uno.';
 
   @override
   String reportsSelectedCount(int count) {
-    return '$count Selected';
+    return '$count seleccionado(s)';
   }
 
   @override
-  String get reportExportCSV => 'Export as CSV';
+  String get reportExportCSV => 'Exportar CSV';
 
   @override
-  String get reportExportAll => 'Export All';
+  String get reportExportAll => 'Exportar todo';
 
   @override
-  String get reportDelete => 'Delete';
+  String get reportDelete => 'Eliminar';
 
   @override
-  String get reportDeleteSelected => 'Delete Selected';
+  String get reportDeleteSelected => 'Eliminar seleccionados';
 
   @override
-  String get reportDeleteConfirmTitle => 'Delete Reports?';
+  String get reportDeleteConfirmTitle => '¿Eliminar informe(s)?';
 
   @override
   String reportDeleteConfirmMessage(int count) {
-    return 'Are you sure you want to delete $count report(s)? This action cannot be undone.';
+    return '¿Está seguro de que desea eliminar los informes seleccionados?';
   }
 
   @override
-  String get reportDeleteSuccess => 'Reports deleted';
+  String get reportDeleteSuccess => 'Informe(s) eliminado(s) exitosamente';
 
   @override
-  String get reportFilterByPreset => 'Filter by Preset';
+  String get reportFilterByPreset => 'Filtrar por preajuste';
 
   @override
-  String get reportFilterAll => 'All Presets';
+  String get reportFilterAll => 'Todos';
 
   @override
-  String get reportStartAnalysis => 'Start Analysis';
+  String get reportStartAnalysis => 'Iniciar análisis';
 
   @override
-  String get csvCopiedToClipboard => 'CSV data copied to clipboard!';
+  String get csvCopiedToClipboard => 'CSV copiado al portapapeles';
 
   @override
-  String get reportDetailTitle => 'Acoustic Report';
+  String get reportDetailTitle => 'Detalles del informe';
 
   @override
-  String get reportQualityTitle => 'Environment Quality';
+  String get reportQualityTitle => 'Calidad';
 
   @override
-  String get reportQualityScore => 'Quality Score';
+  String get reportQualityScore => 'Puntuación de calidad';
 
   @override
-  String get reportAverage => 'Average';
+  String get reportAverage => 'Promedio';
 
   @override
-  String get reportPeak => 'Peak';
+  String get reportPeak => 'Pico';
 
   @override
-  String get reportHourlyBreakdown => 'Hourly Breakdown';
+  String get reportHourlyBreakdown => 'Desglose por hora';
 
   @override
-  String get reportNoiseEvents => 'Noise Events';
+  String get reportNoiseEvents => 'Eventos de ruido';
 
   @override
-  String get reportNoEventsTitle => 'No Interruptions Detected';
+  String get reportNoEventsTitle => 'Sin eventos';
 
   @override
-  String get reportNoEventsMessage => 'Your environment was consistently quiet';
+  String get reportNoEventsMessage =>
+      'No se detectaron eventos de ruido durante esta sesión';
 
   @override
-  String get reportShare => 'Share Report';
+  String get reportShare => 'Compartir';
 
   @override
-  String get reportRecommendations => 'Recommendations';
+  String get reportRecommendations => 'Recomendaciones';
 
   @override
-  String get reportDuration => 'Duration';
+  String get reportDuration => 'Duración';
 
   @override
-  String get reportEvents => 'events';
+  String get reportEvents => 'Eventos';
 
   @override
   String durationHours(int hours) {
-    return '${hours}h';
+    return 'horas';
   }
 
   @override
   String durationMinutes(int minutes) {
-    return '${minutes}m';
+    return 'minutos';
   }
 
   @override
   String durationSeconds(int seconds) {
-    return '${seconds}s';
+    return 'segundos';
   }
 
   @override
@@ -1662,95 +1716,113 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
-  String get qualityExcellent => 'Excellent';
+  String get qualityExcellent => 'Excelente';
 
   @override
-  String get qualityGood => 'Good';
+  String get qualityGood => 'Bueno';
 
   @override
-  String get qualityFair => 'Fair';
+  String get qualityFair => 'Regular';
 
   @override
-  String get qualityPoor => 'Poor';
+  String get qualityPoor => 'Pobre';
 
   @override
   String get unitDecibels => 'dB';
 
   @override
-  String get unitHours => 'hours';
+  String get unitHours => 'horas';
 
   @override
-  String get unitMinutes => 'minutes';
+  String get unitMinutes => 'minutos';
 
   @override
-  String get unitSeconds => 'seconds';
+  String get unitSeconds => 'segundos';
 
   @override
   String get actionOk => 'OK';
 
   @override
-  String get actionContinue => 'Continue';
+  String get actionContinue => 'Continuar';
 
   @override
-  String get actionStop => 'Stop';
+  String get actionStop => 'Detener';
 
   @override
-  String get actionStart => 'Start';
+  String get actionStart => 'Iniciar';
 
   @override
-  String get actionView => 'View';
+  String get actionView => 'Ver';
 
   @override
-  String get actionExport => 'Export';
+  String get actionExport => 'Exportar';
 
   @override
-  String get actionShare => 'Share';
+  String get actionShare => 'Compartir';
 
   @override
-  String get viewHistoricalReports => 'View Historical Reports';
+  String get viewHistoricalReports => 'Ver Informes Históricos';
 
   @override
   String get csvHeaderID => 'ID';
 
   @override
-  String get csvHeaderStartTime => 'Start Time';
+  String get csvHeaderStartTime => 'Hora de inicio';
 
   @override
-  String get csvHeaderEndTime => 'End Time';
+  String get csvHeaderEndTime => 'Hora de finalización';
 
   @override
-  String get csvHeaderDuration => 'Duration (min)';
+  String get csvHeaderDuration => 'Duración (min)';
 
   @override
-  String get csvHeaderPreset => 'Preset';
+  String get csvHeaderPreset => 'Preajuste';
 
   @override
-  String get csvHeaderAverageDB => 'Average dB';
+  String get csvHeaderAverageDB => 'dB promedio';
 
   @override
-  String get csvHeaderMinDB => 'Min dB';
+  String get csvHeaderMinDB => 'dB mínimo';
 
   @override
-  String get csvHeaderMaxDB => 'Max dB';
+  String get csvHeaderMaxDB => 'dB máximo';
 
   @override
-  String get csvHeaderEvents => 'Events';
+  String get csvHeaderEvents => 'Eventos';
 
   @override
-  String get csvHeaderQualityScore => 'Quality Score';
+  String get csvHeaderQualityScore => 'Puntuación de calidad';
 
   @override
-  String get csvHeaderQuality => 'Quality';
+  String get csvHeaderQuality => 'Calidad';
 
   @override
-  String get csvHeaderRecommendation => 'Recommendation';
+  String get csvHeaderRecommendation => 'Recomendación';
 
   @override
-  String get sleepAnalysis => 'Sleep Analysis';
+  String get sleepAnalysis => 'Análisis de sueño';
 
   @override
-  String get workEnvironment => 'Work Environment';
+  String get workEnvironment => 'Entorno de trabajo';
 
   @override
-  String get focusSession => 'Focus Session';
+  String get focusSession => 'Sesión de concentración';
+
+  @override
+  String get recordingComplete => 'Grabación completada';
+
+  @override
+  String get presetName => 'Nombre del preajuste';
+
+  @override
+  String get averageDecibels => 'Decibelios promedio';
+
+  @override
+  String get peakDecibels => 'Decibelios máximos';
+
+  @override
+  String get environmentQuality => 'Calidad del entorno';
+
+  @override
+  String get viewReport => 'Ver informe';
 }

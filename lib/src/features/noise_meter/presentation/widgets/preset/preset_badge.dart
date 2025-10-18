@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:sensorlab/src/features/noise_meter/presentation/state/enhanced_noise_data.dart';
+import 'package:sensorlab/src/features/noise_meter/domain/entities/acoustic_report_entity.dart';
 
 /// Compact preset badge
 class PresetBadge extends StatelessWidget {

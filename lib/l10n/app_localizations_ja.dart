@@ -140,7 +140,8 @@ class AppLocalizationsJa extends AppLocalizations {
   String get resetSettings => '設定をリセット';
 
   @override
-  String get resetAllSettingsToDefaultValues => 'すべての設定をデフォルト値に戻します。この操作は元に戻せません。';
+  String get resetAllSettingsToDefaultValues =>
+      'すべての設定をデフォルト値に戻します。この操作は元に戻せません。';
 
   @override
   String get resetToDefaults => 'デフォルトに戻す';
@@ -320,7 +321,8 @@ class AppLocalizationsJa extends AppLocalizations {
   String get failedToDisableTorch => '懐中電灯を無効にできませんでした';
 
   @override
-  String get intensityControlNotSupported => 'torch_light パッケージでは強度制御をサポートしていません';
+  String get intensityControlNotSupported =>
+      'torch_light パッケージでは強度制御をサポートしていません';
 
   @override
   String get failedToSetMode => 'モード設定に失敗しました';
@@ -590,7 +592,8 @@ class AppLocalizationsJa extends AppLocalizations {
   String get aboutGeolocator => 'ジオロケーターについて';
 
   @override
-  String get geolocatorDescription => 'このツールは、端末の GPS を使って現在の位置を表示します。\n\n機能:\n• 緯度/経度の正確な座標\n• 精度の推定\n• 逆ジオコーディングによる住所取得\n• 地図で位置を表示\n\n最良の結果を得るには:\n• 位置情報サービスを有効にする\n• 空が見える場所に移動する\n• 住所検索のためインターネット接続を有効にする';
+  String get geolocatorDescription =>
+      'このツールは、端末の GPS を使って現在の位置を表示します。\n\n機能:\n• 緯度/経度の正確な座標\n• 精度の推定\n• 逆ジオコーディングによる住所取得\n• 地図で位置を表示\n\n最良の結果を得るには:\n• 位置情報サービスを有効にする\n• 空が見える場所に移動する\n• 住所検索のためインターネット接続を有効にする';
 
   @override
   String get ok => 'OK';
@@ -724,7 +727,8 @@ class AppLocalizationsJa extends AppLocalizations {
   String get noHumiditySensor => '湿度センサーが検出されません';
 
   @override
-  String get noHumiditySensorDescription => 'ほとんどのスマホには湿度センサーがありません。デモ用にシミュレーションデータを表示しています。';
+  String get noHumiditySensorDescription =>
+      'ほとんどのスマホには湿度センサーがありません。デモ用にシミュレーションデータを表示しています。';
 
   @override
   String get checkAgain => '再確認';
@@ -882,7 +886,8 @@ class AppLocalizationsJa extends AppLocalizations {
   String get scanningTips => 'スキャンのヒント';
 
   @override
-  String get scanningTipsDescription => 'デバイスを安定させ、コードがフレーム内で明るく鮮明に見えるようにしてください。';
+  String get scanningTipsDescription =>
+      'デバイスを安定させ、コードがフレーム内で明るく鮮明に見えるようにしてください。';
 
   @override
   String get minStat => '最小';
@@ -1092,7 +1097,8 @@ class AppLocalizationsJa extends AppLocalizations {
   String get deviceNoProximitySensor => 'デバイスには近接センサーがありません';
 
   @override
-  String get proximitySensorLocation => '近接センサーは通常イヤピース付近に位置し、通話中に画面を消すために使用されます。';
+  String get proximitySensorLocation =>
+      '近接センサーは通常イヤピース付近に位置し、通話中に画面を消すために使用されます。';
 
   @override
   String get pausedCameraInUse => '一時停止 - カメラが他の機能で使用中';
@@ -1299,7 +1305,8 @@ class AppLocalizationsJa extends AppLocalizations {
   String get setDailyGoal => '1日の目標を設定';
 
   @override
-  String get resetSessionConfirmation => '現在のセッションをリセットしてもよろしいですか？すべての進捗が失われます。';
+  String get resetSessionConfirmation =>
+      '現在のセッションをリセットしてもよろしいですか？すべての進捗が失われます。';
 
   @override
   String get barometer => '気圧計';
@@ -1335,422 +1342,440 @@ class AppLocalizationsJa extends AppLocalizations {
   String get altitude => '高度';
 
   @override
-  String get altimeter => 'Altimeter';
+  String get altimeter => '高度計';
 
   @override
-  String get altimeterWaiting => 'Waiting for GPS and barometer data...';
+  String get altimeterWaiting => '高度計データを待っています...';
 
   @override
-  String get aboveSeaLevel => 'Above Sea Level';
+  String get aboveSeaLevel => '海抜';
 
   @override
-  String get climbing => 'Climbing';
+  String get climbing => '上昇中';
 
   @override
-  String get descending => 'Descending';
+  String get descending => '下降中';
 
   @override
-  String get stable => 'Stable';
+  String get stable => '安定';
 
   @override
-  String get usingGpsOnly => 'Using GPS data only';
+  String get usingGpsOnly => 'GPSのみ使用';
 
   @override
-  String get usingBarometerOnly => 'Using barometer data only';
+  String get usingBarometerOnly => '気圧計のみ使用';
 
   @override
-  String get usingFusedData => 'Combining GPS and barometer for accuracy';
+  String get usingFusedData => '統合データ使用';
 
   @override
-  String get dataSource => 'Data Source';
+  String get dataSource => 'データソース';
 
   @override
-  String get sensorReadings => 'Sensor Readings';
+  String get sensorReadings => 'センサー読み取り値';
 
   @override
-  String get gpsAltitude => 'GPS Altitude';
+  String get gpsAltitude => 'GPS高度';
 
   @override
-  String get baroAltitude => 'Baro Altitude';
+  String get baroAltitude => '気圧高度';
 
   @override
-  String get pressure => 'Pressure';
+  String get pressure => '気圧';
 
   @override
-  String get statistics => 'Statistics';
+  String get statistics => '統計';
 
   @override
-  String get gain => 'Gain';
+  String get gain => '上昇';
 
   @override
-  String get loss => 'Loss';
+  String get loss => '下降';
 
   @override
-  String get calibrateAltimeter => 'Calibrate Altimeter';
+  String get calibrateAltimeter => '高度計を校正';
 
   @override
-  String get calibrateDescription => 'Enter your current known altitude in meters to calibrate the barometric sensor for better accuracy.';
+  String get calibrateDescription => '校正のために現在の既知の高度を入力してください';
 
   @override
-  String get knownAltitude => 'Known Altitude';
+  String get knownAltitude => '既知の高度';
 
   @override
-  String get calibrationComplete => 'Calibration complete!';
+  String get calibrationComplete => '校正完了';
 
   @override
-  String get statsReset => 'Statistics reset!';
+  String get statsReset => '統計をリセット';
 
   @override
-  String get vibrationMeter => 'Vibration Meter';
+  String get vibrationMeter => '振動計';
 
   @override
-  String get vibrationWaiting => 'Waiting for accelerometer data...';
+  String get vibrationWaiting => '振動データを待っています...';
 
   @override
-  String get vibrationMagnitude => 'Vibration Magnitude';
+  String get vibrationMagnitude => '振動の大きさ';
 
   @override
-  String get vibrationLevel => 'Vibration Level';
+  String get vibrationLevel => '振動レベル';
 
   @override
-  String get realtimeWaveform => 'Real-time Waveform';
+  String get realtimeWaveform => 'リアルタイム波形';
 
   @override
-  String get pattern => 'Pattern';
+  String get pattern => 'パターン';
 
   @override
-  String get frequency => 'Frequency';
+  String get frequency => '周波数';
 
   @override
-  String get axisBreakdown => 'Axis Breakdown';
+  String get axisBreakdown => '軸別内訳';
 
   @override
-  String get advancedMetrics => 'Advanced Metrics';
+  String get advancedMetrics => '高度なメトリクス';
 
   @override
   String get rms => 'RMS';
 
   @override
-  String get peakToPeak => 'Peak-to-Peak';
+  String get peakToPeak => 'ピークツーピーク';
 
   @override
-  String get crestFactor => 'Crest Factor';
+  String get crestFactor => 'クレストファクター';
 
   @override
-  String get acousticAnalyzer => 'Acoustic Analyzer';
+  String get acousticAnalyzer => '音響アナライザー';
 
   @override
-  String get acousticAnalyzerTitle => 'Acoustic Environment Analyzer';
+  String get acousticAnalyzerTitle => '音響アナライザー';
 
   @override
-  String get acousticEnvironment => 'Acoustic Environment';
+  String get acousticEnvironment => '音響環境';
 
   @override
-  String get noiseLevel => 'Noise Level';
+  String get noiseLevel => '騒音レベル';
 
   @override
   String get decibelUnit => 'dB';
 
   @override
-  String get presetSelectTitle => 'Choose Recording Preset';
+  String get presetSelectTitle => 'プリセットを選択';
 
   @override
-  String get presetSelectSubtitle => 'Select a preset to analyze your acoustic environment over time';
+  String get presetSelectSubtitle => '音響分析のタイプを選択';
 
   @override
-  String get presetSleep => 'Sleep';
+  String get presetSleep => '睡眠';
 
   @override
-  String get presetSleepTitle => 'Analyze Sleep Environment';
+  String get presetSleepTitle => '睡眠環境を分析';
 
   @override
-  String get presetSleepDuration => '8 hours';
+  String get presetSleepDuration => '8時間';
 
   @override
-  String get presetSleepDescription => 'Monitor bedroom noise throughout the night to improve sleep quality';
+  String get presetSleepDescription => '睡眠の質を改善するために夜間の寝室のノイズを監視';
 
   @override
-  String get presetWork => 'Work';
+  String get presetWork => '作業';
 
   @override
-  String get presetWorkTitle => 'Monitor Office Environment';
+  String get presetWorkTitle => 'オフィス環境を監視';
 
   @override
-  String get presetWorkDuration => '1 hour';
+  String get presetWorkDuration => '1時間';
 
   @override
-  String get presetWorkDescription => 'Track workplace noise levels and identify distractions';
+  String get presetWorkDescription => '職場の騒音レベルを追跡し、気を散らすものを特定';
 
   @override
-  String get presetFocus => 'Focus';
+  String get presetFocus => '集中';
 
   @override
-  String get presetFocusTitle => 'Focus Session Analysis';
+  String get presetFocusTitle => '集中セッション分析';
 
   @override
-  String get presetFocusDuration => '30 minutes';
+  String get presetFocusDuration => '30分';
 
   @override
-  String get presetFocusDescription => 'Analyze your study or focus session environment';
+  String get presetFocusDescription => '学習または集中セッションの環境を分析';
 
   @override
-  String get presetCustom => 'Custom';
+  String get presetCustom => 'カスタム';
 
   @override
-  String get presetSleepAnalysis => 'Sleep Analysis (8h)';
+  String get presetSleepAnalysis => '睡眠分析';
 
   @override
-  String get presetWorkEnvironment => 'Work Environment (1h)';
+  String get presetWorkEnvironment => '作業環境';
 
   @override
-  String get presetFocusSession => 'Focus Session (30m)';
+  String get presetFocusSession => '集中セッション';
 
   @override
-  String get presetCustomRecording => 'Custom Recording';
+  String get presetCustomRecording => 'カスタム録音';
 
   @override
-  String get monitoringTitle => 'Monitoring';
+  String get monitoringTitle => 'モニタリング';
 
   @override
-  String get monitoringActive => 'Recording Active';
+  String get monitoringActive => 'モニタリング中';
 
   @override
-  String get monitoringStopped => 'Recording Stopped';
+  String get monitoringStopped => 'モニタリング停止';
 
   @override
-  String get monitoringProgress => 'Progress';
+  String get monitoringProgress => 'モニタリング進捗';
 
   @override
-  String get monitoringCurrentLevel => 'Current Level';
+  String get monitoringCurrentLevel => '現在のレベル';
 
   @override
-  String get monitoringLiveChart => 'Live Monitoring';
+  String get monitoringLiveChart => 'ライブチャート';
 
   @override
-  String get monitoringEnvironment => 'Monitoring acoustic environment...';
+  String get monitoringEnvironment => '環境監視中';
 
   @override
-  String get recordingStart => 'Start Recording';
+  String get recordingStart => '録音開始';
 
   @override
-  String get recordingStop => 'Stop Recording';
+  String get recordingStop => '録音停止';
 
   @override
-  String get recordingCompleted => 'Recording completed';
+  String get recordingCompleted => '録音完了';
 
   @override
-  String get reportGeneratedSuccess => 'Report generated successfully!';
+  String get reportGeneratedSuccess => 'レポートが正常に生成されました';
 
   @override
-  String get stopRecordingTooltip => 'Stop Recording';
+  String get stopRecordingTooltip => '録音を停止';
 
   @override
-  String get stopRecordingConfirmTitle => 'Stop Recording?';
+  String get stopRecordingConfirmTitle => '録音を停止しますか？';
 
   @override
-  String get stopRecordingConfirmMessage => 'Are you sure you want to stop the recording? The report will be generated with the current data.';
+  String get stopRecordingConfirmMessage => '現在の録音を停止してもよろしいですか？';
 
   @override
-  String get continueRecording => 'Continue';
+  String get continueRecording => '録音を続ける';
 
   @override
-  String get reportsTitle => 'Acoustic Reports';
+  String get reportsTitle => 'レポート';
 
   @override
-  String get reportsEmpty => 'No Reports Yet';
+  String get reportsEmpty => 'レポートなし';
 
   @override
-  String get reportsEmptyDescription => 'Start an acoustic analysis session to generate your first report';
+  String get reportsEmptyDescription => 'レポートが見つかりません。分析を開始して作成してください。';
 
   @override
   String reportsSelectedCount(int count) {
-    return '$count Selected';
+    return '$count個選択';
   }
 
   @override
-  String get reportExportCSV => 'Export as CSV';
+  String get reportExportCSV => 'CSVをエクスポート';
 
   @override
-  String get reportExportAll => 'Export All';
+  String get reportExportAll => 'すべてエクスポート';
 
   @override
-  String get reportDelete => 'Delete';
+  String get reportDelete => '削除';
 
   @override
-  String get reportDeleteSelected => 'Delete Selected';
+  String get reportDeleteSelected => '選択したものを削除';
 
   @override
-  String get reportDeleteConfirmTitle => 'Delete Reports?';
+  String get reportDeleteConfirmTitle => 'レポートを削除しますか？';
 
   @override
   String reportDeleteConfirmMessage(int count) {
-    return 'Are you sure you want to delete $count report(s)? This action cannot be undone.';
+    return '選択したレポートを削除してもよろしいですか？';
   }
 
   @override
-  String get reportDeleteSuccess => 'Reports deleted';
+  String get reportDeleteSuccess => 'レポートが正常に削除されました';
 
   @override
-  String get reportFilterByPreset => 'Filter by Preset';
+  String get reportFilterByPreset => 'プリセットでフィルター';
 
   @override
-  String get reportFilterAll => 'All Presets';
+  String get reportFilterAll => 'すべて';
 
   @override
-  String get reportStartAnalysis => 'Start Analysis';
+  String get reportStartAnalysis => '分析を開始';
 
   @override
-  String get csvCopiedToClipboard => 'CSV data copied to clipboard!';
+  String get csvCopiedToClipboard => 'CSVをクリップボードにコピー';
 
   @override
-  String get reportDetailTitle => 'Acoustic Report';
+  String get reportDetailTitle => 'レポート詳細';
 
   @override
-  String get reportQualityTitle => 'Environment Quality';
+  String get reportQualityTitle => '品質';
 
   @override
-  String get reportQualityScore => 'Quality Score';
+  String get reportQualityScore => '品質スコア';
 
   @override
-  String get reportAverage => 'Average';
+  String get reportAverage => '平均';
 
   @override
-  String get reportPeak => 'Peak';
+  String get reportPeak => 'ピーク';
 
   @override
-  String get reportHourlyBreakdown => 'Hourly Breakdown';
+  String get reportHourlyBreakdown => '時間別内訳';
 
   @override
-  String get reportNoiseEvents => 'Noise Events';
+  String get reportNoiseEvents => '騒音イベント';
 
   @override
-  String get reportNoEventsTitle => 'No Interruptions Detected';
+  String get reportNoEventsTitle => 'イベントなし';
 
   @override
-  String get reportNoEventsMessage => 'Your environment was consistently quiet';
+  String get reportNoEventsMessage => 'このセッション中に騒音イベントは検出されませんでした';
 
   @override
-  String get reportShare => 'Share Report';
+  String get reportShare => '共有';
 
   @override
-  String get reportRecommendations => 'Recommendations';
+  String get reportRecommendations => '推奨事項';
 
   @override
-  String get reportDuration => 'Duration';
+  String get reportDuration => '期間';
 
   @override
-  String get reportEvents => 'events';
+  String get reportEvents => 'イベント';
 
   @override
   String durationHours(int hours) {
-    return '${hours}h';
+    return '時間';
   }
 
   @override
   String durationMinutes(int minutes) {
-    return '${minutes}m';
+    return '分';
   }
 
   @override
   String durationSeconds(int seconds) {
-    return '${seconds}s';
+    return '秒';
   }
 
   @override
   String durationHoursMinutes(int hours, int minutes) {
-    return '${hours}h ${minutes}m';
+    return '$hours時間$minutes分';
   }
 
   @override
-  String get qualityExcellent => 'Excellent';
+  String get qualityExcellent => '優秀';
 
   @override
-  String get qualityGood => 'Good';
+  String get qualityGood => '良好';
 
   @override
-  String get qualityFair => 'Fair';
+  String get qualityFair => '普通';
 
   @override
-  String get qualityPoor => 'Poor';
+  String get qualityPoor => '悪い';
 
   @override
   String get unitDecibels => 'dB';
 
   @override
-  String get unitHours => 'hours';
+  String get unitHours => '時間';
 
   @override
-  String get unitMinutes => 'minutes';
+  String get unitMinutes => '分';
 
   @override
-  String get unitSeconds => 'seconds';
+  String get unitSeconds => '秒';
 
   @override
   String get actionOk => 'OK';
 
   @override
-  String get actionContinue => 'Continue';
+  String get actionContinue => '続ける';
 
   @override
-  String get actionStop => 'Stop';
+  String get actionStop => '停止';
 
   @override
-  String get actionStart => 'Start';
+  String get actionStart => '開始';
 
   @override
-  String get actionView => 'View';
+  String get actionView => '表示';
 
   @override
-  String get actionExport => 'Export';
+  String get actionExport => 'エクスポート';
 
   @override
-  String get actionShare => 'Share';
+  String get actionShare => '共有';
 
   @override
-  String get viewHistoricalReports => 'View Historical Reports';
+  String get viewHistoricalReports => '過去のレポートを表示';
 
   @override
   String get csvHeaderID => 'ID';
 
   @override
-  String get csvHeaderStartTime => 'Start Time';
+  String get csvHeaderStartTime => '開始時刻';
 
   @override
-  String get csvHeaderEndTime => 'End Time';
+  String get csvHeaderEndTime => '終了時刻';
 
   @override
-  String get csvHeaderDuration => 'Duration (min)';
+  String get csvHeaderDuration => '期間（分）';
 
   @override
-  String get csvHeaderPreset => 'Preset';
+  String get csvHeaderPreset => 'プリセット';
 
   @override
-  String get csvHeaderAverageDB => 'Average dB';
+  String get csvHeaderAverageDB => '平均dB';
 
   @override
-  String get csvHeaderMinDB => 'Min dB';
+  String get csvHeaderMinDB => '最小dB';
 
   @override
-  String get csvHeaderMaxDB => 'Max dB';
+  String get csvHeaderMaxDB => '最大dB';
 
   @override
-  String get csvHeaderEvents => 'Events';
+  String get csvHeaderEvents => 'イベント';
 
   @override
-  String get csvHeaderQualityScore => 'Quality Score';
+  String get csvHeaderQualityScore => '品質スコア';
 
   @override
-  String get csvHeaderQuality => 'Quality';
+  String get csvHeaderQuality => '品質';
 
   @override
-  String get csvHeaderRecommendation => 'Recommendation';
+  String get csvHeaderRecommendation => '推奨事項';
 
   @override
-  String get sleepAnalysis => 'Sleep Analysis';
+  String get sleepAnalysis => '睡眠分析';
 
   @override
-  String get workEnvironment => 'Work Environment';
+  String get workEnvironment => '作業環境';
 
   @override
-  String get focusSession => 'Focus Session';
+  String get focusSession => '集中セッション';
+
+  @override
+  String get recordingComplete => '録音完了';
+
+  @override
+  String get presetName => 'プリセット名';
+
+  @override
+  String get averageDecibels => '平均デシベル';
+
+  @override
+  String get peakDecibels => 'ピークデシベル';
+
+  @override
+  String get environmentQuality => '環境品質';
+
+  @override
+  String get viewReport => 'レポートを表示';
 }

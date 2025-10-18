@@ -47,29 +47,32 @@ class DecibelDisplay extends StatelessWidget {
               style: theme.textTheme.titleMedium?.copyWith(color: Colors.grey),
             ),
             const SizedBox(height: 16),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Text(
-                  decibels.toStringAsFixed(1),
-                  style: theme.textTheme.displayLarge?.copyWith(
-                    fontSize: 72,
-                    fontWeight: FontWeight.bold,
-                    color: color,
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 16, left: 8),
-                  child: Text(
-                    unit,
-                    style: theme.textTheme.headlineMedium?.copyWith(
+            FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Text(
+                    decibels.toStringAsFixed(1),
+                    style: theme.textTheme.displayLarge?.copyWith(
+                      fontSize: 72,
+                      fontWeight: FontWeight.bold,
                       color: color,
-                      fontWeight: FontWeight.w500,
                     ),
                   ),
-                ),
-              ],
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 16, left: 8),
+                    child: Text(
+                      unit,
+                      style: theme.textTheme.headlineMedium?.copyWith(
+                        color: color,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
             const SizedBox(height: 16),
             Text(

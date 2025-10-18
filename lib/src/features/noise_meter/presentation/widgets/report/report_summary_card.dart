@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:iconsax/iconsax.dart';
 
 /// Summary stat card for reports list
 class ReportSummaryCard extends StatelessWidget {
@@ -93,7 +92,9 @@ class ReportSummaryCard extends StatelessWidget {
                 children: [
                   _InfoChip(
                     icon: Icons.graphic_eq_rounded,
-                    label: '${avgDecibels.toStringAsFixed(1)} dB',
+                    label: avgDecibels.isNaN || avgDecibels.isInfinite
+                        ? '--'
+                        : '${avgDecibels.toStringAsFixed(1)} dB',
                     color: Colors.blue,
                   ),
                   const SizedBox(width: 8),

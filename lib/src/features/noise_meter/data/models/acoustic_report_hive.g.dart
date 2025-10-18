@@ -73,13 +73,15 @@ class AcousticReportHiveAdapter extends TypeAdapter<AcousticReportHive> {
       hourlyAverages: (fields[10] as List).cast<double>(),
       environmentQuality: fields[11] as String,
       recommendation: fields[12] as String,
+      qualityScore: fields[13] as int?,
+      interruptionCount: fields[14] as int?,
     );
   }
 
   @override
   void write(BinaryWriter writer, AcousticReportHive obj) {
     writer
-      ..writeByte(13)
+      ..writeByte(15)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -105,7 +107,11 @@ class AcousticReportHiveAdapter extends TypeAdapter<AcousticReportHive> {
       ..writeByte(11)
       ..write(obj.environmentQuality)
       ..writeByte(12)
-      ..write(obj.recommendation);
+      ..write(obj.recommendation)
+      ..writeByte(13)
+      ..write(obj.qualityScore)
+      ..writeByte(14)
+      ..write(obj.interruptionCount);
   }
 
   @override
