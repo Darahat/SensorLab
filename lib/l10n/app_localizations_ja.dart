@@ -140,8 +140,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get resetSettings => '設定をリセット';
 
   @override
-  String get resetAllSettingsToDefaultValues =>
-      'すべての設定をデフォルト値に戻します。この操作は元に戻せません。';
+  String get resetAllSettingsToDefaultValues => 'すべての設定をデフォルト値に戻します。この操作は元に戻せません。';
 
   @override
   String get resetToDefaults => 'デフォルトに戻す';
@@ -321,8 +320,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get failedToDisableTorch => '懐中電灯を無効にできませんでした';
 
   @override
-  String get intensityControlNotSupported =>
-      'torch_light パッケージでは強度制御をサポートしていません';
+  String get intensityControlNotSupported => 'torch_light パッケージでは強度制御をサポートしていません';
 
   @override
   String get failedToSetMode => 'モード設定に失敗しました';
@@ -592,8 +590,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get aboutGeolocator => 'ジオロケーターについて';
 
   @override
-  String get geolocatorDescription =>
-      'このツールは、端末の GPS を使って現在の位置を表示します。\n\n機能:\n• 緯度/経度の正確な座標\n• 精度の推定\n• 逆ジオコーディングによる住所取得\n• 地図で位置を表示\n\n最良の結果を得るには:\n• 位置情報サービスを有効にする\n• 空が見える場所に移動する\n• 住所検索のためインターネット接続を有効にする';
+  String get geolocatorDescription => 'このツールは、端末の GPS を使って現在の位置を表示します。\n\n機能:\n• 緯度/経度の正確な座標\n• 精度の推定\n• 逆ジオコーディングによる住所取得\n• 地図で位置を表示\n\n最良の結果を得るには:\n• 位置情報サービスを有効にする\n• 空が見える場所に移動する\n• 住所検索のためインターネット接続を有効にする';
 
   @override
   String get ok => 'OK';
@@ -727,8 +724,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get noHumiditySensor => '湿度センサーが検出されません';
 
   @override
-  String get noHumiditySensorDescription =>
-      'ほとんどのスマホには湿度センサーがありません。デモ用にシミュレーションデータを表示しています。';
+  String get noHumiditySensorDescription => 'ほとんどのスマホには湿度センサーがありません。デモ用にシミュレーションデータを表示しています。';
 
   @override
   String get checkAgain => '再確認';
@@ -886,8 +882,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get scanningTips => 'スキャンのヒント';
 
   @override
-  String get scanningTipsDescription =>
-      'デバイスを安定させ、コードがフレーム内で明るく鮮明に見えるようにしてください。';
+  String get scanningTipsDescription => 'デバイスを安定させ、コードがフレーム内で明るく鮮明に見えるようにしてください。';
 
   @override
   String get minStat => '最小';
@@ -1097,8 +1092,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get deviceNoProximitySensor => 'デバイスには近接センサーがありません';
 
   @override
-  String get proximitySensorLocation =>
-      '近接センサーは通常イヤピース付近に位置し、通話中に画面を消すために使用されます。';
+  String get proximitySensorLocation => '近接センサーは通常イヤピース付近に位置し、通話中に画面を消すために使用されます。';
 
   @override
   String get pausedCameraInUse => '一時停止 - カメラが他の機能で使用中';
@@ -1305,8 +1299,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get setDailyGoal => '1日の目標を設定';
 
   @override
-  String get resetSessionConfirmation =>
-      '現在のセッションをリセットしてもよろしいですか？すべての進捗が失われます。';
+  String get resetSessionConfirmation => '現在のセッションをリセットしてもよろしいですか？すべての進捗が失われます。';
 
   @override
   String get barometer => '気圧計';
@@ -1778,4 +1771,161 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get viewReport => 'レポートを表示';
+
+  @override
+  String get noiseMeterGuide => '騒音計ガイド';
+
+  @override
+  String get environmentAnalyzer => '環境アナライザー';
+
+  @override
+  String get environmentAnalyzerSubtitle => 'プリセットベースの音響分析';
+
+  @override
+  String get acousticReportsSubtitle => '保存された分析と履歴を表示';
+
+  @override
+  String get exportReports => 'レポートのエクスポート';
+
+  @override
+  String get exportChooseMethod => 'レポートのエクスポート方法を選択してください：';
+
+  @override
+  String get exportCopyToClipboard => 'クリップボードにコピー';
+
+  @override
+  String get exportSaveAsFile => 'ファイルとして保存';
+
+  @override
+  String get exportSuccess => 'エクスポート成功';
+
+  @override
+  String exportSuccessMessage(int count) {
+    return '$count件のレポートが正常にエクスポートされました！';
+  }
+
+  @override
+  String get savedTo => '保存先：';
+
+  @override
+  String get deletePreset => 'プリセットを削除しますか？';
+
+  @override
+  String deletePresetMessage(String title) {
+    return '\"$title\"を削除しますか？この操作は元に戻せません。';
+  }
+
+  @override
+  String get acousticReport => '音響レポート';
+
+  @override
+  String get createCustomPreset => 'カスタムプリセットを作成';
+
+  @override
+  String get durationMustBeGreaterThanZero => '期間は0より大きい必要があります';
+
+  @override
+  String get allPresets => 'すべてのプリセット';
+
+  @override
+  String get consistency => '一貫性';
+
+  @override
+  String get peakManagement => 'ピーク管理';
+
+  @override
+  String get level => 'レベル';
+
+  @override
+  String get avg => '平均';
+
+  @override
+  String get realtimeNoiseLevels => 'リアルタイム騒音レベル';
+
+  @override
+  String get decibelStatistics => 'デシベル統計';
+
+  @override
+  String get quietEnvironment => '静かな環境';
+
+  @override
+  String get moderateNoise => '中程度の騒音';
+
+  @override
+  String get loudEnvironment => 'うるさい環境';
+
+  @override
+  String get veryLoudCaution => '非常にうるさい - 注意';
+
+  @override
+  String get dangerousLevels => '危険なレベル';
+
+  @override
+  String get grantMicrophonePermission => '騒音レベルを測定するためにマイクの許可を付与してください';
+
+  @override
+  String get hourlyBreakdown => '時間別内訳';
+
+  @override
+  String get eventTimeline => 'イベントタイムライン';
+
+  @override
+  String get noEventsRecorded => '記録されたイベントはありません';
+
+  @override
+  String get sessionDetails => 'セッションの詳細';
+
+  @override
+  String get date => '日付';
+
+  @override
+  String get preset => 'プリセット';
+
+  @override
+  String get recommendation => '推奨事項';
+
+  @override
+  String get noInterruptions => '中断なし';
+
+  @override
+  String get quietQuiet => '静か (0-30 dB)';
+
+  @override
+  String get quietModerate => '中程度 (30-60 dB)';
+
+  @override
+  String get quietLoud => 'うるさい (60-85 dB)';
+
+  @override
+  String get quietVeryLoud => '非常にうるさい (85-100 dB)';
+
+  @override
+  String get quietDangerous => '危険 (100+ dB)';
+
+  @override
+  String get anErrorOccurred => 'エラーが発生しました。';
+
+  @override
+  String failedToLoadPresets(String error) {
+    return 'プリセットの読み込みに失敗しました: $error';
+  }
+
+  @override
+  String createdPreset(String title) {
+    return '\"$title\"を作成しました！';
+  }
+
+  @override
+  String failedToSavePreset(String error) {
+    return 'プリセットの保存に失敗しました: $error';
+  }
+
+  @override
+  String get deleteReportsQuestion => 'レポートを削除しますか？';
+
+  @override
+  String get deleteReportsConfirmMessage => '選択したレポートを削除してもよろしいですか？この操作は元に戻せません。';
+
+  @override
+  String get reportsDeleted => 'レポートが削除されました';
 }

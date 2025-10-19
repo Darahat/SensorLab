@@ -64,8 +64,7 @@ import 'app_localizations_km.dart';
 /// be consistent with the languages listed in the AppLocalizations.supportedLocales
 /// property.
 abstract class AppLocalizations {
-  AppLocalizations(String locale)
-    : localeName = intl.Intl.canonicalizedLocale(locale.toString());
+  AppLocalizations(String locale) : localeName = intl.Intl.canonicalizedLocale(locale.toString());
 
   final String localeName;
 
@@ -73,8 +72,7 @@ abstract class AppLocalizations {
     return Localizations.of<AppLocalizations>(context, AppLocalizations);
   }
 
-  static const LocalizationsDelegate<AppLocalizations> delegate =
-      _AppLocalizationsDelegate();
+  static const LocalizationsDelegate<AppLocalizations> delegate = _AppLocalizationsDelegate();
 
   /// A list of this localizations delegate along with the default localizations
   /// delegates.
@@ -86,20 +84,19 @@ abstract class AppLocalizations {
   /// Additional delegates can be added by appending to this list in
   /// MaterialApp. This list does not have to be used at all if a custom list
   /// of delegates is preferred or required.
-  static const List<LocalizationsDelegate<dynamic>> localizationsDelegates =
-      <LocalizationsDelegate<dynamic>>[
-        delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-      ];
+  static const List<LocalizationsDelegate<dynamic>> localizationsDelegates = <LocalizationsDelegate<dynamic>>[
+    delegate,
+    GlobalMaterialLocalizations.delegate,
+    GlobalCupertinoLocalizations.delegate,
+    GlobalWidgetsLocalizations.delegate,
+  ];
 
   /// A list of this localizations delegate's supported locales.
   static const List<Locale> supportedLocales = <Locale>[
     Locale('en'),
     Locale('es'),
     Locale('ja'),
-    Locale('km'),
+    Locale('km')
   ];
 
   /// No description provided for @appName.
@@ -3545,10 +3542,303 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'View Report'**
   String get viewReport;
+
+  /// No description provided for @noiseMeterGuide.
+  ///
+  /// In en, this message translates to:
+  /// **'Noise Meter Guide'**
+  String get noiseMeterGuide;
+
+  /// No description provided for @environmentAnalyzer.
+  ///
+  /// In en, this message translates to:
+  /// **'Environment Analyzer'**
+  String get environmentAnalyzer;
+
+  /// No description provided for @environmentAnalyzerSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Preset-based acoustic analysis'**
+  String get environmentAnalyzerSubtitle;
+
+  /// No description provided for @acousticReportsSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'View saved analyses and history'**
+  String get acousticReportsSubtitle;
+
+  /// No description provided for @exportReports.
+  ///
+  /// In en, this message translates to:
+  /// **'Export Reports'**
+  String get exportReports;
+
+  /// No description provided for @exportChooseMethod.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose how you want to export the reports:'**
+  String get exportChooseMethod;
+
+  /// No description provided for @exportCopyToClipboard.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy to Clipboard'**
+  String get exportCopyToClipboard;
+
+  /// No description provided for @exportSaveAsFile.
+  ///
+  /// In en, this message translates to:
+  /// **'Save as File'**
+  String get exportSaveAsFile;
+
+  /// No description provided for @exportSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Export Successful'**
+  String get exportSuccess;
+
+  /// No description provided for @exportSuccessMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} report(s) exported successfully!'**
+  String exportSuccessMessage(int count);
+
+  /// No description provided for @savedTo.
+  ///
+  /// In en, this message translates to:
+  /// **'Saved to:'**
+  String get savedTo;
+
+  /// No description provided for @deletePreset.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Preset?'**
+  String get deletePreset;
+
+  /// No description provided for @deletePresetMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete \"{title}\"? This cannot be undone.'**
+  String deletePresetMessage(String title);
+
+  /// No description provided for @acousticReport.
+  ///
+  /// In en, this message translates to:
+  /// **'Acoustic Report'**
+  String get acousticReport;
+
+  /// No description provided for @createCustomPreset.
+  ///
+  /// In en, this message translates to:
+  /// **'Create Custom Preset'**
+  String get createCustomPreset;
+
+  /// No description provided for @durationMustBeGreaterThanZero.
+  ///
+  /// In en, this message translates to:
+  /// **'Duration must be greater than 0'**
+  String get durationMustBeGreaterThanZero;
+
+  /// No description provided for @allPresets.
+  ///
+  /// In en, this message translates to:
+  /// **'All Presets'**
+  String get allPresets;
+
+  /// No description provided for @consistency.
+  ///
+  /// In en, this message translates to:
+  /// **'Consistency'**
+  String get consistency;
+
+  /// No description provided for @peakManagement.
+  ///
+  /// In en, this message translates to:
+  /// **'Peak Mgmt'**
+  String get peakManagement;
+
+  /// No description provided for @level.
+  ///
+  /// In en, this message translates to:
+  /// **'Level'**
+  String get level;
+
+  /// No description provided for @avg.
+  ///
+  /// In en, this message translates to:
+  /// **'Avg'**
+  String get avg;
+
+  /// No description provided for @realtimeNoiseLevels.
+  ///
+  /// In en, this message translates to:
+  /// **'Real-time Noise Levels'**
+  String get realtimeNoiseLevels;
+
+  /// No description provided for @decibelStatistics.
+  ///
+  /// In en, this message translates to:
+  /// **'Decibel Statistics'**
+  String get decibelStatistics;
+
+  /// No description provided for @quietEnvironment.
+  ///
+  /// In en, this message translates to:
+  /// **'Quiet Environment'**
+  String get quietEnvironment;
+
+  /// No description provided for @moderateNoise.
+  ///
+  /// In en, this message translates to:
+  /// **'Moderate Noise'**
+  String get moderateNoise;
+
+  /// No description provided for @loudEnvironment.
+  ///
+  /// In en, this message translates to:
+  /// **'Loud Environment'**
+  String get loudEnvironment;
+
+  /// No description provided for @veryLoudCaution.
+  ///
+  /// In en, this message translates to:
+  /// **'Very Loud - Caution'**
+  String get veryLoudCaution;
+
+  /// No description provided for @dangerousLevels.
+  ///
+  /// In en, this message translates to:
+  /// **'Dangerous Levels'**
+  String get dangerousLevels;
+
+  /// No description provided for @grantMicrophonePermission.
+  ///
+  /// In en, this message translates to:
+  /// **'Grant microphone permission to measure noise levels'**
+  String get grantMicrophonePermission;
+
+  /// No description provided for @hourlyBreakdown.
+  ///
+  /// In en, this message translates to:
+  /// **'Hourly Breakdown'**
+  String get hourlyBreakdown;
+
+  /// No description provided for @eventTimeline.
+  ///
+  /// In en, this message translates to:
+  /// **'Event Timeline'**
+  String get eventTimeline;
+
+  /// No description provided for @noEventsRecorded.
+  ///
+  /// In en, this message translates to:
+  /// **'No events recorded'**
+  String get noEventsRecorded;
+
+  /// No description provided for @sessionDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Session Details'**
+  String get sessionDetails;
+
+  /// No description provided for @date.
+  ///
+  /// In en, this message translates to:
+  /// **'Date'**
+  String get date;
+
+  /// No description provided for @preset.
+  ///
+  /// In en, this message translates to:
+  /// **'Preset'**
+  String get preset;
+
+  /// No description provided for @recommendation.
+  ///
+  /// In en, this message translates to:
+  /// **'Recommendation'**
+  String get recommendation;
+
+  /// No description provided for @noInterruptions.
+  ///
+  /// In en, this message translates to:
+  /// **'No Interruptions'**
+  String get noInterruptions;
+
+  /// No description provided for @quietQuiet.
+  ///
+  /// In en, this message translates to:
+  /// **'Quiet (0-30 dB)'**
+  String get quietQuiet;
+
+  /// No description provided for @quietModerate.
+  ///
+  /// In en, this message translates to:
+  /// **'Moderate (30-60 dB)'**
+  String get quietModerate;
+
+  /// No description provided for @quietLoud.
+  ///
+  /// In en, this message translates to:
+  /// **'Loud (60-85 dB)'**
+  String get quietLoud;
+
+  /// No description provided for @quietVeryLoud.
+  ///
+  /// In en, this message translates to:
+  /// **'Very Loud (85-100 dB)'**
+  String get quietVeryLoud;
+
+  /// No description provided for @quietDangerous.
+  ///
+  /// In en, this message translates to:
+  /// **'Dangerous (100+ dB)'**
+  String get quietDangerous;
+
+  /// No description provided for @anErrorOccurred.
+  ///
+  /// In en, this message translates to:
+  /// **'An error occurred.'**
+  String get anErrorOccurred;
+
+  /// No description provided for @failedToLoadPresets.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to load presets: {error}'**
+  String failedToLoadPresets(String error);
+
+  /// No description provided for @createdPreset.
+  ///
+  /// In en, this message translates to:
+  /// **'Created \"{title}\"!'**
+  String createdPreset(String title);
+
+  /// No description provided for @failedToSavePreset.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to save preset: {error}'**
+  String failedToSavePreset(String error);
+
+  /// No description provided for @deleteReportsQuestion.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Reports?'**
+  String get deleteReportsQuestion;
+
+  /// No description provided for @deleteReportsConfirmMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete the selected report(s)? This action cannot be undone.'**
+  String get deleteReportsConfirmMessage;
+
+  /// No description provided for @reportsDeleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Reports deleted'**
+  String get reportsDeleted;
 }
 
-class _AppLocalizationsDelegate
-    extends LocalizationsDelegate<AppLocalizations> {
+class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
   const _AppLocalizationsDelegate();
 
   @override
@@ -3557,30 +3847,27 @@ class _AppLocalizationsDelegate
   }
 
   @override
-  bool isSupported(Locale locale) =>
-      <String>['en', 'es', 'ja', 'km'].contains(locale.languageCode);
+  bool isSupported(Locale locale) => <String>['en', 'es', 'ja', 'km'].contains(locale.languageCode);
 
   @override
   bool shouldReload(_AppLocalizationsDelegate old) => false;
 }
 
 AppLocalizations lookupAppLocalizations(Locale locale) {
+
+
   // Lookup logic when only language code is specified.
   switch (locale.languageCode) {
-    case 'en':
-      return AppLocalizationsEn();
-    case 'es':
-      return AppLocalizationsEs();
-    case 'ja':
-      return AppLocalizationsJa();
-    case 'km':
-      return AppLocalizationsKm();
+    case 'en': return AppLocalizationsEn();
+    case 'es': return AppLocalizationsEs();
+    case 'ja': return AppLocalizationsJa();
+    case 'km': return AppLocalizationsKm();
   }
 
   throw FlutterError(
     'AppLocalizations.delegate failed to load unsupported locale "$locale". This is likely '
     'an issue with the localizations generation tool. Please file an issue '
     'on GitHub with a reproducible sample app and the gen-l10n configuration '
-    'that was used.',
+    'that was used.'
   );
 }
