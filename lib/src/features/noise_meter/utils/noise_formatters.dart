@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sensorlab/src/features/noise_meter/presentation/state/enhanced_noise_data.dart';
-import 'package:sensorlab/src/features/noise_meter/utils/context_extensions.dart';
+import 'package:sensorlab/src/features/noise_meter/utils/utils_index.dart';
 
 class NoiseFormatters {
   static String formatDuration(Duration duration) {

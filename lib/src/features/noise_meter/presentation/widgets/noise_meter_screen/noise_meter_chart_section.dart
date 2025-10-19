@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sensorlab/src/features/noise_meter/utils/utils_index.dart'; // ← Use shared widgets
+import 'package:sensorlab/src/features/noise_meter/utils/utils_index.dart';
 import 'package:sensorlab/src/shared/widgets/utility_widgets.dart'; // ← Use shared widgets
 
 class NoiseMeterChartSection extends StatelessWidget {

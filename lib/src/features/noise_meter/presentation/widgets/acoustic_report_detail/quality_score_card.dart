@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sensorlab/src/features/noise_meter/domain/entities/acoustic_report_entity.dart';
-import 'package:sensorlab/src/features/noise_meter/utils/report_formatters.dart';
+import 'package:sensorlab/src/features/noise_meter/utils/utils_index.dart';
 
 class QualityScoreCard extends StatelessWidget {
   final AcousticReport report;

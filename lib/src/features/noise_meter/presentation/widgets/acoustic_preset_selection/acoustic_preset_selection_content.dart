@@ -3,8 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:sensorlab/l10n/app_localizations.dart';
 import 'package:sensorlab/src/features/noise_meter/presentation/screens/acoustic_reports_list_screen.dart';
-import 'package:sensorlab/src/features/noise_meter/presentation/widgets/acoustic_preset_selection/preset_list_widget.dart';
-import 'package:sensorlab/src/features/noise_meter/utils/acoustic_preset_selection_utils.dart';
+import 'package:sensorlab/src/features/noise_meter/presentation/widgets/widgets_index.dart';
+import 'package:sensorlab/src/features/noise_meter/utils/utils_index.dart';
 
 class AcousticPresetSelectionContent extends ConsumerStatefulWidget {
   const AcousticPresetSelectionContent({super.key});

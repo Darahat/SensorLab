@@ -3,8 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sensorlab/l10n/app_localizations.dart';
 import 'package:sensorlab/src/features/noise_meter/presentation/providers/enhanced_noise_meter_provider.dart';
 import 'package:sensorlab/src/features/noise_meter/presentation/state/enhanced_noise_data.dart';
-import 'package:sensorlab/src/features/noise_meter/presentation/widgets/noise_meter_screen/noise_meter_screen_components.dart';
-import 'package:sensorlab/src/features/noise_meter/utils/utils_index.dart'; // ← Single import
+import 'package:sensorlab/src/features/noise_meter/presentation/widgets/widgets_index.dart';
 
 class NoiseMeterScreen extends ConsumerWidget {
   const NoiseMeterScreen({super.key});

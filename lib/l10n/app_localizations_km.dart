@@ -57,8 +57,7 @@ class AppLocalizationsKm extends AppLocalizations {
   String get darkMode => 'របៀបងងឹត';
 
   @override
-  String get switchBetweenLightAndDarkThemes =>
-      'ប្ដូរវាងអេឡិចត្រូនិច‌លើពន្លឺ និង ភ្នែកងងឹត';
+  String get switchBetweenLightAndDarkThemes => 'ប្ដូរវាងអេឡិចត្រូនិច‌លើពន្លឺ និង ភ្នែកងងឹត';
 
   @override
   String get system => 'ប្រព័ន្ធ';
@@ -103,8 +102,7 @@ class AppLocalizationsKm extends AppLocalizations {
   String get autoScan => 'ស្កេនស្វ័យប្រវត្តិ';
 
   @override
-  String get automaticallyScanWhenOpeningScanner =>
-      'ស្កេនដោយស្វ័យប្រវត្តិពេលបើកកម្មវិធីស្កេន';
+  String get automaticallyScanWhenOpeningScanner => 'ស្កេនដោយស្វ័យប្រវត្តិពេលបើកកម្មវិធីស្កេន';
 
   @override
   String get sensorUpdateFrequency => 'សម្រង់ភាពតម្រូវការអាប់ដេតឧបករណ៍សន្សើម';
@@ -121,8 +119,7 @@ class AppLocalizationsKm extends AppLocalizations {
   String get dataCollection => 'ការប្រមូលទិន្នន័យ';
 
   @override
-  String get allowAnonymousUsageAnalytics =>
-      'អនុញ្ញាតវិភាគប្រើប្រាស់ដោយកម្រិតអនាមិក';
+  String get allowAnonymousUsageAnalytics => 'អនុញ្ញាតវិភាគប្រើប្រាស់ដោយកម្រិតអនាមិក';
 
   @override
   String get privacyMode => 'របៀបភាពឯកជន';
@@ -143,15 +140,13 @@ class AppLocalizationsKm extends AppLocalizations {
   String get resetSettings => 'កំណត់ឡើងវិញ';
 
   @override
-  String get resetAllSettingsToDefaultValues =>
-      'កំណត់ឡើងវិញគ្រប់កំណត់ទៅតម្លៃលំនាំដើម។ សកម្មភាពនេះមិនអាចកែបញ្ចូលវិញបាន។';
+  String get resetAllSettingsToDefaultValues => 'កំណត់ឡើងវិញគ្រប់កំណត់ទៅតម្លៃលំនាំដើម។ សកម្មភាពនេះមិនអាចកែបញ្ចូលវិញបាន។';
 
   @override
   String get resetToDefaults => 'កំណត់ឡើងវិញទៅលំនាំដើម';
 
   @override
-  String get chooseSensorUpdateFrequency =>
-      'ជ្រើសរើសចំនួនដងដែលឧបករណ៍សន្សើមត្រូវធ្វើបច្ចុប្បន្នភាព៖';
+  String get chooseSensorUpdateFrequency => 'ជ្រើសរើសចំនួនដងដែលឧបករណ៍សន្សើមត្រូវធ្វើបច្ចុប្បន្នភាព៖';
 
   @override
   String get fastUpdate => '50ms (លឿន)';
@@ -172,8 +167,7 @@ class AppLocalizationsKm extends AppLocalizations {
   String get confirmReset => 'បញ្ជាក់ ការកំណត់ឡើងវិញ';
 
   @override
-  String get areYouSureResetSettings =>
-      'តើអ្នកប្រាកដថាចង់កំណត់ឡើងវិញគ្រប់ការកំណត់ទៅតម្លៃលំនាំដើម?';
+  String get areYouSureResetSettings => 'តើអ្នកប្រាកដថាចង់កំណត់ឡើងវិញគ្រប់ការកំណត់ទៅតម្លៃលំនាំដើម?';
 
   @override
   String get thisActionCannotBeUndone => 'សកម្មភាពនេះមិនអាចត្រឡប់វិញបានទេ។';
@@ -326,8 +320,7 @@ class AppLocalizationsKm extends AppLocalizations {
   String get failedToDisableTorch => 'បរាជ័យក្នុងការបិទភ្លើងថ្ម';
 
   @override
-  String get intensityControlNotSupported =>
-      'ការគ្រប់គ្រងកម្រិតមិនគាំទ្រដោយកញ្ចប់ torch_light';
+  String get intensityControlNotSupported => 'ការគ្រប់គ្រងកម្រិតមិនគាំទ្រដោយកញ្ចប់ torch_light';
 
   @override
   String get failedToSetMode => 'បរាជ័យក្នុងការកំណត់របៀប';
@@ -351,8 +344,7 @@ class AppLocalizationsKm extends AppLocalizations {
   String get pressFingerFirmlyOnCamera => 'ចុចម្រាមដៃយ៉ាងមាំលើកាមេរ៉ា';
 
   @override
-  String get fingerMovedPlaceFirmlyOnCamera =>
-      'ម្រាមដៃផ្លាស់ -> ដាក់ឱ្យម៉ាំលើកាមេរ៉ា';
+  String get fingerMovedPlaceFirmlyOnCamera => 'ម្រាមដៃផ្លាស់ -> ដាក់ឱ្យម៉ាំលើកាមេរ៉ា';
 
   @override
   String heartRateBpm(int bpm) {
@@ -396,8 +388,7 @@ class AppLocalizationsKm extends AppLocalizations {
   String get initializationFailed => 'ការចាប់ផ្ដើមបរាជ័យ';
 
   @override
-  String get allYourSensorsInOnePlace =>
-      'ឧបករណ៍សន្សើមរបស់អ្នកទាំងអស់នៅកន្លែងតែមួយ';
+  String get allYourSensorsInOnePlace => 'ឧបករណ៍សន្សើមរបស់អ្នកទាំងអស់នៅកន្លែងតែមួយ';
 
   @override
   String get noSensorsAvailable => 'មិនមានឧបករណ៍សន្សើមណាបង្ហាញ';
@@ -454,8 +445,7 @@ class AppLocalizationsKm extends AppLocalizations {
   String get initializingFlashlight => 'កំពុងចាប់ផ្ដើមភ្លើងថ្ម...';
 
   @override
-  String get deviceDoesNotHaveFlashlight =>
-      'ឧបករណ៍មិនមានភ្លើងថ្ម ឬ មិនអាចចូលប្រើបាន';
+  String get deviceDoesNotHaveFlashlight => 'ឧបករណ៍មិនមានភ្លើងថ្ម ឬ មិនអាចចូលប្រើបាន';
 
   @override
   String get tryAgain => 'ព្យាយាមម្តងទៀត';
@@ -558,8 +548,7 @@ class AppLocalizationsKm extends AppLocalizations {
   String get locationPermissionDenied => 'ការអនុញ្ញាតទីតាំងត្រូវបានបដិសេធ';
 
   @override
-  String get locationPermissionsPermanentlyDenied =>
-      'ការអនុញ្ញាតទីតាំងត្រូវបានបដិសេធជាអចិន្រ្តៃយ៍';
+  String get locationPermissionsPermanentlyDenied => 'ការអនុញ្ញាតទីតាំងត្រូវបានបដិសេធជាអចិន្រ្តៃយ៍';
 
   @override
   String errorGettingLocation(String error) {
@@ -601,8 +590,7 @@ class AppLocalizationsKm extends AppLocalizations {
   String get aboutGeolocator => 'អំពី Geolocator';
 
   @override
-  String get geolocatorDescription =>
-      'ឧបករណ៍នេះបង្ហាញទីតាំងបច្ចុប្បន្នរបស់អ្នកដោយប្រើ GPS ក្នុងឧបករណ៍របស់អ្នក។\n\nមុខងារ៖\n• កូអរដោនេត latitude/longitude យ៉ាងត្រឹមត្រូវ\n• ការវាស់ភាពត្រឹមត្រូវ\n• ការបំលែងវិញទៅអាសយដ្ឋាន\n• បើកទីតាំងនៅលើផែនទី\n\nដើម្បីទទួលលទ្ធផលល្អ៖\n• បើកសេវាកម្មទីតាំង\n• រកទីតាំងដែលមានទំហំមេឃស្អាត\n• តភ្ជាប់អ៊ីនធឺណិតសម្រាប់ស្វែងរកអាសយដ្ឋាន';
+  String get geolocatorDescription => 'ឧបករណ៍នេះបង្ហាញទីតាំងបច្ចុប្បន្នរបស់អ្នកដោយប្រើ GPS ក្នុងឧបករណ៍របស់អ្នក។\n\nមុខងារ៖\n• កូអរដោនេត latitude/longitude យ៉ាងត្រឹមត្រូវ\n• ការវាស់ភាពត្រឹមត្រូវ\n• ការបំលែងវិញទៅអាសយដ្ឋាន\n• បើកទីតាំងនៅលើផែនទី\n\nដើម្បីទទួលលទ្ធផលល្អ៖\n• បើកសេវាកម្មទីតាំង\n• រកទីតាំងដែលមានទំហំមេឃស្អាត\n• តភ្ជាប់អ៊ីនធឺណិតសម្រាប់ស្វែងរកអាសយដ្ឋាន';
 
   @override
   String get ok => 'យល់ព្រម';
@@ -623,8 +611,7 @@ class AppLocalizationsKm extends AppLocalizations {
   String get motionIntensity => 'កម្រិតចលនា';
 
   @override
-  String get liveSensorGraph =>
-      'ក្រาฟិកឧបករណ៍សន្សើមបន្ត (X – ក្រហម, Y – បៃតង, Z – ខៀវ)';
+  String get liveSensorGraph => 'ក្រาฟិកឧបករណ៍សន្សើមបន្ត (X – ក្រហម, Y – បៃតង, Z – ខៀវ)';
 
   @override
   String get angularVelocity => 'ល្បឿនមុំ (rad/s)';
@@ -737,8 +724,7 @@ class AppLocalizationsKm extends AppLocalizations {
   String get noHumiditySensor => 'មិនរកឃើញឧបករណ៍សំណើម';
 
   @override
-  String get noHumiditySensorDescription =>
-      'ទូរស័ព្ទច្រើនមិនមានឧបករណ៍សំណើម។ បង្ហាញទិន្នន័យប្រមាណសម្រាប់ការសាកល្បង។';
+  String get noHumiditySensorDescription => 'ទូរស័ព្ទច្រើនមិនមានឧបករណ៍សំណើម។ បង្ហាញទិន្នន័យប្រមាណសម្រាប់ការសាកល្បង។';
 
   @override
   String get checkAgain => 'ពិនិត្យម្ដងទៀត';
@@ -825,8 +811,7 @@ class AppLocalizationsKm extends AppLocalizations {
   String get positionBarcodeInFrame => 'ដាក់កូដក្នុងស៊្នស៍';
 
   @override
-  String get scanningForBarcodes =>
-      'កំពុងស្កេន UPC, EAN, កូដ 128, 39 និងអន្ដរូ';
+  String get scanningForBarcodes => 'កំពុងស្កេន UPC, EAN, កូដ 128, 39 និងអន្ដរូ';
 
   @override
   String get scanQrCode => 'ស្កេន QR ឃូដ';
@@ -897,8 +882,7 @@ class AppLocalizationsKm extends AppLocalizations {
   String get scanningTips => 'គន្លឹះស្កេន';
 
   @override
-  String get scanningTipsDescription =>
-      'សូមដាក់ឧបករណ៍របស់អ្នកឱ្យស្ថិតស្ថេរ និងធ្វើឱ្យកូដមានពន្លឺល្អក្នុងស៊្នស៍។';
+  String get scanningTipsDescription => 'សូមដាក់ឧបករណ៍របស់អ្នកឱ្យស្ថិតស្ថេរ និងធ្វើឱ្យកូដមានពន្លឺល្អក្នុងស៊្នស៍។';
 
   @override
   String get minStat => 'អប្បបរមា';
@@ -1006,8 +990,7 @@ class AppLocalizationsKm extends AppLocalizations {
   String get objectDetectedClose => 'វត្ថុត្រូវបានរកឃើញនៅជិតឧបករណ៍ចាប់សញ្ញា';
 
   @override
-  String get usuallyWithin5cm =>
-      'ជាធម្មតានៅពេលមានអ្វីមួយនៅក្នុងរយៈ 5 សង់ទីម៉ែត្រពីឧបករណ៍ចាប់សញ្ញា';
+  String get usuallyWithin5cm => 'ជាធម្មតានៅពេលមានអ្វីមួយនៅក្នុងរយៈ 5 សង់ទីម៉ែត្រពីឧបករណ៍ចាប់សញ្ញា';
 
   @override
   String get farDetection => 'ការរកឃើញនៅឆ្ងាយ';
@@ -1022,8 +1005,7 @@ class AppLocalizationsKm extends AppLocalizations {
   String get tooDryIrritation => 'ស្ងួតពេក - អាចបណ្តាលឱ្យស្បែកនិងដង្ហើមរលាក';
 
   @override
-  String get somewhatDryHumidifier =>
-      'ស្ងួតបន្តិច - គួរពិចារណាប្រើម៉ាស៊ីនបន្ថែមសំណើម';
+  String get somewhatDryHumidifier => 'ស្ងួតបន្តិច - គួរពិចារណាប្រើម៉ាស៊ីនបន្ថែមសំណើម';
 
   @override
   String get idealHumidityLevel => 'កម្រិតសំណើមល្អសម្រាប់ការងាយស្រួលនិងសុខភាព';
@@ -1104,15 +1086,13 @@ class AppLocalizationsKm extends AppLocalizations {
   String get daylightExample => 'ពន្លឺព្រះអាទិត្យផ្ទាល់';
 
   @override
-  String get grantSensorPermission =>
-      'ផ្តល់ការអនុញ្ញាតឧបករណ៍ចាប់សញ្ញាដើម្បីចូលប្រើឧបករណ៍ចាប់សញ្ញាភាពជិត';
+  String get grantSensorPermission => 'ផ្តល់ការអនុញ្ញាតឧបករណ៍ចាប់សញ្ញាដើម្បីចូលប្រើឧបករណ៍ចាប់សញ្ញាភាពជិត';
 
   @override
   String get deviceNoProximitySensor => 'ឧបករណ៍មិនមានឧបករណ៍ចាប់សញ្ញាភាពជិត';
 
   @override
-  String get proximitySensorLocation =>
-      'ឧបករណ៍ចាប់សញ្ញាភាពជិតធម្មតាស្ថិតនៅក្បែរកាសឆ្នាំ និងប្រើសម្រាប់បិទអេក្រង់កំឡុងពេលហៅទូរស័ព្ទ។';
+  String get proximitySensorLocation => 'ឧបករណ៍ចាប់សញ្ញាភាពជិតធម្មតាស្ថិតនៅក្បែរកាសឆ្នាំ និងប្រើសម្រាប់បិទអេក្រង់កំឡុងពេលហៅទូរស័ព្ទ។';
 
   @override
   String get pausedCameraInUse => 'បានផ្អាក - ម៉ាស៊ីនថតកំពុងប្រើដោយមុខងារផ្សេង';
@@ -1196,12 +1176,10 @@ class AppLocalizationsKm extends AppLocalizations {
   String get allSettings => 'ការកំណត់ទាំងអស់';
 
   @override
-  String get getNotifiedAboutSensorReadings =>
-      'ទទួលការជូនដំណឹងអំពីការអានឧបករណ៍ចាប់សញ្ញា';
+  String get getNotifiedAboutSensorReadings => 'ទទួលការជូនដំណឹងអំពីការអានឧបករណ៍ចាប់សញ្ញា';
 
   @override
-  String get themeChangeRequiresRestart =>
-      'ការផ្លាស់ប្តូរធីមត្រូវការចាប់ផ្តើមកម្មវិធីឡើងវិញ';
+  String get themeChangeRequiresRestart => 'ការផ្លាស់ប្តូរធីមត្រូវការចាប់ផ្តើមកម្មវិធីឡើងវិញ';
 
   @override
   String get quickSettings => 'ការកំណត់លឿន';
@@ -1237,12 +1215,10 @@ class AppLocalizationsKm extends AppLocalizations {
   String get gyroZ => 'ជីរ៉ូ Z';
 
   @override
-  String get qrScannerSubtitle =>
-      'ស្កែន QR កូដ, Data Matrix, PDF417, និងកូដ Aztec';
+  String get qrScannerSubtitle => 'ស្កែន QR កូដ, Data Matrix, PDF417, និងកូដ Aztec';
 
   @override
-  String get barcodeScannerSubtitle =>
-      'ស្កែនបាកូដផលិតផលដូចជា UPC, EAN, Code 128, និងច្រើនទៀត';
+  String get barcodeScannerSubtitle => 'ស្កែនបាកូដផលិតផលដូចជា UPC, EAN, Code 128, និងច្រើនទៀត';
 
   @override
   String get activity => 'សកម្មភាព';
@@ -1260,8 +1236,7 @@ class AppLocalizationsKm extends AppLocalizations {
   String get sessionPaused => 'សម័យបានផ្អាក';
 
   @override
-  String get updateYourPersonalInformation =>
-      'ធ្វើបច្ចុប្បន្នភាពព័ត៌មានផ្ទាល់ខ្លួនរបស់អ្នក';
+  String get updateYourPersonalInformation => 'ធ្វើបច្ចុប្បន្នភាពព័ត៌មានផ្ទាល់ខ្លួនរបស់អ្នក';
 
   @override
   String get personalInformation => 'ព័ត៌មានផ្ទាល់ខ្លួន';
@@ -1324,8 +1299,7 @@ class AppLocalizationsKm extends AppLocalizations {
   String get setDailyGoal => 'កំណត់គោលដៅប្រចាំថ្ងៃ';
 
   @override
-  String get resetSessionConfirmation =>
-      'តើអ្នកប្រាកដថាចង់កំណត់សម័យឡើងវិញទេ? ដំណើរការទាំងអស់នឹងត្រូវបាត់បង់។';
+  String get resetSessionConfirmation => 'តើអ្នកប្រាកដថាចង់កំណត់សម័យឡើងវិញទេ? ដំណើរការទាំងអស់នឹងត្រូវបាត់បង់។';
 
   @override
   String get barometer => 'ឧបករណ៍វាស់សម្ពាធ';
@@ -1415,8 +1389,7 @@ class AppLocalizationsKm extends AppLocalizations {
   String get calibrateAltimeter => 'ក្រិត​កម្ពស់​ស្តង់ដារ';
 
   @override
-  String get calibrateDescription =>
-      'បញ្ចូលកម្ពស់ដែលស្គាល់បច្ចុប្បន្នរបស់អ្នកដើម្បីក្រិតស្តង់ដារ';
+  String get calibrateDescription => 'បញ្ចូលកម្ពស់ដែលស្គាល់បច្ចុប្បន្នរបស់អ្នកដើម្បីក្រិតស្តង់ដារ';
 
   @override
   String get knownAltitude => 'កម្ពស់ដែលស្គាល់';
@@ -1494,8 +1467,7 @@ class AppLocalizationsKm extends AppLocalizations {
   String get presetSleepDuration => '៨ ម៉ោង';
 
   @override
-  String get presetSleepDescription =>
-      'តាមដានសំឡេងក្នុងបន្ទប់គេងពេញមួយយប់ ដើម្បីកែលម្អគុណភាពនៃការគេង';
+  String get presetSleepDescription => 'តាមដានសំឡេងក្នុងបន្ទប់គេងពេញមួយយប់ ដើម្បីកែលម្អគុណភាពនៃការគេង';
 
   @override
   String get presetWork => 'ការងារ';
@@ -1507,8 +1479,7 @@ class AppLocalizationsKm extends AppLocalizations {
   String get presetWorkDuration => '១ ម៉ោង';
 
   @override
-  String get presetWorkDescription =>
-      'តាមដានកម្រិតសំឡេងនៅកន្លែងធ្វើការ និងកំណត់អត្តសញ្ញាណរបស់វត្ថុរំខាន';
+  String get presetWorkDescription => 'តាមដានកម្រិតសំឡេងនៅកន្លែងធ្វើការ និងកំណត់អត្តសញ្ញាណរបស់វត្ថុរំខាន';
 
   @override
   String get presetFocus => 'ការផ្តោតអារម្មណ៍';
@@ -1520,8 +1491,7 @@ class AppLocalizationsKm extends AppLocalizations {
   String get presetFocusDuration => '៣០ នាទី';
 
   @override
-  String get presetFocusDescription =>
-      'វិភាគបរិយាកាសសិក្សា ឬសម័យផ្តោតអារម្មណ៍របស់អ្នក';
+  String get presetFocusDescription => 'វិភាគបរិយាកាសសិក្សា ឬសម័យផ្តោតអារម្មណ៍របស់អ្នក';
 
   @override
   String get presetCustom => 'ផ្ទាល់ខ្លួន';
@@ -1578,8 +1548,7 @@ class AppLocalizationsKm extends AppLocalizations {
   String get stopRecordingConfirmTitle => 'បញ្ឈប់ការថត?';
 
   @override
-  String get stopRecordingConfirmMessage =>
-      'តើអ្នកពិតជាចង់បញ្ឈប់ការថតបច្ចុប្បន្នមែនទេ?';
+  String get stopRecordingConfirmMessage => 'តើអ្នកពិតជាចង់បញ្ឈប់ការថតបច្ចុប្បន្នមែនទេ?';
 
   @override
   String get continueRecording => 'បន្តការថត';
@@ -1591,8 +1560,7 @@ class AppLocalizationsKm extends AppLocalizations {
   String get reportsEmpty => 'គ្មានរបាយការណ៍';
 
   @override
-  String get reportsEmptyDescription =>
-      'រកមិនឃើញរបាយការណ៍ទេ។ ចាប់ផ្តើមការវិភាគដើម្បីបង្កើតមួយ។';
+  String get reportsEmptyDescription => 'រកមិនឃើញរបាយការណ៍ទេ។ ចាប់ផ្តើមការវិភាគដើម្បីបង្កើតមួយ។';
 
   @override
   String reportsSelectedCount(int count) {
@@ -1659,8 +1627,7 @@ class AppLocalizationsKm extends AppLocalizations {
   String get reportNoEventsTitle => 'គ្មានព្រឹត្តិការណ៍';
 
   @override
-  String get reportNoEventsMessage =>
-      'មិនរកឃើញព្រឹត្តិការណ៍សំឡេងក្នុងអំឡុងសម័យនេះទេ';
+  String get reportNoEventsMessage => 'មិនរកឃើញព្រឹត្តិការណ៍សំឡេងក្នុងអំឡុងសម័យនេះទេ';
 
   @override
   String get reportShare => 'ចែករំលែក';

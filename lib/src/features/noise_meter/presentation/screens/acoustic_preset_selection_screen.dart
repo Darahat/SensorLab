@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sensorlab/l10n/app_localizations.dart';
-import 'package:sensorlab/src/features/noise_meter/presentation/widgets/acoustic_preset_selection/acoustic_preset_selection_content.dart';
+import 'package:sensorlab/src/features/noise_meter/presentation/widgets/widgets_index.dart';
 
 class AcousticPresetSelectionScreen extends ConsumerWidget {
   const AcousticPresetSelectionScreen({super.key});
