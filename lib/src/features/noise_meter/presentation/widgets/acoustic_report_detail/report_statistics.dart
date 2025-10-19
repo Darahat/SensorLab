@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:sensorlab/src/features/noise_meter/domain/entities/acoustic_report_entity.dart';
-import 'package:sensorlab/src/features/noise_meter/utils/report_formatters.dart';
+import 'package:sensorlab/src/features/noise_meter/utils/utils_index.dart';
 import 'package:sensorlab/src/shared/widgets/common_cards.dart';
 
 class ReportStatistics extends StatelessWidget {

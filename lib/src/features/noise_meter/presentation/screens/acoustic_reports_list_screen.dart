@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:sensorlab/src/features/noise_meter/presentation/widgets/acoustic_reports_list/acoustic_reports_list_content.dart';
+import 'package:sensorlab/src/features/noise_meter/presentation/widgets/widgets_index.dart';
 
 class AcousticReportsListScreen extends ConsumerWidget {
   const AcousticReportsListScreen({super.key});
