@@ -140,8 +140,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get resetSettings => '設定をリセット';
 
   @override
-  String get resetAllSettingsToDefaultValues =>
-      'すべての設定をデフォルト値に戻します。この操作は元に戻せません。';
+  String get resetAllSettingsToDefaultValues => 'すべての設定をデフォルト値に戻します。この操作は元に戻せません。';
 
   @override
   String get resetToDefaults => 'デフォルトに戻す';
@@ -321,8 +320,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get failedToDisableTorch => '懐中電灯を無効にできませんでした';
 
   @override
-  String get intensityControlNotSupported =>
-      'torch_light パッケージでは強度制御をサポートしていません';
+  String get intensityControlNotSupported => 'torch_light パッケージでは強度制御をサポートしていません';
 
   @override
   String get failedToSetMode => 'モード設定に失敗しました';
@@ -592,8 +590,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get aboutGeolocator => 'ジオロケーターについて';
 
   @override
-  String get geolocatorDescription =>
-      'このツールは、端末の GPS を使って現在の位置を表示します。\n\n機能:\n• 緯度/経度の正確な座標\n• 精度の推定\n• 逆ジオコーディングによる住所取得\n• 地図で位置を表示\n\n最良の結果を得るには:\n• 位置情報サービスを有効にする\n• 空が見える場所に移動する\n• 住所検索のためインターネット接続を有効にする';
+  String get geolocatorDescription => 'このツールは、端末の GPS を使って現在の位置を表示します。\n\n機能:\n• 緯度/経度の正確な座標\n• 精度の推定\n• 逆ジオコーディングによる住所取得\n• 地図で位置を表示\n\n最良の結果を得るには:\n• 位置情報サービスを有効にする\n• 空が見える場所に移動する\n• 住所検索のためインターネット接続を有効にする';
 
   @override
   String get ok => 'OK';
@@ -727,8 +724,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get noHumiditySensor => '湿度センサーが検出されません';
 
   @override
-  String get noHumiditySensorDescription =>
-      'ほとんどのスマホには湿度センサーがありません。デモ用にシミュレーションデータを表示しています。';
+  String get noHumiditySensorDescription => 'ほとんどのスマホには湿度センサーがありません。デモ用にシミュレーションデータを表示しています。';
 
   @override
   String get checkAgain => '再確認';
@@ -886,8 +882,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get scanningTips => 'スキャンのヒント';
 
   @override
-  String get scanningTipsDescription =>
-      'デバイスを安定させ、コードがフレーム内で明るく鮮明に見えるようにしてください。';
+  String get scanningTipsDescription => 'デバイスを安定させ、コードがフレーム内で明るく鮮明に見えるようにしてください。';
 
   @override
   String get minStat => '最小';
@@ -1097,8 +1092,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get deviceNoProximitySensor => 'デバイスには近接センサーがありません';
 
   @override
-  String get proximitySensorLocation =>
-      '近接センサーは通常イヤピース付近に位置し、通話中に画面を消すために使用されます。';
+  String get proximitySensorLocation => '近接センサーは通常イヤピース付近に位置し、通話中に画面を消すために使用されます。';
 
   @override
   String get pausedCameraInUse => '一時停止 - カメラが他の機能で使用中';
@@ -1305,8 +1299,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get setDailyGoal => '1日の目標を設定';
 
   @override
-  String get resetSessionConfirmation =>
-      '現在のセッションをリセットしてもよろしいですか？すべての進捗が失われます。';
+  String get resetSessionConfirmation => '現在のセッションをリセットしてもよろしいですか？すべての進捗が失われます。';
 
   @override
   String get barometer => '気圧計';

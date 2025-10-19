@@ -57,8 +57,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get darkMode => 'Dark Mode';
 
   @override
-  String get switchBetweenLightAndDarkThemes =>
-      'Switch between light and dark themes';
+  String get switchBetweenLightAndDarkThemes => 'Switch between light and dark themes';
 
   @override
   String get system => 'System';
@@ -88,8 +87,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get vibration => 'Vibration';
 
   @override
-  String get hapticFeedbackForInteractions =>
-      'Haptic feedback for interactions';
+  String get hapticFeedbackForInteractions => 'Haptic feedback for interactions';
 
   @override
   String get soundEffects => 'Sound Effects';
@@ -104,8 +102,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get autoScan => 'Auto Scan';
 
   @override
-  String get automaticallyScanWhenOpeningScanner =>
-      'Automatically scan when opening scanner';
+  String get automaticallyScanWhenOpeningScanner => 'Automatically scan when opening scanner';
 
   @override
   String get sensorUpdateFrequency => 'Sensor Update Frequency';
@@ -143,15 +140,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get resetSettings => 'Reset Settings';
 
   @override
-  String get resetAllSettingsToDefaultValues =>
-      'Reset all settings to their default values. This action cannot be undone.';
+  String get resetAllSettingsToDefaultValues => 'Reset all settings to their default values. This action cannot be undone.';
 
   @override
   String get resetToDefaults => 'Reset to Defaults';
 
   @override
-  String get chooseSensorUpdateFrequency =>
-      'Choose how often sensors should update:';
+  String get chooseSensorUpdateFrequency => 'Choose how often sensors should update:';
 
   @override
   String get fastUpdate => '50ms (Fast)';
@@ -172,8 +167,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get confirmReset => 'Confirm Reset';
 
   @override
-  String get areYouSureResetSettings =>
-      'Are you sure you want to reset all settings to their default values?';
+  String get areYouSureResetSettings => 'Are you sure you want to reset all settings to their default values?';
 
   @override
   String get thisActionCannotBeUndone => 'This action cannot be undone.';
@@ -326,8 +320,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get failedToDisableTorch => 'Failed to disable torch';
 
   @override
-  String get intensityControlNotSupported =>
-      'Intensity control not supported by torch_light package';
+  String get intensityControlNotSupported => 'Intensity control not supported by torch_light package';
 
   @override
   String get failedToSetMode => 'Failed to set mode';
@@ -351,8 +344,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get pressFingerFirmlyOnCamera => 'Press finger firmly on camera';
 
   @override
-  String get fingerMovedPlaceFirmlyOnCamera =>
-      'Finger moved! Place firmly on camera';
+  String get fingerMovedPlaceFirmlyOnCamera => 'Finger moved! Place firmly on camera';
 
   @override
   String heartRateBpm(int bpm) {
@@ -453,8 +445,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get initializingFlashlight => 'Initializing Flashlight...';
 
   @override
-  String get deviceDoesNotHaveFlashlight =>
-      'Device does not have a flashlight or it\'s not accessible';
+  String get deviceDoesNotHaveFlashlight => 'Device does not have a flashlight or it\'s not accessible';
 
   @override
   String get tryAgain => 'Try Again';
@@ -557,8 +548,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get locationPermissionDenied => 'Location permission denied';
 
   @override
-  String get locationPermissionsPermanentlyDenied =>
-      'Location permissions are permanently denied';
+  String get locationPermissionsPermanentlyDenied => 'Location permissions are permanently denied';
 
   @override
   String errorGettingLocation(String error) {
@@ -585,8 +575,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get pleaseEnableLocationServices => 'Please enable location services';
 
   @override
-  String get pleaseGrantLocationPermissions =>
-      'Please grant location permissions';
+  String get pleaseGrantLocationPermissions => 'Please grant location permissions';
 
   @override
   String get locating => 'Locating...';
@@ -601,8 +590,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get aboutGeolocator => 'About Geolocator';
 
   @override
-  String get geolocatorDescription =>
-      'This tool shows your current location using your device\'s GPS.\n\nFeatures:\n• Precise latitude/longitude coordinates\n• Estimated accuracy measurement\n• Reverse geocoding to get address\n• Open location in maps\n\nFor best results, ensure you have:\n• Location services enabled\n• Clear view of the sky\n• Internet connection for address lookup';
+  String get geolocatorDescription => 'This tool shows your current location using your device\'s GPS.\n\nFeatures:\n• Precise latitude/longitude coordinates\n• Estimated accuracy measurement\n• Reverse geocoding to get address\n• Open location in maps\n\nFor best results, ensure you have:\n• Location services enabled\n• Clear view of the sky\n• Internet connection for address lookup';
 
   @override
   String get ok => 'OK';
@@ -623,8 +611,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get motionIntensity => 'Motion Intensity';
 
   @override
-  String get liveSensorGraph =>
-      'Live Sensor Graph (X - Red, Y - Green, Z - Blue)';
+  String get liveSensorGraph => 'Live Sensor Graph (X - Red, Y - Green, Z - Blue)';
 
   @override
   String get angularVelocity => 'Angular velocity (rad/s)';
@@ -737,8 +724,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get noHumiditySensor => 'No Humidity Sensor Detected';
 
   @override
-  String get noHumiditySensorDescription =>
-      'Most smartphones don\'t have humidity sensors. Showing simulated data for demonstration.';
+  String get noHumiditySensorDescription => 'Most smartphones don\'t have humidity sensors. Showing simulated data for demonstration.';
 
   @override
   String get checkAgain => 'Check Again';
@@ -825,8 +811,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get positionBarcodeInFrame => 'Position the barcode within the frame';
 
   @override
-  String get scanningForBarcodes =>
-      'Scanning for UPC, EAN, Code 128, Code 39, and other linear barcodes';
+  String get scanningForBarcodes => 'Scanning for UPC, EAN, Code 128, Code 39, and other linear barcodes';
 
   @override
   String get scanQrCode => 'Scan QR Code';
@@ -835,8 +820,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get positionQrCodeInFrame => 'Position the QR code within the frame';
 
   @override
-  String get scanningForQrCodes =>
-      'Scanning for QR codes, Data Matrix, PDF417, and Aztec codes';
+  String get scanningForQrCodes => 'Scanning for QR codes, Data Matrix, PDF417, and Aztec codes';
 
   @override
   String scannedOn(String timestamp) {
@@ -889,8 +873,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get chooseScannerType => 'Choose Scanner Type';
 
   @override
-  String get selectScannerDescription =>
-      'Select the type of code you want to scan';
+  String get selectScannerDescription => 'Select the type of code you want to scan';
 
   @override
   String get commonUses => 'Common uses:';
@@ -899,8 +882,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get scanningTips => 'Scanning Tips';
 
   @override
-  String get scanningTipsDescription =>
-      'Hold your device steady and ensure the code is well-lit and clearly visible within the scanner frame.';
+  String get scanningTipsDescription => 'Hold your device steady and ensure the code is well-lit and clearly visible within the scanner frame.';
 
   @override
   String get minStat => 'Min';
@@ -1008,8 +990,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get objectDetectedClose => 'Object detected close to sensor';
 
   @override
-  String get usuallyWithin5cm =>
-      'Usually when something is within 5cm of the sensor';
+  String get usuallyWithin5cm => 'Usually when something is within 5cm of the sensor';
 
   @override
   String get farDetection => 'Far Detection';
@@ -1021,16 +1002,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get clearAreaAroundSensor => 'Clear area around the proximity sensor';
 
   @override
-  String get tooDryIrritation =>
-      'Too dry - may cause skin and respiratory irritation';
+  String get tooDryIrritation => 'Too dry - may cause skin and respiratory irritation';
 
   @override
-  String get somewhatDryHumidifier =>
-      'Somewhat dry - consider using a humidifier';
+  String get somewhatDryHumidifier => 'Somewhat dry - consider using a humidifier';
 
   @override
-  String get idealHumidityLevel =>
-      'Ideal humidity level for comfort and health';
+  String get idealHumidityLevel => 'Ideal humidity level for comfort and health';
 
   @override
   String get somewhatHumidSticky => 'Somewhat humid - may feel sticky';
@@ -1108,16 +1086,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get daylightExample => 'Direct sunlight';
 
   @override
-  String get grantSensorPermission =>
-      'Grant sensor permission to access proximity sensor';
+  String get grantSensorPermission => 'Grant sensor permission to access proximity sensor';
 
   @override
-  String get deviceNoProximitySensor =>
-      'Device does not have a proximity sensor';
+  String get deviceNoProximitySensor => 'Device does not have a proximity sensor';
 
   @override
-  String get proximitySensorLocation =>
-      'The proximity sensor is typically located near the earpiece and is used to turn off the screen during phone calls.';
+  String get proximitySensorLocation => 'The proximity sensor is typically located near the earpiece and is used to turn off the screen during phone calls.';
 
   @override
   String get pausedCameraInUse => 'Paused - Camera in use by another feature';
@@ -1201,12 +1176,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get allSettings => 'All Settings';
 
   @override
-  String get getNotifiedAboutSensorReadings =>
-      'Get notified about sensor readings';
+  String get getNotifiedAboutSensorReadings => 'Get notified about sensor readings';
 
   @override
-  String get themeChangeRequiresRestart =>
-      'Theme switching requires app restart';
+  String get themeChangeRequiresRestart => 'Theme switching requires app restart';
 
   @override
   String get quickSettings => 'Quick Settings';
@@ -1242,12 +1215,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get gyroZ => 'Gyro Z';
 
   @override
-  String get qrScannerSubtitle =>
-      'Scan QR codes, Data Matrix, PDF417, and Aztec codes';
+  String get qrScannerSubtitle => 'Scan QR codes, Data Matrix, PDF417, and Aztec codes';
 
   @override
-  String get barcodeScannerSubtitle =>
-      'Scan product barcodes like UPC, EAN, Code 128, and more';
+  String get barcodeScannerSubtitle => 'Scan product barcodes like UPC, EAN, Code 128, and more';
 
   @override
   String get activity => 'Activity';
@@ -1265,8 +1236,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get sessionPaused => 'Session Paused';
 
   @override
-  String get updateYourPersonalInformation =>
-      'Update your personal information';
+  String get updateYourPersonalInformation => 'Update your personal information';
 
   @override
   String get personalInformation => 'Personal Information';
@@ -1329,8 +1299,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get setDailyGoal => 'Set Daily Goal';
 
   @override
-  String get resetSessionConfirmation =>
-      'Are you sure you want to reset your current session? All progress will be lost.';
+  String get resetSessionConfirmation => 'Are you sure you want to reset your current session? All progress will be lost.';
 
   @override
   String get barometer => 'Barometer';
@@ -1420,8 +1389,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get calibrateAltimeter => 'Calibrate Altimeter';
 
   @override
-  String get calibrateDescription =>
-      'Enter your current known altitude in meters to calibrate the barometric sensor for better accuracy.';
+  String get calibrateDescription => 'Enter your current known altitude in meters to calibrate the barometric sensor for better accuracy.';
 
   @override
   String get knownAltitude => 'Known Altitude';
@@ -1487,8 +1455,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get presetSelectTitle => 'Choose Recording Preset';
 
   @override
-  String get presetSelectSubtitle =>
-      'Select a preset to analyze your acoustic environment over time';
+  String get presetSelectSubtitle => 'Select a preset to analyze your acoustic environment over time';
 
   @override
   String get presetSleep => 'Sleep';
@@ -1500,8 +1467,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get presetSleepDuration => '8 hours';
 
   @override
-  String get presetSleepDescription =>
-      'Monitor bedroom noise throughout the night to improve sleep quality';
+  String get presetSleepDescription => 'Monitor bedroom noise throughout the night to improve sleep quality';
 
   @override
   String get presetWork => 'Work';
@@ -1513,8 +1479,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get presetWorkDuration => '1 hour';
 
   @override
-  String get presetWorkDescription =>
-      'Track workplace noise levels and identify distractions';
+  String get presetWorkDescription => 'Track workplace noise levels and identify distractions';
 
   @override
   String get presetFocus => 'Focus';
@@ -1526,8 +1491,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get presetFocusDuration => '30 minutes';
 
   @override
-  String get presetFocusDescription =>
-      'Analyze your study or focus session environment';
+  String get presetFocusDescription => 'Analyze your study or focus session environment';
 
   @override
   String get presetCustom => 'Custom';
@@ -1584,8 +1548,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get stopRecordingConfirmTitle => 'Stop Recording?';
 
   @override
-  String get stopRecordingConfirmMessage =>
-      'Are you sure you want to stop the recording? The report will be generated with the current data.';
+  String get stopRecordingConfirmMessage => 'Are you sure you want to stop the recording? The report will be generated with the current data.';
 
   @override
   String get continueRecording => 'Continue';
@@ -1597,8 +1560,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get reportsEmpty => 'No Reports Yet';
 
   @override
-  String get reportsEmptyDescription =>
-      'Start an acoustic analysis session to generate your first report';
+  String get reportsEmptyDescription => 'Start an acoustic analysis session to generate your first report';
 
   @override
   String reportsSelectedCount(int count) {
