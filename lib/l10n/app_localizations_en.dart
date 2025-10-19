@@ -1771,4 +1771,161 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get viewReport => 'View Report';
+
+  @override
+  String get noiseMeterGuide => 'Noise Meter Guide';
+
+  @override
+  String get environmentAnalyzer => 'Environment Analyzer';
+
+  @override
+  String get environmentAnalyzerSubtitle => 'Preset-based acoustic analysis';
+
+  @override
+  String get acousticReportsSubtitle => 'View saved analyses and history';
+
+  @override
+  String get exportReports => 'Export Reports';
+
+  @override
+  String get exportChooseMethod => 'Choose how you want to export the reports:';
+
+  @override
+  String get exportCopyToClipboard => 'Copy to Clipboard';
+
+  @override
+  String get exportSaveAsFile => 'Save as File';
+
+  @override
+  String get exportSuccess => 'Export Successful';
+
+  @override
+  String exportSuccessMessage(int count) {
+    return '$count report(s) exported successfully!';
+  }
+
+  @override
+  String get savedTo => 'Saved to:';
+
+  @override
+  String get deletePreset => 'Delete Preset?';
+
+  @override
+  String deletePresetMessage(String title) {
+    return 'Delete \"$title\"? This cannot be undone.';
+  }
+
+  @override
+  String get acousticReport => 'Acoustic Report';
+
+  @override
+  String get createCustomPreset => 'Create Custom Preset';
+
+  @override
+  String get durationMustBeGreaterThanZero => 'Duration must be greater than 0';
+
+  @override
+  String get allPresets => 'All Presets';
+
+  @override
+  String get consistency => 'Consistency';
+
+  @override
+  String get peakManagement => 'Peak Mgmt';
+
+  @override
+  String get level => 'Level';
+
+  @override
+  String get avg => 'Avg';
+
+  @override
+  String get realtimeNoiseLevels => 'Real-time Noise Levels';
+
+  @override
+  String get decibelStatistics => 'Decibel Statistics';
+
+  @override
+  String get quietEnvironment => 'Quiet Environment';
+
+  @override
+  String get moderateNoise => 'Moderate Noise';
+
+  @override
+  String get loudEnvironment => 'Loud Environment';
+
+  @override
+  String get veryLoudCaution => 'Very Loud - Caution';
+
+  @override
+  String get dangerousLevels => 'Dangerous Levels';
+
+  @override
+  String get grantMicrophonePermission => 'Grant microphone permission to measure noise levels';
+
+  @override
+  String get hourlyBreakdown => 'Hourly Breakdown';
+
+  @override
+  String get eventTimeline => 'Event Timeline';
+
+  @override
+  String get noEventsRecorded => 'No events recorded';
+
+  @override
+  String get sessionDetails => 'Session Details';
+
+  @override
+  String get date => 'Date';
+
+  @override
+  String get preset => 'Preset';
+
+  @override
+  String get recommendation => 'Recommendation';
+
+  @override
+  String get noInterruptions => 'No Interruptions';
+
+  @override
+  String get quietQuiet => 'Quiet (0-30 dB)';
+
+  @override
+  String get quietModerate => 'Moderate (30-60 dB)';
+
+  @override
+  String get quietLoud => 'Loud (60-85 dB)';
+
+  @override
+  String get quietVeryLoud => 'Very Loud (85-100 dB)';
+
+  @override
+  String get quietDangerous => 'Dangerous (100+ dB)';
+
+  @override
+  String get anErrorOccurred => 'An error occurred.';
+
+  @override
+  String failedToLoadPresets(String error) {
+    return 'Failed to load presets: $error';
+  }
+
+  @override
+  String createdPreset(String title) {
+    return 'Created \"$title\"!';
+  }
+
+  @override
+  String failedToSavePreset(String error) {
+    return 'Failed to save preset: $error';
+  }
+
+  @override
+  String get deleteReportsQuestion => 'Delete Reports?';
+
+  @override
+  String get deleteReportsConfirmMessage => 'Are you sure you want to delete the selected report(s)? This action cannot be undone.';
+
+  @override
+  String get reportsDeleted => 'Reports deleted';
 }

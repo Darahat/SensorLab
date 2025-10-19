@@ -725,5 +725,88 @@
   "peakDecibels": "Peak Decibels",
   "environmentQuality": "Environment Quality",
   "viewReport": "View Report",
-  "ok": "OK"
+  "noiseMeterGuide": "Noise Meter Guide",
+  "environmentAnalyzer": "Environment Analyzer",
+  "environmentAnalyzerSubtitle": "Preset-based acoustic analysis",
+  "acousticReportsSubtitle": "View saved analyses and history",
+  "exportReports": "Export Reports",
+  "exportChooseMethod": "Choose how you want to export the reports:",
+  "exportCopyToClipboard": "Copy to Clipboard",
+  "exportSaveAsFile": "Save as File",
+  "exportSuccess": "Export Successful",
+  "exportSuccessMessage": "{count} report(s) exported successfully!",
+  "@exportSuccessMessage": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "savedTo": "Saved to:",
+  "deletePreset": "Delete Preset?",
+  "deletePresetMessage": "Delete \"{title}\"? This cannot be undone.",
+  "@deletePresetMessage": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "acousticReport": "Acoustic Report",
+  "createCustomPreset": "Create Custom Preset",
+  "durationMustBeGreaterThanZero": "Duration must be greater than 0",
+  "allPresets": "All Presets",
+  "consistency": "Consistency",
+  "peakManagement": "Peak Mgmt",
+  "level": "Level",
+  "avg": "Avg",
+  "realtimeNoiseLevels": "Real-time Noise Levels",
+  "decibelStatistics": "Decibel Statistics",
+  "quietEnvironment": "Quiet Environment",
+  "moderateNoise": "Moderate Noise",
+  "loudEnvironment": "Loud Environment",
+  "veryLoudCaution": "Very Loud - Caution",
+  "dangerousLevels": "Dangerous Levels",
+  "grantMicrophonePermission": "Grant microphone permission to measure noise levels",
+  "hourlyBreakdown": "Hourly Breakdown",
+  "eventTimeline": "Event Timeline",
+  "noEventsRecorded": "No events recorded",
+  "sessionDetails": "Session Details",
+  "date": "Date",
+  "preset": "Preset",
+  "recommendation": "Recommendation",
+  "noInterruptions": "No Interruptions",
+  "quietQuiet": "Quiet (0-30 dB)",
+  "quietModerate": "Moderate (30-60 dB)",
+  "quietLoud": "Loud (60-85 dB)",
+  "quietVeryLoud": "Very Loud (85-100 dB)",
+  "quietDangerous": "Dangerous (100+ dB)",
+  "anErrorOccurred": "An error occurred.",
+  "failedToLoadPresets": "Failed to load presets: {error}",
+  "@failedToLoadPresets": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "createdPreset": "Created \"{title}\"!",
+  "@createdPreset": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "failedToSavePreset": "Failed to save preset: {error}",
+  "@failedToSavePreset": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "deleteReportsQuestion": "Delete Reports?",
+  "deleteReportsConfirmMessage": "Are you sure you want to delete the selected report(s)? This action cannot be undone.",
+  "reportsDeleted": "Reports deleted"
 }
