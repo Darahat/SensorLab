@@ -28,9 +28,8 @@ final ThemeData lightTheme = ThemeData(
   ),
 
   // Color scheme for Material 3
-  colorScheme: ColorScheme.light(
+  colorScheme: const ColorScheme.light(
     primary: AppColor.primary,
-    onPrimary: AppColor.buttonText,
     secondary: AppColor.accent,
     onSecondary: AppColor.buttonText,
     surface: AppColor.background,
@@ -269,12 +268,11 @@ final ThemeData darkTheme = ThemeData(
   ),
 
   // Color scheme for Material 3
-  colorScheme: ColorScheme.dark(
+  colorScheme: const ColorScheme.dark(
     primary: AppColor.accent,
     onPrimary: AppColor.buttonText,
     secondary: AppColor.accentLight,
     surface: AppColor.darkSurface,
-    onSurface: AppColor.darkTextPrimary,
     error: AppColor.error,
     surfaceTint: AppColor.darkSurface, // Changed from Colors.transparent
   ),

@@ -114,7 +114,7 @@ class SettingsController extends AsyncNotifier<AppSettings> {
 
     try {
       await _settingsRepository.clearSettings();
-      final defaultSettings = const AppSettings();
+      const defaultSettings = AppSettings();
       await _settingsRepository.saveSettings(defaultSettings);
       state = AsyncValue.data(defaultSettings);
     } catch (e, stackTrace) {

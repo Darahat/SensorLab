@@ -23,10 +23,9 @@ class ServerFailure extends Failure {
   final int? statusCode;
 
   @override
-  String toString() =>
-      statusCode != null
-          ? 'Server error: $message (Status code: $statusCode)'
-          : 'Server error: $message';
+  String toString() => statusCode != null
+      ? 'Server error: $message (Status code: $statusCode)'
+      : 'Server error: $message';
 }
 
 /// Represents a failure that occurred when accessing local cache.
@@ -109,7 +108,6 @@ class PermissionFailure extends Failure {
   @override
   String toString() => 'Permission denied: $permission - $message';
 }
-
 
 // return Left(CacheFailure(message: 'Cache error'));
 // return Left(NetworkFailure(message: 'No internet'));

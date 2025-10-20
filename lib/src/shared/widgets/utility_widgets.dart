@@ -55,7 +55,6 @@ class RealtimeLineChart extends StatelessWidget {
                   : LineChart(
                       LineChartData(
                         gridData: FlGridData(
-                          show: true,
                           drawVerticalLine: false,
                           horizontalInterval: horizontalInterval ?? 20,
                           getDrawingHorizontalLine: (value) {
@@ -80,15 +79,9 @@ class RealtimeLineChart extends StatelessWidget {
                               },
                             ),
                           ),
-                          rightTitles: const AxisTitles(
-                            sideTitles: SideTitles(showTitles: false),
-                          ),
-                          topTitles: const AxisTitles(
-                            sideTitles: SideTitles(showTitles: false),
-                          ),
-                          bottomTitles: const AxisTitles(
-                            sideTitles: SideTitles(showTitles: false),
-                          ),
+                          rightTitles: const AxisTitles(),
+                          topTitles: const AxisTitles(),
+                          bottomTitles: const AxisTitles(),
                         ),
                         borderData: FlBorderData(show: false),
                         minX: 0,

@@ -25,10 +25,9 @@ abstract class AppException implements Exception {
   final Exception? innerException;
 
   @override
-  String toString() =>
-      innerException != null
-          ? '$message (Inner exception: $innerException)'
-          : message;
+  String toString() => innerException != null
+      ? '$message (Inner exception: $innerException)'
+      : message;
 }
 
 /// Thrown when there's an error communication with the server
@@ -102,8 +101,6 @@ class CustomException extends AppException {
 
   const CustomException(super.message, [super.innerException]);
 }
-
-
 
 /// How you will call these exception
 

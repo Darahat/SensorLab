@@ -36,10 +36,9 @@ class HumidityNotifier extends StateNotifier<HumidityData> {
 
       state = state.copyWith(
         hasSensor: hasSensor,
-        errorMessage:
-            hasSensor
-                ? null
-                : 'Device does not have a humidity sensor. Showing simulated data.',
+        errorMessage: hasSensor
+            ? null
+            : 'Device does not have a humidity sensor. Showing simulated data.',
       );
     } catch (e) {
       state = state.copyWith(
@@ -101,7 +100,7 @@ class HumidityNotifier extends StateNotifier<HumidityData> {
     try {
       // Generate realistic humidity values
       // Base humidity around 45-55% with some variation
-      final baseHumidity = 50.0;
+      const baseHumidity = 50.0;
       final variation = (_random.nextDouble() - 0.5) * 20; // ±10%
       final seasonalOffset = _getSeasonalOffset();
 
@@ -160,10 +159,9 @@ class HumidityNotifier extends StateNotifier<HumidityData> {
             : state.maxHumidity,
         humidity,
       );
-      final newAverage =
-          _allReadings.isNotEmpty
-              ? _allReadings.reduce((a, b) => a + b) / _allReadings.length
-              : 0.0;
+      final newAverage = _allReadings.isNotEmpty
+          ? _allReadings.reduce((a, b) => a + b) / _allReadings.length
+          : 0.0;
 
       // Update recent readings for chart (keep last 50 readings)
       final updatedRecentReadings = List<double>.from(state.recentReadings);
@@ -233,8 +231,9 @@ class HumidityNotifier extends StateNotifier<HumidityData> {
       state = state.copyWith(
         currentHumidity: humidity,
         humidityLevel: humidityLevel,
-        errorMessage:
-            state.hasSensor ? null : 'Single reading from simulated data',
+        errorMessage: state.hasSensor
+            ? null
+            : 'Single reading from simulated data',
       );
     } catch (e) {
       state = state.copyWith(

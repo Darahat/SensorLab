@@ -16,14 +16,22 @@ class NoiseEventItem extends StatelessWidget {
   });
 
   Color _getColor() {
-    if (peakDecibels < 65) return Colors.blue;
-    if (peakDecibels < 75) return Colors.orange;
+    if (peakDecibels < 65) {
+      return Colors.blue;
+    }
+    if (peakDecibels < 75) {
+      return Colors.orange;
+    }
     return Colors.red;
   }
 
   IconData _getIcon() {
-    if (peakDecibels < 65) return Icons.volume_down_rounded;
-    if (peakDecibels < 75) return Icons.volume_up_rounded;
+    if (peakDecibels < 65) {
+      return Icons.volume_down_rounded;
+    }
+    if (peakDecibels < 75) {
+      return Icons.volume_up_rounded;
+    }
     return Icons.warning_rounded;
   }
 

@@ -7,6 +7,7 @@ class SettingsItem extends StatelessWidget {
   final VoidCallback? onTap;
 
   const SettingsItem({
+    super.key,
     required this.icon,
     required this.title,
     this.trailing,

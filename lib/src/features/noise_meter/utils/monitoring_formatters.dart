@@ -47,17 +47,19 @@ class MonitoringFormatters {
   }
 
   static String formatTotalDuration(Duration duration, AppLocalizations l10n) {
-    if (duration == Duration.zero) return 'Custom';
+    if (duration == Duration.zero) {
+      return l10n.presetCustom;
+    }
 
     final hours = duration.inHours;
     final minutes = duration.inMinutes.remainder(60);
 
     if (hours > 0 && minutes > 0) {
-      return '${hours}h ${minutes}m';
+      return '${l10n.durationHours(hours)} ${l10n.durationMinutes(minutes)}';
     } else if (hours > 0) {
-      return '${hours}h';
+      return l10n.durationHours(hours);
     } else {
-      return '${minutes}m';
+      return l10n.durationMinutes(minutes);
     }
   }
 
@@ -66,37 +68,57 @@ class MonitoringFormatters {
     Duration total,
     AppLocalizations l10n,
   ) {
-    if (total == Duration.zero) return 'Custom duration';
+    if (total == Duration.zero) {
+      return l10n.presetCustomRecording;
+    }
 
     final remaining = total - elapsed;
-    if (remaining.isNegative) return 'Finished';
+    if (remaining.isNegative) {
+      return l10n.recordingCompleted;
+    }
 
     final hours = remaining.inHours;
     final minutes = remaining.inMinutes.remainder(60);
     final seconds = remaining.inSeconds.remainder(60);
 
     if (hours > 0) {
-      return '${hours}h ${minutes}m remaining';
+      return '${l10n.durationHours(hours)} ${l10n.durationMinutes(minutes)}';
     } else if (minutes > 0) {
-      return '${minutes}m ${seconds}s remaining';
+      return '${l10n.durationMinutes(minutes)} ${l10n.durationSeconds(seconds)}';
     } else {
-      return '${seconds}s remaining';
+      return l10n.durationSeconds(seconds);
     }
   }
 
   static Color getDecibelColor(double decibel) {
-    if (decibel < 40) return Colors.green;
-    if (decibel < 55) return Colors.lightGreen;
-    if (decibel < 65) return Colors.orange;
-    if (decibel < 75) return Colors.deepOrange;
+    if (decibel < 40) {
+      return Colors.green;
+    }
+    if (decibel < 55) {
+      return Colors.lightGreen;
+    }
+    if (decibel < 65) {
+      return Colors.orange;
+    }
+    if (decibel < 75) {
+      return Colors.deepOrange;
+    }
     return Colors.red;
   }
 
   static String getNoiseLevel(double decibel) {
-    if (decibel < 40) return 'Very Quiet';
-    if (decibel < 55) return 'Quiet';
-    if (decibel < 65) return 'Moderate';
-    if (decibel < 75) return 'Loud';
+    if (decibel < 40) {
+      return 'Very Quiet';
+    }
+    if (decibel < 55) {
+      return 'Quiet';
+    }
+    if (decibel < 65) {
+      return 'Moderate';
+    }
+    if (decibel < 75) {
+      return 'Loud';
+    }
     return 'Very Loud';
   }
 }

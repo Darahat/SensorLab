@@ -18,7 +18,7 @@ class SpeedMeterNotifier extends StateNotifier<SpeedData> {
     if (_isTracking) return;
 
     // Check permissions
-    bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    final bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
       return;
     }

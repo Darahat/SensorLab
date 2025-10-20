@@ -41,7 +41,7 @@ class EventsSection extends StatelessWidget {
         padding: const EdgeInsets.all(32),
         child: Column(
           children: [
-            Icon(Iconsax.tick_circle, size: 48, color: Colors.green),
+            const Icon(Iconsax.tick_circle, size: 48, color: Colors.green),
             const SizedBox(height: 16),
             Text(
               'No Interruptions Detected',

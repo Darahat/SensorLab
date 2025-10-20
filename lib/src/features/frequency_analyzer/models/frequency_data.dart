@@ -231,7 +231,7 @@ class FrequencyData {
     ];
 
     // A4 = 440 Hz
-    final a4 = 440.0;
+    const a4 = 440.0;
     final c0 = a4 * math.pow(2, -4.75); // C0 frequency
 
     final halfSteps = 12 * (math.log(frequency / c0) / math.ln2);

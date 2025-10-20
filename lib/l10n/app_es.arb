@@ -776,5 +776,10 @@
   "failedToSavePreset": "Error al guardar preajuste: {error}",
   "deleteReportsQuestion": "¿Eliminar Informes?",
   "deleteReportsConfirmMessage": "¿Está seguro de que desea eliminar los informes seleccionados? Esta acción no se puede deshacer.",
-  "reportsDeleted": "Informes eliminados"
+  "reportsDeleted": "Informes eliminados",
+  "presetDetails": "Detalles del Preajuste",
+  "mustBeAtLeast3Chars": "Debe tener al menos 3 caracteres",
+  "mustBeAtLeast10Chars": "Debe tener al menos 10 caracteres",
+  "chooseIcon": "Elegir ícono",
+  "chooseColor": "Elegir color"
 }

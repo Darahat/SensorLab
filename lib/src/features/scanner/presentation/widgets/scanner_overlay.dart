@@ -112,8 +112,9 @@ class _ScannerOverlayState extends State<ScannerOverlay>
   List<Widget> _buildCornerIndicators(double width, double height) {
     const cornerSize = 24.0;
     const cornerThickness = 4.0;
-    final cornerColor =
-        widget.scanType == ScanType.qrCode ? Colors.green : Colors.orange;
+    final cornerColor = widget.scanType == ScanType.qrCode
+        ? Colors.green
+        : Colors.orange;
 
     return [
       // Top-left
@@ -203,14 +204,14 @@ class _ScannerOverlayState extends State<ScannerOverlay>
           child: Container(
             height: 2,
             decoration: BoxDecoration(
-              gradient: LinearGradient(
+              gradient: const LinearGradient(
                 colors: [
                   Colors.transparent,
                   Colors.green,
                   Colors.green,
                   Colors.transparent,
                 ],
-                stops: const [0.0, 0.3, 0.7, 1.0],
+                stops: [0.0, 0.3, 0.7, 1.0],
               ),
               boxShadow: [
                 BoxShadow(
@@ -237,14 +238,14 @@ class _ScannerOverlayState extends State<ScannerOverlay>
           child: Container(
             height: 2,
             decoration: BoxDecoration(
-              gradient: LinearGradient(
+              gradient: const LinearGradient(
                 colors: [
                   Colors.transparent,
                   Colors.orange,
                   Colors.orange,
                   Colors.transparent,
                 ],
-                stops: const [0.0, 0.3, 0.7, 1.0],
+                stops: [0.0, 0.3, 0.7, 1.0],
               ),
               boxShadow: [
                 BoxShadow(

@@ -27,7 +27,6 @@ class QRScannerProvider extends StateNotifier<QRScannerData> {
   Future<void> initialize() async {
     state = state.copyWith(
       isInitialized: false,
-      errorMessage: null,
       sessionStartTime: DateTime.now(),
     );
 
@@ -35,14 +34,13 @@ class QRScannerProvider extends StateNotifier<QRScannerData> {
       _controller = MobileScannerController(
         facing: state.cameraFacing,
         detectionSpeed: DetectionSpeed.noDuplicates,
-        returnImage: false,
       );
 
       // Check permissions
       await _controller!.start();
 
       // Start session timer
-      _sessionTimer = Timer.periodic(Duration(seconds: 1), (_) {
+      _sessionTimer = Timer.periodic(const Duration(seconds: 1), (_) {
         _updateSessionDuration();
       });
 
@@ -72,10 +70,7 @@ class QRScannerProvider extends StateNotifier<QRScannerData> {
 
       await _controller!.start();
 
-      state = state.copyWith(
-        scannerState: ScannerState.scanning,
-        errorMessage: null,
-      );
+      state = state.copyWith(scannerState: ScannerState.scanning);
     } catch (e) {
       state = state.copyWith(
         errorMessage: 'Failed to start scanner: $e',
@@ -149,10 +144,9 @@ class QRScannerProvider extends StateNotifier<QRScannerData> {
   // Camera control
   Future<void> switchCamera() async {
     try {
-      final newFacing =
-          state.cameraFacing == CameraFacing.back
-              ? CameraFacing.front
-              : CameraFacing.back;
+      final newFacing = state.cameraFacing == CameraFacing.back
+          ? CameraFacing.front
+          : CameraFacing.back;
 
       await _controller?.switchCamera();
 
@@ -193,8 +187,9 @@ class QRScannerProvider extends StateNotifier<QRScannerData> {
 
     // Update statistics
     final newTotalScans = state.totalScans + 1;
-    final newUniqueScans =
-        isDuplicate ? state.uniqueScans : state.uniqueScans + 1;
+    final newUniqueScans = isDuplicate
+        ? state.uniqueScans
+        : state.uniqueScans + 1;
 
     state = state.copyWith(
       lastScanResult: scanResult,
@@ -220,12 +215,7 @@ class QRScannerProvider extends StateNotifier<QRScannerData> {
 
   // History management
   void clearHistory() {
-    state = state.copyWith(
-      scanHistory: [],
-      lastScanResult: null,
-      totalScans: 0,
-      uniqueScans: 0,
-    );
+    state = state.copyWith(scanHistory: [], totalScans: 0, uniqueScans: 0);
   }
 
   void removeScanFromHistory(QRScanResult scan) {
@@ -235,8 +225,10 @@ class QRScannerProvider extends StateNotifier<QRScannerData> {
     );
 
     // Update unique count
-    final remainingUniqueCount =
-        updatedHistory.map((s) => s.rawData).toSet().length;
+    final remainingUniqueCount = updatedHistory
+        .map((s) => s.rawData)
+        .toSet()
+        .length;
 
     state = state.copyWith(
       scanHistory: updatedHistory,
@@ -331,7 +323,7 @@ class QRScannerProvider extends StateNotifier<QRScannerData> {
       // We'll assume flash is available for back camera
       final hasFlash = state.cameraFacing == CameraFacing.back;
 
-      state = state.copyWith(hasFlash: hasFlash, errorMessage: null);
+      state = state.copyWith(hasFlash: hasFlash);
     } catch (e) {
       state = state.copyWith(errorMessage: 'Failed to check capabilities: $e');
     }

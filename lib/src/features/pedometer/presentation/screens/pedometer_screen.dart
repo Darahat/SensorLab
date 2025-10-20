@@ -259,11 +259,15 @@ class _PedometerScreenState extends ConsumerState<PedometerScreen>
               else
                 Row(
                   children: [
-                    Icon(Iconsax.tick_circle5, size: 16, color: Colors.green),
+                    const Icon(
+                      Iconsax.tick_circle5,
+                      size: 16,
+                      color: Colors.green,
+                    ),
                     const SizedBox(width: 4),
                     Text(
                       l10n.goalReached,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.bold,
                         color: Colors.green,

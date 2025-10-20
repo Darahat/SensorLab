@@ -37,9 +37,7 @@ class _BarcodeScannerScreenState extends ConsumerState<BarcodeScannerScreen> {
         BarcodeFormat.codabar,
         BarcodeFormat.itf,
       ],
-      detectionSpeed: DetectionSpeed.normal,
       detectionTimeoutMs: 1000, // Limit detection frequency
-      returnImage: false, // Don't return image data to reduce memory
     );
 
     // Pause heart rate monitoring when scanner is active
@@ -60,98 +58,107 @@ class _BarcodeScannerScreenState extends ConsumerState<BarcodeScannerScreen> {
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
 
-    return Builder(builder: (context) {
-      final l10n = AppLocalizations.of(context)!;
-      return Scaffold(
-        appBar: AppBar(
-          title: Text(l10n.barcodeScanner),
+    return Builder(
+      builder: (context) {
+        final l10n = AppLocalizations.of(context)!;
+        return Scaffold(
+          appBar: AppBar(
+            title: Text(l10n.barcodeScanner),
+            backgroundColor: Colors.black,
+            foregroundColor: Colors.white,
+            actions: [
+              IconButton(
+                icon: Icon(_isTorchOn ? Iconsax.flash_slash : Iconsax.flash_1),
+                onPressed: () {
+                  _controller.toggleTorch();
+                  setState(() => _isTorchOn = !_isTorchOn);
+                },
+              ),
+              IconButton(
+                icon: Icon(_isScanning ? Iconsax.pause : Iconsax.play),
+                onPressed: () {
+                  if (_isScanning) {
+                    _controller.stop();
+                  } else {
+                    _controller.start();
+                  }
+                  setState(() => _isScanning = !_isScanning);
+                },
+              ),
+            ],
+          ),
           backgroundColor: Colors.black,
-          foregroundColor: Colors.white,
-          actions: [
-            IconButton(
-              icon: Icon(_isTorchOn ? Iconsax.flash_slash : Iconsax.flash_1),
-              onPressed: () {
-                _controller.toggleTorch();
-                setState(() => _isTorchOn = !_isTorchOn);
-              },
-            ),
-            IconButton(
-              icon: Icon(_isScanning ? Iconsax.pause : Iconsax.play),
-              onPressed: () {
-                if (_isScanning) {
-                  _controller.stop();
-                } else {
-                  _controller.start();
-                }
-                setState(() => _isScanning = !_isScanning);
-              },
-            ),
-          ],
-        ),
-        backgroundColor: Colors.black,
-        body: Stack(
-          children: [
-            // Camera preview
-            MobileScanner(controller: _controller, onDetect: _onBarcodeDetected),
+          body: Stack(
+            children: [
+              // Camera preview
+              MobileScanner(
+                controller: _controller,
+                onDetect: _onBarcodeDetected,
+              ),
 
-            Align(
-              alignment: Alignment.center,
-              child: SizedBox(
-                width: MediaQuery.of(context).size.width * 0.8,
-                height: MediaQuery.of(context).size.width * 0.8,
-                child: ScannerOverlay(
-                  title: l10n.scanBarcode,
-                  subtitle: l10n.positionBarcodeInFrame,
-                  scanType: ScanType.barcode,
+              Align(
+                child: SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.8,
+                  height: MediaQuery.of(context).size.width * 0.8,
+                  child: ScannerOverlay(
+                    title: l10n.scanBarcode,
+                    subtitle: l10n.positionBarcodeInFrame,
+                    scanType: ScanType.barcode,
+                  ),
                 ),
               ),
-            ),
-            // Bottom instruction panel
-            Positioned(
-              bottom: 0,
-              left: 0,
-              right: 0,
-              child: Container(
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [
-                      Colors.transparent,
-                      Colors.black.withOpacity(0.7),
-                      Colors.black.withOpacity(0.9),
+              // Bottom instruction panel
+              Positioned(
+                bottom: 0,
+                left: 0,
+                right: 0,
+                child: Container(
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [
+                        Colors.transparent,
+                        Colors.black.withOpacity(0.7),
+                        Colors.black.withOpacity(0.9),
+                      ],
+                    ),
+                  ),
+                  padding: const EdgeInsets.fromLTRB(24, 40, 24, 40),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(
+                        Iconsax.barcode,
+                        color: colorScheme.secondary,
+                        size: 32,
+                      ),
+                      const SizedBox(height: 12),
+                      Text(
+                        l10n.barcodeScanner,
+                        style: Theme.of(context).textTheme.titleMedium
+                            ?.copyWith(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        l10n.scanningForBarcodes,
+                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                          color: Colors.white.withOpacity(0.8),
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
                     ],
                   ),
                 ),
-                padding: const EdgeInsets.fromLTRB(24, 40, 24, 40),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Icon(Iconsax.barcode, color: colorScheme.secondary, size: 32),
-                    const SizedBox(height: 12),
-                    Text(
-                      l10n.barcodeScanner,
-                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      l10n.scanningForBarcodes,
-                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        color: Colors.white.withOpacity(0.8),
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                  ],
-                ),
               ),
-            ),
-          ],
-        ),
-      );
-    });
+            ],
+          ),
+        );
+      },
+    );
   }
 
   void _onBarcodeDetected(BarcodeCapture capture) {

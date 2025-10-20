@@ -97,16 +97,14 @@ class HumidityData {
       '${currentHumidity.toStringAsFixed(1)}%';
 
   /// Get formatted min humidity reading
-  String get formattedMinHumidity =>
-      minHumidity == double.infinity
-          ? '--'
-          : '${minHumidity.toStringAsFixed(1)}%';
+  String get formattedMinHumidity => minHumidity == double.infinity
+      ? '--'
+      : '${minHumidity.toStringAsFixed(1)}%';
 
   /// Get formatted max humidity reading
-  String get formattedMaxHumidity =>
-      maxHumidity == double.negativeInfinity
-          ? '--'
-          : '${maxHumidity.toStringAsFixed(1)}%';
+  String get formattedMaxHumidity => maxHumidity == double.negativeInfinity
+      ? '--'
+      : '${maxHumidity.toStringAsFixed(1)}%';
 
   /// Get formatted average humidity reading
   String get formattedAverageHumidity =>

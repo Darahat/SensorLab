@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:sensorlab/l10n/app_localizations.dart';
 
 class ExportDialog extends StatelessWidget {
   final int reportCount;
@@ -15,18 +16,19 @@ class ExportDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return AlertDialog(
-      title: const Text('Export Reports'),
-      content: Text('Choose how you want to export $reportCount report(s):'),
+      title: Text(l10n.exportReports),
+      content: Text(l10n.exportChooseMethod),
       actions: [
         TextButton(
           onPressed: () => Navigator.pop(context, 'clipboard'),
-          child: const Text('Copy to Clipboard'),
+          child: Text(l10n.exportCopyToClipboard),
         ),
         ElevatedButton.icon(
           onPressed: () => Navigator.pop(context, 'file'),
           icon: const Icon(Iconsax.document_download, size: 18),
-          label: const Text('Save as File'),
+          label: Text(l10n.exportSaveAsFile),
         ),
       ],
     );

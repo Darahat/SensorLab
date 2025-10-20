@@ -1,23 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:sensorlab/l10n/app_localizations.dart';
 
 class ExportSuccessDialog {
   static void show(BuildContext context, int reportCount, String filePath) {
+    final l10n = AppLocalizations.of(context)!;
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
         title: Row(
           children: [
-            Icon(Iconsax.tick_circle, color: Colors.green, size: 28),
+            const Icon(Iconsax.tick_circle, color: Colors.green, size: 28),
             const SizedBox(width: 12),
-            const Text('Export Successful'),
+            Text(l10n.exportSuccess),
           ],
         ),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('$reportCount report(s) exported successfully!'),
+            Text(l10n.exportSuccessMessage(reportCount)),
             const SizedBox(height: 12),
             Container(
               padding: const EdgeInsets.all(12),
@@ -28,9 +30,12 @@ class ExportSuccessDialog {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
-                    'Saved to:',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
+                  Text(
+                    l10n.savedTo,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 12,
+                    ),
                   ),
                   const SizedBox(height: 4),
                   Text(filePath, style: const TextStyle(fontSize: 11)),
@@ -42,7 +47,7 @@ class ExportSuccessDialog {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('OK'),
+            child: Text(l10n.actionOk),
           ),
         ],
       ),

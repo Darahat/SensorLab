@@ -12,7 +12,8 @@ part of 'enhanced_noise_data.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
 
 /// @nodoc
 mixin _$EnhancedNoiseMeterData {
@@ -48,37 +49,41 @@ mixin _$EnhancedNoiseMeterData {
 
 /// @nodoc
 abstract class $EnhancedNoiseMeterDataCopyWith<$Res> {
-  factory $EnhancedNoiseMeterDataCopyWith(EnhancedNoiseMeterData value,
-          $Res Function(EnhancedNoiseMeterData) then) =
-      _$EnhancedNoiseMeterDataCopyWithImpl<$Res, EnhancedNoiseMeterData>;
+  factory $EnhancedNoiseMeterDataCopyWith(
+    EnhancedNoiseMeterData value,
+    $Res Function(EnhancedNoiseMeterData) then,
+  ) = _$EnhancedNoiseMeterDataCopyWithImpl<$Res, EnhancedNoiseMeterData>;
   @useResult
-  $Res call(
-      {double currentDecibels,
-      double minDecibels,
-      double maxDecibels,
-      double averageDecibels,
-      bool isRecording,
-      NoiseLevel noiseLevel,
-      List<double> recentReadings,
-      String? errorMessage,
-      bool hasPermission,
-      int totalReadings,
-      Duration sessionDuration,
-      DateTime? sessionStartTime,
-      RecordingPreset? activePreset,
-      Duration? customPresetDuration,
-      List<AcousticEvent> events,
-      Map<String, int> timeInLevels,
-      List<double> allReadings,
-      List<AcousticReport> savedReports,
-      bool isAnalyzing,
-      List<double> decibelHistory,
-      AcousticReport? lastGeneratedReport});
+  $Res call({
+    double currentDecibels,
+    double minDecibels,
+    double maxDecibels,
+    double averageDecibels,
+    bool isRecording,
+    NoiseLevel noiseLevel,
+    List<double> recentReadings,
+    String? errorMessage,
+    bool hasPermission,
+    int totalReadings,
+    Duration sessionDuration,
+    DateTime? sessionStartTime,
+    RecordingPreset? activePreset,
+    Duration? customPresetDuration,
+    List<AcousticEvent> events,
+    Map<String, int> timeInLevels,
+    List<double> allReadings,
+    List<AcousticReport> savedReports,
+    bool isAnalyzing,
+    List<double> decibelHistory,
+    AcousticReport? lastGeneratedReport,
+  });
 }
 
 /// @nodoc
-class _$EnhancedNoiseMeterDataCopyWithImpl<$Res,
-        $Val extends EnhancedNoiseMeterData>
+class _$EnhancedNoiseMeterDataCopyWithImpl<
+  $Res,
+  $Val extends EnhancedNoiseMeterData
+>
     implements $EnhancedNoiseMeterDataCopyWith<$Res> {
   _$EnhancedNoiseMeterDataCopyWithImpl(this._value, this._then);
 
@@ -112,92 +117,95 @@ class _$EnhancedNoiseMeterDataCopyWithImpl<$Res,
     Object? decibelHistory = null,
     Object? lastGeneratedReport = freezed,
   }) {
-    return _then(_value.copyWith(
-      currentDecibels: null == currentDecibels
-          ? _value.currentDecibels
-          : currentDecibels // ignore: cast_nullable_to_non_nullable
-              as double,
-      minDecibels: null == minDecibels
-          ? _value.minDecibels
-          : minDecibels // ignore: cast_nullable_to_non_nullable
-              as double,
-      maxDecibels: null == maxDecibels
-          ? _value.maxDecibels
-          : maxDecibels // ignore: cast_nullable_to_non_nullable
-              as double,
-      averageDecibels: null == averageDecibels
-          ? _value.averageDecibels
-          : averageDecibels // ignore: cast_nullable_to_non_nullable
-              as double,
-      isRecording: null == isRecording
-          ? _value.isRecording
-          : isRecording // ignore: cast_nullable_to_non_nullable
-              as bool,
-      noiseLevel: null == noiseLevel
-          ? _value.noiseLevel
-          : noiseLevel // ignore: cast_nullable_to_non_nullable
-              as NoiseLevel,
-      recentReadings: null == recentReadings
-          ? _value.recentReadings
-          : recentReadings // ignore: cast_nullable_to_non_nullable
-              as List<double>,
-      errorMessage: freezed == errorMessage
-          ? _value.errorMessage
-          : errorMessage // ignore: cast_nullable_to_non_nullable
-              as String?,
-      hasPermission: null == hasPermission
-          ? _value.hasPermission
-          : hasPermission // ignore: cast_nullable_to_non_nullable
-              as bool,
-      totalReadings: null == totalReadings
-          ? _value.totalReadings
-          : totalReadings // ignore: cast_nullable_to_non_nullable
-              as int,
-      sessionDuration: null == sessionDuration
-          ? _value.sessionDuration
-          : sessionDuration // ignore: cast_nullable_to_non_nullable
-              as Duration,
-      sessionStartTime: freezed == sessionStartTime
-          ? _value.sessionStartTime
-          : sessionStartTime // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      activePreset: freezed == activePreset
-          ? _value.activePreset
-          : activePreset // ignore: cast_nullable_to_non_nullable
-              as RecordingPreset?,
-      customPresetDuration: freezed == customPresetDuration
-          ? _value.customPresetDuration
-          : customPresetDuration // ignore: cast_nullable_to_non_nullable
-              as Duration?,
-      events: null == events
-          ? _value.events
-          : events // ignore: cast_nullable_to_non_nullable
-              as List<AcousticEvent>,
-      timeInLevels: null == timeInLevels
-          ? _value.timeInLevels
-          : timeInLevels // ignore: cast_nullable_to_non_nullable
-              as Map<String, int>,
-      allReadings: null == allReadings
-          ? _value.allReadings
-          : allReadings // ignore: cast_nullable_to_non_nullable
-              as List<double>,
-      savedReports: null == savedReports
-          ? _value.savedReports
-          : savedReports // ignore: cast_nullable_to_non_nullable
-              as List<AcousticReport>,
-      isAnalyzing: null == isAnalyzing
-          ? _value.isAnalyzing
-          : isAnalyzing // ignore: cast_nullable_to_non_nullable
-              as bool,
-      decibelHistory: null == decibelHistory
-          ? _value.decibelHistory
-          : decibelHistory // ignore: cast_nullable_to_non_nullable
-              as List<double>,
-      lastGeneratedReport: freezed == lastGeneratedReport
-          ? _value.lastGeneratedReport
-          : lastGeneratedReport // ignore: cast_nullable_to_non_nullable
-              as AcousticReport?,
-    ) as $Val);
+    return _then(
+      _value.copyWith(
+            currentDecibels: null == currentDecibels
+                ? _value.currentDecibels
+                : currentDecibels // ignore: cast_nullable_to_non_nullable
+                      as double,
+            minDecibels: null == minDecibels
+                ? _value.minDecibels
+                : minDecibels // ignore: cast_nullable_to_non_nullable
+                      as double,
+            maxDecibels: null == maxDecibels
+                ? _value.maxDecibels
+                : maxDecibels // ignore: cast_nullable_to_non_nullable
+                      as double,
+            averageDecibels: null == averageDecibels
+                ? _value.averageDecibels
+                : averageDecibels // ignore: cast_nullable_to_non_nullable
+                      as double,
+            isRecording: null == isRecording
+                ? _value.isRecording
+                : isRecording // ignore: cast_nullable_to_non_nullable
+                      as bool,
+            noiseLevel: null == noiseLevel
+                ? _value.noiseLevel
+                : noiseLevel // ignore: cast_nullable_to_non_nullable
+                      as NoiseLevel,
+            recentReadings: null == recentReadings
+                ? _value.recentReadings
+                : recentReadings // ignore: cast_nullable_to_non_nullable
+                      as List<double>,
+            errorMessage: freezed == errorMessage
+                ? _value.errorMessage
+                : errorMessage // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            hasPermission: null == hasPermission
+                ? _value.hasPermission
+                : hasPermission // ignore: cast_nullable_to_non_nullable
+                      as bool,
+            totalReadings: null == totalReadings
+                ? _value.totalReadings
+                : totalReadings // ignore: cast_nullable_to_non_nullable
+                      as int,
+            sessionDuration: null == sessionDuration
+                ? _value.sessionDuration
+                : sessionDuration // ignore: cast_nullable_to_non_nullable
+                      as Duration,
+            sessionStartTime: freezed == sessionStartTime
+                ? _value.sessionStartTime
+                : sessionStartTime // ignore: cast_nullable_to_non_nullable
+                      as DateTime?,
+            activePreset: freezed == activePreset
+                ? _value.activePreset
+                : activePreset // ignore: cast_nullable_to_non_nullable
+                      as RecordingPreset?,
+            customPresetDuration: freezed == customPresetDuration
+                ? _value.customPresetDuration
+                : customPresetDuration // ignore: cast_nullable_to_non_nullable
+                      as Duration?,
+            events: null == events
+                ? _value.events
+                : events // ignore: cast_nullable_to_non_nullable
+                      as List<AcousticEvent>,
+            timeInLevels: null == timeInLevels
+                ? _value.timeInLevels
+                : timeInLevels // ignore: cast_nullable_to_non_nullable
+                      as Map<String, int>,
+            allReadings: null == allReadings
+                ? _value.allReadings
+                : allReadings // ignore: cast_nullable_to_non_nullable
+                      as List<double>,
+            savedReports: null == savedReports
+                ? _value.savedReports
+                : savedReports // ignore: cast_nullable_to_non_nullable
+                      as List<AcousticReport>,
+            isAnalyzing: null == isAnalyzing
+                ? _value.isAnalyzing
+                : isAnalyzing // ignore: cast_nullable_to_non_nullable
+                      as bool,
+            decibelHistory: null == decibelHistory
+                ? _value.decibelHistory
+                : decibelHistory // ignore: cast_nullable_to_non_nullable
+                      as List<double>,
+            lastGeneratedReport: freezed == lastGeneratedReport
+                ? _value.lastGeneratedReport
+                : lastGeneratedReport // ignore: cast_nullable_to_non_nullable
+                      as AcousticReport?,
+          )
+          as $Val,
+    );
   }
 }
 
@@ -205,44 +213,45 @@ class _$EnhancedNoiseMeterDataCopyWithImpl<$Res,
 abstract class _$$EnhancedNoiseMeterDataImplCopyWith<$Res>
     implements $EnhancedNoiseMeterDataCopyWith<$Res> {
   factory _$$EnhancedNoiseMeterDataImplCopyWith(
-          _$EnhancedNoiseMeterDataImpl value,
-          $Res Function(_$EnhancedNoiseMeterDataImpl) then) =
-      __$$EnhancedNoiseMeterDataImplCopyWithImpl<$Res>;
+    _$EnhancedNoiseMeterDataImpl value,
+    $Res Function(_$EnhancedNoiseMeterDataImpl) then,
+  ) = __$$EnhancedNoiseMeterDataImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {double currentDecibels,
-      double minDecibels,
-      double maxDecibels,
-      double averageDecibels,
-      bool isRecording,
-      NoiseLevel noiseLevel,
-      List<double> recentReadings,
-      String? errorMessage,
-      bool hasPermission,
-      int totalReadings,
-      Duration sessionDuration,
-      DateTime? sessionStartTime,
-      RecordingPreset? activePreset,
-      Duration? customPresetDuration,
-      List<AcousticEvent> events,
-      Map<String, int> timeInLevels,
-      List<double> allReadings,
-      List<AcousticReport> savedReports,
-      bool isAnalyzing,
-      List<double> decibelHistory,
-      AcousticReport? lastGeneratedReport});
+  $Res call({
+    double currentDecibels,
+    double minDecibels,
+    double maxDecibels,
+    double averageDecibels,
+    bool isRecording,
+    NoiseLevel noiseLevel,
+    List<double> recentReadings,
+    String? errorMessage,
+    bool hasPermission,
+    int totalReadings,
+    Duration sessionDuration,
+    DateTime? sessionStartTime,
+    RecordingPreset? activePreset,
+    Duration? customPresetDuration,
+    List<AcousticEvent> events,
+    Map<String, int> timeInLevels,
+    List<double> allReadings,
+    List<AcousticReport> savedReports,
+    bool isAnalyzing,
+    List<double> decibelHistory,
+    AcousticReport? lastGeneratedReport,
+  });
 }
 
 /// @nodoc
 class __$$EnhancedNoiseMeterDataImplCopyWithImpl<$Res>
-    extends _$EnhancedNoiseMeterDataCopyWithImpl<$Res,
-        _$EnhancedNoiseMeterDataImpl>
+    extends
+        _$EnhancedNoiseMeterDataCopyWithImpl<$Res, _$EnhancedNoiseMeterDataImpl>
     implements _$$EnhancedNoiseMeterDataImplCopyWith<$Res> {
   __$$EnhancedNoiseMeterDataImplCopyWithImpl(
-      _$EnhancedNoiseMeterDataImpl _value,
-      $Res Function(_$EnhancedNoiseMeterDataImpl) _then)
-      : super(_value, _then);
+    _$EnhancedNoiseMeterDataImpl _value,
+    $Res Function(_$EnhancedNoiseMeterDataImpl) _then,
+  ) : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
@@ -269,126 +278,128 @@ class __$$EnhancedNoiseMeterDataImplCopyWithImpl<$Res>
     Object? decibelHistory = null,
     Object? lastGeneratedReport = freezed,
   }) {
-    return _then(_$EnhancedNoiseMeterDataImpl(
-      currentDecibels: null == currentDecibels
-          ? _value.currentDecibels
-          : currentDecibels // ignore: cast_nullable_to_non_nullable
-              as double,
-      minDecibels: null == minDecibels
-          ? _value.minDecibels
-          : minDecibels // ignore: cast_nullable_to_non_nullable
-              as double,
-      maxDecibels: null == maxDecibels
-          ? _value.maxDecibels
-          : maxDecibels // ignore: cast_nullable_to_non_nullable
-              as double,
-      averageDecibels: null == averageDecibels
-          ? _value.averageDecibels
-          : averageDecibels // ignore: cast_nullable_to_non_nullable
-              as double,
-      isRecording: null == isRecording
-          ? _value.isRecording
-          : isRecording // ignore: cast_nullable_to_non_nullable
-              as bool,
-      noiseLevel: null == noiseLevel
-          ? _value.noiseLevel
-          : noiseLevel // ignore: cast_nullable_to_non_nullable
-              as NoiseLevel,
-      recentReadings: null == recentReadings
-          ? _value._recentReadings
-          : recentReadings // ignore: cast_nullable_to_non_nullable
-              as List<double>,
-      errorMessage: freezed == errorMessage
-          ? _value.errorMessage
-          : errorMessage // ignore: cast_nullable_to_non_nullable
-              as String?,
-      hasPermission: null == hasPermission
-          ? _value.hasPermission
-          : hasPermission // ignore: cast_nullable_to_non_nullable
-              as bool,
-      totalReadings: null == totalReadings
-          ? _value.totalReadings
-          : totalReadings // ignore: cast_nullable_to_non_nullable
-              as int,
-      sessionDuration: null == sessionDuration
-          ? _value.sessionDuration
-          : sessionDuration // ignore: cast_nullable_to_non_nullable
-              as Duration,
-      sessionStartTime: freezed == sessionStartTime
-          ? _value.sessionStartTime
-          : sessionStartTime // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      activePreset: freezed == activePreset
-          ? _value.activePreset
-          : activePreset // ignore: cast_nullable_to_non_nullable
-              as RecordingPreset?,
-      customPresetDuration: freezed == customPresetDuration
-          ? _value.customPresetDuration
-          : customPresetDuration // ignore: cast_nullable_to_non_nullable
-              as Duration?,
-      events: null == events
-          ? _value._events
-          : events // ignore: cast_nullable_to_non_nullable
-              as List<AcousticEvent>,
-      timeInLevels: null == timeInLevels
-          ? _value._timeInLevels
-          : timeInLevels // ignore: cast_nullable_to_non_nullable
-              as Map<String, int>,
-      allReadings: null == allReadings
-          ? _value._allReadings
-          : allReadings // ignore: cast_nullable_to_non_nullable
-              as List<double>,
-      savedReports: null == savedReports
-          ? _value._savedReports
-          : savedReports // ignore: cast_nullable_to_non_nullable
-              as List<AcousticReport>,
-      isAnalyzing: null == isAnalyzing
-          ? _value.isAnalyzing
-          : isAnalyzing // ignore: cast_nullable_to_non_nullable
-              as bool,
-      decibelHistory: null == decibelHistory
-          ? _value._decibelHistory
-          : decibelHistory // ignore: cast_nullable_to_non_nullable
-              as List<double>,
-      lastGeneratedReport: freezed == lastGeneratedReport
-          ? _value.lastGeneratedReport
-          : lastGeneratedReport // ignore: cast_nullable_to_non_nullable
-              as AcousticReport?,
-    ));
+    return _then(
+      _$EnhancedNoiseMeterDataImpl(
+        currentDecibels: null == currentDecibels
+            ? _value.currentDecibels
+            : currentDecibels // ignore: cast_nullable_to_non_nullable
+                  as double,
+        minDecibels: null == minDecibels
+            ? _value.minDecibels
+            : minDecibels // ignore: cast_nullable_to_non_nullable
+                  as double,
+        maxDecibels: null == maxDecibels
+            ? _value.maxDecibels
+            : maxDecibels // ignore: cast_nullable_to_non_nullable
+                  as double,
+        averageDecibels: null == averageDecibels
+            ? _value.averageDecibels
+            : averageDecibels // ignore: cast_nullable_to_non_nullable
+                  as double,
+        isRecording: null == isRecording
+            ? _value.isRecording
+            : isRecording // ignore: cast_nullable_to_non_nullable
+                  as bool,
+        noiseLevel: null == noiseLevel
+            ? _value.noiseLevel
+            : noiseLevel // ignore: cast_nullable_to_non_nullable
+                  as NoiseLevel,
+        recentReadings: null == recentReadings
+            ? _value._recentReadings
+            : recentReadings // ignore: cast_nullable_to_non_nullable
+                  as List<double>,
+        errorMessage: freezed == errorMessage
+            ? _value.errorMessage
+            : errorMessage // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        hasPermission: null == hasPermission
+            ? _value.hasPermission
+            : hasPermission // ignore: cast_nullable_to_non_nullable
+                  as bool,
+        totalReadings: null == totalReadings
+            ? _value.totalReadings
+            : totalReadings // ignore: cast_nullable_to_non_nullable
+                  as int,
+        sessionDuration: null == sessionDuration
+            ? _value.sessionDuration
+            : sessionDuration // ignore: cast_nullable_to_non_nullable
+                  as Duration,
+        sessionStartTime: freezed == sessionStartTime
+            ? _value.sessionStartTime
+            : sessionStartTime // ignore: cast_nullable_to_non_nullable
+                  as DateTime?,
+        activePreset: freezed == activePreset
+            ? _value.activePreset
+            : activePreset // ignore: cast_nullable_to_non_nullable
+                  as RecordingPreset?,
+        customPresetDuration: freezed == customPresetDuration
+            ? _value.customPresetDuration
+            : customPresetDuration // ignore: cast_nullable_to_non_nullable
+                  as Duration?,
+        events: null == events
+            ? _value._events
+            : events // ignore: cast_nullable_to_non_nullable
+                  as List<AcousticEvent>,
+        timeInLevels: null == timeInLevels
+            ? _value._timeInLevels
+            : timeInLevels // ignore: cast_nullable_to_non_nullable
+                  as Map<String, int>,
+        allReadings: null == allReadings
+            ? _value._allReadings
+            : allReadings // ignore: cast_nullable_to_non_nullable
+                  as List<double>,
+        savedReports: null == savedReports
+            ? _value._savedReports
+            : savedReports // ignore: cast_nullable_to_non_nullable
+                  as List<AcousticReport>,
+        isAnalyzing: null == isAnalyzing
+            ? _value.isAnalyzing
+            : isAnalyzing // ignore: cast_nullable_to_non_nullable
+                  as bool,
+        decibelHistory: null == decibelHistory
+            ? _value._decibelHistory
+            : decibelHistory // ignore: cast_nullable_to_non_nullable
+                  as List<double>,
+        lastGeneratedReport: freezed == lastGeneratedReport
+            ? _value.lastGeneratedReport
+            : lastGeneratedReport // ignore: cast_nullable_to_non_nullable
+                  as AcousticReport?,
+      ),
+    );
   }
 }
 
 /// @nodoc
 
 class _$EnhancedNoiseMeterDataImpl implements _EnhancedNoiseMeterData {
-  const _$EnhancedNoiseMeterDataImpl(
-      {this.currentDecibels = 0.0,
-      this.minDecibels = double.infinity,
-      this.maxDecibels = double.negativeInfinity,
-      this.averageDecibels = 0.0,
-      this.isRecording = false,
-      this.noiseLevel = NoiseLevel.quiet,
-      final List<double> recentReadings = const [],
-      this.errorMessage,
-      this.hasPermission = false,
-      this.totalReadings = 0,
-      this.sessionDuration = Duration.zero,
-      this.sessionStartTime,
-      this.activePreset,
-      this.customPresetDuration,
-      final List<AcousticEvent> events = const [],
-      final Map<String, int> timeInLevels = const {},
-      final List<double> allReadings = const [],
-      final List<AcousticReport> savedReports = const [],
-      this.isAnalyzing = false,
-      final List<double> decibelHistory = const [],
-      this.lastGeneratedReport})
-      : _recentReadings = recentReadings,
-        _events = events,
-        _timeInLevels = timeInLevels,
-        _allReadings = allReadings,
-        _savedReports = savedReports,
-        _decibelHistory = decibelHistory;
+  const _$EnhancedNoiseMeterDataImpl({
+    this.currentDecibels = 0.0,
+    this.minDecibels = double.infinity,
+    this.maxDecibels = double.negativeInfinity,
+    this.averageDecibels = 0.0,
+    this.isRecording = false,
+    this.noiseLevel = NoiseLevel.quiet,
+    final List<double> recentReadings = const [],
+    this.errorMessage,
+    this.hasPermission = false,
+    this.totalReadings = 0,
+    this.sessionDuration = Duration.zero,
+    this.sessionStartTime,
+    this.activePreset,
+    this.customPresetDuration,
+    final List<AcousticEvent> events = const [],
+    final Map<String, int> timeInLevels = const {},
+    final List<double> allReadings = const [],
+    final List<AcousticReport> savedReports = const [],
+    this.isAnalyzing = false,
+    final List<double> decibelHistory = const [],
+    this.lastGeneratedReport,
+  }) : _recentReadings = recentReadings,
+       _events = events,
+       _timeInLevels = timeInLevels,
+       _allReadings = allReadings,
+       _savedReports = savedReports,
+       _decibelHistory = decibelHistory;
 
   @override
   @JsonKey()
@@ -434,9 +445,9 @@ class _$EnhancedNoiseMeterDataImpl implements _EnhancedNoiseMeterData {
   final RecordingPreset? activePreset;
   @override
   final Duration? customPresetDuration;
-// For custom presets
+  // For custom presets
   final List<AcousticEvent> _events;
-// For custom presets
+  // For custom presets
   @override
   @JsonKey()
   List<AcousticEvent> get events {
@@ -463,9 +474,9 @@ class _$EnhancedNoiseMeterDataImpl implements _EnhancedNoiseMeterData {
     return EqualUnmodifiableListView(_allReadings);
   }
 
-// Store all readings for report
+  // Store all readings for report
   final List<AcousticReport> _savedReports;
-// Store all readings for report
+  // Store all readings for report
   @override
   @JsonKey()
   List<AcousticReport> get savedReports {
@@ -486,7 +497,7 @@ class _$EnhancedNoiseMeterDataImpl implements _EnhancedNoiseMeterData {
     return EqualUnmodifiableListView(_decibelHistory);
   }
 
-// For real-time chart
+  // For real-time chart
   @override
   final AcousticReport? lastGeneratedReport;
 
@@ -512,8 +523,10 @@ class _$EnhancedNoiseMeterDataImpl implements _EnhancedNoiseMeterData {
                 other.isRecording == isRecording) &&
             (identical(other.noiseLevel, noiseLevel) ||
                 other.noiseLevel == noiseLevel) &&
-            const DeepCollectionEquality()
-                .equals(other._recentReadings, _recentReadings) &&
+            const DeepCollectionEquality().equals(
+              other._recentReadings,
+              _recentReadings,
+            ) &&
             (identical(other.errorMessage, errorMessage) ||
                 other.errorMessage == errorMessage) &&
             (identical(other.hasPermission, hasPermission) ||
@@ -529,78 +542,89 @@ class _$EnhancedNoiseMeterDataImpl implements _EnhancedNoiseMeterData {
             (identical(other.customPresetDuration, customPresetDuration) ||
                 other.customPresetDuration == customPresetDuration) &&
             const DeepCollectionEquality().equals(other._events, _events) &&
-            const DeepCollectionEquality()
-                .equals(other._timeInLevels, _timeInLevels) &&
-            const DeepCollectionEquality()
-                .equals(other._allReadings, _allReadings) &&
-            const DeepCollectionEquality()
-                .equals(other._savedReports, _savedReports) &&
+            const DeepCollectionEquality().equals(
+              other._timeInLevels,
+              _timeInLevels,
+            ) &&
+            const DeepCollectionEquality().equals(
+              other._allReadings,
+              _allReadings,
+            ) &&
+            const DeepCollectionEquality().equals(
+              other._savedReports,
+              _savedReports,
+            ) &&
             (identical(other.isAnalyzing, isAnalyzing) ||
                 other.isAnalyzing == isAnalyzing) &&
-            const DeepCollectionEquality()
-                .equals(other._decibelHistory, _decibelHistory) &&
+            const DeepCollectionEquality().equals(
+              other._decibelHistory,
+              _decibelHistory,
+            ) &&
             (identical(other.lastGeneratedReport, lastGeneratedReport) ||
                 other.lastGeneratedReport == lastGeneratedReport));
   }
 
   @override
   int get hashCode => Object.hashAll([
-        runtimeType,
-        currentDecibels,
-        minDecibels,
-        maxDecibels,
-        averageDecibels,
-        isRecording,
-        noiseLevel,
-        const DeepCollectionEquality().hash(_recentReadings),
-        errorMessage,
-        hasPermission,
-        totalReadings,
-        sessionDuration,
-        sessionStartTime,
-        activePreset,
-        customPresetDuration,
-        const DeepCollectionEquality().hash(_events),
-        const DeepCollectionEquality().hash(_timeInLevels),
-        const DeepCollectionEquality().hash(_allReadings),
-        const DeepCollectionEquality().hash(_savedReports),
-        isAnalyzing,
-        const DeepCollectionEquality().hash(_decibelHistory),
-        lastGeneratedReport
-      ]);
+    runtimeType,
+    currentDecibels,
+    minDecibels,
+    maxDecibels,
+    averageDecibels,
+    isRecording,
+    noiseLevel,
+    const DeepCollectionEquality().hash(_recentReadings),
+    errorMessage,
+    hasPermission,
+    totalReadings,
+    sessionDuration,
+    sessionStartTime,
+    activePreset,
+    customPresetDuration,
+    const DeepCollectionEquality().hash(_events),
+    const DeepCollectionEquality().hash(_timeInLevels),
+    const DeepCollectionEquality().hash(_allReadings),
+    const DeepCollectionEquality().hash(_savedReports),
+    isAnalyzing,
+    const DeepCollectionEquality().hash(_decibelHistory),
+    lastGeneratedReport,
+  ]);
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$EnhancedNoiseMeterDataImplCopyWith<_$EnhancedNoiseMeterDataImpl>
-      get copyWith => __$$EnhancedNoiseMeterDataImplCopyWithImpl<
-          _$EnhancedNoiseMeterDataImpl>(this, _$identity);
+  get copyWith =>
+      __$$EnhancedNoiseMeterDataImplCopyWithImpl<_$EnhancedNoiseMeterDataImpl>(
+        this,
+        _$identity,
+      );
 }
 
 abstract class _EnhancedNoiseMeterData implements EnhancedNoiseMeterData {
-  const factory _EnhancedNoiseMeterData(
-          {final double currentDecibels,
-          final double minDecibels,
-          final double maxDecibels,
-          final double averageDecibels,
-          final bool isRecording,
-          final NoiseLevel noiseLevel,
-          final List<double> recentReadings,
-          final String? errorMessage,
-          final bool hasPermission,
-          final int totalReadings,
-          final Duration sessionDuration,
-          final DateTime? sessionStartTime,
-          final RecordingPreset? activePreset,
-          final Duration? customPresetDuration,
-          final List<AcousticEvent> events,
-          final Map<String, int> timeInLevels,
-          final List<double> allReadings,
-          final List<AcousticReport> savedReports,
-          final bool isAnalyzing,
-          final List<double> decibelHistory,
-          final AcousticReport? lastGeneratedReport}) =
-      _$EnhancedNoiseMeterDataImpl;
+  const factory _EnhancedNoiseMeterData({
+    final double currentDecibels,
+    final double minDecibels,
+    final double maxDecibels,
+    final double averageDecibels,
+    final bool isRecording,
+    final NoiseLevel noiseLevel,
+    final List<double> recentReadings,
+    final String? errorMessage,
+    final bool hasPermission,
+    final int totalReadings,
+    final Duration sessionDuration,
+    final DateTime? sessionStartTime,
+    final RecordingPreset? activePreset,
+    final Duration? customPresetDuration,
+    final List<AcousticEvent> events,
+    final Map<String, int> timeInLevels,
+    final List<double> allReadings,
+    final List<AcousticReport> savedReports,
+    final bool isAnalyzing,
+    final List<double> decibelHistory,
+    final AcousticReport? lastGeneratedReport,
+  }) = _$EnhancedNoiseMeterDataImpl;
 
   @override
   double get currentDecibels;
@@ -647,5 +671,5 @@ abstract class _EnhancedNoiseMeterData implements EnhancedNoiseMeterData {
   @override
   @JsonKey(ignore: true)
   _$$EnhancedNoiseMeterDataImplCopyWith<_$EnhancedNoiseMeterDataImpl>
-      get copyWith => throw _privateConstructorUsedError;
+  get copyWith => throw _privateConstructorUsedError;
 }

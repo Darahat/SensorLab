@@ -39,12 +39,11 @@ class ProximityNotifier extends StateNotifier<ProximityData> {
       state = state.copyWith(
         hasPermission: status.isGranted,
         hasSensor: hasSensor,
-        errorMessage:
-            !status.isGranted
-                ? 'Sensor permission is required'
-                : !hasSensor
-                ? 'Device does not have a proximity sensor'
-                : null,
+        errorMessage: !status.isGranted
+            ? 'Sensor permission is required'
+            : !hasSensor
+            ? 'Device does not have a proximity sensor'
+            : null,
       );
     } catch (e) {
       state = state.copyWith(
@@ -76,7 +75,6 @@ class ProximityNotifier extends StateNotifier<ProximityData> {
     try {
       state = state.copyWith(
         isReading: true,
-        errorMessage: null,
         totalReadings: 0,
         sessionDuration: 0,
         nearDetections: 0,
@@ -139,7 +137,6 @@ class ProximityNotifier extends StateNotifier<ProximityData> {
         totalReadings: state.totalReadings + 1,
         nearDetections: newNearDetections,
         farDetections: newFarDetections,
-        errorMessage: null,
       );
     } catch (e) {
       state = state.copyWith(
@@ -205,11 +202,7 @@ class ProximityNotifier extends StateNotifier<ProximityData> {
       final isNear = event > 0;
       final proximityState = isNear ? ProximityState.near : ProximityState.far;
 
-      state = state.copyWith(
-        isNear: isNear,
-        proximityState: proximityState,
-        errorMessage: null,
-      );
+      state = state.copyWith(isNear: isNear, proximityState: proximityState);
     } catch (e) {
       state = state.copyWith(
         errorMessage: 'Failed to get proximity reading: $e',

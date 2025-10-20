@@ -25,7 +25,7 @@ class SensorDisplay extends StatelessWidget {
           children: [
             Text(
               l10n.sensorData,
-              style: TextStyle(fontWeight: FontWeight.bold),
+              style: const TextStyle(fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 8),
             Text('${l10n.stepsLabel}: $steps'),

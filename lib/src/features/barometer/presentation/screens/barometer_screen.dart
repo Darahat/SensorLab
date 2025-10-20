@@ -118,7 +118,6 @@ class _BarometerScreenState extends ConsumerState<BarometerScreen> {
                       color: barometerData.isActive
                           ? colorScheme.primary
                           : colorScheme.outline.withOpacity(0.3),
-                      width: 1,
                     ),
                   ),
                   child: Text(

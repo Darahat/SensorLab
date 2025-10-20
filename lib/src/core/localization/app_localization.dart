@@ -22,9 +22,9 @@ mixin AppLocale {
 
   /// Mapping from string keys to actual Locale objects
   static final Map<String, Locale> localeMap = {
-    enUS: Locale('en', 'US'),
-    kmKH: Locale('km', 'KH'),
-    jaJP: Locale('ja', 'JP'),
+    enUS: const Locale('en', 'US'),
+    kmKH: const Locale('km', 'KH'),
+    jaJP: const Locale('ja', 'JP'),
   };
 
   /// List of supported [Locale]s for use with materialApp or CupertinoApp.

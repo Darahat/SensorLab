@@ -40,14 +40,7 @@ class SpeedData {
 
   /// Reset max and average values, keep current speed
   SpeedData resetStats() {
-    return SpeedData(
-      currentSpeed: currentSpeed,
-      maxSpeed: 0,
-      avgSpeed: 0,
-      distance: 0,
-      isActive: isActive,
-      sampleCount: 0,
-    );
+    return SpeedData(currentSpeed: currentSpeed, isActive: isActive);
   }
 
   // Speed conversions

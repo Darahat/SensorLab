@@ -23,7 +23,10 @@ class ActivitySessionRepositoryImpl implements ActivitySessionRepository {
     final session = await getSessionById(sessionId);
     if (session != null) {
       await updateActivitySession(
-        session.copyWith(status: SessionStatus.completed, endTime: DateTime.now()),
+        session.copyWith(
+          status: SessionStatus.completed,
+          endTime: DateTime.now(),
+        ),
       );
     }
   }
@@ -59,8 +62,11 @@ class ActivitySessionRepositoryImpl implements ActivitySessionRepository {
     DateTime end,
   ) async {
     return _sessionBox.values
-        .where((session) =>
-            session.startTime.isAfter(start) && session.startTime.isBefore(end))
+        .where(
+          (session) =>
+              session.startTime.isAfter(start) &&
+              session.startTime.isBefore(end),
+        )
         .toList();
   }
 
@@ -81,13 +87,22 @@ class ActivitySessionRepositoryImpl implements ActivitySessionRepository {
         .toList();
 
     final totalSessions = sessionsInDateRange.length;
-    final completedSessions =
-        sessionsInDateRange.where((s) => s.status == SessionStatus.completed).length;
-    final totalActiveTime =
-        sessionsInDateRange.fold<Duration>(Duration.zero, (p, s) => p + s.activeDuration);
+    final completedSessions = sessionsInDateRange
+        .where((s) => s.status == SessionStatus.completed)
+        .length;
+    final totalActiveTime = sessionsInDateRange.fold<Duration>(
+      Duration.zero,
+      (p, s) => p + s.activeDuration,
+    );
     final totalSteps = sessionsInDateRange.fold<int>(0, (p, s) => p + s.steps);
-    final totalDistance = sessionsInDateRange.fold<double>(0, (p, s) => p + s.distance);
-    final totalCalories = sessionsInDateRange.fold<double>(0, (p, s) => p + s.calories);
+    final totalDistance = sessionsInDateRange.fold<double>(
+      0,
+      (p, s) => p + s.distance,
+    );
+    final totalCalories = sessionsInDateRange.fold<double>(
+      0,
+      (p, s) => p + s.calories,
+    );
 
     final activityBreakdown = <ActivityType, int>{};
     for (final session in sessionsInDateRange) {
@@ -101,8 +116,9 @@ class ActivitySessionRepositoryImpl implements ActivitySessionRepository {
     final averageSessionDuration = totalSessions > 0
         ? totalActiveTime.inMinutes / totalSessions
         : 0.0;
-    final averageCaloriesPerSession =
-        totalSessions > 0 ? totalCalories / totalSessions : 0.0;
+    final averageCaloriesPerSession = totalSessions > 0
+        ? totalCalories / totalSessions
+        : 0.0;
 
     return SessionStatistics(
       totalSessions: totalSessions,

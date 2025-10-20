@@ -82,7 +82,9 @@ class PresetSelectionUtils extends ChangeNotifier {
 
   Future<void> deleteCustomPreset(String id) async {
     final preset = customPresets[id];
-    if (preset == null) return;
+    if (preset == null) {
+      return;
+    }
 
     // Optimistic deletion
     setState(() {

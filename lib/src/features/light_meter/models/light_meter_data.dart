@@ -96,10 +96,9 @@ class LightMeterData {
       minLux == double.infinity ? '--' : '${minLux.toStringAsFixed(1)} lux';
 
   /// Get formatted max lux reading
-  String get formattedMaxLux =>
-      maxLux == double.negativeInfinity
-          ? '--'
-          : '${maxLux.toStringAsFixed(1)} lux';
+  String get formattedMaxLux => maxLux == double.negativeInfinity
+      ? '--'
+      : '${maxLux.toStringAsFixed(1)} lux';
 
   /// Get formatted average lux reading
   String get formattedAverageLux => '${averageLux.toStringAsFixed(1)} lux';

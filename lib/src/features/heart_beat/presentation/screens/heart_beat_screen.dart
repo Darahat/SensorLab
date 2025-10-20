@@ -14,24 +14,24 @@ class HeartRateScreen extends ConsumerWidget {
     final heartBeatData = ref.watch(heartBeatProvider);
     final heartBeatNotifier = ref.read(heartBeatProvider.notifier);
 
-    return Builder(builder: (context) {
-      final l10n = AppLocalizations.of(context)!;
-      return Scaffold(
-        appBar: AppBar(
-          title: Text(l10n.heartRateMonitor),
-          actions: [
-            IconButton(
-              icon: Icon(
-                heartBeatData.isFlashOn ? Icons.flash_on : Icons.flash_off,
+    return Builder(
+      builder: (context) {
+        final l10n = AppLocalizations.of(context)!;
+        return Scaffold(
+          appBar: AppBar(
+            title: Text(l10n.heartRateMonitor),
+            actions: [
+              IconButton(
+                icon: Icon(
+                  heartBeatData.isFlashOn ? Icons.flash_on : Icons.flash_off,
+                ),
+                onPressed: () => heartBeatNotifier.toggleFlash(),
+                tooltip: l10n.toggleFlash,
               ),
-              onPressed: () => heartBeatNotifier.toggleFlash(),
-              tooltip: l10n.toggleFlash,
-            ),
-          ],
-        ),
-        body:
-            heartBeatData.isInitialized
-                ? Column(
+            ],
+          ),
+          body: heartBeatData.isInitialized
+              ? Column(
                   children: [
                     Expanded(
                       child: Stack(
@@ -76,9 +76,10 @@ class HeartRateScreen extends ConsumerWidget {
                     ),
                   ],
                 )
-                : _buildLoadingScreen(heartBeatData),
-      );
-    });
+              : _buildLoadingScreen(heartBeatData),
+        );
+      },
+    );
   }
 
   Widget _buildEnvironmentWarning(
