@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sensorlab/src/features/noise_meter/presentation/providers/acoustic_reports_list_controller.dart';
+import 'package:sensorlab/src/features/noise_meter/application/notifiers/acoustic_reports_list_notifier.dart';
 
 class DeleteSelectedDialog {
   static Future<void> show(

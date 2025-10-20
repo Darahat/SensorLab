@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:sensorlab/l10n/app_localizations.dart';
-import 'package:sensorlab/src/features/noise_meter/presentation/providers/custom_preset_provider.dart';
+import 'package:sensorlab/src/features/noise_meter/application/providers/custom_preset_provider.dart';
 import 'package:sensorlab/src/shared/widgets/common_cards.dart';
 import 'package:sensorlab/src/shared/widgets/utility_widgets.dart';
 
@@ -50,8 +50,8 @@ class CustomPresetCreationScreen extends ConsumerWidget {
         Navigator.pop(context, customPreset);
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Please fill all fields and set a duration.'),
+          SnackBar(
+            content: Text(l10n.durationMustBeGreaterThanZero),
             backgroundColor: Colors.red,
           ),
         );
@@ -72,7 +72,7 @@ class CustomPresetCreationScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Create Custom Preset'),
+        title: Text(l10n.createCustomPreset),
         centerTitle: true,
         elevation: 0,
       ),
@@ -125,7 +125,7 @@ class CustomPresetCreationScreen extends ConsumerWidget {
                               children: [
                                 Text(
                                   presetState.title.isEmpty
-                                      ? 'Preset Name'
+                                      ? l10n.presetName
                                       : presetState.title,
                                   style: theme.textTheme.titleLarge?.copyWith(
                                     fontWeight: FontWeight.bold,

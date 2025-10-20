@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:sensorlab/l10n/app_localizations.dart';
+import 'package:sensorlab/src/features/noise_meter/application/notifiers/enhanced_noise_meter_notifier.dart';
+import 'package:sensorlab/src/features/noise_meter/application/services/monitoring_service.dart';
 import 'package:sensorlab/src/features/noise_meter/domain/entities/acoustic_report_entity.dart';
 import 'package:sensorlab/src/features/noise_meter/presentation/models/custom_preset_config.dart';
-import 'package:sensorlab/src/features/noise_meter/presentation/providers/enhanced_noise_meter_provider.dart';
 import 'package:sensorlab/src/features/noise_meter/presentation/widgets/widgets_index.dart'
     show
         StatusCard,
@@ -11,7 +12,6 @@ import 'package:sensorlab/src/features/noise_meter/presentation/widgets/widgets_
         SessionProgressIndicator,
         NoiseEventItem,
         EmptyStateWidget;
-import 'package:sensorlab/src/features/noise_meter/services/monitoring_service.dart';
 import 'package:sensorlab/src/features/noise_meter/utils/utils_index.dart';
 import 'package:sensorlab/src/shared/widgets/common_cards.dart' show StatCard;
 import 'package:sensorlab/src/shared/widgets/utility_widgets.dart'

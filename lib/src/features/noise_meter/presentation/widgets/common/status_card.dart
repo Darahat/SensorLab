@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:iconsax/iconsax.dart';
 
 /// Reusable status indicator card with animated dot
 class StatusCard extends StatelessWidget {

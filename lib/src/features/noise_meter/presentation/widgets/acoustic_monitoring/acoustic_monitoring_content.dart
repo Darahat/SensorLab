@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:sensorlab/src/features/noise_meter/application/notifiers/enhanced_noise_meter_notifier.dart';
+import 'package:sensorlab/src/features/noise_meter/application/providers/enhanced_noise_meter_provider.dart';
 import 'package:sensorlab/src/features/noise_meter/domain/entities/acoustic_report_entity.dart';
 import 'package:sensorlab/src/features/noise_meter/presentation/models/custom_preset_config.dart';
-import 'package:sensorlab/src/features/noise_meter/presentation/providers/enhanced_noise_meter_provider.dart';
 import 'package:sensorlab/src/features/noise_meter/presentation/widgets/widgets_index.dart';
 import 'package:sensorlab/src/features/noise_meter/utils/utils_index.dart';
 

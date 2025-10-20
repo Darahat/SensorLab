@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:sensorlab/src/features/noise_meter/domain/entities/acoustic_report_entity.dart';
 import 'package:sensorlab/src/features/noise_meter/presentation/screens/acoustic_report_detail_screen.dart';
-import 'package:sensorlab/src/features/noise_meter/presentation/widgets/index.dart'
+import 'package:sensorlab/src/features/noise_meter/presentation/widgets/widgets_index.dart'
     show ReportSummaryCard;
 import 'package:sensorlab/src/features/noise_meter/utils/report_formatters.dart';
 
