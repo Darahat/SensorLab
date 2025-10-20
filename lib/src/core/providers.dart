@@ -13,7 +13,7 @@ export '../features/heart_beat/presentation/providers/heart_beat_provider.dart';
 export '../features/humidity/presentation/providers/humidity_provider.dart';
 export '../features/light_meter/presentation/providers/light_meter_provider.dart';
 export '../features/magnetometer/presentation/providers/magnetometer_provider.dart';
-export '../features/noise_meter/presentation/providers/enhanced_noise_meter_provider.dart';
+export '../features/noise_meter/application/providers/enhanced_noise_meter_provider.dart';
 export '../features/proximity/presentation/providers/proximity_provider.dart';
 export '../features/qr_scanner/presentation/providers/qr_scanner_provider.dart';
 

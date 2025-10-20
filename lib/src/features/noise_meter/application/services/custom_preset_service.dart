@@ -64,7 +64,7 @@ class CustomPresetService {
     debugPrint('📦 Box contains ${box.length} items');
     debugPrint('🔑 Keys: ${box.keys.toList()}');
     final Map<String, CustomPresetConfig> presets = {};
-    for (var key in box.keys) {
+    for (final key in box.keys) {
       final hiveModel = box.get(key);
       if (hiveModel != null) {
         presets[key.toString()] = hiveModel.toConfig();

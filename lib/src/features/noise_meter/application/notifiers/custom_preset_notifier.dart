@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:iconsax/iconsax.dart';
@@ -49,7 +48,9 @@ class CustomPresetNotifier extends StateNotifier<CustomPresetState> {
   }
 
   void updateDuration(int hours, int minutes) {
-    state = state.copyWith(duration: Duration(hours: hours, minutes: minutes));
+    state = state.copyWith(
+      duration: Duration(hours: hours, minutes: minutes),
+    );
   }
 
   void selectIcon(IconData icon) {
@@ -75,8 +76,3 @@ class CustomPresetNotifier extends StateNotifier<CustomPresetState> {
     );
   }
 }
-
-final customPresetProvider =
-    StateNotifierProvider<CustomPresetNotifier, CustomPresetState>(
-  (ref) => CustomPresetNotifier(),
-);

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:sensorlab/src/features/noise_meter/application/services/custom_preset_service.dart';
 import 'package:sensorlab/src/features/noise_meter/domain/entities/acoustic_report_entity.dart';
 import 'package:sensorlab/src/features/noise_meter/presentation/models/custom_preset_config.dart';
 import 'package:sensorlab/src/features/noise_meter/presentation/screens/acoustic_monitoring_screen.dart';
 import 'package:sensorlab/src/features/noise_meter/presentation/screens/custom_preset_creation_screen.dart';
-import 'package:sensorlab/src/features/noise_meter/services/custom_preset_service.dart';
 
 class PresetSelectionUtils extends ChangeNotifier {
   Map<String, CustomPresetConfig> customPresets = {};
@@ -13,6 +13,9 @@ class PresetSelectionUtils extends ChangeNotifier {
     setState(() => isLoading = true);
     try {
       final presets = await CustomPresetService.getAllPresetsWithIds();
+      if (!context.mounted) {
+        return;
+      }
       if (_isContextValid(context)) {
         setState(() {
           customPresets = presets;
@@ -20,6 +23,9 @@ class PresetSelectionUtils extends ChangeNotifier {
         });
       }
     } catch (e) {
+      if (!context.mounted) {
+        return;
+      }
       if (_isContextValid(context)) {
         setState(() => isLoading = false);
         _showErrorSnackbar(context, 'Failed to load presets: $e');
@@ -35,14 +41,24 @@ class PresetSelectionUtils extends ChangeNotifier {
       ),
     );
 
+    if (!context.mounted) {
+      return;
+    }
+
     if (customPreset != null && _isContextValid(context)) {
       try {
         final id = await CustomPresetService.savePreset(customPreset);
+        if (!context.mounted) {
+          return;
+        }
         setState(() {
           customPresets[id] = customPreset;
         });
         _showSuccessSnackbar(context, 'Created "${customPreset.title}"!');
       } catch (e) {
+        if (!context.mounted) {
+          return;
+        }
         _showErrorSnackbar(context, 'Failed to save preset: $e');
       }
     }

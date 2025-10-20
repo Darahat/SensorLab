@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:sensorlab/l10n/app_localizations.dart';
-import 'package:sensorlab/src/features/noise_meter/presentation/providers/enhanced_noise_meter_provider.dart';
+import 'package:sensorlab/src/features/noise_meter/application/notifiers/enhanced_noise_meter_notifier.dart';
+import 'package:sensorlab/src/features/noise_meter/application/state/enhanced_noise_data.dart';
 import 'package:sensorlab/src/features/noise_meter/presentation/widgets/widgets_index.dart';
-
-import '../../state/enhanced_noise_data.dart';
 
 class NoiseMeterComponents {
   static Widget buildPermissionSection(

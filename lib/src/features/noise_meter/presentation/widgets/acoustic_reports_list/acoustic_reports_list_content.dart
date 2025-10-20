@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:sensorlab/src/features/noise_meter/presentation/providers/acoustic_reports_list_controller.dart';
+import 'package:sensorlab/src/features/noise_meter/application/providers/acoustic_reports_list_controller.dart';
 import 'package:sensorlab/src/features/noise_meter/presentation/widgets/acoustic_reports_list/reports_actions_helper.dart';
 import 'package:sensorlab/src/features/noise_meter/presentation/widgets/acoustic_reports_list/reports_list_view.dart';
 import 'package:sensorlab/src/features/noise_meter/presentation/widgets/acoustic_reports_list/selection_app_bar.dart';

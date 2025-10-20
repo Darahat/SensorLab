@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../../state/enhanced_noise_data.dart';
+import 'package:sensorlab/src/features/noise_meter/application/state/enhanced_noise_data.dart';
 
 class NoiseMeterErrorSection extends StatelessWidget {
   final EnhancedNoiseMeterData data;

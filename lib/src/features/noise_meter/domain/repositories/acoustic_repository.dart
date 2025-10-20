@@ -1,5 +1,5 @@
 import 'package:sensorlab/src/features/noise_meter/domain/entities/acoustic_report_entity.dart';
-import 'package:sensorlab/src/features/noise_meter/presentation/state/enhanced_noise_data.dart';
+
 import '../entities/noise_data.dart';
 
 /// Abstract repository for all acoustic-related data operations.
