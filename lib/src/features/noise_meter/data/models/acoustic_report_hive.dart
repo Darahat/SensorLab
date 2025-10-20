@@ -1,7 +1,6 @@
 
 import 'package:hive/hive.dart';
 import 'package:sensorlab/src/features/noise_meter/domain/entities/acoustic_report_entity.dart';
-import 'package:sensorlab/src/features/noise_meter/presentation/state/enhanced_noise_data.dart';
 
 part 'acoustic_report_hive.g.dart';
 
@@ -74,6 +73,10 @@ class AcousticReportHive {
   final String environmentQuality;
   @HiveField(12)
   final String recommendation;
+  @HiveField(13)
+  final int? qualityScore;
+  @HiveField(14)
+  final int? interruptionCount;
 
   AcousticReportHive({
     required this.id,
@@ -89,6 +92,8 @@ class AcousticReportHive {
     required this.hourlyAverages,
     required this.environmentQuality,
     required this.recommendation,
+    this.qualityScore,
+    this.interruptionCount,
   });
 
   /// Mapper from a domain [AcousticReport] entity.
@@ -107,6 +112,8 @@ class AcousticReportHive {
       hourlyAverages: entity.hourlyAverages,
       environmentQuality: entity.environmentQuality,
       recommendation: entity.recommendation,
+      qualityScore: entity.qualityScore,
+      interruptionCount: entity.interruptionCount,
     );
   }
 
@@ -126,6 +133,8 @@ class AcousticReportHive {
       hourlyAverages: hourlyAverages,
       environmentQuality: environmentQuality,
       recommendation: recommendation,
+      qualityScore: qualityScore ?? 0,
+      interruptionCount: interruptionCount ?? 0,
     );
   }
 }

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:sensorlab/src/features/noise_meter/domain/entities/acoustic_report_entity.dart';
 import 'package:sensorlab/src/features/noise_meter/presentation/models/custom_preset_config.dart';
 import 'package:sensorlab/src/features/noise_meter/presentation/screens/acoustic_monitoring_screen.dart';
 import 'package:sensorlab/src/features/noise_meter/presentation/screens/custom_preset_creation_screen.dart';
-import 'package:sensorlab/src/features/noise_meter/presentation/state/enhanced_noise_data.dart';
 import 'package:sensorlab/src/features/noise_meter/services/custom_preset_service.dart';
 
-class PresetSelectionUtils {
+class PresetSelectionUtils extends ChangeNotifier {
   Map<String, CustomPresetConfig> customPresets = {};
   bool isLoading = true;
 
@@ -86,7 +86,7 @@ class PresetSelectionUtils {
 
   void setState(VoidCallback fn) {
     fn();
-    // This would typically notify listeners in a state management solution
+    notifyListeners();
   }
 
   bool _isContextValid(BuildContext context) {

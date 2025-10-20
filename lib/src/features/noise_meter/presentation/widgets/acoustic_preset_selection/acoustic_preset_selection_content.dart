@@ -3,8 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:sensorlab/l10n/app_localizations.dart';
 import 'package:sensorlab/src/features/noise_meter/presentation/screens/acoustic_reports_list_screen.dart';
-import 'package:sensorlab/src/features/noise_meter/presentation/widgets/acoustic_preset_selection/preset_list_widget.dart';
-import 'package:sensorlab/src/features/noise_meter/utils/acoustic_preset_selection_utils.dart';
+import 'package:sensorlab/src/features/noise_meter/presentation/widgets/widgets_index.dart';
+import 'package:sensorlab/src/features/noise_meter/utils/utils_index.dart';
 
 class AcousticPresetSelectionContent extends ConsumerStatefulWidget {
   const AcousticPresetSelectionContent({super.key});
@@ -16,12 +16,27 @@ class AcousticPresetSelectionContent extends ConsumerStatefulWidget {
 
 class _AcousticPresetSelectionContentState
     extends ConsumerState<AcousticPresetSelectionContent> {
-  final _presetUtils = PresetSelectionUtils();
+  late final PresetSelectionUtils _presetUtils;
 
   @override
   void initState() {
     super.initState();
+    _presetUtils = PresetSelectionUtils();
+    _presetUtils.addListener(_onPresetUtilsChanged);
     _presetUtils.loadCustomPresets(context);
+  }
+
+  @override
+  void dispose() {
+    _presetUtils.removeListener(_onPresetUtilsChanged);
+    _presetUtils.dispose();
+    super.dispose();
+  }
+
+  void _onPresetUtilsChanged() {
+    if (mounted) {
+      setState(() {});
+    }
   }
 
   @override

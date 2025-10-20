@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:sensorlab/l10n/app_localizations.dart';
+import 'package:sensorlab/src/features/noise_meter/domain/entities/acoustic_report_entity.dart';
 import 'package:sensorlab/src/features/noise_meter/presentation/models/custom_preset_config.dart';
-import 'package:sensorlab/src/features/noise_meter/presentation/state/enhanced_noise_data.dart';
-import 'package:sensorlab/src/features/noise_meter/presentation/widgets/index.dart'
+import 'package:sensorlab/src/features/noise_meter/presentation/widgets/widgets_index.dart'
     show PresetCard;
 
 class PresetListWidget extends StatelessWidget {
@@ -110,6 +110,7 @@ class PresetListWidget extends StatelessWidget {
               ),
               onLongPress: () =>
                   _showDeleteDialog(context, id, customPreset.title),
+              // ← Remove the compact parameter
             ),
           );
         }),

@@ -1771,4 +1771,161 @@ class AppLocalizationsKm extends AppLocalizations {
 
   @override
   String get viewReport => 'មើលរបាយការណ៍';
+
+  @override
+  String get noiseMeterGuide => 'មគ្គុទ្ទេសក៍ឧបករណ៍វាស់សំឡេង';
+
+  @override
+  String get environmentAnalyzer => 'ឧបករណ៍វិភាគបរិស្ថាន';
+
+  @override
+  String get environmentAnalyzerSubtitle => 'ការវិភាគសំឡេងតាមការកំណត់ជាមុន';
+
+  @override
+  String get acousticReportsSubtitle => 'មើលការវិភាគដែលបានរក្សាទុក និងប្រវត្តិ';
+
+  @override
+  String get exportReports => 'នាំចេញរបាយការណ៍';
+
+  @override
+  String get exportChooseMethod => 'ជ្រើសរើសរបៀបដែលអ្នកចង់នាំចេញរបាយការណ៍៖';
+
+  @override
+  String get exportCopyToClipboard => 'ចម្លងទៅក្ដារតម្បៀតខ្ទាស់';
+
+  @override
+  String get exportSaveAsFile => 'រក្សាទុកជាឯកសារ';
+
+  @override
+  String get exportSuccess => 'នាំចេញជោគជ័យ';
+
+  @override
+  String exportSuccessMessage(int count) {
+    return 'នាំចេញរបាយការណ៍ $count ជោគជ័យ!';
+  }
+
+  @override
+  String get savedTo => 'រក្សាទុកនៅ៖';
+
+  @override
+  String get deletePreset => 'លុបការកំណត់ជាមុន?';
+
+  @override
+  String deletePresetMessage(String title) {
+    return 'លុប \"$title\"? សកម្មភាពនេះមិនអាចត្រឡប់វិញបានទេ។';
+  }
+
+  @override
+  String get acousticReport => 'របាយការណ៍សំឡេង';
+
+  @override
+  String get createCustomPreset => 'បង្កើតការកំណត់ផ្ទាល់ខ្លួន';
+
+  @override
+  String get durationMustBeGreaterThanZero => 'រយៈពេលត្រូវតែធំជាង 0';
+
+  @override
+  String get allPresets => 'ការកំណត់ជាមុនទាំងអស់';
+
+  @override
+  String get consistency => 'ភាពស៊ីសង្វាក់គ្នា';
+
+  @override
+  String get peakManagement => 'ការគ្រប់គ្រងកំពូល';
+
+  @override
+  String get level => 'កម្រិត';
+
+  @override
+  String get avg => 'មធ្យម';
+
+  @override
+  String get realtimeNoiseLevels => 'កម្រិតសំឡេងពេលវេលាជាក់ស្តែង';
+
+  @override
+  String get decibelStatistics => 'ស្ថិតិដេស៊ីបែល';
+
+  @override
+  String get quietEnvironment => 'បរិស្ថានស្ងប់ស្ងាត់';
+
+  @override
+  String get moderateNoise => 'សំឡេងមធ្យម';
+
+  @override
+  String get loudEnvironment => 'បរិស្ថានគ្រោតគ្រាំង';
+
+  @override
+  String get veryLoudCaution => 'ខ្លាំងណាស់ - ប្រុងប្រយ័ត្ន';
+
+  @override
+  String get dangerousLevels => 'កម្រិតគ្រោះថ្នាក់';
+
+  @override
+  String get grantMicrophonePermission => 'ផ្តល់សិទ្ធិមីក្រូហ្វូនដើម្បីវាស់កម្រិតសំឡេង';
+
+  @override
+  String get hourlyBreakdown => 'ការបំបែកតាមម៉ោង';
+
+  @override
+  String get eventTimeline => 'កាលបរិច្ឆេទព្រឹត្តិការណ៍';
+
+  @override
+  String get noEventsRecorded => 'មិនមានព្រឹត្តិការណ៍ត្រូវបានកត់ត្រា';
+
+  @override
+  String get sessionDetails => 'ព័ត៌មានលម្អិតនៃសម័យ';
+
+  @override
+  String get date => 'កាលបរិច្ឆេទ';
+
+  @override
+  String get preset => 'ការកំណត់ជាមុន';
+
+  @override
+  String get recommendation => 'អនុសាសន៍';
+
+  @override
+  String get noInterruptions => 'គ្មានការរំខាន';
+
+  @override
+  String get quietQuiet => 'ស្ងប់ស្ងាត់ (0-30 dB)';
+
+  @override
+  String get quietModerate => 'មធ្យម (30-60 dB)';
+
+  @override
+  String get quietLoud => 'គ្រោតគ្រាំង (60-85 dB)';
+
+  @override
+  String get quietVeryLoud => 'ខ្លាំងណាស់ (85-100 dB)';
+
+  @override
+  String get quietDangerous => 'គ្រោះថ្នាក់ (100+ dB)';
+
+  @override
+  String get anErrorOccurred => 'មានកំហុសបានកើតឡើង។';
+
+  @override
+  String failedToLoadPresets(String error) {
+    return 'បរាជ័យក្នុងការផ្ទុកការកំណត់ជាមុន៖ $error';
+  }
+
+  @override
+  String createdPreset(String title) {
+    return 'បានបង្កើត \"$title\"!';
+  }
+
+  @override
+  String failedToSavePreset(String error) {
+    return 'បរាជ័យក្នុងការរក្សាទុកការកំណត់ជាមុន៖ $error';
+  }
+
+  @override
+  String get deleteReportsQuestion => 'លុបរបាយការណ៍?';
+
+  @override
+  String get deleteReportsConfirmMessage => 'តើអ្នកប្រាកដថាចង់លុបរបាយការណ៍ដែលបានជ្រើសរើស? សកម្មភាពនេះមិនអាចត្រឡប់វិញបានទេ។';
+
+  @override
+  String get reportsDeleted => 'របាយការណ៍ត្រូវបានលុប';
 }

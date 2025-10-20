@@ -2,7 +2,8 @@ import 'dart:async';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sensorlab/src/features/noise_meter/data/repositories/acoustic_repository_impl.dart';
-import 'package:sensorlab/src/features/noise_meter/domain/entities/acoustic_report_entity.dart';
+import 'package:sensorlab/src/features/noise_meter/domain/entities/acoustic_report_entity.dart'
+    as entities;
 import 'package:sensorlab/src/features/noise_meter/domain/entities/noise_data.dart';
 import 'package:sensorlab/src/features/noise_meter/domain/repositories/acoustic_repository.dart';
 import 'package:sensorlab/src/features/noise_meter/presentation/state/enhanced_noise_data.dart';
@@ -10,13 +11,12 @@ import 'package:sensorlab/src/features/noise_meter/presentation/state/enhanced_n
 import '../../services/acoustic_report_service.dart';
 
 /// Provider for the enhanced noise meter notifier
-final enhancedNoiseMeterProvider =
-    StateNotifierProvider<EnhancedNoiseMeterNotifier, EnhancedNoiseMeterData>((
-      ref,
-    ) {
-      final repository = ref.watch(acousticRepositoryProvider);
-      return EnhancedNoiseMeterNotifier(repository);
-    });
+final enhancedNoiseMeterProvider = StateNotifierProvider<EnhancedNoiseMeterNotifier, EnhancedNoiseMeterData>((
+  ref,
+) {
+  final repository = ref.watch(acousticRepositoryProvider);
+  return EnhancedNoiseMeterNotifier(repository);
+});
 
 /// Controller for the entire noise meter feature.
 /// This class orchestrates the data flow from the repository and applies business logic
@@ -49,7 +49,7 @@ class EnhancedNoiseMeterNotifier extends StateNotifier<EnhancedNoiseMeterData> {
   }
 
   Future<void> startRecordingWithPreset(
-    RecordingPreset preset, {
+    entities.RecordingPreset preset, {
     Duration? customDuration,
   }) async {
     if (!state.hasPermission) {
@@ -88,7 +88,7 @@ class EnhancedNoiseMeterNotifier extends StateNotifier<EnhancedNoiseMeterData> {
 
         // Check if we should stop based on preset duration
         final targetDuration =
-            preset == RecordingPreset.custom && customDuration != null
+            preset == entities.RecordingPreset.custom && customDuration != null
                 ? customDuration
                 : _getPresetDuration(preset);
 
@@ -164,8 +164,9 @@ class EnhancedNoiseMeterNotifier extends StateNotifier<EnhancedNoiseMeterData> {
 
     // Store samples for report (downsample to keep memory usage low)
     final shouldStoreSample = _totalReadings % 10 == 0;
-    final allReadings =
-        shouldStoreSample ? [...state.allReadings, db] : state.allReadings;
+    final allReadings = shouldStoreSample
+        ? [...state.allReadings, db]
+        : state.allReadings;
     if (allReadings.length > 1000) {
       allReadings.removeRange(0, allReadings.length - 1000);
     }
@@ -203,7 +204,7 @@ class EnhancedNoiseMeterNotifier extends StateNotifier<EnhancedNoiseMeterData> {
           state = state.copyWith(
             events: [
               ...state.events,
-              AcousticEvent(
+              entities.AcousticEvent(
                 timestamp: _eventStartTime!,
                 peakDecibels: _eventPeakDb!,
                 duration: duration,
@@ -217,7 +218,7 @@ class EnhancedNoiseMeterNotifier extends StateNotifier<EnhancedNoiseMeterData> {
     }
   }
 
-  Future<AcousticReport?> stopRecording() async {
+  Future<entities.AcousticReport?> stopRecording() async {
     state = state.copyWith(isRecording: false, isAnalyzing: true);
 
     // Generate the report BEFORE cleaning up
@@ -257,15 +258,14 @@ class EnhancedNoiseMeterNotifier extends StateNotifier<EnhancedNoiseMeterData> {
     try {
       await _repository.deleteReport(reportId);
       state = state.copyWith(
-        savedReports:
-            state.savedReports.where((r) => r.id != reportId).toList(),
+        savedReports: state.savedReports.where((r) => r.id != reportId).toList(),
       );
     } catch (e) {
       state = state.copyWith(errorMessage: 'Failed to delete report: $e');
     }
   }
 
-  AcousticReport _generateReport() {
+  entities.AcousticReport _generateReport() {
     final hourlyAvgs = <double>[];
     if (state.allReadings.isNotEmpty && state.sessionDuration.inHours > 0) {
       final readingsPerHour =
@@ -300,12 +300,13 @@ class EnhancedNoiseMeterNotifier extends StateNotifier<EnhancedNoiseMeterData> {
 
     final environmentQuality = _calculateEnvironmentQuality(validAverage);
     final recommendation = _getRecommendation(validAverage);
+    final qualityScore = _calculateQualityScore(validAverage);
 
-    return AcousticReport(
+    return entities.AcousticReport(
       startTime: state.sessionStartTime ?? now,
       endTime: now,
       duration: state.sessionDuration,
-      preset: state.activePreset ?? RecordingPreset.custom,
+      preset: state.activePreset ?? entities.RecordingPreset.custom,
       averageDecibels: validAverage,
       minDecibels: validMin,
       maxDecibels: validMax,
@@ -314,8 +315,17 @@ class EnhancedNoiseMeterNotifier extends StateNotifier<EnhancedNoiseMeterData> {
       hourlyAverages: hourlyAvgs,
       environmentQuality: environmentQuality,
       recommendation: recommendation,
+      qualityScore: qualityScore,
+      interruptionCount: state.events.length,
       id: now.millisecondsSinceEpoch.toString(),
     );
+  }
+
+  int _calculateQualityScore(double averageDecibels) {
+    if (averageDecibels <= 35) return 100;
+    if (averageDecibels <= 50) return 75;
+    if (averageDecibels <= 65) return 50;
+    return 25;
   }
 
   String _calculateEnvironmentQuality(double averageDecibels) {
@@ -326,12 +336,12 @@ class EnhancedNoiseMeterNotifier extends StateNotifier<EnhancedNoiseMeterData> {
   }
 
   String _getRecommendation(double averageDecibels) {
-    if (state.activePreset == RecordingPreset.sleep) {
+    if (state.activePreset == entities.RecordingPreset.sleep) {
       if (averageDecibels <= 30) return 'Perfect sleep environment!';
       if (averageDecibels <= 40) return 'Good sleep environment.';
       return 'Too noisy for quality sleep.';
-    } else if (state.activePreset == RecordingPreset.work ||
-        state.activePreset == RecordingPreset.focus) {
+    } else if (state.activePreset == entities.RecordingPreset.work ||
+        state.activePreset == entities.RecordingPreset.focus) {
       if (averageDecibels <= 45) return 'Ideal for focus work!';
       if (averageDecibels <= 55) return 'Good for most work.';
       return 'Too loud for focused work.';
@@ -339,15 +349,15 @@ class EnhancedNoiseMeterNotifier extends StateNotifier<EnhancedNoiseMeterData> {
     return 'Monitor your environment to optimize for your needs.';
   }
 
-  Duration _getPresetDuration(RecordingPreset preset) {
+  Duration _getPresetDuration(entities.RecordingPreset preset) {
     switch (preset) {
-      case RecordingPreset.sleep:
+      case entities.RecordingPreset.sleep:
         return const Duration(hours: 8);
-      case RecordingPreset.work:
+      case entities.RecordingPreset.work:
         return const Duration(hours: 1);
-      case RecordingPreset.focus:
+      case entities.RecordingPreset.focus:
         return const Duration(minutes: 30);
-      case RecordingPreset.custom:
+      case entities.RecordingPreset.custom:
         return Duration.zero;
     }
   }
@@ -395,13 +405,13 @@ final reportStatisticsProvider = Provider<Map<String, dynamic>>((ref) {
     'total': AcousticReportService.reportCount,
     'averageQuality': AcousticReportService.averageQualityScore.toInt(),
     'sleepStats': AcousticReportService.getPresetStatistics(
-      RecordingPreset.sleep,
+      entities.RecordingPreset.sleep,
     ),
     'workStats': AcousticReportService.getPresetStatistics(
-      RecordingPreset.work,
+      entities.RecordingPreset.work,
     ),
     'focusStats': AcousticReportService.getPresetStatistics(
-      RecordingPreset.focus,
+      entities.RecordingPreset.focus,
     ),
   };
 });

@@ -1771,4 +1771,161 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get viewReport => 'Ver informe';
+
+  @override
+  String get noiseMeterGuide => 'Guía del Medidor de Ruido';
+
+  @override
+  String get environmentAnalyzer => 'Analizador de Ambiente';
+
+  @override
+  String get environmentAnalyzerSubtitle => 'Análisis acústico basado en preajustes';
+
+  @override
+  String get acousticReportsSubtitle => 'Ver análisis guardados e historial';
+
+  @override
+  String get exportReports => 'Exportar Informes';
+
+  @override
+  String get exportChooseMethod => 'Elija cómo desea exportar los informes:';
+
+  @override
+  String get exportCopyToClipboard => 'Copiar al Portapapeles';
+
+  @override
+  String get exportSaveAsFile => 'Guardar como Archivo';
+
+  @override
+  String get exportSuccess => 'Exportación Exitosa';
+
+  @override
+  String exportSuccessMessage(int count) {
+    return '¡$count informe(s) exportado(s) exitosamente!';
+  }
+
+  @override
+  String get savedTo => 'Guardado en:';
+
+  @override
+  String get deletePreset => '¿Eliminar Preajuste?';
+
+  @override
+  String deletePresetMessage(String title) {
+    return '¿Eliminar \"$title\"? Esto no se puede deshacer.';
+  }
+
+  @override
+  String get acousticReport => 'Informe Acústico';
+
+  @override
+  String get createCustomPreset => 'Crear Preajuste Personalizado';
+
+  @override
+  String get durationMustBeGreaterThanZero => 'La duración debe ser mayor que 0';
+
+  @override
+  String get allPresets => 'Todos los Preajustes';
+
+  @override
+  String get consistency => 'Consistencia';
+
+  @override
+  String get peakManagement => 'Gestión de Picos';
+
+  @override
+  String get level => 'Nivel';
+
+  @override
+  String get avg => 'Prom';
+
+  @override
+  String get realtimeNoiseLevels => 'Niveles de Ruido en Tiempo Real';
+
+  @override
+  String get decibelStatistics => 'Estadísticas de Decibelios';
+
+  @override
+  String get quietEnvironment => 'Ambiente Tranquilo';
+
+  @override
+  String get moderateNoise => 'Ruido Moderado';
+
+  @override
+  String get loudEnvironment => 'Ambiente Ruidoso';
+
+  @override
+  String get veryLoudCaution => 'Muy Ruidoso - Precaución';
+
+  @override
+  String get dangerousLevels => 'Niveles Peligrosos';
+
+  @override
+  String get grantMicrophonePermission => 'Otorgue permiso de micrófono para medir niveles de ruido';
+
+  @override
+  String get hourlyBreakdown => 'Desglose por Hora';
+
+  @override
+  String get eventTimeline => 'Línea de Tiempo de Eventos';
+
+  @override
+  String get noEventsRecorded => 'No se registraron eventos';
+
+  @override
+  String get sessionDetails => 'Detalles de la Sesión';
+
+  @override
+  String get date => 'Fecha';
+
+  @override
+  String get preset => 'Preajuste';
+
+  @override
+  String get recommendation => 'Recomendación';
+
+  @override
+  String get noInterruptions => 'Sin Interrupciones';
+
+  @override
+  String get quietQuiet => 'Silencioso (0-30 dB)';
+
+  @override
+  String get quietModerate => 'Moderado (30-60 dB)';
+
+  @override
+  String get quietLoud => 'Ruidoso (60-85 dB)';
+
+  @override
+  String get quietVeryLoud => 'Muy Ruidoso (85-100 dB)';
+
+  @override
+  String get quietDangerous => 'Peligroso (100+ dB)';
+
+  @override
+  String get anErrorOccurred => 'Ocurrió un error.';
+
+  @override
+  String failedToLoadPresets(String error) {
+    return 'Error al cargar preajustes: $error';
+  }
+
+  @override
+  String createdPreset(String title) {
+    return '¡Creado \"$title\"!';
+  }
+
+  @override
+  String failedToSavePreset(String error) {
+    return 'Error al guardar preajuste: $error';
+  }
+
+  @override
+  String get deleteReportsQuestion => '¿Eliminar Informes?';
+
+  @override
+  String get deleteReportsConfirmMessage => '¿Está seguro de que desea eliminar los informes seleccionados? Esta acción no se puede deshacer.';
+
+  @override
+  String get reportsDeleted => 'Informes eliminados';
 }

@@ -1771,4 +1771,161 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get viewReport => 'レポートを表示';
+
+  @override
+  String get noiseMeterGuide => '騒音計ガイド';
+
+  @override
+  String get environmentAnalyzer => '環境アナライザー';
+
+  @override
+  String get environmentAnalyzerSubtitle => 'プリセットベースの音響分析';
+
+  @override
+  String get acousticReportsSubtitle => '保存された分析と履歴を表示';
+
+  @override
+  String get exportReports => 'レポートのエクスポート';
+
+  @override
+  String get exportChooseMethod => 'レポートのエクスポート方法を選択してください：';
+
+  @override
+  String get exportCopyToClipboard => 'クリップボードにコピー';
+
+  @override
+  String get exportSaveAsFile => 'ファイルとして保存';
+
+  @override
+  String get exportSuccess => 'エクスポート成功';
+
+  @override
+  String exportSuccessMessage(int count) {
+    return '$count件のレポートが正常にエクスポートされました！';
+  }
+
+  @override
+  String get savedTo => '保存先：';
+
+  @override
+  String get deletePreset => 'プリセットを削除しますか？';
+
+  @override
+  String deletePresetMessage(String title) {
+    return '\"$title\"を削除しますか？この操作は元に戻せません。';
+  }
+
+  @override
+  String get acousticReport => '音響レポート';
+
+  @override
+  String get createCustomPreset => 'カスタムプリセットを作成';
+
+  @override
+  String get durationMustBeGreaterThanZero => '期間は0より大きい必要があります';
+
+  @override
+  String get allPresets => 'すべてのプリセット';
+
+  @override
+  String get consistency => '一貫性';
+
+  @override
+  String get peakManagement => 'ピーク管理';
+
+  @override
+  String get level => 'レベル';
+
+  @override
+  String get avg => '平均';
+
+  @override
+  String get realtimeNoiseLevels => 'リアルタイム騒音レベル';
+
+  @override
+  String get decibelStatistics => 'デシベル統計';
+
+  @override
+  String get quietEnvironment => '静かな環境';
+
+  @override
+  String get moderateNoise => '中程度の騒音';
+
+  @override
+  String get loudEnvironment => 'うるさい環境';
+
+  @override
+  String get veryLoudCaution => '非常にうるさい - 注意';
+
+  @override
+  String get dangerousLevels => '危険なレベル';
+
+  @override
+  String get grantMicrophonePermission => '騒音レベルを測定するためにマイクの許可を付与してください';
+
+  @override
+  String get hourlyBreakdown => '時間別内訳';
+
+  @override
+  String get eventTimeline => 'イベントタイムライン';
+
+  @override
+  String get noEventsRecorded => '記録されたイベントはありません';
+
+  @override
+  String get sessionDetails => 'セッションの詳細';
+
+  @override
+  String get date => '日付';
+
+  @override
+  String get preset => 'プリセット';
+
+  @override
+  String get recommendation => '推奨事項';
+
+  @override
+  String get noInterruptions => '中断なし';
+
+  @override
+  String get quietQuiet => '静か (0-30 dB)';
+
+  @override
+  String get quietModerate => '中程度 (30-60 dB)';
+
+  @override
+  String get quietLoud => 'うるさい (60-85 dB)';
+
+  @override
+  String get quietVeryLoud => '非常にうるさい (85-100 dB)';
+
+  @override
+  String get quietDangerous => '危険 (100+ dB)';
+
+  @override
+  String get anErrorOccurred => 'エラーが発生しました。';
+
+  @override
+  String failedToLoadPresets(String error) {
+    return 'プリセットの読み込みに失敗しました: $error';
+  }
+
+  @override
+  String createdPreset(String title) {
+    return '\"$title\"を作成しました！';
+  }
+
+  @override
+  String failedToSavePreset(String error) {
+    return 'プリセットの保存に失敗しました: $error';
+  }
+
+  @override
+  String get deleteReportsQuestion => 'レポートを削除しますか？';
+
+  @override
+  String get deleteReportsConfirmMessage => '選択したレポートを削除してもよろしいですか？この操作は元に戻せません。';
+
+  @override
+  String get reportsDeleted => 'レポートが削除されました';
 }

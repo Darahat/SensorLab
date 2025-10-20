@@ -1,12 +1,12 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:noise_meter/noise_meter.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:sensorlab/src/features/noise_meter/data/models/acoustic_report_hive.dart';
+import 'package:sensorlab/src/features/noise_meter/domain/entities/noise_data.dart';
 
 import '../../domain/entities/acoustic_report_entity.dart';
 import '../../domain/repositories/acoustic_repository.dart';
 import '../../services/acoustic_report_service.dart';
-import 'package:sensorlab/src/features/noise_meter/data/models/acoustic_report_hive.dart';
-import 'package:sensorlab/src/features/noise_meter/domain/entities/noise_data.dart';
 
 // Provider for the new repository
 final acousticRepositoryProvider = Provider<AcousticRepository>((ref) {

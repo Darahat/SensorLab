@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sensorlab/l10n/app_localizations.dart';
-import 'package:sensorlab/src/features/noise_meter/utils/context_extensions.dart';
+import 'package:sensorlab/src/features/noise_meter/utils/utils_index.dart';
 import 'package:sensorlab/src/shared/widgets/utility_widgets.dart'; // ← Add this
-
-import '../../state/enhanced_noise_data.dart';
 
 class NoiseMeterStatisticsSection extends StatelessWidget {
   final EnhancedNoiseMeterData data;
