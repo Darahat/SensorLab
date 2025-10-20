@@ -1928,4 +1928,19 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get reportsDeleted => 'Informes eliminados';
+
+  @override
+  String get presetDetails => 'Detalles del Preajuste';
+
+  @override
+  String get mustBeAtLeast3Chars => 'Debe tener al menos 3 caracteres';
+
+  @override
+  String get mustBeAtLeast10Chars => 'Debe tener al menos 10 caracteres';
+
+  @override
+  String get chooseIcon => 'Elegir ícono';
+
+  @override
+  String get chooseColor => 'Elegir color';
 }

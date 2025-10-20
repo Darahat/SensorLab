@@ -14,7 +14,9 @@ import 'package:sensors_plus/sensors_plus.dart';
 
 final healthProvider = StateNotifierProvider<HealthProvider, HealthData>((ref) {
   final userProfileRepository = ref.watch(userProfileRepositoryProvider);
-  final activitySessionRepository = ref.watch(activitySessionRepositoryProvider);
+  final activitySessionRepository = ref.watch(
+    activitySessionRepositoryProvider,
+  );
   return HealthProvider(userProfileRepository, activitySessionRepository);
 });
 
@@ -22,23 +24,21 @@ class HealthProvider extends StateNotifier<HealthData> {
   final UserProfileRepository _userProfileRepository;
   final ActivitySessionRepository _activitySessionRepository;
 
-  HealthProvider(
-    this._userProfileRepository,
-    this._activitySessionRepository,
-  ) : super(
-          HealthData(
-            profile: domain.UserProfile(
-              id: '1',
-              name: 'User',
-              age: 30,
-              weight: 70.0,
-              height: 175.0,
-              gender: domain.Gender.male,
-              createdAt: DateTime.now(),
-              updatedAt: DateTime.now(),
-            ),
+  HealthProvider(this._userProfileRepository, this._activitySessionRepository)
+    : super(
+        HealthData(
+          profile: domain.UserProfile(
+            id: '1',
+            name: 'User',
+            age: 30,
+            weight: 70.0,
+            height: 175.0,
+            gender: domain.Gender.male,
+            createdAt: DateTime.now(),
+            updatedAt: DateTime.now(),
           ),
-        ) {
+        ),
+      ) {
     initialize();
   }
 
@@ -145,7 +145,6 @@ class HealthProvider extends StateNotifier<HealthData> {
         isTracking: true,
         sessionState: HealthSessionState.tracking,
         sessionStartTime: DateTime.now(),
-        errorMessage: null,
       );
     } catch (e) {
       state = state.copyWith(errorMessage: 'Failed to start tracking: $e');
@@ -315,7 +314,8 @@ class HealthProvider extends StateNotifier<HealthData> {
     if (intensity > _movementThreshold) {
       final now = DateTime.now();
       if (_lastMovementTime == null ||
-          now.difference(_lastMovementTime!) > const Duration(milliseconds: 500)) {
+          now.difference(_lastMovementTime!) >
+              const Duration(milliseconds: 500)) {
         _lastMovementTime = now;
         return intensity > _lastIntensity * 1.2; // 20% increase threshold
       }

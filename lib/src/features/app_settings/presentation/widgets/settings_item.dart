@@ -36,24 +36,23 @@ class SettingsItem extends StatelessWidget {
           child: Icon(icon, color: iconColor ?? colorScheme.primary, size: 20),
         ),
         title: Text(title, style: const TextStyle(fontWeight: FontWeight.w500)),
-        subtitle:
-            subtitle != null
-                ? Text(
-                  subtitle!,
-                  style: TextStyle(
-                    color: colorScheme.onSurface.withOpacity(0.6),
-                    fontSize: 12,
-                  ),
-                )
-                : null,
+        subtitle: subtitle != null
+            ? Text(
+                subtitle!,
+                style: TextStyle(
+                  color: colorScheme.onSurface.withOpacity(0.6),
+                  fontSize: 12,
+                ),
+              )
+            : null,
         trailing:
             trailing ??
             (onTap != null
                 ? Icon(
-                  Iconsax.arrow_right_3,
-                  color: colorScheme.onSurface.withOpacity(0.4),
-                  size: 16,
-                )
+                    Iconsax.arrow_right_3,
+                    color: colorScheme.onSurface.withOpacity(0.4),
+                    size: 16,
+                  )
                 : null),
         onTap: onTap,
         contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),

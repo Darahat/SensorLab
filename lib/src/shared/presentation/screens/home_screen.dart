@@ -191,11 +191,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
                 titlePadding: const EdgeInsets.only(bottom: 100),
                 title: Text(
                   l10n.appName,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontWeight: FontWeight.w600,
                     color: Colors.white,
                     shadows: [
-                      const Shadow(
+                      Shadow(
                         color: Colors.black26,
                         blurRadius: 10,
                         offset: Offset(0, 2),
@@ -316,8 +316,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
     }
 
     // Clamp animation values so initial builds don't show NaN or negative scale
-    final safeOpacity = (_fadeAnimation.value).clamp(0.0, 1.0);
-    final safeScale = (_scaleAnimation.value).clamp(0.0, 2.0);
+    final safeOpacity = _fadeAnimation.value.clamp(0.0, 1.0);
+    final safeScale = _scaleAnimation.value.clamp(0.0, 2.0);
 
     return CustomScrollView(
       physics: const BouncingScrollPhysics(),
@@ -347,7 +347,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
             delegate: SliverChildBuilderDelegate((context, index) {
               return SensorGridItem(
                 sensor: sensorsToShow[index],
-                sensorStatus: "NEW",
+                sensorStatus: 'NEW',
                 fixedColumnWidth:
                     MediaQuery.of(context).size.width *
                     0.25, // Responsive width

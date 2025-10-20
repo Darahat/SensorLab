@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:sensorlab/l10n/app_localizations.dart';
 import 'package:sensorlab/src/features/noise_meter/application/notifiers/acoustic_reports_list_notifier.dart';
 import 'package:sensorlab/src/features/noise_meter/application/state/acoustic_reports_list_state.dart';
 import 'package:sensorlab/src/features/noise_meter/presentation/widgets/acoustic_reports_list/filter_chip.dart';
@@ -60,15 +61,15 @@ class ReportsListView extends StatelessWidget {
   }
 
   Widget _buildEmptyState(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return EmptyStateWidget(
       icon: Iconsax.document,
-      title: 'No Reports Yet',
-      message:
-          'Start an acoustic analysis session to generate your first report',
+      title: l10n.reportsEmpty,
+      message: l10n.reportsEmptyDescription,
       action: ElevatedButton.icon(
         onPressed: () => Navigator.pop(context),
         icon: const Icon(Iconsax.add_circle),
-        label: const Text('Start Analysis'),
+        label: Text(l10n.reportStartAnalysis),
       ),
     );
   }

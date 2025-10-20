@@ -27,11 +27,17 @@ class MonitoringService {
   }
 
   static double calculateProgress(Duration elapsed, Duration total) {
-    if (total.inSeconds == 0) return 0.0;
+    if (total.inSeconds == 0) {
+      return 0.0;
+    }
 
     double progress = elapsed.inSeconds / total.inSeconds;
-    if (progress > 1.0) progress = 1.0;
-    if (progress < 0.0) progress = 0.0;
+    if (progress > 1.0) {
+      progress = 1.0;
+    }
+    if (progress < 0.0) {
+      progress = 0.0;
+    }
     return progress;
   }
 }

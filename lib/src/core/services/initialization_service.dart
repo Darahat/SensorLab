@@ -19,7 +19,7 @@ class InitializationService {
 
     /// Register background message handler
     try {
-      await dotenv.load(fileName: ".env");
+      await dotenv.load();
     } catch (e) {
       // .env file is optional, continue without it
       print('No .env file found, continuing without environment variables');

@@ -51,7 +51,7 @@ class CameraSettingsData {
 
     if (lux < 10) {
       // Very dark - Night/Interior
-      return CameraSetting(
+      return const CameraSetting(
         iso: 6400,
         shutterSpeed: '1/30',
         aperture: 1.8,
@@ -59,7 +59,7 @@ class CameraSettingsData {
       );
     } else if (lux < 50) {
       // Dim interior
-      return CameraSetting(
+      return const CameraSetting(
         iso: 3200,
         shutterSpeed: '1/60',
         aperture: 2.0,
@@ -67,7 +67,7 @@ class CameraSettingsData {
       );
     } else if (lux < 400) {
       // Normal interior
-      return CameraSetting(
+      return const CameraSetting(
         iso: 800,
         shutterSpeed: '1/100',
         aperture: 2.8,
@@ -75,7 +75,7 @@ class CameraSettingsData {
       );
     } else if (lux < 1000) {
       // Bright interior / Overcast outdoor
-      return CameraSetting(
+      return const CameraSetting(
         iso: 400,
         shutterSpeed: '1/125',
         aperture: 4.0,
@@ -83,7 +83,7 @@ class CameraSettingsData {
       );
     } else if (lux < 10000) {
       // Very bright interior / Cloudy outdoor
-      return CameraSetting(
+      return const CameraSetting(
         iso: 200,
         shutterSpeed: '1/250',
         aperture: 5.6,
@@ -91,7 +91,7 @@ class CameraSettingsData {
       );
     } else if (lux < 32000) {
       // Shade outdoor
-      return CameraSetting(
+      return const CameraSetting(
         iso: 100,
         shutterSpeed: '1/500',
         aperture: 8.0,
@@ -99,7 +99,7 @@ class CameraSettingsData {
       );
     } else if (lux < 100000) {
       // Full daylight
-      return CameraSetting(
+      return const CameraSetting(
         iso: 100,
         shutterSpeed: '1/1000',
         aperture: 11,
@@ -107,7 +107,7 @@ class CameraSettingsData {
       );
     } else {
       // Bright sunlight
-      return CameraSetting(
+      return const CameraSetting(
         iso: 100,
         shutterSpeed: '1/2000',
         aperture: 16,
@@ -197,7 +197,7 @@ class CameraSettingsData {
   String get evValue {
     // Calculate Exposure Value: EV = log2(lux / 2.5)
     if (lux <= 0) return 'N/A';
-    final ev = (log2(lux / 2.5));
+    final ev = log2(lux / 2.5);
     return ev.toStringAsFixed(1);
   }
 

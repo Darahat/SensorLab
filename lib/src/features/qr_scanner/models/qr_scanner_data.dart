@@ -244,8 +244,9 @@ class QRScanResult {
       contentType: QRContentType.fromData(data),
       format: barcode.format,
       timestamp: DateTime.now(),
-      corners:
-          barcode.corners.map((point) => Offset(point.dx, point.dy)).toList(),
+      corners: barcode.corners
+          .map((point) => Offset(point.dx, point.dy))
+          .toList(),
     );
   }
 

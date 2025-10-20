@@ -5,14 +5,16 @@ import 'package:sensorlab/l10n/app_localizations.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class GeolocatorPage extends StatefulWidget {
+  const GeolocatorPage({super.key});
+
   @override
   _GeolocatorPageState createState() => _GeolocatorPageState();
 }
 
 class _GeolocatorPageState extends State<GeolocatorPage> {
-  String _location = "";
-  String _address = "";
-  String _accuracy = "--";
+  String _location = '';
+  String _address = '';
+  String _accuracy = '--';
   double? _latitude;
   double? _longitude;
   bool _isLoading = false;
@@ -30,7 +32,7 @@ class _GeolocatorPageState extends State<GeolocatorPage> {
 
     try {
       // Check if location services are enabled
-      bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
+      final bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
       if (!serviceEnabled) {
         setState(() {
           _serviceDisabled = true;
@@ -61,7 +63,7 @@ class _GeolocatorPageState extends State<GeolocatorPage> {
       }
 
       // Get current position
-      Position position = await Geolocator.getCurrentPosition(
+      final Position position = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high,
       );
 
@@ -69,9 +71,9 @@ class _GeolocatorPageState extends State<GeolocatorPage> {
         _latitude = position.latitude;
         _longitude = position.longitude;
         _location =
-            "${position.latitude.toStringAsFixed(6)}, ${position.longitude.toStringAsFixed(6)}";
+            '${position.latitude.toStringAsFixed(6)}, ${position.longitude.toStringAsFixed(6)}';
         _accuracy =
-            "${position.accuracy?.toStringAsFixed(2) ?? "--"} ${l10n.meters}";
+            "${position.accuracy.toStringAsFixed(2) ?? "--"} ${l10n.meters}";
       });
 
       // Get address from coordinates
@@ -88,8 +90,11 @@ class _GeolocatorPageState extends State<GeolocatorPage> {
   Future<void> _getAddressFromLatLng(double lat, double lon) async {
     final l10n = AppLocalizations.of(context)!;
     try {
-      List<Placemark> placemarks = await placemarkFromCoordinates(lat, lon);
-      Placemark place = placemarks[0];
+      final List<Placemark> placemarks = await placemarkFromCoordinates(
+        lat,
+        lon,
+      );
+      final Placemark place = placemarks[0];
 
       setState(() {
         _address =

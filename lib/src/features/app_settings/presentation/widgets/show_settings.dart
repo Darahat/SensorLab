@@ -10,7 +10,6 @@ void showSettings(BuildContext context) {
     context: context,
     backgroundColor: Colors.transparent,
     isScrollControlled: true,
-    enableDrag: true,
     showDragHandle: false,
     builder: (context) => DraggableScrollableSheet(
       initialChildSize: 0.85,

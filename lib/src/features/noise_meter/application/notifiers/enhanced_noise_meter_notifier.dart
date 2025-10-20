@@ -314,28 +314,48 @@ class EnhancedNoiseMeterNotifier extends StateNotifier<EnhancedNoiseMeterData> {
   }
 
   int _calculateQualityScore(double averageDecibels) {
-    if (averageDecibels <= 35) return 100;
-    if (averageDecibels <= 50) return 75;
-    if (averageDecibels <= 65) return 50;
+    if (averageDecibels <= 35) {
+      return 100;
+    }
+    if (averageDecibels <= 50) {
+      return 75;
+    }
+    if (averageDecibels <= 65) {
+      return 50;
+    }
     return 25;
   }
 
   String _calculateEnvironmentQuality(double averageDecibels) {
-    if (averageDecibels <= 35) return 'excellent';
-    if (averageDecibels <= 50) return 'good';
-    if (averageDecibels <= 65) return 'fair';
+    if (averageDecibels <= 35) {
+      return 'excellent';
+    }
+    if (averageDecibels <= 50) {
+      return 'good';
+    }
+    if (averageDecibels <= 65) {
+      return 'fair';
+    }
     return 'poor';
   }
 
   String _getRecommendation(double averageDecibels) {
     if (state.activePreset == entities.RecordingPreset.sleep) {
-      if (averageDecibels <= 30) return 'Perfect sleep environment!';
-      if (averageDecibels <= 40) return 'Good sleep environment.';
+      if (averageDecibels <= 30) {
+        return 'Perfect sleep environment!';
+      }
+      if (averageDecibels <= 40) {
+        return 'Good sleep environment.';
+      }
       return 'Too noisy for quality sleep.';
     } else if (state.activePreset == entities.RecordingPreset.work ||
         state.activePreset == entities.RecordingPreset.focus) {
-      if (averageDecibels <= 45) return 'Ideal for focus work!';
-      if (averageDecibels <= 55) return 'Good for most work.';
+      if (averageDecibels <= 45) {
+        return 'Ideal for focus work!';
+      }
+      if (averageDecibels <= 55) {
+        return 'Good for most work.';
+      }
       return 'Too loud for focused work.';
     }
     return 'Monitor your environment to optimize for your needs.';
@@ -355,16 +375,28 @@ class EnhancedNoiseMeterNotifier extends StateNotifier<EnhancedNoiseMeterData> {
   }
 
   String _determineEventType(Duration duration) {
-    if (duration.inSeconds < 3) return 'spike';
-    if (duration.inSeconds < 10) return 'intermittent';
+    if (duration.inSeconds < 3) {
+      return 'spike';
+    }
+    if (duration.inSeconds < 10) {
+      return 'intermittent';
+    }
     return 'sustained';
   }
 
   NoiseLevel _getNoiseLevel(double db) {
-    if (db < 30) return NoiseLevel.quiet;
-    if (db < 60) return NoiseLevel.moderate;
-    if (db < 85) return NoiseLevel.loud;
-    if (db < 100) return NoiseLevel.veryLoud;
+    if (db < 30) {
+      return NoiseLevel.quiet;
+    }
+    if (db < 60) {
+      return NoiseLevel.moderate;
+    }
+    if (db < 85) {
+      return NoiseLevel.loud;
+    }
+    if (db < 100) {
+      return NoiseLevel.veryLoud;
+    }
     return NoiseLevel.dangerous;
   }
 

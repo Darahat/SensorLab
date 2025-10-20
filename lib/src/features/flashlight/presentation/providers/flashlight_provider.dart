@@ -51,7 +51,6 @@ class FlashlightNotifier extends StateNotifier<FlashlightData> {
         isAvailable: true,
         supportsIntensity: supportsIntensity,
         sessionStartTime: DateTime.now(),
-        errorMessage: null,
       );
     } catch (e) {
       state = state.copyWith(
@@ -80,7 +79,6 @@ class FlashlightNotifier extends StateNotifier<FlashlightData> {
       state = state.copyWith(
         toggleCount: state.toggleCount + 1,
         lastToggleTime: DateTime.now(),
-        errorMessage: null,
       );
     } catch (e) {
       state = state.copyWith(errorMessage: 'Failed to toggle flashlight: $e');
@@ -149,7 +147,7 @@ class FlashlightNotifier extends StateNotifier<FlashlightData> {
       // Stop current special modes
       _stopSpecialModes();
 
-      state = state.copyWith(mode: mode, errorMessage: null);
+      state = state.copyWith(mode: mode);
 
       // Start new mode if flashlight is on
       if (state.isOn) {
@@ -264,9 +262,7 @@ class FlashlightNotifier extends StateNotifier<FlashlightData> {
       totalOnTime: 0,
       toggleCount: 0,
       sessionStartTime: DateTime.now(),
-      lastToggleTime: null,
       mode: FlashlightMode.normal,
-      errorMessage: null,
     );
   }
 
@@ -290,7 +286,6 @@ class FlashlightNotifier extends StateNotifier<FlashlightData> {
       state = state.copyWith(
         toggleCount: state.toggleCount + 2, // Count both on and off
         lastToggleTime: DateTime.now(),
-        errorMessage: null,
       );
     } catch (e) {
       state = state.copyWith(errorMessage: 'Failed to perform quick flash: $e');

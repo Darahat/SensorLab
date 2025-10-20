@@ -67,7 +67,6 @@ class LightMeterNotifier extends StateNotifier<LightMeterData> {
       _allReadings.clear();
       state = state.copyWith(
         isReading: true,
-        errorMessage: null,
         minLux: double.infinity,
         maxLux: double.negativeInfinity,
         averageLux: 0.0,
@@ -102,7 +101,7 @@ class LightMeterNotifier extends StateNotifier<LightMeterData> {
     _sessionTimer?.cancel();
     _sessionTimer = null;
 
-    state = state.copyWith(isReading: false, errorMessage: null);
+    state = state.copyWith(isReading: false);
   }
 
   /// Handle incoming light data
@@ -151,7 +150,6 @@ class LightMeterNotifier extends StateNotifier<LightMeterData> {
         lightLevel: lightLevel,
         recentReadings: updatedRecentReadings,
         totalReadings: _allReadings.length,
-        errorMessage: null,
       );
     } catch (e) {
       state = state.copyWith(errorMessage: 'Error processing light data: $e');
@@ -197,11 +195,7 @@ class LightMeterNotifier extends StateNotifier<LightMeterData> {
 
       final lightLevel = LightMeterData.getLightLevel(lux);
 
-      state = state.copyWith(
-        currentLux: lux,
-        lightLevel: lightLevel,
-        errorMessage: null,
-      );
+      state = state.copyWith(currentLux: lux, lightLevel: lightLevel);
     } catch (e) {
       state = state.copyWith(errorMessage: 'Failed to get light reading: $e');
     }
@@ -261,7 +255,7 @@ class LightMeterNotifier extends StateNotifier<LightMeterData> {
 
     // Calculate DLI contribution for this interval (10 seconds)
     // DLI = PPFD × time(hours) × 3600 / 1,000,000
-    final hours = 10 / 3600.0; // 10 seconds in hours
+    const hours = 10 / 3600.0; // 10 seconds in hours
     final dliContribution = ppfd * hours * 3600 / 1000000;
 
     _accumulatedDLI += dliContribution;
@@ -309,7 +303,7 @@ class LightMeterNotifier extends StateNotifier<LightMeterData> {
     }
 
     // Check DLI progress
-    final progress = (_accumulatedDLI / plantData.targetDLI * 100);
+    final progress = _accumulatedDLI / plantData.targetDLI * 100;
     if (progress < 50) {
       final remaining = plantData.targetDLI - _accumulatedDLI;
       final hoursNeeded = (remaining / (currentPPFD * 3600 / 1000000)).ceil();

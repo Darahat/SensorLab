@@ -18,7 +18,7 @@ class CompassNotifier extends StateNotifier<CompassData> {
         _updateHeading(event.heading);
       },
       onError: (error) {
-        state = state.copyWith(heading: null, hasError: true, isActive: false);
+        state = state.copyWith(hasError: true, isActive: false);
       },
     );
   }

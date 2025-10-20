@@ -1928,4 +1928,19 @@ class AppLocalizationsKm extends AppLocalizations {
 
   @override
   String get reportsDeleted => 'របាយការណ៍ត្រូវបានលុប';
+
+  @override
+  String get presetDetails => 'ព័ត៌មានលម្អិតអំពីការកំណត់ជាមុន';
+
+  @override
+  String get mustBeAtLeast3Chars => 'ត្រូវតែមានយ៉ាងហោចណាស់ 3 តួអក្សរ';
+
+  @override
+  String get mustBeAtLeast10Chars => 'ត្រូវតែមានយ៉ាងហោចណាស់ 10 តួអក្សរ';
+
+  @override
+  String get chooseIcon => 'ជ្រើសរើសរូបតំណាង';
+
+  @override
+  String get chooseColor => 'ជ្រើសរើសពណ៌';
 }

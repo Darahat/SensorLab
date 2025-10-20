@@ -58,6 +58,9 @@ dependencies:
   json_annotation: ^4.9.0
   freezed_annotation: ^2.4.1
 
+  flutter_localizations:
+    sdk: flutter
+  intl: any
 dev_dependencies:
   flutter_test:
     sdk: flutter

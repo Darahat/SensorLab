@@ -71,7 +71,7 @@ class PedometerData {
     final newTotalSteps = totalSteps + stepDelta;
 
     // Calculate new distance (assuming average stride length)
-    final strideLength = 0.78; // Average stride length in meters
+    const strideLength = 0.78; // Average stride length in meters
     final newDistance = newTotalSteps * strideLength;
 
     // Calculate calories (rough estimate: 0.04 calories per step)

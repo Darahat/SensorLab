@@ -105,7 +105,7 @@ class _SplashScreenState extends State<SplashScreen>
                     ).createShader(bounds),
                     child: Text(
                       AppLocalizations.of(context)!.appName,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 32,
                         fontWeight: FontWeight.bold,
                         color: Colors.white,

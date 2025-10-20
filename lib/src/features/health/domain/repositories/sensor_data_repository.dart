@@ -49,13 +49,13 @@ enum SensorSamplingRate {
   Duration get interval {
     switch (this) {
       case SensorSamplingRate.slow:
-        return Duration(milliseconds: 200);
+        return const Duration(milliseconds: 200);
       case SensorSamplingRate.normal:
-        return Duration(milliseconds: 100);
+        return const Duration(milliseconds: 100);
       case SensorSamplingRate.fast:
-        return Duration(milliseconds: 50);
+        return const Duration(milliseconds: 50);
       case SensorSamplingRate.fastest:
-        return Duration(milliseconds: 20);
+        return const Duration(milliseconds: 20);
     }
   }
 }

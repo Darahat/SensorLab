@@ -367,7 +367,6 @@ class _HumidityScreenState extends ConsumerState<HumidityScreen> {
                             height: 200,
                             child: LineChart(
                               LineChartData(
-                                gridData: const FlGridData(show: true),
                                 titlesData: FlTitlesData(
                                   leftTitles: AxisTitles(
                                     sideTitles: SideTitles(
@@ -381,15 +380,9 @@ class _HumidityScreenState extends ConsumerState<HumidityScreen> {
                                       },
                                     ),
                                   ),
-                                  bottomTitles: const AxisTitles(
-                                    sideTitles: SideTitles(showTitles: false),
-                                  ),
-                                  topTitles: const AxisTitles(
-                                    sideTitles: SideTitles(showTitles: false),
-                                  ),
-                                  rightTitles: const AxisTitles(
-                                    sideTitles: SideTitles(showTitles: false),
-                                  ),
+                                  bottomTitles: const AxisTitles(),
+                                  topTitles: const AxisTitles(),
+                                  rightTitles: const AxisTitles(),
                                 ),
                                 borderData: FlBorderData(show: true),
                                 lineBarsData: [
@@ -408,7 +401,6 @@ class _HumidityScreenState extends ConsumerState<HumidityScreen> {
                                     color: Color(
                                       humidityData.humidityLevelColor,
                                     ),
-                                    barWidth: 2,
                                     dotData: const FlDotData(show: false),
                                     belowBarData: BarAreaData(
                                       show: true,

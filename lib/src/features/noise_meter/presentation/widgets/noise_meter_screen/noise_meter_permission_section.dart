@@ -18,7 +18,9 @@ class NoiseMeterPermissionSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (data.hasPermission) return const SizedBox.shrink();
+    if (data.hasPermission) {
+      return const SizedBox.shrink();
+    }
 
     return Card(
       color: Colors.orange.shade100,
@@ -33,10 +35,7 @@ class NoiseMeterPermissionSection extends StatelessWidget {
               style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 8),
-            const Text(
-              'Grant microphone permission to measure noise levels',
-              textAlign: TextAlign.center,
-            ),
+            Text(l10n.grantMicrophonePermission, textAlign: TextAlign.center),
             const SizedBox(height: 16),
             ElevatedButton(
               onPressed: () =>

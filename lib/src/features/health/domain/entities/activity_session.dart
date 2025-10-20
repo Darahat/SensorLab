@@ -276,7 +276,7 @@ class MovementData {
   }
 
   /// Business Logic: Calculate magnitude of movement
-  double get magnitude => (x * x + y * y + z * z);
+  double get magnitude => x * x + y * y + z * z;
 
   @override
   bool operator ==(Object other) =>

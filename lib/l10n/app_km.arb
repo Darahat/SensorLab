@@ -776,5 +776,10 @@
   "failedToSavePreset": "បរាជ័យក្នុងការរក្សាទុកការកំណត់ជាមុន៖ {error}",
   "deleteReportsQuestion": "លុបរបាយការណ៍?",
   "deleteReportsConfirmMessage": "តើអ្នកប្រាកដថាចង់លុបរបាយការណ៍ដែលបានជ្រើសរើស? សកម្មភាពនេះមិនអាចត្រឡប់វិញបានទេ។",
-  "reportsDeleted": "របាយការណ៍ត្រូវបានលុប"
+  "reportsDeleted": "របាយការណ៍ត្រូវបានលុប",
+  "presetDetails": "ព័ត៌មានលម្អិតអំពីការកំណត់ជាមុន",
+  "mustBeAtLeast3Chars": "ត្រូវតែមានយ៉ាងហោចណាស់ 3 តួអក្សរ",
+  "mustBeAtLeast10Chars": "ត្រូវតែមានយ៉ាងហោចណាស់ 10 តួអក្សរ",
+  "chooseIcon": "ជ្រើសរើសរូបតំណាង",
+  "chooseColor": "ជ្រើសរើសពណ៌"
 }

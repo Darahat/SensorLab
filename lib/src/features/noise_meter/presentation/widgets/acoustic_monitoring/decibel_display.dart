@@ -15,10 +15,18 @@ class DecibelDisplay extends StatelessWidget {
   });
 
   Color _getColor() {
-    if (decibels < 30) return Colors.blue;
-    if (decibels < 50) return Colors.green;
-    if (decibels < 70) return Colors.orange;
-    if (decibels < 85) return Colors.deepOrange;
+    if (decibels < 30) {
+      return Colors.blue;
+    }
+    if (decibels < 50) {
+      return Colors.green;
+    }
+    if (decibels < 70) {
+      return Colors.orange;
+    }
+    if (decibels < 85) {
+      return Colors.deepOrange;
+    }
     return Colors.red;
   }
 

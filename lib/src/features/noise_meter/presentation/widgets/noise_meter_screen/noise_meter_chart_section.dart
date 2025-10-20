@@ -16,7 +16,6 @@ class NoiseMeterChartSection extends StatelessWidget {
       title: 'Real-time Noise Levels',
       dataPoints: data.decibelHistory,
       lineColor: noiseColor,
-      minY: 0,
       maxY: 120,
       horizontalInterval: 30,
       leftTitleBuilder: (value) => '${value.toInt()} dB',

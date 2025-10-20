@@ -1,4 +1,3 @@
-
 import 'package:hive/hive.dart';
 import 'package:sensorlab/src/features/noise_meter/domain/entities/acoustic_report_entity.dart';
 
@@ -107,7 +106,9 @@ class AcousticReportHive {
       averageDecibels: entity.averageDecibels,
       minDecibels: entity.minDecibels,
       maxDecibels: entity.maxDecibels,
-      events: entity.events.map((e) => AcousticEventHive.fromEntity(e)).toList(),
+      events: entity.events
+          .map((e) => AcousticEventHive.fromEntity(e))
+          .toList(),
       timeInLevels: entity.timeInLevels,
       hourlyAverages: entity.hourlyAverages,
       environmentQuality: entity.environmentQuality,

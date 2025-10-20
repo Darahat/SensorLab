@@ -34,7 +34,7 @@ List<SensorCard> getSensors(AppLocalizations l10n) {
       icon: Iconsax.sound,
       label: l10n.noiseMeter,
       color: Colors.teal,
-      screen: NoiseMeterScreen(),
+      screen: const NoiseMeterScreen(),
       category: l10n.health,
     ),
     SensorCard(

@@ -71,14 +71,13 @@ class TrackMovementDataUseCase {
     // Check timing since last step
     final lastStep = history.lastWhere(
       (data) => data.isStep,
-      orElse:
-          () => MovementData(
-            timestamp: DateTime.now().subtract(Duration(seconds: 1)),
-            x: 0,
-            y: 0,
-            z: 0,
-            intensity: 0,
-          ),
+      orElse: () => MovementData(
+        timestamp: DateTime.now().subtract(const Duration(seconds: 1)),
+        x: 0,
+        y: 0,
+        z: 0,
+        intensity: 0,
+      ),
     );
 
     final timeSinceLastStep = currentData.timestamp.difference(
@@ -108,14 +107,12 @@ class TrackMovementDataUseCase {
 
     // Business Logic: Update intensity metrics
     final intensities = updatedMovements.map((m) => m.intensity).toList();
-    final avgIntensity =
-        intensities.isNotEmpty
-            ? intensities.reduce((a, b) => a + b) / intensities.length
-            : 0.0;
-    final peakIntensity =
-        intensities.isNotEmpty
-            ? intensities.reduce((a, b) => a > b ? a : b)
-            : 0.0;
+    final avgIntensity = intensities.isNotEmpty
+        ? intensities.reduce((a, b) => a + b) / intensities.length
+        : 0.0;
+    final peakIntensity = intensities.isNotEmpty
+        ? intensities.reduce((a, b) => a > b ? a : b)
+        : 0.0;
 
     return session.copyWith(
       movements: updatedMovements,

@@ -162,11 +162,12 @@ class ReportsActionsHelper {
       }
     } catch (e) {
       if (context.mounted) {
+        final l10n = AppLocalizations.of(context)!;
         ScaffoldMessenger.of(context)
           ..hideCurrentSnackBar()
           ..showSnackBar(
             SnackBar(
-              content: Text('Failed to export file: $e'),
+              content: Text('${l10n.error}: $e'),
               backgroundColor: Colors.red,
             ),
           );

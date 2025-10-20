@@ -82,7 +82,6 @@ class RecordingActiveState extends StatelessWidget {
           lineColor: MonitoringFormatters.getDecibelColor(
             state.averageDecibels,
           ),
-          maxY: 100,
           horizontalInterval: 20,
         ),
         const SizedBox(height: 24),
@@ -124,7 +123,7 @@ class RecordingActiveState extends StatelessWidget {
     AppLocalizations l10n,
   ) {
     if (state.events.isEmpty) {
-      return EmptyStateWidget(
+      return const EmptyStateWidget(
         icon: Iconsax.tick_circle,
         title: 'No Interruptions',
         message: 'Your environment has been quiet',

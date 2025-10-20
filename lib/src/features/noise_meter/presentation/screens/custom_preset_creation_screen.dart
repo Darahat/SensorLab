@@ -62,11 +62,17 @@ class CustomPresetCreationScreen extends ConsumerWidget {
       final hours = presetState.duration.inHours;
       final minutes = presetState.duration.inMinutes.remainder(60);
 
-      if (hours == 0 && minutes == 0) return '0m';
+      if (hours == 0 && minutes == 0) {
+        return '0m';
+      }
 
       final parts = <String>[];
-      if (hours > 0) parts.add('${hours}h');
-      if (minutes > 0) parts.add('${minutes}m');
+      if (hours > 0) {
+        parts.add(l10n.durationHours(hours));
+      }
+      if (minutes > 0) {
+        parts.add(l10n.durationMinutes(minutes));
+      }
       return parts.join(' ');
     }
 
@@ -164,15 +170,15 @@ class CustomPresetCreationScreen extends ConsumerWidget {
               const SizedBox(height: 24),
 
               // Form Section
-              const SectionHeader(title: 'Preset Details'),
+              SectionHeader(title: l10n.presetDetails),
               const SizedBox(height: 16),
 
               // Title Field
               TextFormField(
                 initialValue: presetState.title,
                 decoration: InputDecoration(
-                  labelText: 'Preset Name *',
-                  hintText: 'e.g., Study Session, Gym Workout',
+                  labelText: l10n.presetName,
+                  hintText: l10n.presetName,
                   prefixIcon: const Icon(Iconsax.edit),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
@@ -182,10 +188,10 @@ class CustomPresetCreationScreen extends ConsumerWidget {
                 maxLength: 30,
                 validator: (value) {
                   if (value == null || value.trim().isEmpty) {
-                    return 'Please enter a preset name';
+                    return l10n.presetName;
                   }
                   if (value.trim().length < 3) {
-                    return 'Name must be at least 3 characters';
+                    return l10n.mustBeAtLeast3Chars;
                   }
                   return null;
                 },
@@ -197,8 +203,8 @@ class CustomPresetCreationScreen extends ConsumerWidget {
               TextFormField(
                 initialValue: presetState.description,
                 decoration: InputDecoration(
-                  labelText: 'Description *',
-                  hintText: 'Describe when to use this preset',
+                  labelText: l10n.description,
+                  hintText: l10n.description,
                   prefixIcon: const Icon(Iconsax.document_text),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
@@ -208,10 +214,10 @@ class CustomPresetCreationScreen extends ConsumerWidget {
                 maxLength: 100,
                 validator: (value) {
                   if (value == null || value.trim().isEmpty) {
-                    return 'Please enter a description';
+                    return l10n.description;
                   }
                   if (value.trim().length < 10) {
-                    return 'Description must be at least 10 characters';
+                    return l10n.mustBeAtLeast10Chars;
                   }
                   return null;
                 },
@@ -220,7 +226,7 @@ class CustomPresetCreationScreen extends ConsumerWidget {
               const SizedBox(height: 16),
 
               // Duration Section
-              const SectionHeader(title: 'Recording Duration'),
+              SectionHeader(title: l10n.duration),
               const SizedBox(height: 12),
               Row(
                 children: [
@@ -228,7 +234,7 @@ class CustomPresetCreationScreen extends ConsumerWidget {
                     child: TextFormField(
                       initialValue: presetState.duration.inHours.toString(),
                       decoration: InputDecoration(
-                        labelText: 'Hours',
+                        labelText: l10n.unitHours,
                         suffixText: 'h',
                         prefixIcon: const Icon(Iconsax.clock),
                         border: OutlineInputBorder(
@@ -255,7 +261,7 @@ class CustomPresetCreationScreen extends ConsumerWidget {
                           .remainder(60)
                           .toString(),
                       decoration: InputDecoration(
-                        labelText: 'Minutes',
+                        labelText: l10n.unitMinutes,
                         suffixText: 'm',
                         prefixIcon: const Icon(Iconsax.timer_1),
                         border: OutlineInputBorder(
@@ -279,7 +285,7 @@ class CustomPresetCreationScreen extends ConsumerWidget {
               const SizedBox(height: 24),
 
               // Icon Selection
-              const SectionHeader(title: 'Choose Icon'),
+              SectionHeader(title: l10n.chooseIcon),
               const SizedBox(height: 12),
               Wrap(
                 spacing: 12,
@@ -317,7 +323,7 @@ class CustomPresetCreationScreen extends ConsumerWidget {
               const SizedBox(height: 24),
 
               // Color Selection
-              const SectionHeader(title: 'Choose Color'),
+              SectionHeader(title: l10n.chooseColor),
               const SizedBox(height: 12),
               Wrap(
                 spacing: 12,
@@ -363,7 +369,7 @@ class CustomPresetCreationScreen extends ConsumerWidget {
               ActionButton(
                 onPressed: createPreset,
                 icon: Iconsax.add_circle,
-                label: 'Create Preset',
+                label: l10n.createCustomPreset,
                 color: presetState.selectedColor,
               ),
               const SizedBox(height: 16),
