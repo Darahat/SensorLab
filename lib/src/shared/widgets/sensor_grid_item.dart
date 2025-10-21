@@ -104,9 +104,8 @@ class SensorGridItem extends StatelessWidget {
               // Right column (expanded) - Status Badge (Top Center)
               Expanded(
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start, // Align to top
                   children: [
-                    const SizedBox(height: 12), // Optional top padding
+                    const SizedBox(height: 12),
                     Container(
                       padding: const EdgeInsets.symmetric(
                         horizontal: 8,

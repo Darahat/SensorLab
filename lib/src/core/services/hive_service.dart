@@ -3,6 +3,10 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:sensorlab/src/core/errors/exceptions.dart';
 import 'package:sensorlab/src/core/utils/logger.dart';
 import 'package:sensorlab/src/features/app_settings/domain/models/app_settings.dart';
+import 'package:sensorlab/src/features/custom_lab/domain/entities/lab.dart';
+import 'package:sensorlab/src/features/custom_lab/domain/entities/lab_session.dart';
+import 'package:sensorlab/src/features/custom_lab/domain/entities/sensor_data_point.dart';
+import 'package:sensorlab/src/features/custom_lab/domain/entities/sensor_type.dart';
 import 'package:sensorlab/src/features/health/domain/entities/activity_session.dart';
 import 'package:sensorlab/src/features/health/domain/entities/activity_type.dart';
 import 'package:sensorlab/src/features/health/domain/entities/user_profile.dart';
@@ -54,10 +58,21 @@ class HiveService {
   static const String dailyLightSummaryBoxName =
       HiveConstants.dailyLightSummaryBox;
 
+  /// [customLabsBoxName] Instance
+  static const String customLabsBoxName = 'customLabsBox';
+
+  /// [labSessionsBoxName] Instance
+  static const String labSessionsBoxName = 'labSessionsBox';
+
+  /// [sensorDataBoxName] Instance
+  static const String sensorDataBoxName = 'sensorDataBox';
+
   /// Hive Service Initialization
   Future<void> init() async {
     /// If all-ready initialized return nothing
-    if (_initialized) return;
+    if (_initialized) {
+      return;
+    }
     try {
       /// Teach Hive about [AppSettings] data model
       if (!Hive.isAdapterRegistered(0)) {
@@ -140,6 +155,36 @@ class HiveService {
         _appLogger.info('✅ CustomPresetHiveAdapter registered (typeId: 15)');
       }
 
+      /// Teach Hive about [SensorType] enum (typeId: 20)
+      if (!Hive.isAdapterRegistered(20)) {
+        Hive.registerAdapter(SensorTypeAdapter());
+        _appLogger.info('✅ SensorTypeAdapter registered (typeId: 20)');
+      }
+
+      /// Teach Hive about [Lab] data model (typeId: 21)
+      if (!Hive.isAdapterRegistered(21)) {
+        Hive.registerAdapter(LabAdapter());
+        _appLogger.info('✅ LabAdapter registered (typeId: 21)');
+      }
+
+      /// Teach Hive about [RecordingStatus] enum (typeId: 22)
+      if (!Hive.isAdapterRegistered(22)) {
+        Hive.registerAdapter(RecordingStatusAdapter());
+        _appLogger.info('✅ RecordingStatusAdapter registered (typeId: 22)');
+      }
+
+      /// Teach Hive about [LabSession] data model (typeId: 23)
+      if (!Hive.isAdapterRegistered(23)) {
+        Hive.registerAdapter(LabSessionAdapter());
+        _appLogger.info('✅ LabSessionAdapter registered (typeId: 23)');
+      }
+
+      /// Teach Hive about [SensorDataPoint] data model (typeId: 24)
+      if (!Hive.isAdapterRegistered(24)) {
+        Hive.registerAdapter(SensorDataPointAdapter());
+        _appLogger.info('✅ SensorDataPointAdapter registered (typeId: 24)');
+      }
+
       /// Open The Database drawers to read/write data
       await Hive.openBox<AppSettings>(settingsBoxName);
       await Hive.openBox<UserProfile>(userProfileBoxName);
@@ -150,6 +195,12 @@ class HiveService {
       await Hive.openBox<PlantTrackingSession>(plantTrackingBoxName);
       await Hive.openBox<PhotoSession>(photoSessionBoxName);
       await Hive.openBox<DailyLightSummary>(dailyLightSummaryBoxName);
+      await Hive.openBox<Lab>(customLabsBoxName);
+      _appLogger.info('✅ Custom labs box opened: $customLabsBoxName');
+      await Hive.openBox<LabSession>(labSessionsBoxName);
+      _appLogger.info('✅ Lab sessions box opened: $labSessionsBoxName');
+      await Hive.openBox<SensorDataPoint>(sensorDataBoxName);
+      _appLogger.info('✅ Sensor data box opened: $sensorDataBoxName');
 
       /// Set _initialized value true
       _initialized = true;
@@ -212,9 +263,29 @@ class HiveService {
     return Hive.box<DailyLightSummary>(dailyLightSummaryBoxName);
   }
 
+  ///customLabsBox initialized
+  Box<Lab> get customLabsBox {
+    _checkInitialized();
+    return Hive.box<Lab>(customLabsBoxName);
+  }
+
+  ///labSessionsBox initialized
+  Box<LabSession> get labSessionsBox {
+    _checkInitialized();
+    return Hive.box<LabSession>(labSessionsBoxName);
+  }
+
+  ///sensorDataBox initialized
+  Box<SensorDataPoint> get sensorDataBox {
+    _checkInitialized();
+    return Hive.box<SensorDataPoint>(sensorDataBoxName);
+  }
+
   /// check are they initialized or not
   void _checkInitialized() {
-    if (!_initialized) throw Exception('HiveService not initialized');
+    if (!_initialized) {
+      throw Exception('HiveService not initialized');
+    }
   }
 
   /// Clear all boxes

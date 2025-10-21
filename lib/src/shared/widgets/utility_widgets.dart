@@ -227,12 +227,16 @@ class ActionButton extends StatelessWidget {
   }
 
   double _getDefaultIconSize() {
-    if (compact) return 16;
+    if (compact) {
+      return 16;
+    }
     return 20;
   }
 
   double _getDefaultFontSize() {
-    if (compact) return 12;
+    if (compact) {
+      return 12;
+    }
     return 14;
   }
 }

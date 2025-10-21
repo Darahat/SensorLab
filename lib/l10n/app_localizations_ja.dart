@@ -1943,4 +1943,345 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get chooseColor => '色を選択';
+
+  @override
+  String get customLabs => 'カスタムラボ';
+
+  @override
+  String get allLabs => 'すべてのラボ';
+
+  @override
+  String get myLabs => 'マイラボ';
+
+  @override
+  String get noLabsYet => 'まだラボがありません';
+
+  @override
+  String get createFirstLabMessage => '最初のカスタムラボを作成して始めましょう';
+
+  @override
+  String get noCustomLabsYet => 'まだカスタムラボがありません';
+
+  @override
+  String get tapPlusToCreateLab => '+ボタンをタップして最初のカスタムラボを作成';
+
+  @override
+  String get newLab => '新しいラボ';
+
+  @override
+  String get presetLabs => 'プリセットラボ';
+
+  @override
+  String get myCustomLabs => 'マイカスタムラボ';
+
+  @override
+  String get errorLoadingLabs => 'ラボの読み込みエラー';
+
+  @override
+  String get createLab => 'ラボを作成';
+
+  @override
+  String get editLab => 'ラボを編集';
+
+  @override
+  String get deleteLab => 'ラボを削除';
+
+  @override
+  String get labName => 'ラボ名';
+
+  @override
+  String get labNameHint => '例：動作分析';
+
+  @override
+  String get descriptionHint => 'このラボが測定する内容を説明してください';
+
+  @override
+  String get recordingIntervalMs => '記録間隔（ms）';
+
+  @override
+  String get recordingIntervalHint => '1000';
+
+  @override
+  String get intervalMustBeBetween => '間隔は100〜10000 msの範囲で指定してください';
+
+  @override
+  String get pleaseEnterInterval => '間隔を入力してください';
+
+  @override
+  String get pleaseEnterLabName => 'ラボ名を入力してください';
+
+  @override
+  String get labColor => 'ラボの色';
+
+  @override
+  String get selectSensors => 'センサーを選択';
+
+  @override
+  String get sensors => 'センサー';
+
+  @override
+  String get interval => '間隔';
+
+  @override
+  String get created => '作成日';
+
+  @override
+  String get sessions => 'セッション';
+
+  @override
+  String get notes => 'メモ';
+
+  @override
+  String get export => 'エクスポート';
+
+  @override
+  String get chooseAtLeastOneSensor => '記録する少なくとも1つのセンサーを選択してください';
+
+  @override
+  String get labCreatedSuccessfully => 'ラボが正常に作成されました';
+
+  @override
+  String get labUpdatedSuccessfully => 'ラボが正常に更新されました';
+
+  @override
+  String get labDeletedSuccessfully => 'ラボが正常に削除されました';
+
+  @override
+  String deleteLabConfirm(String labName) {
+    return '「$labName」を削除してもよろしいですか？';
+  }
+
+  @override
+  String get cannotModifyPresetLabs => 'プリセットラボは変更できません';
+
+  @override
+  String get cannotDeletePresetLabs => 'プリセットラボは削除できません';
+
+  @override
+  String get pleaseSelectAtLeastOneSensor => '少なくとも1つのセンサーを選択してください';
+
+  @override
+  String sensorsCount(int count) {
+    return '$count個のセンサー';
+  }
+
+  @override
+  String intervalMs(int interval) {
+    return '${interval}ms間隔';
+  }
+
+  @override
+  String get presetBadge => 'プリセット';
+
+  @override
+  String get labDetails => 'ラボの詳細';
+
+  @override
+  String get sessionHistory => 'セッション履歴';
+
+  @override
+  String get startRecording => '記録を開始';
+
+  @override
+  String get stopRecording => '記録を停止';
+
+  @override
+  String get pauseRecording => '記録を一時停止';
+
+  @override
+  String get recordingStatus => '記録中';
+
+  @override
+  String get pausedStatus => '一時停止';
+
+  @override
+  String get completedStatus => '完了';
+
+  @override
+  String get failedStatus => '失敗';
+
+  @override
+  String get idleStatus => '待機中';
+
+  @override
+  String get elapsedTime => '経過時間';
+
+  @override
+  String get collectingSensorData => 'センサーデータを収集中...';
+
+  @override
+  String get stopRecordingQuestion => '記録を停止しますか？';
+
+  @override
+  String get stopRecordingConfirm => 'この記録セッションを停止して保存しますか？';
+
+  @override
+  String get continueRecordingAction => '記録を続ける';
+
+  @override
+  String get stopAndSave => '停止して保存';
+
+  @override
+  String get recordingSavedSuccessfully => '記録が正常に保存されました';
+
+  @override
+  String get failedToStartRecording => '記録セッションの開始に失敗しました';
+
+  @override
+  String dataPoints(int count) {
+    return '$countポイント';
+  }
+
+  @override
+  String get noRecordingSessionsYet => 'まだ記録セッションがありません';
+
+  @override
+  String get startRecordingToCreateSession => '記録を開始して最初のセッションを作成';
+
+  @override
+  String get errorLoadingSessions => 'セッションの読み込みエラー';
+
+  @override
+  String get sessionDetailsTitle => 'セッションの詳細';
+
+  @override
+  String get exportAndShare => 'エクスポートと共有';
+
+  @override
+  String get deleteSession => 'セッションを削除';
+
+  @override
+  String get deleteSessionConfirm => 'この記録セッションを削除してもよろしいですか？この操作は元に戻せません。';
+
+  @override
+  String get sessionDeletedSuccessfully => 'セッションが正常に削除されました';
+
+  @override
+  String get recordingTime => '記録時間';
+
+  @override
+  String get startTime => '開始時刻';
+
+  @override
+  String get endTime => '終了時刻';
+
+  @override
+  String get recordingData => '記録データ';
+
+  @override
+  String get dataPointsCount => 'データポイント';
+
+  @override
+  String get sensorsUsed => '使用されたセンサー';
+
+  @override
+  String get sessionExportedToCSV => 'セッションがCSVにエクスポートされました';
+
+  @override
+  String get sessionNotYetExported => 'セッションはまだエクスポートされていません';
+
+  @override
+  String get errorCheckingExportStatus => 'エクスポートステータスの確認エラー';
+
+  @override
+  String get dataPreview => 'データプレビュー';
+
+  @override
+  String get noDataPointsRecorded => 'データポイントが記録されていません';
+
+  @override
+  String showingDataPoints(int showing, int total) {
+    return '$total個中$showing個のデータポイントを表示';
+  }
+
+  @override
+  String get pointNumber => 'ポイント';
+
+  @override
+  String errorLoadingDataPoints(String error) {
+    return 'データポイントの読み込みエラー: $error';
+  }
+
+  @override
+  String get exportToCSV => 'CSVにエクスポート';
+
+  @override
+  String get exportingStatus => 'エクスポート中...';
+
+  @override
+  String exportedTo(String path) {
+    return 'エクスポート先: $path';
+  }
+
+  @override
+  String get sharingNotYetImplemented => '（共有は未実装）';
+
+  @override
+  String get failedToExportSession => 'セッションのエクスポートに失敗しました';
+
+  @override
+  String get exportedLabel => 'エクスポート済み';
+
+  @override
+  String get sensorAccelerometer => '加速度計';
+
+  @override
+  String get sensorGyroscope => 'ジャイロスコープ';
+
+  @override
+  String get sensorMagnetometer => '磁力計';
+
+  @override
+  String get sensorBarometer => '気圧計';
+
+  @override
+  String get sensorLightMeter => '光';
+
+  @override
+  String get sensorNoiseMeter => '騒音';
+
+  @override
+  String get sensorGPS => 'GPS';
+
+  @override
+  String get sensorProximity => '近接';
+
+  @override
+  String get sensorTemperature => '温度';
+
+  @override
+  String get sensorHumidity => '湿度';
+
+  @override
+  String get sensorPedometer => '歩数計';
+
+  @override
+  String get sensorCompass => 'コンパス';
+
+  @override
+  String get sensorAltimeter => '高度計';
+
+  @override
+  String get sensorSpeedMeter => '速度';
+
+  @override
+  String get sensorHeartBeat => '心拍数';
+
+  @override
+  String get environmentMonitor => '環境モニター';
+
+  @override
+  String get motionAnalysis => '動作分析';
+
+  @override
+  String get indoorQuality => '室内品質';
+
+  @override
+  String get outdoorExplorer => '屋外探検';
+
+  @override
+  String get vehicleDynamics => '車両ダイナミクス';
+
+  @override
+  String get healthTrackerLab => '健康トラッカー';
 }

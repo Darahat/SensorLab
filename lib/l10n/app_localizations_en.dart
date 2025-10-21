@@ -1943,4 +1943,345 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get chooseColor => 'Choose Color';
+
+  @override
+  String get customLabs => 'Custom Labs';
+
+  @override
+  String get allLabs => 'All Labs';
+
+  @override
+  String get myLabs => 'My Labs';
+
+  @override
+  String get noLabsYet => 'No labs yet';
+
+  @override
+  String get createFirstLabMessage => 'Create your first custom lab to get started';
+
+  @override
+  String get noCustomLabsYet => 'No custom labs yet';
+
+  @override
+  String get tapPlusToCreateLab => 'Tap the + button to create your first custom lab';
+
+  @override
+  String get newLab => 'New Lab';
+
+  @override
+  String get presetLabs => 'Preset Labs';
+
+  @override
+  String get myCustomLabs => 'My Custom Labs';
+
+  @override
+  String get errorLoadingLabs => 'Error loading labs';
+
+  @override
+  String get createLab => 'Create Lab';
+
+  @override
+  String get editLab => 'Edit Lab';
+
+  @override
+  String get deleteLab => 'Delete Lab';
+
+  @override
+  String get labName => 'Lab Name';
+
+  @override
+  String get labNameHint => 'e.g., Motion Analysis';
+
+  @override
+  String get descriptionHint => 'Describe what this lab measures';
+
+  @override
+  String get recordingIntervalMs => 'Recording Interval (ms)';
+
+  @override
+  String get recordingIntervalHint => '1000';
+
+  @override
+  String get intervalMustBeBetween => 'Interval must be between 100-10000 ms';
+
+  @override
+  String get pleaseEnterInterval => 'Please enter an interval';
+
+  @override
+  String get pleaseEnterLabName => 'Please enter a lab name';
+
+  @override
+  String get labColor => 'Lab Color';
+
+  @override
+  String get selectSensors => 'Select Sensors';
+
+  @override
+  String get sensors => 'Sensors';
+
+  @override
+  String get interval => 'Interval';
+
+  @override
+  String get created => 'Created';
+
+  @override
+  String get sessions => 'Sessions';
+
+  @override
+  String get notes => 'Notes';
+
+  @override
+  String get export => 'Export';
+
+  @override
+  String get chooseAtLeastOneSensor => 'Choose at least one sensor to record';
+
+  @override
+  String get labCreatedSuccessfully => 'Lab created successfully';
+
+  @override
+  String get labUpdatedSuccessfully => 'Lab updated successfully';
+
+  @override
+  String get labDeletedSuccessfully => 'Lab deleted successfully';
+
+  @override
+  String deleteLabConfirm(String labName) {
+    return 'Are you sure you want to delete \"$labName\"?';
+  }
+
+  @override
+  String get cannotModifyPresetLabs => 'Cannot modify preset labs';
+
+  @override
+  String get cannotDeletePresetLabs => 'Cannot delete preset labs';
+
+  @override
+  String get pleaseSelectAtLeastOneSensor => 'Please select at least one sensor';
+
+  @override
+  String sensorsCount(int count) {
+    return '$count sensors';
+  }
+
+  @override
+  String intervalMs(int interval) {
+    return '${interval}ms interval';
+  }
+
+  @override
+  String get presetBadge => 'PRESET';
+
+  @override
+  String get labDetails => 'Lab Details';
+
+  @override
+  String get sessionHistory => 'Session History';
+
+  @override
+  String get startRecording => 'Start Recording';
+
+  @override
+  String get stopRecording => 'Stop Recording';
+
+  @override
+  String get pauseRecording => 'Pause Recording';
+
+  @override
+  String get recordingStatus => 'RECORDING';
+
+  @override
+  String get pausedStatus => 'PAUSED';
+
+  @override
+  String get completedStatus => 'COMPLETED';
+
+  @override
+  String get failedStatus => 'FAILED';
+
+  @override
+  String get idleStatus => 'IDLE';
+
+  @override
+  String get elapsedTime => 'Elapsed Time';
+
+  @override
+  String get collectingSensorData => 'Collecting sensor data...';
+
+  @override
+  String get stopRecordingQuestion => 'Stop Recording?';
+
+  @override
+  String get stopRecordingConfirm => 'Do you want to stop and save this recording session?';
+
+  @override
+  String get continueRecordingAction => 'Continue Recording';
+
+  @override
+  String get stopAndSave => 'Stop & Save';
+
+  @override
+  String get recordingSavedSuccessfully => 'Recording saved successfully';
+
+  @override
+  String get failedToStartRecording => 'Failed to start recording session';
+
+  @override
+  String dataPoints(int count) {
+    return '$count points';
+  }
+
+  @override
+  String get noRecordingSessionsYet => 'No recording sessions yet';
+
+  @override
+  String get startRecordingToCreateSession => 'Start recording to create your first session';
+
+  @override
+  String get errorLoadingSessions => 'Error loading sessions';
+
+  @override
+  String get sessionDetailsTitle => 'Session Details';
+
+  @override
+  String get exportAndShare => 'Export & Share';
+
+  @override
+  String get deleteSession => 'Delete Session';
+
+  @override
+  String get deleteSessionConfirm => 'Are you sure you want to delete this recording session? This action cannot be undone.';
+
+  @override
+  String get sessionDeletedSuccessfully => 'Session deleted successfully';
+
+  @override
+  String get recordingTime => 'Recording Time';
+
+  @override
+  String get startTime => 'Start Time';
+
+  @override
+  String get endTime => 'End Time';
+
+  @override
+  String get recordingData => 'Recording Data';
+
+  @override
+  String get dataPointsCount => 'Data Points';
+
+  @override
+  String get sensorsUsed => 'Sensors Used';
+
+  @override
+  String get sessionExportedToCSV => 'Session has been exported to CSV';
+
+  @override
+  String get sessionNotYetExported => 'Session not yet exported';
+
+  @override
+  String get errorCheckingExportStatus => 'Error checking export status';
+
+  @override
+  String get dataPreview => 'Data Preview';
+
+  @override
+  String get noDataPointsRecorded => 'No data points recorded';
+
+  @override
+  String showingDataPoints(int showing, int total) {
+    return 'Showing $showing of $total data points';
+  }
+
+  @override
+  String get pointNumber => 'Point';
+
+  @override
+  String errorLoadingDataPoints(String error) {
+    return 'Error loading data points: $error';
+  }
+
+  @override
+  String get exportToCSV => 'Export to CSV';
+
+  @override
+  String get exportingStatus => 'Exporting...';
+
+  @override
+  String exportedTo(String path) {
+    return 'Exported to: $path';
+  }
+
+  @override
+  String get sharingNotYetImplemented => '(Sharing not yet implemented)';
+
+  @override
+  String get failedToExportSession => 'Failed to export session';
+
+  @override
+  String get exportedLabel => 'Exported';
+
+  @override
+  String get sensorAccelerometer => 'Accelerometer';
+
+  @override
+  String get sensorGyroscope => 'Gyroscope';
+
+  @override
+  String get sensorMagnetometer => 'Magnetometer';
+
+  @override
+  String get sensorBarometer => 'Barometer';
+
+  @override
+  String get sensorLightMeter => 'Light';
+
+  @override
+  String get sensorNoiseMeter => 'Noise';
+
+  @override
+  String get sensorGPS => 'GPS';
+
+  @override
+  String get sensorProximity => 'Proximity';
+
+  @override
+  String get sensorTemperature => 'Temp';
+
+  @override
+  String get sensorHumidity => 'Humidity';
+
+  @override
+  String get sensorPedometer => 'Pedometer';
+
+  @override
+  String get sensorCompass => 'Compass';
+
+  @override
+  String get sensorAltimeter => 'Altimeter';
+
+  @override
+  String get sensorSpeedMeter => 'Speed';
+
+  @override
+  String get sensorHeartBeat => 'Heart Rate';
+
+  @override
+  String get environmentMonitor => 'Environment Monitor';
+
+  @override
+  String get motionAnalysis => 'Motion Analysis';
+
+  @override
+  String get indoorQuality => 'Indoor Quality';
+
+  @override
+  String get outdoorExplorer => 'Outdoor Explorer';
+
+  @override
+  String get vehicleDynamics => 'Vehicle Dynamics';
+
+  @override
+  String get healthTrackerLab => 'Health Tracker';
 }
