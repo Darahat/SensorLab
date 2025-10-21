@@ -26,7 +26,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
   late Animation<double> _scaleAnimation;
   late Animation<double> _fadeAnimation;
   InterstitialAd? _interstitialAd;
-  bool _isRefreshing = false;
   int _selectedTabIndex = 0;
   TabController? _tabController; // Nullable — created in didChangeDependencies
 
@@ -91,8 +90,12 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
 
       // Safely clamp the initial index to an integer within range
       var initialIndex = _selectedTabIndex;
-      if (initialIndex < 0) initialIndex = 0;
-      if (initialIndex > categories.length) initialIndex = categories.length;
+      if (initialIndex < 0) {
+        initialIndex = 0;
+      }
+      if (initialIndex > categories.length) {
+        initialIndex = categories.length;
+      }
 
       _tabController = TabController(
         length: categories.length + 1,
@@ -104,7 +107,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
   }
 
   void _handleTabChange() {
-    if (_tabController == null) return;
+    if (_tabController == null) {
+      return;
+    }
     if (_tabController!.indexIsChanging) {
       setState(() {
         _selectedTabIndex = _tabController!.index;
@@ -113,21 +118,16 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
   }
 
   Future<void> _handleRefresh() async {
-    if (!mounted) return;
-
-    setState(() {
-      _isRefreshing = true;
-    });
+    if (!mounted) {
+      return;
+    }
 
     // Reset animation
     _animationController.reset();
     await Future.delayed(const Duration(milliseconds: 300));
 
     if (mounted) {
-      setState(() {
-        _isRefreshing = false;
-        _animationController.forward();
-      });
+      _animationController.forward();
     }
   }
 
@@ -383,7 +383,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
     final seen = <String>{};
     final result = <String>[];
     for (final s in sensorList) {
-      if (seen.add(s.category)) result.add(s.category);
+      if (seen.add(s.category)) {
+        result.add(s.category);
+      }
     }
     return result;
   }

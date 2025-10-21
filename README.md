@@ -267,21 +267,21 @@ Both files are excluded from version control for security.
 
 ### **Core Modules**
 
-| Module               | Description                                        | Documentation                                            |
-| -------------------- | -------------------------------------------------- | -------------------------------------------------------- |
-| 🏥 **Health**        | Activity tracking, calorie counter, health metrics | [📖 Health Module](docs/modules/health.md)               |
-| 📊 **Accelerometer** | 3-axis acceleration measurement                    | [📖 Accelerometer Module](docs/modules/accelerometer.md) |
-| 🌀 **Gyroscope**     | Device rotation and angular velocity               | [📖 Gyroscope Module](docs/modules/gyroscope.md)         |
-| 🧭 **Compass**       | Magnetic field and navigation                      | [📖 Compass Module](docs/modules/compass.md)             |
-| 📍 **Geolocator**    | GPS positioning and location services              | [📖 Geolocator Module](docs/modules/geolocator.md)       |
-| 💡 **Light Meter**   | Ambient light measurement                          | [📖 Light Meter Module](docs/modules/light_meter.md)     |
-| 🔊 **Noise Meter**   | Sound level monitoring                             | [📖 Noise Meter Module](docs/modules/noise_meter.md)     |
-| 💧 **Humidity**      | Environmental humidity sensing                     | [📖 Humidity Module](docs/modules/humidity.md)           |
-| 📏 **Proximity**     | Distance detection sensor                          | [📖 Proximity Module](docs/modules/proximity.md)         |
-| ❤️ **Heart Beat**    | Heart rate monitoring via camera                   | [📖 Heart Beat Module](docs/modules/heart_beat.md)       |
-| 📱 **QR Scanner**    | QR code and barcode scanning                       | [📖 QR Scanner Module](docs/modules/qr_scanner.md)       |
-| 🔦 **Flashlight**    | Device flashlight control                          | [📖 Flashlight Module](docs/modules/flashlight.md)       |
-| ⚙️ **App Settings**  | Application configuration                          | [📖 Settings Module](docs/modules/app_settings.md)       |
+| Module               | Description                                        | Documentation                                                      |
+| -------------------- | -------------------------------------------------- | ------------------------------------------------------------------ |
+| 🏥 **Health**        | Activity tracking, calorie counter, health metrics | [📖 Health Module](docs/modules/health.md)                         |
+| 📊 **Accelerometer** | 3-axis acceleration measurement                    | [📖 Accelerometer Module](docs/modules/accelerometer.md)           |
+| 🌀 **Gyroscope**     | Device rotation and angular velocity               | [📖 Gyroscope Module](docs/modules/gyroscope.md)                   |
+| 🧭 **Compass**       | Magnetic field and navigation                      | [📖 Compass Module](docs/modules/compass.md)                       |
+| 📍 **Geolocator**    | GPS positioning and location services              | [📖 Geolocator Module](docs/modules/geolocator.md)                 |
+| 💡 **Light Meter**   | Ambient light measurement                          | [📖 Light Meter Module](docs/modules/light_meter.md)               |
+| 🔊 **Noise Meter**   | Sound level monitoring                             | [📖 Noise Meter Docs](lib/src/features/noise_meter/docs/README.md) |
+| 💧 **Humidity**      | Environmental humidity sensing                     | [📖 Humidity Module](docs/modules/humidity.md)                     |
+| 📏 **Proximity**     | Distance detection sensor                          | [📖 Proximity Module](docs/modules/proximity.md)                   |
+| ❤️ **Heart Beat**    | Heart rate monitoring via camera                   | [📖 Heart Beat Module](docs/modules/heart_beat.md)                 |
+| 📱 **QR Scanner**    | QR code and barcode scanning                       | [📖 QR Scanner Module](docs/modules/qr_scanner.md)                 |
+| 🔦 **Flashlight**    | Device flashlight control                          | [📖 Flashlight Module](docs/modules/flashlight.md)                 |
+| ⚙️ **App Settings**  | Application configuration                          | [📖 Settings Module](docs/modules/app_settings.md)                 |
 
 ---
 

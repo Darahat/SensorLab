@@ -57,7 +57,9 @@ class HiveService {
   /// Hive Service Initialization
   Future<void> init() async {
     /// If all-ready initialized return nothing
-    if (_initialized) return;
+    if (_initialized) {
+      return;
+    }
     try {
       /// Teach Hive about [AppSettings] data model
       if (!Hive.isAdapterRegistered(0)) {
@@ -214,7 +216,9 @@ class HiveService {
 
   /// check are they initialized or not
   void _checkInitialized() {
-    if (!_initialized) throw Exception('HiveService not initialized');
+    if (!_initialized) {
+      throw Exception('HiveService not initialized');
+    }
   }
 
   /// Clear all boxes
