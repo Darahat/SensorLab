@@ -1605,6 +1605,72 @@ abstract class AppLocalizations {
   /// **'Grant Permission'**
   String get grantPermission;
 
+  /// No description provided for @permissionGranted.
+  ///
+  /// In en, this message translates to:
+  /// **'Permission Granted'**
+  String get permissionGranted;
+
+  /// No description provided for @microphonePermissionDenied.
+  ///
+  /// In en, this message translates to:
+  /// **'Microphone permission denied'**
+  String get microphonePermissionDenied;
+
+  /// No description provided for @microphonePermissionPermanentlyDenied.
+  ///
+  /// In en, this message translates to:
+  /// **'Microphone permission was permanently denied. Please enable it in your device settings to use the noise meter.'**
+  String get microphonePermissionPermanentlyDenied;
+
+  /// No description provided for @openSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Open Settings'**
+  String get openSettings;
+
+  /// No description provided for @microphoneAccessNeeded.
+  ///
+  /// In en, this message translates to:
+  /// **'Microphone Access Needed'**
+  String get microphoneAccessNeeded;
+
+  /// No description provided for @microphoneAccessDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'To measure and analyze sound levels accurately, we need access to your device\'s microphone. Your audio is never recorded or stored.'**
+  String get microphoneAccessDescription;
+
+  /// No description provided for @measureNoiseLevels.
+  ///
+  /// In en, this message translates to:
+  /// **'Measure noise levels in real-time'**
+  String get measureNoiseLevels;
+
+  /// No description provided for @analyzeAcoustics.
+  ///
+  /// In en, this message translates to:
+  /// **'Analyze acoustic environment'**
+  String get analyzeAcoustics;
+
+  /// No description provided for @generateReports.
+  ///
+  /// In en, this message translates to:
+  /// **'Generate detailed reports'**
+  String get generateReports;
+
+  /// No description provided for @allowMicrophoneAccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Allow Microphone Access'**
+  String get allowMicrophoneAccess;
+
+  /// No description provided for @audioNotRecorded.
+  ///
+  /// In en, this message translates to:
+  /// **'Audio is never recorded or stored'**
+  String get audioNotRecorded;
+
   /// No description provided for @inactive.
   ///
   /// In en, this message translates to:
@@ -3710,6 +3776,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Dangerous Levels'**
   String get dangerousLevels;
+
+  /// No description provided for @keyStatistics.
+  ///
+  /// In en, this message translates to:
+  /// **'Key Statistics'**
+  String get keyStatistics;
+
+  /// No description provided for @noiseEvents.
+  ///
+  /// In en, this message translates to:
+  /// **'Noise Events'**
+  String get noiseEvents;
+
+  /// No description provided for @noInterruptionsDetected.
+  ///
+  /// In en, this message translates to:
+  /// **'No Interruptions Detected'**
+  String get noInterruptionsDetected;
+
+  /// No description provided for @environmentConsistentlyQuiet.
+  ///
+  /// In en, this message translates to:
+  /// **'Your environment was consistently quiet'**
+  String get environmentConsistentlyQuiet;
+
+  /// No description provided for @expertAdvice.
+  ///
+  /// In en, this message translates to:
+  /// **'Expert Advice'**
+  String get expertAdvice;
+
+  /// No description provided for @quickTips.
+  ///
+  /// In en, this message translates to:
+  /// **'Quick Tips'**
+  String get quickTips;
+
+  /// No description provided for @dataPoints.
+  ///
+  /// In en, this message translates to:
+  /// **'Data Points'**
+  String get dataPoints;
 
   /// No description provided for @grantMicrophonePermission.
   ///

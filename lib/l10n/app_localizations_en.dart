@@ -784,6 +784,39 @@ class AppLocalizationsEn extends AppLocalizations {
   String get grantPermission => 'Grant Permission';
 
   @override
+  String get permissionGranted => 'Permission Granted';
+
+  @override
+  String get microphonePermissionDenied => 'Microphone permission denied';
+
+  @override
+  String get microphonePermissionPermanentlyDenied => 'Microphone permission was permanently denied. Please enable it in your device settings to use the noise meter.';
+
+  @override
+  String get openSettings => 'Open Settings';
+
+  @override
+  String get microphoneAccessNeeded => 'Microphone Access Needed';
+
+  @override
+  String get microphoneAccessDescription => 'To measure and analyze sound levels accurately, we need access to your device\'s microphone. Your audio is never recorded or stored.';
+
+  @override
+  String get measureNoiseLevels => 'Measure noise levels in real-time';
+
+  @override
+  String get analyzeAcoustics => 'Analyze acoustic environment';
+
+  @override
+  String get generateReports => 'Generate detailed reports';
+
+  @override
+  String get allowMicrophoneAccess => 'Allow Microphone Access';
+
+  @override
+  String get audioNotRecorded => 'Audio is never recorded or stored';
+
+  @override
   String get inactive => 'Inactive';
 
   @override
@@ -1859,6 +1892,27 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get dangerousLevels => 'Dangerous Levels';
+
+  @override
+  String get keyStatistics => 'Key Statistics';
+
+  @override
+  String get noiseEvents => 'Noise Events';
+
+  @override
+  String get noInterruptionsDetected => 'No Interruptions Detected';
+
+  @override
+  String get environmentConsistentlyQuiet => 'Your environment was consistently quiet';
+
+  @override
+  String get expertAdvice => 'Expert Advice';
+
+  @override
+  String get quickTips => 'Quick Tips';
+
+  @override
+  String get dataPoints => 'Data Points';
 
   @override
   String get grantMicrophonePermission => 'Grant microphone permission to measure noise levels';

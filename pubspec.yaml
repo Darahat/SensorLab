@@ -51,6 +51,8 @@ dependencies:
   url_launcher: ^6.3.2
   go_router: ^16.2.4
   flutter_file_dialog: ^3.0.2
+  share_plus: ^10.0.2
+  pdf: ^3.11.0
 
   # --- Localization & Utils ---
   flutter_localization: ^0.3.3

@@ -18,7 +18,11 @@ class AcousticReportsListContent extends ConsumerWidget {
           child: ReportsListView(state: state, notifier: notifier),
         ),
         if (!state.isSelectionMode && state.filteredReports.isNotEmpty)
-          ExportFab(notifier: notifier, reports: state.filteredReports),
+          Row(
+            children: [
+              ExportFab(notifier: notifier, reports: state.filteredReports),
+            ],
+          ),
       ],
     );
   }

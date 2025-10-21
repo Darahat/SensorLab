@@ -10,11 +10,12 @@ class AcousticReportDetailContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      padding: const EdgeInsets.all(16.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Quality Score Card
+          const SizedBox(height: 8),
+
+          // Quality Score Hero Card
           QualityScoreCard(report: report),
           const SizedBox(height: 24),
 
@@ -24,20 +25,26 @@ class AcousticReportDetailContent extends StatelessWidget {
 
           // Hourly Chart
           if (report.hourlyAverages.isNotEmpty) ...[
-            HourlyBreakdownChart(hourlyAverages: report.hourlyAverages),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: HourlyBreakdownChart(
+                hourlyAverages: report.hourlyAverages,
+              ),
+            ),
             const SizedBox(height: 24),
           ],
 
-          // Events List
+          // Events Timeline
           EventsSection(report: report),
           const SizedBox(height: 24),
 
-          // Recommendation
+          // Recommendation with Action Tips
           RecommendationSection(report: report),
           const SizedBox(height: 24),
 
-          // Session Info
+          // Collapsible Session Info
           SessionInfoSection(report: report),
+          const SizedBox(height: 32),
         ],
       ),
     );

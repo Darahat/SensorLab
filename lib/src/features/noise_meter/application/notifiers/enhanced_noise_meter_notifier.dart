@@ -37,6 +37,11 @@ class EnhancedNoiseMeterNotifier extends StateNotifier<EnhancedNoiseMeterData> {
     state = state.copyWith(hasPermission: hasPermission);
   }
 
+  /// Public method to refresh permission status
+  Future<void> refreshPermissionStatus() async {
+    await _checkPermission();
+  }
+
   Future<void> startRecordingWithPreset(
     entities.RecordingPreset preset, {
     Duration? customDuration,

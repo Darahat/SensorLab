@@ -784,6 +784,39 @@ class AppLocalizationsJa extends AppLocalizations {
   String get grantPermission => '許可を与える';
 
   @override
+  String get permissionGranted => '許可が付与されました';
+
+  @override
+  String get microphonePermissionDenied => 'マイクの許可が拒否されました';
+
+  @override
+  String get microphonePermissionPermanentlyDenied => 'マイクの許可が永久に拒否されました。ノイズメーターを使用するには、デバイス設定で有効にしてください。';
+
+  @override
+  String get openSettings => '設定を開く';
+
+  @override
+  String get microphoneAccessNeeded => 'マイクアクセスが必要です';
+
+  @override
+  String get microphoneAccessDescription => '音声レベルを正確に測定および分析するには、デバイスのマイクへのアクセスが必要です。音声は記録または保存されることはありません。';
+
+  @override
+  String get measureNoiseLevels => 'リアルタイムでノイズレベルを測定';
+
+  @override
+  String get analyzeAcoustics => '音響環境を分析';
+
+  @override
+  String get generateReports => '詳細なレポートを生成';
+
+  @override
+  String get allowMicrophoneAccess => 'マイクアクセスを許可';
+
+  @override
+  String get audioNotRecorded => '音声は記録または保存されません';
+
+  @override
   String get inactive => '非アクティブ';
 
   @override
@@ -1859,6 +1892,27 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get dangerousLevels => '危険なレベル';
+
+  @override
+  String get keyStatistics => '主要統計';
+
+  @override
+  String get noiseEvents => '騒音イベント';
+
+  @override
+  String get noInterruptionsDetected => '中断は検出されませんでした';
+
+  @override
+  String get environmentConsistentlyQuiet => '環境は一貫して静かでした';
+
+  @override
+  String get expertAdvice => '専門家のアドバイス';
+
+  @override
+  String get quickTips => 'クイックヒント';
+
+  @override
+  String get dataPoints => 'データポイント';
 
   @override
   String get grantMicrophonePermission => '騒音レベルを測定するためにマイクの許可を付与してください';
