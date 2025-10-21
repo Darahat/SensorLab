@@ -8,10 +8,10 @@ class NoiseMeterGuideSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Card(
+    return Card(
       child: Padding(
-        padding: EdgeInsets.all(16.0),
-        child: Text('Noise Meter Guide'),
+        padding: const EdgeInsets.all(16.0),
+        child: Text(l10n.noiseMeterGuide),
       ),
     );
   }

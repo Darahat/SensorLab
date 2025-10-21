@@ -31,24 +31,44 @@ class ReportFormatters {
   }
 
   static Color getQualityColor(int score) {
-    if (score >= 80) return Colors.green;
-    if (score >= 60) return Colors.lightGreen;
-    if (score >= 40) return Colors.orange;
+    if (score >= 80) {
+      return Colors.green;
+    }
+    if (score >= 60) {
+      return Colors.lightGreen;
+    }
+    if (score >= 40) {
+      return Colors.orange;
+    }
     return Colors.red;
   }
 
   static String getQualityLabel(int score) {
-    if (score >= 80) return 'EXCELLENT';
-    if (score >= 60) return 'GOOD';
-    if (score >= 40) return 'FAIR';
+    if (score >= 80) {
+      return 'EXCELLENT';
+    }
+    if (score >= 60) {
+      return 'GOOD';
+    }
+    if (score >= 40) {
+      return 'FAIR';
+    }
     return 'POOR';
   }
 
   static Color getDecibelColor(double decibel) {
-    if (decibel < 40) return Colors.green;
-    if (decibel < 55) return Colors.lightGreen;
-    if (decibel < 65) return Colors.orange;
-    if (decibel < 75) return Colors.deepOrange;
+    if (decibel < 40) {
+      return Colors.green;
+    }
+    if (decibel < 55) {
+      return Colors.lightGreen;
+    }
+    if (decibel < 65) {
+      return Colors.orange;
+    }
+    if (decibel < 75) {
+      return Colors.deepOrange;
+    }
     return Colors.red;
   }
 

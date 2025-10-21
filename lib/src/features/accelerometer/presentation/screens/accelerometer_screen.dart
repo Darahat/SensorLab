@@ -58,7 +58,6 @@ class AccelerometerScreen extends ConsumerWidget {
                       color: accelerometerData.isActive
                           ? colorScheme.primary
                           : colorScheme.outline.withOpacity(0.3),
-                      width: 1,
                     ),
                   ),
                   child: Text(
@@ -152,7 +151,7 @@ class AccelerometerScreen extends ConsumerWidget {
       ),
       child: Table(
         columnWidths: const {
-          0: FlexColumnWidth(1),
+          0: FlexColumnWidth(),
           1: FlexColumnWidth(2),
           2: FlexColumnWidth(2),
         },

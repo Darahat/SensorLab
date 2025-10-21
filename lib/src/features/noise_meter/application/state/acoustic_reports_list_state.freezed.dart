@@ -12,7 +12,8 @@ part of 'acoustic_reports_list_state.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
 
 /// @nodoc
 mixin _$AcousticReportsListState {
@@ -29,21 +30,25 @@ mixin _$AcousticReportsListState {
 
 /// @nodoc
 abstract class $AcousticReportsListStateCopyWith<$Res> {
-  factory $AcousticReportsListStateCopyWith(AcousticReportsListState value,
-          $Res Function(AcousticReportsListState) then) =
-      _$AcousticReportsListStateCopyWithImpl<$Res, AcousticReportsListState>;
+  factory $AcousticReportsListStateCopyWith(
+    AcousticReportsListState value,
+    $Res Function(AcousticReportsListState) then,
+  ) = _$AcousticReportsListStateCopyWithImpl<$Res, AcousticReportsListState>;
   @useResult
-  $Res call(
-      {List<AcousticReport> reports,
-      bool isLoading,
-      RecordingPreset? filterPreset,
-      Set<String> selectedReportIds,
-      bool isSelectionMode});
+  $Res call({
+    List<AcousticReport> reports,
+    bool isLoading,
+    RecordingPreset? filterPreset,
+    Set<String> selectedReportIds,
+    bool isSelectionMode,
+  });
 }
 
 /// @nodoc
-class _$AcousticReportsListStateCopyWithImpl<$Res,
-        $Val extends AcousticReportsListState>
+class _$AcousticReportsListStateCopyWithImpl<
+  $Res,
+  $Val extends AcousticReportsListState
+>
     implements $AcousticReportsListStateCopyWith<$Res> {
   _$AcousticReportsListStateCopyWithImpl(this._value, this._then);
 
@@ -61,28 +66,31 @@ class _$AcousticReportsListStateCopyWithImpl<$Res,
     Object? selectedReportIds = null,
     Object? isSelectionMode = null,
   }) {
-    return _then(_value.copyWith(
-      reports: null == reports
-          ? _value.reports
-          : reports // ignore: cast_nullable_to_non_nullable
-              as List<AcousticReport>,
-      isLoading: null == isLoading
-          ? _value.isLoading
-          : isLoading // ignore: cast_nullable_to_non_nullable
-              as bool,
-      filterPreset: freezed == filterPreset
-          ? _value.filterPreset
-          : filterPreset // ignore: cast_nullable_to_non_nullable
-              as RecordingPreset?,
-      selectedReportIds: null == selectedReportIds
-          ? _value.selectedReportIds
-          : selectedReportIds // ignore: cast_nullable_to_non_nullable
-              as Set<String>,
-      isSelectionMode: null == isSelectionMode
-          ? _value.isSelectionMode
-          : isSelectionMode // ignore: cast_nullable_to_non_nullable
-              as bool,
-    ) as $Val);
+    return _then(
+      _value.copyWith(
+            reports: null == reports
+                ? _value.reports
+                : reports // ignore: cast_nullable_to_non_nullable
+                      as List<AcousticReport>,
+            isLoading: null == isLoading
+                ? _value.isLoading
+                : isLoading // ignore: cast_nullable_to_non_nullable
+                      as bool,
+            filterPreset: freezed == filterPreset
+                ? _value.filterPreset
+                : filterPreset // ignore: cast_nullable_to_non_nullable
+                      as RecordingPreset?,
+            selectedReportIds: null == selectedReportIds
+                ? _value.selectedReportIds
+                : selectedReportIds // ignore: cast_nullable_to_non_nullable
+                      as Set<String>,
+            isSelectionMode: null == isSelectionMode
+                ? _value.isSelectionMode
+                : isSelectionMode // ignore: cast_nullable_to_non_nullable
+                      as bool,
+          )
+          as $Val,
+    );
   }
 }
 
@@ -90,28 +98,32 @@ class _$AcousticReportsListStateCopyWithImpl<$Res,
 abstract class _$$AcousticReportsListStateImplCopyWith<$Res>
     implements $AcousticReportsListStateCopyWith<$Res> {
   factory _$$AcousticReportsListStateImplCopyWith(
-          _$AcousticReportsListStateImpl value,
-          $Res Function(_$AcousticReportsListStateImpl) then) =
-      __$$AcousticReportsListStateImplCopyWithImpl<$Res>;
+    _$AcousticReportsListStateImpl value,
+    $Res Function(_$AcousticReportsListStateImpl) then,
+  ) = __$$AcousticReportsListStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {List<AcousticReport> reports,
-      bool isLoading,
-      RecordingPreset? filterPreset,
-      Set<String> selectedReportIds,
-      bool isSelectionMode});
+  $Res call({
+    List<AcousticReport> reports,
+    bool isLoading,
+    RecordingPreset? filterPreset,
+    Set<String> selectedReportIds,
+    bool isSelectionMode,
+  });
 }
 
 /// @nodoc
 class __$$AcousticReportsListStateImplCopyWithImpl<$Res>
-    extends _$AcousticReportsListStateCopyWithImpl<$Res,
-        _$AcousticReportsListStateImpl>
+    extends
+        _$AcousticReportsListStateCopyWithImpl<
+          $Res,
+          _$AcousticReportsListStateImpl
+        >
     implements _$$AcousticReportsListStateImplCopyWith<$Res> {
   __$$AcousticReportsListStateImplCopyWithImpl(
-      _$AcousticReportsListStateImpl _value,
-      $Res Function(_$AcousticReportsListStateImpl) _then)
-      : super(_value, _then);
+    _$AcousticReportsListStateImpl _value,
+    $Res Function(_$AcousticReportsListStateImpl) _then,
+  ) : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
@@ -122,28 +134,30 @@ class __$$AcousticReportsListStateImplCopyWithImpl<$Res>
     Object? selectedReportIds = null,
     Object? isSelectionMode = null,
   }) {
-    return _then(_$AcousticReportsListStateImpl(
-      reports: null == reports
-          ? _value._reports
-          : reports // ignore: cast_nullable_to_non_nullable
-              as List<AcousticReport>,
-      isLoading: null == isLoading
-          ? _value.isLoading
-          : isLoading // ignore: cast_nullable_to_non_nullable
-              as bool,
-      filterPreset: freezed == filterPreset
-          ? _value.filterPreset
-          : filterPreset // ignore: cast_nullable_to_non_nullable
-              as RecordingPreset?,
-      selectedReportIds: null == selectedReportIds
-          ? _value._selectedReportIds
-          : selectedReportIds // ignore: cast_nullable_to_non_nullable
-              as Set<String>,
-      isSelectionMode: null == isSelectionMode
-          ? _value.isSelectionMode
-          : isSelectionMode // ignore: cast_nullable_to_non_nullable
-              as bool,
-    ));
+    return _then(
+      _$AcousticReportsListStateImpl(
+        reports: null == reports
+            ? _value._reports
+            : reports // ignore: cast_nullable_to_non_nullable
+                  as List<AcousticReport>,
+        isLoading: null == isLoading
+            ? _value.isLoading
+            : isLoading // ignore: cast_nullable_to_non_nullable
+                  as bool,
+        filterPreset: freezed == filterPreset
+            ? _value.filterPreset
+            : filterPreset // ignore: cast_nullable_to_non_nullable
+                  as RecordingPreset?,
+        selectedReportIds: null == selectedReportIds
+            ? _value._selectedReportIds
+            : selectedReportIds // ignore: cast_nullable_to_non_nullable
+                  as Set<String>,
+        isSelectionMode: null == isSelectionMode
+            ? _value.isSelectionMode
+            : isSelectionMode // ignore: cast_nullable_to_non_nullable
+                  as bool,
+      ),
+    );
   }
 }
 
@@ -151,15 +165,15 @@ class __$$AcousticReportsListStateImplCopyWithImpl<$Res>
 
 class _$AcousticReportsListStateImpl extends _AcousticReportsListState
     with DiagnosticableTreeMixin {
-  const _$AcousticReportsListStateImpl(
-      {final List<AcousticReport> reports = const [],
-      this.isLoading = true,
-      this.filterPreset,
-      final Set<String> selectedReportIds = const {},
-      this.isSelectionMode = false})
-      : _reports = reports,
-        _selectedReportIds = selectedReportIds,
-        super._();
+  const _$AcousticReportsListStateImpl({
+    final List<AcousticReport> reports = const [],
+    this.isLoading = true,
+    this.filterPreset,
+    final Set<String> selectedReportIds = const {},
+    this.isSelectionMode = false,
+  }) : _reports = reports,
+       _selectedReportIds = selectedReportIds,
+       super._();
 
   final List<AcousticReport> _reports;
   @override
@@ -216,36 +230,42 @@ class _$AcousticReportsListStateImpl extends _AcousticReportsListState
                 other.isLoading == isLoading) &&
             (identical(other.filterPreset, filterPreset) ||
                 other.filterPreset == filterPreset) &&
-            const DeepCollectionEquality()
-                .equals(other._selectedReportIds, _selectedReportIds) &&
+            const DeepCollectionEquality().equals(
+              other._selectedReportIds,
+              _selectedReportIds,
+            ) &&
             (identical(other.isSelectionMode, isSelectionMode) ||
                 other.isSelectionMode == isSelectionMode));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(_reports),
-      isLoading,
-      filterPreset,
-      const DeepCollectionEquality().hash(_selectedReportIds),
-      isSelectionMode);
+    runtimeType,
+    const DeepCollectionEquality().hash(_reports),
+    isLoading,
+    filterPreset,
+    const DeepCollectionEquality().hash(_selectedReportIds),
+    isSelectionMode,
+  );
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$AcousticReportsListStateImplCopyWith<_$AcousticReportsListStateImpl>
-      get copyWith => __$$AcousticReportsListStateImplCopyWithImpl<
-          _$AcousticReportsListStateImpl>(this, _$identity);
+  get copyWith =>
+      __$$AcousticReportsListStateImplCopyWithImpl<
+        _$AcousticReportsListStateImpl
+      >(this, _$identity);
 }
 
 abstract class _AcousticReportsListState extends AcousticReportsListState {
-  const factory _AcousticReportsListState(
-      {final List<AcousticReport> reports,
-      final bool isLoading,
-      final RecordingPreset? filterPreset,
-      final Set<String> selectedReportIds,
-      final bool isSelectionMode}) = _$AcousticReportsListStateImpl;
+  const factory _AcousticReportsListState({
+    final List<AcousticReport> reports,
+    final bool isLoading,
+    final RecordingPreset? filterPreset,
+    final Set<String> selectedReportIds,
+    final bool isSelectionMode,
+  }) = _$AcousticReportsListStateImpl;
   const _AcousticReportsListState._() : super._();
 
   @override
@@ -261,5 +281,5 @@ abstract class _AcousticReportsListState extends AcousticReportsListState {
   @override
   @JsonKey(ignore: true)
   _$$AcousticReportsListStateImplCopyWith<_$AcousticReportsListStateImpl>
-      get copyWith => throw _privateConstructorUsedError;
+  get copyWith => throw _privateConstructorUsedError;
 }

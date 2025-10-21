@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sensorlab/l10n/app_localizations.dart';
 
 extension ContextExtensions on BuildContext {
   // Theme shortcuts
@@ -31,7 +32,13 @@ extension ContextExtensions on BuildContext {
         title: Text(title),
         content: Text(content),
         actions:
-            actions ?? [TextButton(onPressed: pop, child: const Text('OK'))],
+            actions ??
+            [
+              TextButton(
+                onPressed: pop,
+                child: Text(AppLocalizations.of(this)?.actionOk ?? 'OK'),
+              ),
+            ],
       ),
     );
   }

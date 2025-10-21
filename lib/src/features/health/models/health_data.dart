@@ -1,5 +1,3 @@
-import 'package:sensors_plus/sensors_plus.dart';
-
 import '../domain/entities/activity_session.dart';
 import '../domain/entities/activity_type.dart';
 import '../domain/entities/user_profile.dart' as domain;
@@ -219,17 +217,12 @@ class HealthData {
   // Progress calculations
   double get stepsProgress =>
       targetSteps > 0 ? (steps / targetSteps).clamp(0.0, 1.0) : 0.0;
-  double get caloriesProgress =>
-      targetCalories > 0
-          ? (caloriesBurned / targetCalories).clamp(0.0, 1.0)
-          : 0.0;
-  double get durationProgress =>
-      targetDuration.inSeconds > 0
-          ? (totalActiveTime.inSeconds / targetDuration.inSeconds).clamp(
-            0.0,
-            1.0,
-          )
-          : 0.0;
+  double get caloriesProgress => targetCalories > 0
+      ? (caloriesBurned / targetCalories).clamp(0.0, 1.0)
+      : 0.0;
+  double get durationProgress => targetDuration.inSeconds > 0
+      ? (totalActiveTime.inSeconds / targetDuration.inSeconds).clamp(0.0, 1.0)
+      : 0.0;
 
   // Status indicators
   String get sessionStateIcon => sessionState.icon;

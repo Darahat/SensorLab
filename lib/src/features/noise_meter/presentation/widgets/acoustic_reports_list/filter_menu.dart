@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:sensorlab/l10n/app_localizations.dart';
 import 'package:sensorlab/src/features/noise_meter/domain/entities/acoustic_report_entity.dart';
 
 class FilterMenu extends StatelessWidget {
@@ -9,18 +10,27 @@ class FilterMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return PopupMenuButton<RecordingPreset?>(
       icon: const Icon(Iconsax.filter),
-      tooltip: 'Filter by Preset',
+      tooltip: l10n.reportFilterByPreset,
       onSelected: onFilterSelected,
       itemBuilder: (context) => [
-        const PopupMenuItem(value: null, child: Text('All Presets')),
+        PopupMenuItem(child: Text(l10n.allPresets)),
         const PopupMenuDivider(),
-        _buildPresetMenuItem(RecordingPreset.sleep, 'Sleep', Iconsax.moon),
-        _buildPresetMenuItem(RecordingPreset.work, 'Work', Iconsax.briefcase),
+        _buildPresetMenuItem(
+          RecordingPreset.sleep,
+          l10n.presetSleep,
+          Iconsax.moon,
+        ),
+        _buildPresetMenuItem(
+          RecordingPreset.work,
+          l10n.presetWork,
+          Iconsax.briefcase,
+        ),
         _buildPresetMenuItem(
           RecordingPreset.focus,
-          'Focus',
+          l10n.presetFocus,
           Iconsax.lamp_charge,
         ),
       ],

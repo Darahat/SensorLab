@@ -3,7 +3,6 @@ import 'package:sensorlab/src/core/services/hive_service.dart';
 import 'package:sensorlab/src/features/noise_meter/data/models/acoustic_report_hive.dart';
 import 'package:sensorlab/src/features/noise_meter/domain/entities/acoustic_report_entity.dart';
 
-
 /// Service for managing acoustic reports in Hive database.
 ///
 /// This service should only be concerned with persisting and retrieving the
@@ -55,9 +54,13 @@ class AcousticReportService {
 
   /// Get average quality score from all reports
   static double get averageQualityScore {
-    if (_box.isEmpty) return 0;
-    final sum =
-        _box.values.fold<double>(0, (sum, r) => sum + r.toEntity().qualityScore);
+    if (_box.isEmpty) {
+      return 0;
+    }
+    final sum = _box.values.fold<double>(
+      0,
+      (sum, r) => sum + r.toEntity().qualityScore,
+    );
     return sum / _box.length;
   }
 

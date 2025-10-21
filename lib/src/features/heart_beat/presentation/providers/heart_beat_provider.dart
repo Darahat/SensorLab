@@ -256,7 +256,7 @@ class HeartBeatNotifier extends StateNotifier<HeartBeatData> {
   }
 
   List<int> _findValidPeaks(double threshold) {
-    List<int> peaks = [];
+    final List<int> peaks = [];
     for (int i = 1; i < state.samples.length - 1; i++) {
       if (state.samples[i] > state.samples[i - 1] + threshold &&
           state.samples[i] > state.samples[i + 1] + threshold) {

@@ -48,11 +48,7 @@ class BarometerData {
   BarometerData resetStats() {
     return BarometerData(
       pressure: pressure,
-      maxPressure: 0,
-      minPressure: double.infinity,
-      avgPressure: 0,
       isActive: isActive,
-      sampleCount: 0,
       timestamp: timestamp,
     );
   }

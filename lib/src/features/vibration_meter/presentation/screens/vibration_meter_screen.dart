@@ -206,7 +206,7 @@ class VibrationMeterScreen extends ConsumerWidget {
     VibrationData data,
     AppLocalizations l10n,
   ) {
-    final levels = VibrationLevel.values;
+    const levels = VibrationLevel.values;
     final currentIndex = levels.indexOf(data.level);
 
     return Container(
@@ -316,7 +316,6 @@ class VibrationMeterScreen extends ConsumerWidget {
             child: LineChart(
               LineChartData(
                 gridData: FlGridData(
-                  show: true,
                   drawVerticalLine: false,
                   horizontalInterval: 0.5,
                   getDrawingHorizontalLine: (value) {
@@ -326,7 +325,7 @@ class VibrationMeterScreen extends ConsumerWidget {
                     );
                   },
                 ),
-                titlesData: FlTitlesData(show: false),
+                titlesData: const FlTitlesData(show: false),
                 borderData: FlBorderData(show: false),
                 minY: 0,
                 maxY: data.maxMagnitude > 0 ? data.maxMagnitude * 1.2 : 1,
@@ -339,9 +338,8 @@ class VibrationMeterScreen extends ConsumerWidget {
                         .toList(),
                     isCurved: true,
                     color: _getLevelColor(data.level),
-                    barWidth: 2,
                     isStrokeCapRound: true,
-                    dotData: FlDotData(show: false),
+                    dotData: const FlDotData(show: false),
                     belowBarData: BarAreaData(
                       show: true,
                       color: _getLevelColor(data.level).withOpacity(0.2),
@@ -492,7 +490,7 @@ class VibrationMeterScreen extends ConsumerWidget {
     double magnitude,
     Color color,
   ) {
-    final maxAccel = 20.0; // Max expected acceleration
+    const maxAccel = 20.0; // Max expected acceleration
     final percentage = (magnitude / maxAccel).clamp(0.0, 1.0);
 
     return Row(
@@ -611,7 +609,7 @@ class VibrationMeterScreen extends ConsumerWidget {
             ),
             child: Row(
               children: [
-                Icon(Iconsax.info_circle, size: 16, color: Colors.blue),
+                const Icon(Iconsax.info_circle, size: 16, color: Colors.blue),
                 const SizedBox(width: 8),
                 Expanded(
                   child: Text(

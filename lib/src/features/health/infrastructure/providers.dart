@@ -10,7 +10,9 @@ final userProfileRepositoryProvider = Provider<UserProfileRepository>((ref) {
   return UserProfileRepositoryImpl(hiveService.userProfileBox);
 });
 
-final activitySessionRepositoryProvider = Provider<ActivitySessionRepository>((ref) {
+final activitySessionRepositoryProvider = Provider<ActivitySessionRepository>((
+  ref,
+) {
   final hiveService = ref.watch(hiveServiceProvider);
   return ActivitySessionRepositoryImpl(hiveService.activitySessionBox);
 });

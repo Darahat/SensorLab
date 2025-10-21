@@ -16,52 +16,54 @@ class ScanResultScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
 
-    return Builder(builder: (context) {
-      final l10n = AppLocalizations.of(context)!;
-      return Scaffold(
-        appBar: AppBar(
-          title: Text('${result.scanType.displayName} ${l10n.scanResult}'),
-          actions: [
-            IconButton(
-              icon: const Icon(Iconsax.copy),
-              onPressed: () => _copyToClipboard(context, l10n),
-            ),
-            IconButton(
-              icon: const Icon(Iconsax.share),
-              onPressed: () => _shareResult(context, l10n),
-            ),
-          ],
-        ),
-        body: SingleChildScrollView(
-          padding: const EdgeInsets.all(24),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Header card
-              _buildHeaderCard(colorScheme, l10n),
-              const SizedBox(height: 24),
-
-              // Content card
-              _buildContentCard(colorScheme, l10n),
-              const SizedBox(height: 24),
-
-              // Actions card (if actionable)
-              if (result.isActionable) ...[
-                _buildActionsCard(colorScheme, context, l10n),
-                const SizedBox(height: 24),
-              ],
-
-              // Technical details card
-              _buildTechnicalCard(colorScheme, l10n),
-              const SizedBox(height: 32),
-
-              // Action buttons
-              _buildActionButtons(context, colorScheme, l10n),
+    return Builder(
+      builder: (context) {
+        final l10n = AppLocalizations.of(context)!;
+        return Scaffold(
+          appBar: AppBar(
+            title: Text('${result.scanType.displayName} ${l10n.scanResult}'),
+            actions: [
+              IconButton(
+                icon: const Icon(Iconsax.copy),
+                onPressed: () => _copyToClipboard(context, l10n),
+              ),
+              IconButton(
+                icon: const Icon(Iconsax.share),
+                onPressed: () => _shareResult(context, l10n),
+              ),
             ],
           ),
-        ),
-      );
-    });
+          body: SingleChildScrollView(
+            padding: const EdgeInsets.all(24),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Header card
+                _buildHeaderCard(colorScheme, l10n),
+                const SizedBox(height: 24),
+
+                // Content card
+                _buildContentCard(colorScheme, l10n),
+                const SizedBox(height: 24),
+
+                // Actions card (if actionable)
+                if (result.isActionable) ...[
+                  _buildActionsCard(colorScheme, context, l10n),
+                  const SizedBox(height: 24),
+                ],
+
+                // Technical details card
+                _buildTechnicalCard(colorScheme, l10n),
+                const SizedBox(height: 32),
+
+                // Action buttons
+                _buildActionButtons(context, colorScheme, l10n),
+              ],
+            ),
+          ),
+        );
+      },
+    );
   }
 
   Widget _buildHeaderCard(ColorScheme colorScheme, AppLocalizations l10n) {
@@ -139,7 +141,10 @@ class ScanResultScreen extends StatelessWidget {
                 const SizedBox(width: 8),
                 Text(
                   l10n.content,
-                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  style: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ],
             ),
@@ -166,17 +171,16 @@ class ScanResultScreen extends StatelessWidget {
             else
               // Structured content display
               Column(
-                children:
-                    parsedContent.entries.map((entry) {
-                      return Padding(
-                        padding: const EdgeInsets.only(bottom: 12),
-                        child: _buildContentRow(
-                          entry.key,
-                          entry.value,
-                          colorScheme,
-                        ),
-                      );
-                    }).toList(),
+                children: parsedContent.entries.map((entry) {
+                  return Padding(
+                    padding: const EdgeInsets.only(bottom: 12),
+                    child: _buildContentRow(
+                      entry.key,
+                      entry.value,
+                      colorScheme,
+                    ),
+                  );
+                }).toList(),
               ),
           ],
         ),
@@ -217,7 +221,11 @@ class ScanResultScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildActionsCard(ColorScheme colorScheme, BuildContext context, AppLocalizations l10n) {
+  Widget _buildActionsCard(
+    ColorScheme colorScheme,
+    BuildContext context,
+    AppLocalizations l10n,
+  ) {
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(20),
@@ -234,7 +242,10 @@ class ScanResultScreen extends StatelessWidget {
                 const SizedBox(width: 8),
                 Text(
                   l10n.quickActions,
-                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  style: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ],
             ),
@@ -270,7 +281,10 @@ class ScanResultScreen extends StatelessWidget {
                 const SizedBox(width: 8),
                 Text(
                   l10n.technicalDetails,
-                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  style: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ],
             ),
@@ -333,7 +347,11 @@ class ScanResultScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildActionButtons(BuildContext context, ColorScheme colorScheme, AppLocalizations l10n) {
+  Widget _buildActionButtons(
+    BuildContext context,
+    ColorScheme colorScheme,
+    AppLocalizations l10n,
+  ) {
     return Column(
       children: [
         Row(

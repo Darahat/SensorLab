@@ -3836,6 +3836,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Reports deleted'**
   String get reportsDeleted;
+
+  /// No description provided for @presetDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Preset Details'**
+  String get presetDetails;
+
+  /// No description provided for @mustBeAtLeast3Chars.
+  ///
+  /// In en, this message translates to:
+  /// **'Must be at least 3 characters'**
+  String get mustBeAtLeast3Chars;
+
+  /// No description provided for @mustBeAtLeast10Chars.
+  ///
+  /// In en, this message translates to:
+  /// **'Must be at least 10 characters'**
+  String get mustBeAtLeast10Chars;
+
+  /// No description provided for @chooseIcon.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose Icon'**
+  String get chooseIcon;
+
+  /// No description provided for @chooseColor.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose Color'**
+  String get chooseColor;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

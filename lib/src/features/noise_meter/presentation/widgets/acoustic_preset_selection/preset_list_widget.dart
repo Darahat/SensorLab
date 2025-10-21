@@ -203,12 +203,14 @@ class PresetListWidget extends StatelessWidget {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Delete Preset?'),
-        content: Text('Delete "$presetTitle"? This cannot be undone.'),
+        title: Text(AppLocalizations.of(context)!.deletePreset),
+        content: Text(
+          AppLocalizations.of(context)!.deletePresetMessage(presetTitle),
+        ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('CANCEL'),
+            child: Text(AppLocalizations.of(context)!.cancel),
           ),
           ElevatedButton(
             onPressed: () {
@@ -219,7 +221,7 @@ class PresetListWidget extends StatelessWidget {
               backgroundColor: Colors.red,
               foregroundColor: Colors.white,
             ),
-            child: const Text('DELETE'),
+            child: Text(AppLocalizations.of(context)!.delete),
           ),
         ],
       ),

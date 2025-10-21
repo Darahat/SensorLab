@@ -1928,4 +1928,19 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get reportsDeleted => 'レポートが削除されました';
+
+  @override
+  String get presetDetails => 'プリセット詳細';
+
+  @override
+  String get mustBeAtLeast3Chars => '3文字以上で入力してください';
+
+  @override
+  String get mustBeAtLeast10Chars => '10文字以上で入力してください';
+
+  @override
+  String get chooseIcon => 'アイコンを選択';
+
+  @override
+  String get chooseColor => '色を選択';
 }

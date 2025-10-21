@@ -808,5 +808,10 @@
   },
   "deleteReportsQuestion": "Delete Reports?",
   "deleteReportsConfirmMessage": "Are you sure you want to delete the selected report(s)? This action cannot be undone.",
-  "reportsDeleted": "Reports deleted"
+  "reportsDeleted": "Reports deleted",
+  "presetDetails": "Preset Details",
+  "mustBeAtLeast3Chars": "Must be at least 3 characters",
+  "mustBeAtLeast10Chars": "Must be at least 10 characters",
+  "chooseIcon": "Choose Icon",
+  "chooseColor": "Choose Color"
 }

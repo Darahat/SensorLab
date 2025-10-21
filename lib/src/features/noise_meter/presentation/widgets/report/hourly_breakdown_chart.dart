@@ -13,10 +13,18 @@ class HourlyBreakdownChart extends StatelessWidget {
   });
 
   Color _getBarColor(double value) {
-    if (value < 30) return Colors.blue;
-    if (value < 50) return Colors.green;
-    if (value < 70) return Colors.orange;
-    if (value < 85) return Colors.deepOrange;
+    if (value < 30) {
+      return Colors.blue;
+    }
+    if (value < 50) {
+      return Colors.green;
+    }
+    if (value < 70) {
+      return Colors.orange;
+    }
+    if (value < 85) {
+      return Colors.deepOrange;
+    }
     return Colors.red;
   }
 
@@ -60,18 +68,14 @@ class HourlyBreakdownChart extends StatelessWidget {
                     ),
                   ),
                   titlesData: FlTitlesData(
-                    show: true,
-                    rightTitles: const AxisTitles(
-                      sideTitles: SideTitles(showTitles: false),
-                    ),
-                    topTitles: const AxisTitles(
-                      sideTitles: SideTitles(showTitles: false),
-                    ),
+                    rightTitles: const AxisTitles(),
+                    topTitles: const AxisTitles(),
                     bottomTitles: AxisTitles(
                       sideTitles: SideTitles(
-                        showTitles: true,
                         getTitlesWidget: (value, meta) {
-                          if (value.toInt() % 2 != 0) return const SizedBox();
+                          if (value.toInt() % 2 != 0) {
+                            return const SizedBox();
+                          }
                           return Padding(
                             padding: const EdgeInsets.only(top: 8),
                             child: Text(
@@ -86,7 +90,6 @@ class HourlyBreakdownChart extends StatelessWidget {
                     ),
                     leftTitles: AxisTitles(
                       sideTitles: SideTitles(
-                        showTitles: true,
                         reservedSize: 40,
                         getTitlesWidget: (value, meta) {
                           return Text(
@@ -101,7 +104,6 @@ class HourlyBreakdownChart extends StatelessWidget {
                   ),
                   borderData: FlBorderData(show: false),
                   gridData: FlGridData(
-                    show: true,
                     drawVerticalLine: false,
                     horizontalInterval: 20,
                     getDrawingHorizontalLine: (value) {

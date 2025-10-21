@@ -39,15 +39,14 @@ class SensorSearchDelegate extends SearchDelegate {
   }
 
   Widget _buildSearchResults() {
-    final results =
-        query.isEmpty
-            ? sensors
-            : sensors
-                .where(
-                  (sensor) =>
-                      sensor.label.toLowerCase().contains(query.toLowerCase()),
-                )
-                .toList();
+    final results = query.isEmpty
+        ? sensors
+        : sensors
+              .where(
+                (sensor) =>
+                    sensor.label.toLowerCase().contains(query.toLowerCase()),
+              )
+              .toList();
 
     return ListView.builder(
       itemCount: results.length,

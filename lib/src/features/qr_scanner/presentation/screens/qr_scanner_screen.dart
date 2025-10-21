@@ -83,14 +83,12 @@ class _QRScannerScreenState extends State<QRScannerScreen> {
               child: Container(
                 width: 50,
                 height: 50,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   border: Border(
                     top: BorderSide(color: Colors.green, width: 4),
                     left: BorderSide(color: Colors.green, width: 4),
                   ),
-                  borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(12),
-                  ),
+                  borderRadius: BorderRadius.only(topLeft: Radius.circular(12)),
                 ),
               ),
             ),
@@ -100,12 +98,12 @@ class _QRScannerScreenState extends State<QRScannerScreen> {
               child: Container(
                 width: 50,
                 height: 50,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   border: Border(
                     top: BorderSide(color: Colors.green, width: 4),
                     right: BorderSide(color: Colors.green, width: 4),
                   ),
-                  borderRadius: const BorderRadius.only(
+                  borderRadius: BorderRadius.only(
                     topRight: Radius.circular(12),
                   ),
                 ),
@@ -117,12 +115,12 @@ class _QRScannerScreenState extends State<QRScannerScreen> {
               child: Container(
                 width: 50,
                 height: 50,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   border: Border(
                     bottom: BorderSide(color: Colors.green, width: 4),
                     left: BorderSide(color: Colors.green, width: 4),
                   ),
-                  borderRadius: const BorderRadius.only(
+                  borderRadius: BorderRadius.only(
                     bottomLeft: Radius.circular(12),
                   ),
                 ),
@@ -134,12 +132,12 @@ class _QRScannerScreenState extends State<QRScannerScreen> {
               child: Container(
                 width: 50,
                 height: 50,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   border: Border(
                     bottom: BorderSide(color: Colors.green, width: 4),
                     right: BorderSide(color: Colors.green, width: 4),
                   ),
-                  borderRadius: const BorderRadius.only(
+                  borderRadius: BorderRadius.only(
                     bottomRight: Radius.circular(12),
                   ),
                 ),
@@ -154,7 +152,7 @@ class _QRScannerScreenState extends State<QRScannerScreen> {
                 child: Container(
                   height: 2,
                   decoration: BoxDecoration(
-                    gradient: LinearGradient(
+                    gradient: const LinearGradient(
                       colors: [
                         Colors.transparent,
                         Colors.green,

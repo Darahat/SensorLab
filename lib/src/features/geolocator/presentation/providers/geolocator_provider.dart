@@ -28,7 +28,7 @@ class GeolocatorProvider extends StateNotifier<GeolocatorData> {
 
   // Initialize location services
   Future<void> initialize() async {
-    state = state.copyWith(isInitialized: false, errorMessage: null);
+    state = state.copyWith(isInitialized: false);
 
     try {
       // Check if location services are enabled
@@ -60,10 +60,7 @@ class GeolocatorProvider extends StateNotifier<GeolocatorData> {
   Future<void> requestPermission() async {
     try {
       final permission = await Geolocator.requestPermission();
-      state = state.copyWith(
-        permissionStatus: _mapPermission(permission),
-        errorMessage: null,
-      );
+      state = state.copyWith(permissionStatus: _mapPermission(permission));
 
       // Try to get location if permission granted
       if (state.permissionStatus.isGranted) {
@@ -92,12 +89,12 @@ class GeolocatorProvider extends StateNotifier<GeolocatorData> {
       return;
     }
 
-    state = state.copyWith(isLoadingLocation: true, errorMessage: null);
+    state = state.copyWith(isLoadingLocation: true);
 
     try {
       final position = await Geolocator.getCurrentPosition(
         desiredAccuracy: state.desiredAccuracy,
-        timeLimit: Duration(seconds: 30),
+        timeLimit: const Duration(seconds: 30),
       );
 
       final locationData = LocationData.fromPosition(position);
@@ -131,29 +128,29 @@ class GeolocatorProvider extends StateNotifier<GeolocatorData> {
       final locationSettings = LocationSettings(
         accuracy: state.desiredAccuracy,
         distanceFilter: state.distanceFilter,
-        timeLimit: Duration(seconds: 30),
+        timeLimit: const Duration(seconds: 30),
       );
 
-      _positionSubscription = Geolocator.getPositionStream(
-        locationSettings: locationSettings,
-      ).listen(
-        _handleLocationUpdate,
-        onError: (error) {
-          state = state.copyWith(
-            errorMessage: 'Location tracking error: $error',
+      _positionSubscription =
+          Geolocator.getPositionStream(
+            locationSettings: locationSettings,
+          ).listen(
+            _handleLocationUpdate,
+            onError: (error) {
+              state = state.copyWith(
+                errorMessage: 'Location tracking error: $error',
+              );
+            },
           );
-        },
-      );
 
       // Start tracking timer
-      _trackingTimer = Timer.periodic(Duration(seconds: 1), (_) {
+      _trackingTimer = Timer.periodic(const Duration(seconds: 1), (_) {
         _updateTrackingDuration();
       });
 
       state = state.copyWith(
         isTracking: true,
         sessionStartTime: DateTime.now(),
-        errorMessage: null,
       );
     } catch (e) {
       state = state.copyWith(errorMessage: 'Failed to start tracking: $e');
@@ -269,7 +266,7 @@ class GeolocatorProvider extends StateNotifier<GeolocatorData> {
 
     // Update address every 30 seconds or if moved significantly
     final timeSinceLastUpdate = DateTime.now().difference(_lastLocationUpdate!);
-    return timeSinceLastUpdate > Duration(seconds: 30);
+    return timeSinceLastUpdate > const Duration(seconds: 30);
   }
 
   Future<void> _getAddressForLocation(LocationData location) async {
@@ -408,7 +405,6 @@ class GeolocatorProvider extends StateNotifier<GeolocatorData> {
       state = state.copyWith(
         isServiceEnabled: serviceEnabled,
         permissionStatus: _mapPermission(permission),
-        errorMessage: null,
       );
     } catch (e) {
       state = state.copyWith(errorMessage: 'Failed to refresh status: $e');

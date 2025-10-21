@@ -16,7 +16,7 @@ class FilterMenu extends StatelessWidget {
       tooltip: 'Filter by Preset',
       onSelected: onFilterSelected,
       itemBuilder: (context) => [
-        const PopupMenuItem(value: null, child: Text('All Presets')),
+        const PopupMenuItem(child: Text('All Presets')),
         const PopupMenuDivider(),
         _buildPresetMenuItem(RecordingPreset.sleep),
         _buildPresetMenuItem(RecordingPreset.work),

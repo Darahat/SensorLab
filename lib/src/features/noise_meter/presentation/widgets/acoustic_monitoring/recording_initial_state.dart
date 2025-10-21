@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:sensorlab/l10n/app_localizations.dart';
+import 'package:sensorlab/src/features/noise_meter/application/services/monitoring_service.dart';
 import 'package:sensorlab/src/features/noise_meter/domain/entities/acoustic_report_entity.dart';
 import 'package:sensorlab/src/features/noise_meter/presentation/models/custom_preset_config.dart';
-import 'package:sensorlab/src/features/noise_meter/services/monitoring_service.dart';
 import 'package:sensorlab/src/features/noise_meter/utils/monitoring_formatters.dart';
 
 class RecordingInitialState extends StatelessWidget {

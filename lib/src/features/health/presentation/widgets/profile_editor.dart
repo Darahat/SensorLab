@@ -185,7 +185,6 @@ class _ProfileEditorState extends ConsumerState<ProfileEditor> {
                   border: Border(
                     top: BorderSide(
                       color: colorScheme.outline.withOpacity(0.2),
-                      width: 1,
                     ),
                   ),
                 ),
@@ -346,13 +345,10 @@ class _ProfileEditorState extends ConsumerState<ProfileEditor> {
         width: 120,
         child: TextFormField(
           controller: _weightController,
-          decoration: InputDecoration(
+          decoration: const InputDecoration(
             hintText: 'kg',
-            border: const OutlineInputBorder(),
-            contentPadding: const EdgeInsets.symmetric(
-              horizontal: 12,
-              vertical: 8,
-            ),
+            border: OutlineInputBorder(),
+            contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
           ),
           keyboardType: TextInputType.number,
           validator: (value) {
@@ -378,13 +374,10 @@ class _ProfileEditorState extends ConsumerState<ProfileEditor> {
         width: 120,
         child: TextFormField(
           controller: _heightController,
-          decoration: InputDecoration(
+          decoration: const InputDecoration(
             hintText: 'cm',
-            border: const OutlineInputBorder(),
-            contentPadding: const EdgeInsets.symmetric(
-              horizontal: 12,
-              vertical: 8,
-            ),
+            border: OutlineInputBorder(),
+            contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
           ),
           keyboardType: TextInputType.number,
           validator: (value) {

@@ -72,18 +72,18 @@ class AppSettingsAdapter extends TypeAdapter<AppSettings> {
 // **************************************************************************
 
 AppSettings _$AppSettingsFromJson(Map<String, dynamic> json) => AppSettings(
-      themeMode: json['theme_mode'] as String? ?? 'system',
-      notificationsEnabled: json['notifications_enabled'] as bool? ?? true,
-      vibrationEnabled: json['vibration_enabled'] as bool? ?? true,
-      soundEnabled: json['sound_enabled'] as bool? ?? true,
-      autoScanEnabled: json['auto_scan_enabled'] as bool? ?? false,
-      sensorUpdateFrequency:
-          (json['sensor_update_frequency'] as num?)?.toInt() ?? 100,
-      languageCode: json['language_code'] as String? ?? 'en',
-      dataCollectionEnabled: json['data_collection_enabled'] as bool? ?? false,
-      adsEnabled: json['ads_enabled'] as bool? ?? true,
-      privacyMode: json['privacy_mode'] as bool? ?? false,
-    );
+  themeMode: json['theme_mode'] as String? ?? 'system',
+  notificationsEnabled: json['notifications_enabled'] as bool? ?? true,
+  vibrationEnabled: json['vibration_enabled'] as bool? ?? true,
+  soundEnabled: json['sound_enabled'] as bool? ?? true,
+  autoScanEnabled: json['auto_scan_enabled'] as bool? ?? false,
+  sensorUpdateFrequency:
+      (json['sensor_update_frequency'] as num?)?.toInt() ?? 100,
+  languageCode: json['language_code'] as String? ?? 'en',
+  dataCollectionEnabled: json['data_collection_enabled'] as bool? ?? false,
+  adsEnabled: json['ads_enabled'] as bool? ?? true,
+  privacyMode: json['privacy_mode'] as bool? ?? false,
+);
 
 Map<String, dynamic> _$AppSettingsToJson(AppSettings instance) =>
     <String, dynamic>{

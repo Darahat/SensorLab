@@ -96,7 +96,6 @@ class _SpeedMeterScreenState extends ConsumerState<SpeedMeterScreen> {
                       color: speedData.isActive
                           ? colorScheme.primary
                           : colorScheme.outline.withOpacity(0.3),
-                      width: 1,
                     ),
                   ),
                   child: Text(

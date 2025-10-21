@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:sensorlab/l10n/app_localizations.dart';
+import 'package:sensorlab/src/features/noise_meter/application/notifiers/enhanced_noise_meter_notifier.dart';
+import 'package:sensorlab/src/features/noise_meter/application/state/enhanced_noise_data.dart';
 import 'package:sensorlab/src/features/noise_meter/domain/entities/acoustic_report_entity.dart';
-import 'package:sensorlab/src/features/noise_meter/presentation/providers/enhanced_noise_meter_provider.dart';
-
-import '../../state/enhanced_noise_data.dart';
 
 class NoiseMeterPermissionSection extends StatelessWidget {
   final EnhancedNoiseMeterData data;
@@ -19,7 +18,9 @@ class NoiseMeterPermissionSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (data.hasPermission) return const SizedBox.shrink();
+    if (data.hasPermission) {
+      return const SizedBox.shrink();
+    }
 
     return Card(
       color: Colors.orange.shade100,
@@ -34,10 +35,7 @@ class NoiseMeterPermissionSection extends StatelessWidget {
               style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 8),
-            const Text(
-              'Grant microphone permission to measure noise levels',
-              textAlign: TextAlign.center,
-            ),
+            Text(l10n.grantMicrophonePermission, textAlign: TextAlign.center),
             const SizedBox(height: 16),
             ElevatedButton(
               onPressed: () =>

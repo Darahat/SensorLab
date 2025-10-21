@@ -364,8 +364,9 @@ class GeolocatorData {
   String get statusDescription {
     if (!isInitialized) return 'Initializing...';
     if (!isServiceEnabled) return 'Location Service Disabled';
-    if (!permissionStatus.isGranted)
+    if (!permissionStatus.isGranted) {
       return 'Permission ${permissionStatus.displayName}';
+    }
     if (isTracking) return 'Tracking Location';
     if (currentLocation != null) return 'Location Available';
     return 'No Location Data';
@@ -373,8 +374,9 @@ class GeolocatorData {
 
   int get statusColor {
     if (!isInitialized || isLoadingLocation) return 0xFF2196F3; // Blue
-    if (!isServiceEnabled || !permissionStatus.isGranted)
+    if (!isServiceEnabled || !permissionStatus.isGranted) {
       return 0xFFF44336; // Red
+    }
     if (isTracking) return 0xFF4CAF50; // Green
     if (currentLocation != null) return 0xFF8BC34A; // Light Green
     return 0xFFFF9800; // Orange

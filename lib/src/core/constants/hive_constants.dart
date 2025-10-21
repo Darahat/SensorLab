@@ -12,35 +12,35 @@ class HiveConstants {
   static const String settingsBoxName = 'settings';
 
   /// table for user information saving and authentication
-  static const String authBox = "user_auth_box";
+  static const String authBox = 'user_auth_box';
 
   /// hive box for tasks
-  static const String taskBox = "task_box";
+  static const String taskBox = 'task_box';
 
   /// hive box for tasks
-  static const String aiChatBox = "sensorlab/src_box";
+  static const String aiChatBox = 'sensorlab/src_box';
 
   /// hive box for user to user chat
-  static const String uTouChatBox = "uTou_chat_box";
+  static const String uTouChatBox = 'uTou_chat_box';
 
   /// hive box for user profile
-  static const String userProfileBox = "user_profile_box";
+  static const String userProfileBox = 'user_profile_box';
 
   /// hive box for activity session
-  static const String activitySessionBox = "activity_session_box";
+  static const String activitySessionBox = 'activity_session_box';
 
   /// hive box for acoustic reports (noise meter)
-  static const String acousticReportBox = "acoustic_report_box";
+  static const String acousticReportBox = 'acoustic_report_box';
 
   /// hive box for custom acoustic presets (noise meter)
-  static const String customPresetsBox = "custom_presets_box";
+  static const String customPresetsBox = 'custom_presets_box';
 
   /// hive box for plant tracking sessions (light meter)
-  static const String plantTrackingBox = "plant_tracking_box";
+  static const String plantTrackingBox = 'plant_tracking_box';
 
   /// hive box for photo sessions (light meter)
-  static const String photoSessionBox = "photo_session_box";
+  static const String photoSessionBox = 'photo_session_box';
 
   /// hive box for daily light summaries (light meter)
-  static const String dailyLightSummaryBox = "daily_light_summary_box";
+  static const String dailyLightSummaryBox = 'daily_light_summary_box';
 }

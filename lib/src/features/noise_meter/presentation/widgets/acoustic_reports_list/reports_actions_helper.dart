@@ -6,8 +6,8 @@ import 'package:flutter_file_dialog/flutter_file_dialog.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sensorlab/l10n/app_localizations.dart';
+import 'package:sensorlab/src/features/noise_meter/application/notifiers/acoustic_reports_list_notifier.dart';
 import 'package:sensorlab/src/features/noise_meter/domain/entities/acoustic_report_entity.dart';
-import 'package:sensorlab/src/features/noise_meter/presentation/providers/acoustic_reports_list_controller.dart';
 
 class ReportsActionsHelper {
   static Future<void> exportReports(
@@ -37,7 +37,9 @@ class ReportsActionsHelper {
       ),
     );
 
-    if (exportOption == null) return;
+    if (exportOption == null) {
+      return;
+    }
 
     final csvData = notifier.exportReportsAsCSV(reports);
 
@@ -57,6 +59,10 @@ class ReportsActionsHelper {
       }
     } else if (exportOption == 'file') {
       // Save to file
+      // Capture a local reference to Navigator to avoid using context after await
+      if (!context.mounted) {
+        return;
+      }
       await _saveCSVToFile(context, csvData, reports.length);
     }
   }
@@ -156,11 +162,12 @@ class ReportsActionsHelper {
       }
     } catch (e) {
       if (context.mounted) {
+        final l10n = AppLocalizations.of(context)!;
         ScaffoldMessenger.of(context)
           ..hideCurrentSnackBar()
           ..showSnackBar(
             SnackBar(
-              content: Text('Failed to export file: $e'),
+              content: Text('${l10n.error}: $e'),
               backgroundColor: Colors.red,
             ),
           );

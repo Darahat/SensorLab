@@ -112,14 +112,14 @@ class ProximityData {
   /// Get proximity detection percentage
   String get nearDetectionPercentage {
     if (totalReadings == 0) return '0%';
-    final percentage = (nearDetections / totalReadings * 100);
+    final percentage = nearDetections / totalReadings * 100;
     return '${percentage.toStringAsFixed(1)}%';
   }
 
   /// Get far detection percentage
   String get farDetectionPercentage {
     if (totalReadings == 0) return '0%';
-    final percentage = (farDetections / totalReadings * 100);
+    final percentage = farDetections / totalReadings * 100;
     return '${percentage.toStringAsFixed(1)}%';
   }
 

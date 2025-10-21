@@ -22,9 +22,15 @@ class ReportSummaryCard extends StatelessWidget {
   });
 
   Color _getQualityColor() {
-    if (qualityScore >= 80) return Colors.green;
-    if (qualityScore >= 60) return Colors.blue;
-    if (qualityScore >= 40) return Colors.orange;
+    if (qualityScore >= 80) {
+      return Colors.green;
+    }
+    if (qualityScore >= 60) {
+      return Colors.blue;
+    }
+    if (qualityScore >= 40) {
+      return Colors.orange;
+    }
     return Colors.red;
   }
 
