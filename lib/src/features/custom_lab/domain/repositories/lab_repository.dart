@@ -26,10 +26,10 @@ abstract class LabRepository {
 
   // Bulk operations
   Future<void> saveBatchDataPoints(List<SensorDataPoint> dataPoints);
-  
+
   // Export operations
   Future<String> exportSessionToCSV(String sessionId);
-  
+
   // Cleanup
   Future<void> clearAllData();
 }

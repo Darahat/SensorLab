@@ -1943,4 +1943,345 @@ class AppLocalizationsKm extends AppLocalizations {
 
   @override
   String get chooseColor => 'ជ្រើសរើសពណ៌';
+
+  @override
+  String get customLabs => 'មន្ទីរពិសោធន៍ផ្ទាល់ខ្លួន';
+
+  @override
+  String get allLabs => 'មន្ទីរពិសោធន៍ទាំងអស់';
+
+  @override
+  String get myLabs => 'មន្ទីរពិសោធន៍របស់ខ្ញុំ';
+
+  @override
+  String get noLabsYet => 'មិនទាន់មានមន្ទីរពិសោធន៍នៅឡើយ';
+
+  @override
+  String get createFirstLabMessage => 'បង្កើតមន្ទីរពិសោធន៍ផ្ទាល់ខ្លួនដំបូងរបស់អ្នកដើម្បីចាប់ផ្តើម';
+
+  @override
+  String get noCustomLabsYet => 'មិនទាន់មានមន្ទីរពិសោធន៍ផ្ទាល់ខ្លួននៅឡើយ';
+
+  @override
+  String get tapPlusToCreateLab => 'ចុចប៊ូតុង + ដើម្បីបង្កើតមន្ទីរពិសោធន៍ផ្ទាល់ខ្លួនដំបូងរបស់អ្នក';
+
+  @override
+  String get newLab => 'មន្ទីរពិសោធន៍ថ្មី';
+
+  @override
+  String get presetLabs => 'មន្ទីរពិសោធន៍កំណត់ជាមុន';
+
+  @override
+  String get myCustomLabs => 'មន្ទីរពិសោធន៍ផ្ទាល់ខ្លួនរបស់ខ្ញុំ';
+
+  @override
+  String get errorLoadingLabs => 'កំហុសក្នុងការផ្ទុកមន្ទីរពិសោធន៍';
+
+  @override
+  String get createLab => 'បង្កើតមន្ទីរពិសោធន៍';
+
+  @override
+  String get editLab => 'កែសម្រួលមន្ទីរពិសោធន៍';
+
+  @override
+  String get deleteLab => 'លុបមន្ទីរពិសោធន៍';
+
+  @override
+  String get labName => 'ឈ្មោះមន្ទីរពិសោធន៍';
+
+  @override
+  String get labNameHint => 'ឧទា. ការវិភាគចលនា';
+
+  @override
+  String get descriptionHint => 'ពិពណ៌នាអំពីអ្វីដែលមន្ទីរពិសោធន៍នេះវាស់';
+
+  @override
+  String get recordingIntervalMs => 'ចន្លោះពេលកត់ត្រា (ms)';
+
+  @override
+  String get recordingIntervalHint => '1000';
+
+  @override
+  String get intervalMustBeBetween => 'ចន្លោះពេលត្រូវតែនៅចន្លោះ 100-10000 ms';
+
+  @override
+  String get pleaseEnterInterval => 'សូមបញ្ចូលចន្លោះពេល';
+
+  @override
+  String get pleaseEnterLabName => 'សូមបញ្ចូលឈ្មោះមន្ទីរពិសោធន៍';
+
+  @override
+  String get labColor => 'ពណ៌មន្ទីរពិសោធន៍';
+
+  @override
+  String get selectSensors => 'ជ្រើសរើសសេន្ស័រ';
+
+  @override
+  String get sensors => 'សេន្ស័រ';
+
+  @override
+  String get interval => 'ចន្លោះពេល';
+
+  @override
+  String get created => 'បានបង្កើត';
+
+  @override
+  String get sessions => 'វគ្គ';
+
+  @override
+  String get notes => 'កំណត់ចំណាំ';
+
+  @override
+  String get export => 'នាំចេញ';
+
+  @override
+  String get chooseAtLeastOneSensor => 'ជ្រើសរើសសេន្ស័រយ៉ាងហោចណាស់មួយដើម្បីកត់ត្រា';
+
+  @override
+  String get labCreatedSuccessfully => 'មន្ទីរពិសោធន៍ត្រូវបានបង្កើតដោយជោគជ័យ';
+
+  @override
+  String get labUpdatedSuccessfully => 'មន្ទីរពិសោធន៍ត្រូវបានធ្វើបច្ចុប្បន្នភាពដោយជោគជ័យ';
+
+  @override
+  String get labDeletedSuccessfully => 'មន្ទីរពិសោធន៍ត្រូវបានលុបដោយជោគជ័យ';
+
+  @override
+  String deleteLabConfirm(String labName) {
+    return 'តើអ្នកប្រាកដថាចង់លុប \"$labName\"?';
+  }
+
+  @override
+  String get cannotModifyPresetLabs => 'មិនអាចកែប្រែមន្ទីរពិសោធន៍កំណត់ជាមុនបានទេ';
+
+  @override
+  String get cannotDeletePresetLabs => 'មិនអាចលុបមន្ទីរពិសោធន៍កំណត់ជាមុនបានទេ';
+
+  @override
+  String get pleaseSelectAtLeastOneSensor => 'សូមជ្រើសរើសសេន្ស័រយ៉ាងហោចណាស់មួយ';
+
+  @override
+  String sensorsCount(int count) {
+    return '$count សេន្ស័រ';
+  }
+
+  @override
+  String intervalMs(int interval) {
+    return 'ចន្លោះពេល ${interval}ms';
+  }
+
+  @override
+  String get presetBadge => 'កំណត់ជាមុន';
+
+  @override
+  String get labDetails => 'ព័ត៌មានលម្អិតមន្ទីរពិសោធន៍';
+
+  @override
+  String get sessionHistory => 'ប្រវត្តិវគ្គ';
+
+  @override
+  String get startRecording => 'ចាប់ផ្តើមកត់ត្រា';
+
+  @override
+  String get stopRecording => 'បញ្ឈប់កត់ត្រា';
+
+  @override
+  String get pauseRecording => 'ផ្អាកកត់ត្រា';
+
+  @override
+  String get recordingStatus => 'កំពុងកត់ត្រា';
+
+  @override
+  String get pausedStatus => 'បានផ្អាក';
+
+  @override
+  String get completedStatus => 'បានបញ្ចប់';
+
+  @override
+  String get failedStatus => 'បរាជ័យ';
+
+  @override
+  String get idleStatus => 'ទំនេរ';
+
+  @override
+  String get elapsedTime => 'ពេលវេលាកន្លងផុត';
+
+  @override
+  String get collectingSensorData => 'កំពុងប្រមូលទិន្នន័យសេន្ស័រ...';
+
+  @override
+  String get stopRecordingQuestion => 'បញ្ឈប់កត់ត្រា?';
+
+  @override
+  String get stopRecordingConfirm => 'តើអ្នកចង់បញ្ឈប់និងរក្សាទុកវគ្គកត់ត្រានេះ?';
+
+  @override
+  String get continueRecordingAction => 'បន្តកត់ត្រា';
+
+  @override
+  String get stopAndSave => 'បញ្ឈប់និងរក្សាទុក';
+
+  @override
+  String get recordingSavedSuccessfully => 'ការកត់ត្រាត្រូវបានរក្សាទុកដោយជោគជ័យ';
+
+  @override
+  String get failedToStartRecording => 'បរាជ័យក្នុងការចាប់ផ្តើមវគ្គកត់ត្រា';
+
+  @override
+  String dataPoints(int count) {
+    return '$count ចំណុច';
+  }
+
+  @override
+  String get noRecordingSessionsYet => 'មិនទាន់មានវគ្គកត់ត្រានៅឡើយ';
+
+  @override
+  String get startRecordingToCreateSession => 'ចាប់ផ្តើមកត់ត្រាដើម្បីបង្កើតវគ្គដំបូងរបស់អ្នក';
+
+  @override
+  String get errorLoadingSessions => 'កំហុសក្នុងការផ្ទុកវគ្គ';
+
+  @override
+  String get sessionDetailsTitle => 'ព័ត៌មានលម្អិតវគ្គ';
+
+  @override
+  String get exportAndShare => 'នាំចេញនិងចែករំលែក';
+
+  @override
+  String get deleteSession => 'លុបវគ្គ';
+
+  @override
+  String get deleteSessionConfirm => 'តើអ្នកប្រាកដថាចង់លុបវគ្គកត់ត្រានេះ? សកម្មភាពនេះមិនអាចត្រឡប់វិញបានទេ។';
+
+  @override
+  String get sessionDeletedSuccessfully => 'វគ្គត្រូវបានលុបដោយជោគជ័យ';
+
+  @override
+  String get recordingTime => 'ពេលវេលាកត់ត្រា';
+
+  @override
+  String get startTime => 'ពេលវេលាចាប់ផ្តើម';
+
+  @override
+  String get endTime => 'ពេលវេលាបញ្ចប់';
+
+  @override
+  String get recordingData => 'ទិន្នន័យកត់ត្រា';
+
+  @override
+  String get dataPointsCount => 'ចំណុចទិន្នន័យ';
+
+  @override
+  String get sensorsUsed => 'សេន្ស័រប្រើ';
+
+  @override
+  String get sessionExportedToCSV => 'វគ្គត្រូវបាននាំចេញទៅ CSV';
+
+  @override
+  String get sessionNotYetExported => 'វគ្គមិនទាន់ត្រូវបាននាំចេញនៅឡើយ';
+
+  @override
+  String get errorCheckingExportStatus => 'កំហុសក្នុងការពិនិត្យស្ថានភាពនាំចេញ';
+
+  @override
+  String get dataPreview => 'មើលទិន្នន័យជាមុន';
+
+  @override
+  String get noDataPointsRecorded => 'គ្មានចំណុចទិន្នន័យត្រូវបានកត់ត្រាទេ';
+
+  @override
+  String showingDataPoints(int showing, int total) {
+    return 'បង្ហាញ $showing ពី $total ចំណុចទិន្នន័យ';
+  }
+
+  @override
+  String get pointNumber => 'ចំណុច';
+
+  @override
+  String errorLoadingDataPoints(String error) {
+    return 'កំហុសក្នុងការផ្ទុកចំណុចទិន្នន័យ៖ $error';
+  }
+
+  @override
+  String get exportToCSV => 'នាំចេញទៅ CSV';
+
+  @override
+  String get exportingStatus => 'កំពុងនាំចេញ...';
+
+  @override
+  String exportedTo(String path) {
+    return 'នាំចេញទៅ៖ $path';
+  }
+
+  @override
+  String get sharingNotYetImplemented => '(ការចែករំលែកមិនទាន់អនុវត្ត)';
+
+  @override
+  String get failedToExportSession => 'បរាជ័យក្នុងការនាំចេញវគ្គ';
+
+  @override
+  String get exportedLabel => 'បាននាំចេញ';
+
+  @override
+  String get sensorAccelerometer => 'ឧបករណ៍វាស់ល្បឿន';
+
+  @override
+  String get sensorGyroscope => 'ហ្សីរ៉ូស្កុប';
+
+  @override
+  String get sensorMagnetometer => 'ម៉ាញេតូម៉ែត្រ';
+
+  @override
+  String get sensorBarometer => 'បារ៉ូម៉ែត្រ';
+
+  @override
+  String get sensorLightMeter => 'ពន្លឺ';
+
+  @override
+  String get sensorNoiseMeter => 'សំឡេង';
+
+  @override
+  String get sensorGPS => 'GPS';
+
+  @override
+  String get sensorProximity => 'ជិត';
+
+  @override
+  String get sensorTemperature => 'សីតុណ្ហភាព';
+
+  @override
+  String get sensorHumidity => 'សំណើម';
+
+  @override
+  String get sensorPedometer => 'ឧបករណ៍វាស់ជំហាន';
+
+  @override
+  String get sensorCompass => 'ត្រីវិស័យ';
+
+  @override
+  String get sensorAltimeter => 'ឧបករណ៍វាស់កម្ពស់';
+
+  @override
+  String get sensorSpeedMeter => 'ល្បឿន';
+
+  @override
+  String get sensorHeartBeat => 'ចង្វាក់បេះដូង';
+
+  @override
+  String get environmentMonitor => 'ឧបករណ៍ត្រួតពិនិត្យបរិស្ថាន';
+
+  @override
+  String get motionAnalysis => 'ការវិភាគចលនា';
+
+  @override
+  String get indoorQuality => 'គុណភាពខាងក្នុង';
+
+  @override
+  String get outdoorExplorer => 'អ្នករុករកខាងក្រៅ';
+
+  @override
+  String get vehicleDynamics => 'ថាមវន្តយានយន្ត';
+
+  @override
+  String get healthTrackerLab => 'ឧបករណ៍តាមដានសុខភាព';
 }

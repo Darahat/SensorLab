@@ -31,15 +31,6 @@ class App extends ConsumerWidget {
           ? Locale(settings.value!.languageCode)
           : null,
 
-      // localeResolutionCallback: (locale, supportedLocales) {
-      //   for (var supportedLocale in supportedLocales) {
-      //     if (supportedLocale.languageCode == locale?.languageCode &&
-      //         supportedLocale.countryCode == locale?.countryCode) {
-      //       return supportedLocale;
-      //     }
-      //   }
-      //   return const Locale('en', 'US');
-      // },
       routerConfig: router,
       debugShowCheckedModeBanner: false,
     );

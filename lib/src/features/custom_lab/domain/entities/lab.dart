@@ -1,5 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hive/hive.dart';
+
 import 'sensor_type.dart';
 
 part 'lab.freezed.dart';

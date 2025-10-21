@@ -20,7 +20,7 @@ enum RecordingStatus {
   completed,
 
   @HiveField(4)
-  failed;
+  failed,
 }
 
 /// Represents an active or completed recording session for a lab

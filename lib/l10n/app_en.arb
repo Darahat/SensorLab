@@ -813,5 +813,166 @@
   "mustBeAtLeast3Chars": "Must be at least 3 characters",
   "mustBeAtLeast10Chars": "Must be at least 10 characters",
   "chooseIcon": "Choose Icon",
-  "chooseColor": "Choose Color"
+  "chooseColor": "Choose Color",
+  "customLabs": "Custom Labs",
+  "allLabs": "All Labs",
+  "myLabs": "My Labs",
+  "noLabsYet": "No labs yet",
+  "createFirstLabMessage": "Create your first custom lab to get started",
+  "noCustomLabsYet": "No custom labs yet",
+  "tapPlusToCreateLab": "Tap the + button to create your first custom lab",
+  "newLab": "New Lab",
+  "presetLabs": "Preset Labs",
+  "myCustomLabs": "My Custom Labs",
+  "errorLoadingLabs": "Error loading labs",
+  "createLab": "Create Lab",
+  "editLab": "Edit Lab",
+  "deleteLab": "Delete Lab",
+  "labName": "Lab Name",
+  "labNameHint": "e.g., Motion Analysis",
+  "descriptionHint": "Describe what this lab measures",
+  "recordingIntervalMs": "Recording Interval (ms)",
+  "recordingIntervalHint": "1000",
+  "intervalMustBeBetween": "Interval must be between 100-10000 ms",
+  "pleaseEnterInterval": "Please enter an interval",
+  "pleaseEnterLabName": "Please enter a lab name",
+  "labColor": "Lab Color",
+  "selectSensors": "Select Sensors",
+  "sensors": "Sensors",
+  "interval": "Interval",
+  "created": "Created",
+  "sessions": "Sessions",
+  "notes": "Notes",
+  "export": "Export",
+  "chooseAtLeastOneSensor": "Choose at least one sensor to record",
+  "labCreatedSuccessfully": "Lab created successfully",
+  "labUpdatedSuccessfully": "Lab updated successfully",
+  "labDeletedSuccessfully": "Lab deleted successfully",
+  "deleteLabConfirm": "Are you sure you want to delete \"{labName}\"?",
+  "@deleteLabConfirm": {
+    "placeholders": {
+      "labName": {
+        "type": "String"
+      }
+    }
+  },
+  "cannotModifyPresetLabs": "Cannot modify preset labs",
+  "cannotDeletePresetLabs": "Cannot delete preset labs",
+  "pleaseSelectAtLeastOneSensor": "Please select at least one sensor",
+  "sensorsCount": "{count} sensors",
+  "@sensorsCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "intervalMs": "{interval}ms interval",
+  "@intervalMs": {
+    "placeholders": {
+      "interval": {
+        "type": "int"
+      }
+    }
+  },
+  "presetBadge": "PRESET",
+  "labDetails": "Lab Details",
+  "sessionHistory": "Session History",
+  "startRecording": "Start Recording",
+  "stopRecording": "Stop Recording",
+  "pauseRecording": "Pause Recording",
+  "recordingStatus": "RECORDING",
+  "pausedStatus": "PAUSED",
+  "completedStatus": "COMPLETED",
+  "failedStatus": "FAILED",
+  "idleStatus": "IDLE",
+  "elapsedTime": "Elapsed Time",
+  "collectingSensorData": "Collecting sensor data...",
+  "stopRecordingQuestion": "Stop Recording?",
+  "stopRecordingConfirm": "Do you want to stop and save this recording session?",
+  "continueRecordingAction": "Continue Recording",
+  "stopAndSave": "Stop & Save",
+  "recordingSavedSuccessfully": "Recording saved successfully",
+  "failedToStartRecording": "Failed to start recording session",
+  "dataPoints": "{count} points",
+  "@dataPoints": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "noRecordingSessionsYet": "No recording sessions yet",
+  "startRecordingToCreateSession": "Start recording to create your first session",
+  "errorLoadingSessions": "Error loading sessions",
+  "sessionDetailsTitle": "Session Details",
+  "exportAndShare": "Export & Share",
+  "deleteSession": "Delete Session",
+  "deleteSessionConfirm": "Are you sure you want to delete this recording session? This action cannot be undone.",
+  "sessionDeletedSuccessfully": "Session deleted successfully",
+  "recordingTime": "Recording Time",
+  "startTime": "Start Time",
+  "endTime": "End Time",
+  "recordingData": "Recording Data",
+  "dataPointsCount": "Data Points",
+  "sensorsUsed": "Sensors Used",
+  "sessionExportedToCSV": "Session has been exported to CSV",
+  "sessionNotYetExported": "Session not yet exported",
+  "errorCheckingExportStatus": "Error checking export status",
+  "dataPreview": "Data Preview",
+  "noDataPointsRecorded": "No data points recorded",
+  "showingDataPoints": "Showing {showing} of {total} data points",
+  "@showingDataPoints": {
+    "placeholders": {
+      "showing": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "pointNumber": "Point",
+  "errorLoadingDataPoints": "Error loading data points: {error}",
+  "@errorLoadingDataPoints": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "exportToCSV": "Export to CSV",
+  "exportingStatus": "Exporting...",
+  "exportedTo": "Exported to: {path}",
+  "@exportedTo": {
+    "placeholders": {
+      "path": {
+        "type": "String"
+      }
+    }
+  },
+  "sharingNotYetImplemented": "(Sharing not yet implemented)",
+  "failedToExportSession": "Failed to export session",
+  "exportedLabel": "Exported",
+  "sensorAccelerometer": "Accelerometer",
+  "sensorGyroscope": "Gyroscope",
+  "sensorMagnetometer": "Magnetometer",
+  "sensorBarometer": "Barometer",
+  "sensorLightMeter": "Light",
+  "sensorNoiseMeter": "Noise",
+  "sensorGPS": "GPS",
+  "sensorProximity": "Proximity",
+  "sensorTemperature": "Temp",
+  "sensorHumidity": "Humidity",
+  "sensorPedometer": "Pedometer",
+  "sensorCompass": "Compass",
+  "sensorAltimeter": "Altimeter",
+  "sensorSpeedMeter": "Speed",
+  "sensorHeartBeat": "Heart Rate",
+  "environmentMonitor": "Environment Monitor",
+  "motionAnalysis": "Motion Analysis",
+  "indoorQuality": "Indoor Quality",
+  "outdoorExplorer": "Outdoor Explorer",
+  "vehicleDynamics": "Vehicle Dynamics",
+  "healthTrackerLab": "Health Tracker"
 }
