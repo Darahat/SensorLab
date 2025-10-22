@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import 'package:iconsax/iconsax.dart';
 import 'package:sensorlab/l10n/app_localizations.dart';
 import 'package:sensorlab/src/features/noise_meter/application/services/report_export_service.dart';
+
 import 'package:sensorlab/src/features/noise_meter/domain/entities/acoustic_report_entity.dart';
 import 'package:sensorlab/src/features/noise_meter/presentation/widgets/widgets_index.dart';
 
@@ -18,6 +20,7 @@ class AcousticReportDetailScreen extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(l10n.acousticReport),
+
         actions: [
           IconButton(
             icon: const Icon(Iconsax.export_1),
@@ -108,6 +111,7 @@ class AcousticReportDetailScreen extends ConsumerWidget {
             ),
           ],
         ),
+
       ),
     );
   }

@@ -1997,4 +1997,345 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get chooseColor => 'Elegir color';
+
+  @override
+  String get customLabs => 'Laboratorios Personalizados';
+
+  @override
+  String get allLabs => 'Todos los Laboratorios';
+
+  @override
+  String get myLabs => 'Mis Laboratorios';
+
+  @override
+  String get noLabsYet => 'Aún no hay laboratorios';
+
+  @override
+  String get createFirstLabMessage => 'Crea tu primer laboratorio personalizado para comenzar';
+
+  @override
+  String get noCustomLabsYet => 'Aún no hay laboratorios personalizados';
+
+  @override
+  String get tapPlusToCreateLab => 'Toca el botón + para crear tu primer laboratorio personalizado';
+
+  @override
+  String get newLab => 'Nuevo Laboratorio';
+
+  @override
+  String get presetLabs => 'Laboratorios Preestablecidos';
+
+  @override
+  String get myCustomLabs => 'Mis Laboratorios Personalizados';
+
+  @override
+  String get errorLoadingLabs => 'Error al cargar laboratorios';
+
+  @override
+  String get createLab => 'Crear Laboratorio';
+
+  @override
+  String get editLab => 'Editar Laboratorio';
+
+  @override
+  String get deleteLab => 'Eliminar Laboratorio';
+
+  @override
+  String get labName => 'Nombre del Laboratorio';
+
+  @override
+  String get labNameHint => 'ej., Análisis de Movimiento';
+
+  @override
+  String get descriptionHint => 'Describe lo que mide este laboratorio';
+
+  @override
+  String get recordingIntervalMs => 'Intervalo de Grabación (ms)';
+
+  @override
+  String get recordingIntervalHint => '1000';
+
+  @override
+  String get intervalMustBeBetween => 'El intervalo debe estar entre 100-10000 ms';
+
+  @override
+  String get pleaseEnterInterval => 'Por favor ingrese un intervalo';
+
+  @override
+  String get pleaseEnterLabName => 'Por favor ingrese un nombre de laboratorio';
+
+  @override
+  String get labColor => 'Color del Laboratorio';
+
+  @override
+  String get selectSensors => 'Seleccionar Sensores';
+
+  @override
+  String get sensors => 'Sensores';
+
+  @override
+  String get interval => 'Intervalo';
+
+  @override
+  String get created => 'Creado';
+
+  @override
+  String get sessions => 'Sesiones';
+
+  @override
+  String get notes => 'Notas';
+
+  @override
+  String get export => 'Exportar';
+
+  @override
+  String get chooseAtLeastOneSensor => 'Elija al menos un sensor para grabar';
+
+  @override
+  String get labCreatedSuccessfully => 'Laboratorio creado exitosamente';
+
+  @override
+  String get labUpdatedSuccessfully => 'Laboratorio actualizado exitosamente';
+
+  @override
+  String get labDeletedSuccessfully => 'Laboratorio eliminado exitosamente';
+
+  @override
+  String deleteLabConfirm(String labName) {
+    return '¿Estás seguro de que quieres eliminar \"$labName\"?';
+  }
+
+  @override
+  String get cannotModifyPresetLabs => 'No se pueden modificar los laboratorios preestablecidos';
+
+  @override
+  String get cannotDeletePresetLabs => 'No se pueden eliminar los laboratorios preestablecidos';
+
+  @override
+  String get pleaseSelectAtLeastOneSensor => 'Por favor selecciona al menos un sensor';
+
+  @override
+  String sensorsCount(int count) {
+    return '$count sensores';
+  }
+
+  @override
+  String intervalMs(int interval) {
+    return 'Intervalo de ${interval}ms';
+  }
+
+  @override
+  String get presetBadge => 'PREESTABLECIDO';
+
+  @override
+  String get labDetails => 'Detalles del Laboratorio';
+
+  @override
+  String get sessionHistory => 'Historial de Sesiones';
+
+  @override
+  String get startRecording => 'Iniciar Grabación';
+
+  @override
+  String get stopRecording => 'Detener Grabación';
+
+  @override
+  String get pauseRecording => 'Pausar Grabación';
+
+  @override
+  String get recordingStatus => 'GRABANDO';
+
+  @override
+  String get pausedStatus => 'PAUSADO';
+
+  @override
+  String get completedStatus => 'COMPLETADO';
+
+  @override
+  String get failedStatus => 'FALLIDO';
+
+  @override
+  String get idleStatus => 'INACTIVO';
+
+  @override
+  String get elapsedTime => 'Tiempo Transcurrido';
+
+  @override
+  String get collectingSensorData => 'Recopilando datos del sensor...';
+
+  @override
+  String get stopRecordingQuestion => '¿Detener Grabación?';
+
+  @override
+  String get stopRecordingConfirm => '¿Quieres detener y guardar esta sesión de grabación?';
+
+  @override
+  String get continueRecordingAction => 'Continuar Grabando';
+
+  @override
+  String get stopAndSave => 'Detener y Guardar';
+
+  @override
+  String get recordingSavedSuccessfully => 'Grabación guardada exitosamente';
+
+  @override
+  String get failedToStartRecording => 'Error al iniciar sesión de grabación';
+
+  @override
+  String dataPoints(int count) {
+    return '$count puntos';
+  }
+
+  @override
+  String get noRecordingSessionsYet => 'Aún no hay sesiones de grabación';
+
+  @override
+  String get startRecordingToCreateSession => 'Inicia la grabación para crear tu primera sesión';
+
+  @override
+  String get errorLoadingSessions => 'Error al cargar sesiones';
+
+  @override
+  String get sessionDetailsTitle => 'Detalles de la Sesión';
+
+  @override
+  String get exportAndShare => 'Exportar y Compartir';
+
+  @override
+  String get deleteSession => 'Eliminar Sesión';
+
+  @override
+  String get deleteSessionConfirm => '¿Estás seguro de que quieres eliminar esta sesión de grabación? Esta acción no se puede deshacer.';
+
+  @override
+  String get sessionDeletedSuccessfully => 'Sesión eliminada exitosamente';
+
+  @override
+  String get recordingTime => 'Tiempo de Grabación';
+
+  @override
+  String get startTime => 'Hora de Inicio';
+
+  @override
+  String get endTime => 'Hora de Finalización';
+
+  @override
+  String get recordingData => 'Datos de Grabación';
+
+  @override
+  String get dataPointsCount => 'Puntos de Datos';
+
+  @override
+  String get sensorsUsed => 'Sensores Utilizados';
+
+  @override
+  String get sessionExportedToCSV => 'La sesión ha sido exportada a CSV';
+
+  @override
+  String get sessionNotYetExported => 'La sesión aún no se ha exportado';
+
+  @override
+  String get errorCheckingExportStatus => 'Error al verificar el estado de exportación';
+
+  @override
+  String get dataPreview => 'Vista Previa de Datos';
+
+  @override
+  String get noDataPointsRecorded => 'No se grabaron puntos de datos';
+
+  @override
+  String showingDataPoints(int showing, int total) {
+    return 'Mostrando $showing de $total puntos de datos';
+  }
+
+  @override
+  String get pointNumber => 'Punto';
+
+  @override
+  String errorLoadingDataPoints(String error) {
+    return 'Error al cargar puntos de datos: $error';
+  }
+
+  @override
+  String get exportToCSV => 'Exportar a CSV';
+
+  @override
+  String get exportingStatus => 'Exportando...';
+
+  @override
+  String exportedTo(String path) {
+    return 'Exportado a: $path';
+  }
+
+  @override
+  String get sharingNotYetImplemented => '(Compartir aún no implementado)';
+
+  @override
+  String get failedToExportSession => 'Error al exportar sesión';
+
+  @override
+  String get exportedLabel => 'Exportado';
+
+  @override
+  String get sensorAccelerometer => 'Acelerómetro';
+
+  @override
+  String get sensorGyroscope => 'Giroscopio';
+
+  @override
+  String get sensorMagnetometer => 'Magnetómetro';
+
+  @override
+  String get sensorBarometer => 'Barómetro';
+
+  @override
+  String get sensorLightMeter => 'Luz';
+
+  @override
+  String get sensorNoiseMeter => 'Ruido';
+
+  @override
+  String get sensorGPS => 'GPS';
+
+  @override
+  String get sensorProximity => 'Proximidad';
+
+  @override
+  String get sensorTemperature => 'Temp';
+
+  @override
+  String get sensorHumidity => 'Humedad';
+
+  @override
+  String get sensorPedometer => 'Podómetro';
+
+  @override
+  String get sensorCompass => 'Brújula';
+
+  @override
+  String get sensorAltimeter => 'Altímetro';
+
+  @override
+  String get sensorSpeedMeter => 'Velocidad';
+
+  @override
+  String get sensorHeartBeat => 'Frecuencia Cardíaca';
+
+  @override
+  String get environmentMonitor => 'Monitor Ambiental';
+
+  @override
+  String get motionAnalysis => 'Análisis de Movimiento';
+
+  @override
+  String get indoorQuality => 'Calidad Interior';
+
+  @override
+  String get outdoorExplorer => 'Explorador Exterior';
+
+  @override
+  String get vehicleDynamics => 'Dinámica Vehicular';
+
+  @override
+  String get healthTrackerLab => 'Monitor de Salud';
 }

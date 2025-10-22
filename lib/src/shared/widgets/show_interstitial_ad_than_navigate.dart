@@ -12,7 +12,15 @@ Future<void> showInterstitialAdThenNavigate({
     interstitialAd.show();
     await Future.delayed(const Duration(milliseconds: 800));
   }
-  if (Navigator.of(context).canPop()) return;
+  if (!context.mounted) {
+    return;
+  }
+  if (Navigator.of(context).canPop()) {
+    return;
+  }
+  if (!context.mounted) {
+    return;
+  }
   Navigator.push(
     context,
     PageRouteBuilder(

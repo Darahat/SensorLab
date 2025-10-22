@@ -3974,6 +3974,660 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Choose Color'**
   String get chooseColor;
+
+  /// No description provided for @customLabs.
+  ///
+  /// In en, this message translates to:
+  /// **'Custom Labs'**
+  String get customLabs;
+
+  /// No description provided for @allLabs.
+  ///
+  /// In en, this message translates to:
+  /// **'All Labs'**
+  String get allLabs;
+
+  /// No description provided for @myLabs.
+  ///
+  /// In en, this message translates to:
+  /// **'My Labs'**
+  String get myLabs;
+
+  /// No description provided for @noLabsYet.
+  ///
+  /// In en, this message translates to:
+  /// **'No labs yet'**
+  String get noLabsYet;
+
+  /// No description provided for @createFirstLabMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Create your first custom lab to get started'**
+  String get createFirstLabMessage;
+
+  /// No description provided for @noCustomLabsYet.
+  ///
+  /// In en, this message translates to:
+  /// **'No custom labs yet'**
+  String get noCustomLabsYet;
+
+  /// No description provided for @tapPlusToCreateLab.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap the + button to create your first custom lab'**
+  String get tapPlusToCreateLab;
+
+  /// No description provided for @newLab.
+  ///
+  /// In en, this message translates to:
+  /// **'New Lab'**
+  String get newLab;
+
+  /// No description provided for @presetLabs.
+  ///
+  /// In en, this message translates to:
+  /// **'Preset Labs'**
+  String get presetLabs;
+
+  /// No description provided for @myCustomLabs.
+  ///
+  /// In en, this message translates to:
+  /// **'My Custom Labs'**
+  String get myCustomLabs;
+
+  /// No description provided for @errorLoadingLabs.
+  ///
+  /// In en, this message translates to:
+  /// **'Error loading labs'**
+  String get errorLoadingLabs;
+
+  /// No description provided for @createLab.
+  ///
+  /// In en, this message translates to:
+  /// **'Create Lab'**
+  String get createLab;
+
+  /// No description provided for @editLab.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Lab'**
+  String get editLab;
+
+  /// No description provided for @deleteLab.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Lab'**
+  String get deleteLab;
+
+  /// No description provided for @labName.
+  ///
+  /// In en, this message translates to:
+  /// **'Lab Name'**
+  String get labName;
+
+  /// No description provided for @labNameHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g., Motion Analysis'**
+  String get labNameHint;
+
+  /// No description provided for @descriptionHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Describe what this lab measures'**
+  String get descriptionHint;
+
+  /// No description provided for @recordingIntervalMs.
+  ///
+  /// In en, this message translates to:
+  /// **'Recording Interval (ms)'**
+  String get recordingIntervalMs;
+
+  /// No description provided for @recordingIntervalHint.
+  ///
+  /// In en, this message translates to:
+  /// **'1000'**
+  String get recordingIntervalHint;
+
+  /// No description provided for @intervalMustBeBetween.
+  ///
+  /// In en, this message translates to:
+  /// **'Interval must be between 100-10000 ms'**
+  String get intervalMustBeBetween;
+
+  /// No description provided for @pleaseEnterInterval.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter an interval'**
+  String get pleaseEnterInterval;
+
+  /// No description provided for @pleaseEnterLabName.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a lab name'**
+  String get pleaseEnterLabName;
+
+  /// No description provided for @labColor.
+  ///
+  /// In en, this message translates to:
+  /// **'Lab Color'**
+  String get labColor;
+
+  /// No description provided for @selectSensors.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Sensors'**
+  String get selectSensors;
+
+  /// No description provided for @sensors.
+  ///
+  /// In en, this message translates to:
+  /// **'Sensors'**
+  String get sensors;
+
+  /// No description provided for @interval.
+  ///
+  /// In en, this message translates to:
+  /// **'Interval'**
+  String get interval;
+
+  /// No description provided for @created.
+  ///
+  /// In en, this message translates to:
+  /// **'Created'**
+  String get created;
+
+  /// No description provided for @sessions.
+  ///
+  /// In en, this message translates to:
+  /// **'Sessions'**
+  String get sessions;
+
+  /// No description provided for @notes.
+  ///
+  /// In en, this message translates to:
+  /// **'Notes'**
+  String get notes;
+
+  /// No description provided for @export.
+  ///
+  /// In en, this message translates to:
+  /// **'Export'**
+  String get export;
+
+  /// No description provided for @chooseAtLeastOneSensor.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose at least one sensor to record'**
+  String get chooseAtLeastOneSensor;
+
+  /// No description provided for @labCreatedSuccessfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Lab created successfully'**
+  String get labCreatedSuccessfully;
+
+  /// No description provided for @labUpdatedSuccessfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Lab updated successfully'**
+  String get labUpdatedSuccessfully;
+
+  /// No description provided for @labDeletedSuccessfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Lab deleted successfully'**
+  String get labDeletedSuccessfully;
+
+  /// No description provided for @deleteLabConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete \"{labName}\"?'**
+  String deleteLabConfirm(String labName);
+
+  /// No description provided for @cannotModifyPresetLabs.
+  ///
+  /// In en, this message translates to:
+  /// **'Cannot modify preset labs'**
+  String get cannotModifyPresetLabs;
+
+  /// No description provided for @cannotDeletePresetLabs.
+  ///
+  /// In en, this message translates to:
+  /// **'Cannot delete preset labs'**
+  String get cannotDeletePresetLabs;
+
+  /// No description provided for @pleaseSelectAtLeastOneSensor.
+  ///
+  /// In en, this message translates to:
+  /// **'Please select at least one sensor'**
+  String get pleaseSelectAtLeastOneSensor;
+
+  /// No description provided for @sensorsCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} sensors'**
+  String sensorsCount(int count);
+
+  /// No description provided for @intervalMs.
+  ///
+  /// In en, this message translates to:
+  /// **'{interval}ms interval'**
+  String intervalMs(int interval);
+
+  /// No description provided for @presetBadge.
+  ///
+  /// In en, this message translates to:
+  /// **'PRESET'**
+  String get presetBadge;
+
+  /// No description provided for @labDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Lab Details'**
+  String get labDetails;
+
+  /// No description provided for @sessionHistory.
+  ///
+  /// In en, this message translates to:
+  /// **'Session History'**
+  String get sessionHistory;
+
+  /// No description provided for @startRecording.
+  ///
+  /// In en, this message translates to:
+  /// **'Start Recording'**
+  String get startRecording;
+
+  /// No description provided for @stopRecording.
+  ///
+  /// In en, this message translates to:
+  /// **'Stop Recording'**
+  String get stopRecording;
+
+  /// No description provided for @pauseRecording.
+  ///
+  /// In en, this message translates to:
+  /// **'Pause Recording'**
+  String get pauseRecording;
+
+  /// No description provided for @recordingStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'RECORDING'**
+  String get recordingStatus;
+
+  /// No description provided for @pausedStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'PAUSED'**
+  String get pausedStatus;
+
+  /// No description provided for @completedStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'COMPLETED'**
+  String get completedStatus;
+
+  /// No description provided for @failedStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'FAILED'**
+  String get failedStatus;
+
+  /// No description provided for @idleStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'IDLE'**
+  String get idleStatus;
+
+  /// No description provided for @elapsedTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Elapsed Time'**
+  String get elapsedTime;
+
+  /// No description provided for @collectingSensorData.
+  ///
+  /// In en, this message translates to:
+  /// **'Collecting sensor data...'**
+  String get collectingSensorData;
+
+  /// No description provided for @stopRecordingQuestion.
+  ///
+  /// In en, this message translates to:
+  /// **'Stop Recording?'**
+  String get stopRecordingQuestion;
+
+  /// No description provided for @stopRecordingConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Do you want to stop and save this recording session?'**
+  String get stopRecordingConfirm;
+
+  /// No description provided for @continueRecordingAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue Recording'**
+  String get continueRecordingAction;
+
+  /// No description provided for @stopAndSave.
+  ///
+  /// In en, this message translates to:
+  /// **'Stop & Save'**
+  String get stopAndSave;
+
+  /// No description provided for @recordingSavedSuccessfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Recording saved successfully'**
+  String get recordingSavedSuccessfully;
+
+  /// No description provided for @failedToStartRecording.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to start recording session'**
+  String get failedToStartRecording;
+
+  /// No description provided for @dataPoints.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} points'**
+  String dataPoints(int count);
+
+  /// No description provided for @noRecordingSessionsYet.
+  ///
+  /// In en, this message translates to:
+  /// **'No recording sessions yet'**
+  String get noRecordingSessionsYet;
+
+  /// No description provided for @startRecordingToCreateSession.
+  ///
+  /// In en, this message translates to:
+  /// **'Start recording to create your first session'**
+  String get startRecordingToCreateSession;
+
+  /// No description provided for @errorLoadingSessions.
+  ///
+  /// In en, this message translates to:
+  /// **'Error loading sessions'**
+  String get errorLoadingSessions;
+
+  /// No description provided for @sessionDetailsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Session Details'**
+  String get sessionDetailsTitle;
+
+  /// No description provided for @exportAndShare.
+  ///
+  /// In en, this message translates to:
+  /// **'Export & Share'**
+  String get exportAndShare;
+
+  /// No description provided for @deleteSession.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Session'**
+  String get deleteSession;
+
+  /// No description provided for @deleteSessionConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete this recording session? This action cannot be undone.'**
+  String get deleteSessionConfirm;
+
+  /// No description provided for @sessionDeletedSuccessfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Session deleted successfully'**
+  String get sessionDeletedSuccessfully;
+
+  /// No description provided for @recordingTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Recording Time'**
+  String get recordingTime;
+
+  /// No description provided for @startTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Start Time'**
+  String get startTime;
+
+  /// No description provided for @endTime.
+  ///
+  /// In en, this message translates to:
+  /// **'End Time'**
+  String get endTime;
+
+  /// No description provided for @recordingData.
+  ///
+  /// In en, this message translates to:
+  /// **'Recording Data'**
+  String get recordingData;
+
+  /// No description provided for @dataPointsCount.
+  ///
+  /// In en, this message translates to:
+  /// **'Data Points'**
+  String get dataPointsCount;
+
+  /// No description provided for @sensorsUsed.
+  ///
+  /// In en, this message translates to:
+  /// **'Sensors Used'**
+  String get sensorsUsed;
+
+  /// No description provided for @sessionExportedToCSV.
+  ///
+  /// In en, this message translates to:
+  /// **'Session has been exported to CSV'**
+  String get sessionExportedToCSV;
+
+  /// No description provided for @sessionNotYetExported.
+  ///
+  /// In en, this message translates to:
+  /// **'Session not yet exported'**
+  String get sessionNotYetExported;
+
+  /// No description provided for @errorCheckingExportStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'Error checking export status'**
+  String get errorCheckingExportStatus;
+
+  /// No description provided for @dataPreview.
+  ///
+  /// In en, this message translates to:
+  /// **'Data Preview'**
+  String get dataPreview;
+
+  /// No description provided for @noDataPointsRecorded.
+  ///
+  /// In en, this message translates to:
+  /// **'No data points recorded'**
+  String get noDataPointsRecorded;
+
+  /// No description provided for @showingDataPoints.
+  ///
+  /// In en, this message translates to:
+  /// **'Showing {showing} of {total} data points'**
+  String showingDataPoints(int showing, int total);
+
+  /// No description provided for @pointNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Point'**
+  String get pointNumber;
+
+  /// No description provided for @errorLoadingDataPoints.
+  ///
+  /// In en, this message translates to:
+  /// **'Error loading data points: {error}'**
+  String errorLoadingDataPoints(String error);
+
+  /// No description provided for @exportToCSV.
+  ///
+  /// In en, this message translates to:
+  /// **'Export to CSV'**
+  String get exportToCSV;
+
+  /// No description provided for @exportingStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'Exporting...'**
+  String get exportingStatus;
+
+  /// No description provided for @exportedTo.
+  ///
+  /// In en, this message translates to:
+  /// **'Exported to: {path}'**
+  String exportedTo(String path);
+
+  /// No description provided for @sharingNotYetImplemented.
+  ///
+  /// In en, this message translates to:
+  /// **'(Sharing not yet implemented)'**
+  String get sharingNotYetImplemented;
+
+  /// No description provided for @failedToExportSession.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to export session'**
+  String get failedToExportSession;
+
+  /// No description provided for @exportedLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Exported'**
+  String get exportedLabel;
+
+  /// No description provided for @sensorAccelerometer.
+  ///
+  /// In en, this message translates to:
+  /// **'Accelerometer'**
+  String get sensorAccelerometer;
+
+  /// No description provided for @sensorGyroscope.
+  ///
+  /// In en, this message translates to:
+  /// **'Gyroscope'**
+  String get sensorGyroscope;
+
+  /// No description provided for @sensorMagnetometer.
+  ///
+  /// In en, this message translates to:
+  /// **'Magnetometer'**
+  String get sensorMagnetometer;
+
+  /// No description provided for @sensorBarometer.
+  ///
+  /// In en, this message translates to:
+  /// **'Barometer'**
+  String get sensorBarometer;
+
+  /// No description provided for @sensorLightMeter.
+  ///
+  /// In en, this message translates to:
+  /// **'Light'**
+  String get sensorLightMeter;
+
+  /// No description provided for @sensorNoiseMeter.
+  ///
+  /// In en, this message translates to:
+  /// **'Noise'**
+  String get sensorNoiseMeter;
+
+  /// No description provided for @sensorGPS.
+  ///
+  /// In en, this message translates to:
+  /// **'GPS'**
+  String get sensorGPS;
+
+  /// No description provided for @sensorProximity.
+  ///
+  /// In en, this message translates to:
+  /// **'Proximity'**
+  String get sensorProximity;
+
+  /// No description provided for @sensorTemperature.
+  ///
+  /// In en, this message translates to:
+  /// **'Temp'**
+  String get sensorTemperature;
+
+  /// No description provided for @sensorHumidity.
+  ///
+  /// In en, this message translates to:
+  /// **'Humidity'**
+  String get sensorHumidity;
+
+  /// No description provided for @sensorPedometer.
+  ///
+  /// In en, this message translates to:
+  /// **'Pedometer'**
+  String get sensorPedometer;
+
+  /// No description provided for @sensorCompass.
+  ///
+  /// In en, this message translates to:
+  /// **'Compass'**
+  String get sensorCompass;
+
+  /// No description provided for @sensorAltimeter.
+  ///
+  /// In en, this message translates to:
+  /// **'Altimeter'**
+  String get sensorAltimeter;
+
+  /// No description provided for @sensorSpeedMeter.
+  ///
+  /// In en, this message translates to:
+  /// **'Speed'**
+  String get sensorSpeedMeter;
+
+  /// No description provided for @sensorHeartBeat.
+  ///
+  /// In en, this message translates to:
+  /// **'Heart Rate'**
+  String get sensorHeartBeat;
+
+  /// No description provided for @environmentMonitor.
+  ///
+  /// In en, this message translates to:
+  /// **'Environment Monitor'**
+  String get environmentMonitor;
+
+  /// No description provided for @motionAnalysis.
+  ///
+  /// In en, this message translates to:
+  /// **'Motion Analysis'**
+  String get motionAnalysis;
+
+  /// No description provided for @indoorQuality.
+  ///
+  /// In en, this message translates to:
+  /// **'Indoor Quality'**
+  String get indoorQuality;
+
+  /// No description provided for @outdoorExplorer.
+  ///
+  /// In en, this message translates to:
+  /// **'Outdoor Explorer'**
+  String get outdoorExplorer;
+
+  /// No description provided for @vehicleDynamics.
+  ///
+  /// In en, this message translates to:
+  /// **'Vehicle Dynamics'**
+  String get vehicleDynamics;
+
+  /// No description provided for @healthTrackerLab.
+  ///
+  /// In en, this message translates to:
+  /// **'Health Tracker'**
+  String get healthTrackerLab;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

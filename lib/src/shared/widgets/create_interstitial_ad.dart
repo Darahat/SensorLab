@@ -13,21 +13,29 @@ InterstitialAd? interstitialAd;
 String _getInterstitialAdUnitId() {
   // Use Google test ad unit IDs in debug to avoid invalid traffic.
   if (kDebugMode) {
-    if (Platform.isAndroid) return 'ca-app-pub-3940256099942544/1033173712';
-    if (Platform.isIOS) return 'ca-app-pub-3940256099942544/4411468910';
+    if (Platform.isAndroid) {
+      return 'ca-app-pub-3940256099942544/1033173712';
+    }
+    if (Platform.isIOS) {
+      return 'ca-app-pub-3940256099942544/4411468910';
+    }
     return 'ca-app-pub-3940256099942544/1033173712';
   }
 
   // Production ad unit IDs: Use values from .env file configured via key.properties
   if (Platform.isAndroid) {
     final fromEnv = dotenv.env['AD_UNIT_INTERSTITIAL_ANDROID'];
-    if (fromEnv != null && fromEnv.isNotEmpty) return fromEnv;
+    if (fromEnv != null && fromEnv.isNotEmpty) {
+      return fromEnv;
+    }
     // Fallback to test ad unit for safety
     return 'ca-app-pub-3940256099942544/1033173712';
   }
   if (Platform.isIOS) {
     final fromEnv = dotenv.env['AD_UNIT_INTERSTITIAL_IOS'];
-    if (fromEnv != null && fromEnv.isNotEmpty) return fromEnv;
+    if (fromEnv != null && fromEnv.isNotEmpty) {
+      return fromEnv;
+    }
     // Fallback to test ad unit for safety
     return 'ca-app-pub-3940256099942544/4411468910';
   }
@@ -37,7 +45,9 @@ String _getInterstitialAdUnitId() {
 
 void createInterstitialAd() {
   // If we already have a loaded ad, don't load another.
-  if (interstitialAd != null) return;
+  if (interstitialAd != null) {
+    return;
+  }
   final adUnitId = _getInterstitialAdUnitId();
   InterstitialAd.load(
     adUnitId: adUnitId,

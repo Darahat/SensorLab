@@ -23,7 +23,9 @@ class SettingsController extends AsyncNotifier<AppSettings> {
   /// Update Theme mode
   Future<void> updateThemeMode(ThemeMode themeMode) async {
     final currentSettings = state.value;
-    if (currentSettings == null) return;
+    if (currentSettings == null) {
+      return;
+    }
 
     // state = const AsyncValue.loading();
 
@@ -116,7 +118,7 @@ class SettingsController extends AsyncNotifier<AppSettings> {
       await _settingsRepository.clearSettings();
       const defaultSettings = AppSettings();
       await _settingsRepository.saveSettings(defaultSettings);
-      state = AsyncValue.data(defaultSettings);
+      state = const AsyncValue.data(defaultSettings);
     } catch (e, stackTrace) {
       state = AsyncValue.error(e, stackTrace);
     }
@@ -125,7 +127,9 @@ class SettingsController extends AsyncNotifier<AppSettings> {
   /// Helper method to update settings
   Future<void> _updateSetting(AppSettings Function(AppSettings) updater) async {
     final currentSettings = state.value;
-    if (currentSettings == null) return;
+    if (currentSettings == null) {
+      return;
+    }
 
     // state = const AsyncValue.loading();
 

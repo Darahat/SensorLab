@@ -5,7 +5,6 @@ import '../../../../../l10n/app_localizations.dart';
 import '../pages/settings_page.dart';
 
 void showSettings(BuildContext context) {
-  final l10n = AppLocalizations.of(context)!;
   showModalBottomSheet(
     context: context,
     backgroundColor: Colors.transparent,

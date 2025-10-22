@@ -22,6 +22,7 @@ class InitializationService {
       await dotenv.load();
     } catch (e) {
       // .env file is optional, continue without it
+      // ignore: avoid_print
       print('No .env file found, continuing without environment variables');
     }
     await Hive.initFlutter();
