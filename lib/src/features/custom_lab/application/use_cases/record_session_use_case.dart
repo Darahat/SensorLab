@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:sensorlab/src/features/custom_lab/domain/entities/lab_session.dart';
 import 'package:sensorlab/src/features/custom_lab/domain/entities/sensor_data_point.dart';
+import 'package:sensorlab/src/features/custom_lab/domain/entities/sensor_type.dart';
 import 'package:sensorlab/src/features/custom_lab/domain/repositories/lab_repository.dart';
 import 'package:uuid/uuid.dart';
 
@@ -22,8 +23,9 @@ class RecordSessionUseCase {
       throw Exception('Lab not found: $labId');
     }
 
+    final sessionId = _uuid.v4();
     final session = LabSession(
-      id: _uuid.v4(),
+      id: sessionId,
       labId: labId,
       labName: lab.name,
       startTime: DateTime.now(),
@@ -33,11 +35,18 @@ class RecordSessionUseCase {
       duration: 0,
       notes: notes ?? '',
       exportPath: null,
-      sensorTypes: lab.sensors.map((s) => s.name).toList(),
+      sensorTypes: lab.sensors,
     );
 
     await _repository.createSession(session);
-    return session;
+
+    // Verify the session was saved correctly
+    final savedSession = await _repository.getSessionById(sessionId);
+    if (savedSession == null) {
+      throw Exception('Failed to save session: $sessionId');
+    }
+
+    return savedSession;
   }
 
   /// Pause an active recording session
@@ -60,7 +69,8 @@ class RecordSessionUseCase {
       endTime: session.endTime,
       status: RecordingStatus.paused,
       dataPointsCount: session.dataPointsCount,
-      duration: now.difference(session.startTime).inMilliseconds,
+      // Store duration in seconds to match the model contract
+      duration: now.difference(session.startTime).inSeconds,
       notes: session.notes,
       exportPath: session.exportPath,
       sensorTypes: session.sensorTypes,
@@ -123,7 +133,8 @@ class RecordSessionUseCase {
       endTime: now,
       status: RecordingStatus.completed,
       dataPointsCount: session.dataPointsCount,
-      duration: now.difference(session.startTime).inMilliseconds,
+      // Store duration in seconds to match the model contract
+      duration: now.difference(session.startTime).inSeconds,
       notes: additionalNotes != null
           ? '${session.notes}\n$additionalNotes'.trim()
           : session.notes,
@@ -138,7 +149,7 @@ class RecordSessionUseCase {
   /// Add a data point to a session
   Future<void> addDataPoint({
     required String sessionId,
-    required Map<String, dynamic> sensorValues,
+    required Map<SensorType, dynamic> sensorValues,
   }) async {
     final session = await _repository.getSessionById(sessionId);
     if (session == null) {
@@ -179,7 +190,7 @@ class RecordSessionUseCase {
   /// Add multiple data points in batch
   Future<void> addDataPointsBatch({
     required String sessionId,
-    required List<Map<String, dynamic>> sensorValuesList,
+    required List<Map<SensorType, dynamic>> sensorValuesList,
   }) async {
     final session = await _repository.getSessionById(sessionId);
     if (session == null) {
@@ -243,7 +254,8 @@ class RecordSessionUseCase {
       endTime: now,
       status: RecordingStatus.failed,
       dataPointsCount: session.dataPointsCount,
-      duration: now.difference(session.startTime).inMilliseconds,
+      // Store duration in seconds to match the model contract
+      duration: now.difference(session.startTime).inSeconds,
       notes: '${session.notes}\nError: $errorMessage'.trim(),
       exportPath: session.exportPath,
       sensorTypes: session.sensorTypes,

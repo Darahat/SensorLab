@@ -784,6 +784,39 @@ class AppLocalizationsKm extends AppLocalizations {
   String get grantPermission => 'ផ្តល់អនុញ្ញាត';
 
   @override
+  String get permissionGranted => 'បានផ្តល់អនុញ្ញាត';
+
+  @override
+  String get microphonePermissionDenied => 'បានបដិសេធការអនុញ្ញាតមីក្រូហ្វូន';
+
+  @override
+  String get microphonePermissionPermanentlyDenied => 'ការអនុញ្ញាតមីក្រូហ្វូនត្រូវបានបដិសេធជាអចិន្ត្រៃយ៍។ សូមបើកវានៅក្នុងការកំណត់ឧបករណ៍របស់អ្នកដើម្បីប្រើឧបករណ៍វាស់សំឡេង។';
+
+  @override
+  String get openSettings => 'បើកការកំណត់';
+
+  @override
+  String get microphoneAccessNeeded => 'ត្រូវការចូលប្រើមីក្រូហ្វូន';
+
+  @override
+  String get microphoneAccessDescription => 'ដើម្បីវាស់និងវិភាគកម្រិតសំឡេងត្រឹមត្រូវ យើងត្រូវការចូលប្រើមីក្រូហ្វូនឧបករណ៍របស់អ្នក។ សំឡេងរបស់អ្នកមិនត្រូវបានថតឬរក្សាទុកទេ។';
+
+  @override
+  String get measureNoiseLevels => 'វាស់កម្រិតសំឡេងក្នុងពេលពិត';
+
+  @override
+  String get analyzeAcoustics => 'វិភាគបរិយាកាសសូរសព្ទ';
+
+  @override
+  String get generateReports => 'បង្កើតរបាយការណ៍លម្អិត';
+
+  @override
+  String get allowMicrophoneAccess => 'អនុញ្ញាតចូលប្រើមីក្រូហ្វូន';
+
+  @override
+  String get audioNotRecorded => 'សំឡេងមិនត្រូវបានថតឬរក្សាទុកទេ';
+
+  @override
   String get inactive => 'មិនសកម្ម';
 
   @override
@@ -1861,6 +1894,29 @@ class AppLocalizationsKm extends AppLocalizations {
   String get dangerousLevels => 'កម្រិតគ្រោះថ្នាក់';
 
   @override
+  String get keyStatistics => 'ស្ថិតិសំខាន់ៗ';
+
+  @override
+  String get noiseEvents => 'ព្រឹត្តិការណ៍សំឡេង';
+
+  @override
+  String get noInterruptionsDetected => 'រកមិនឃើញការរំខាន';
+
+  @override
+  String get environmentConsistentlyQuiet => 'បរិស្ថានរបស់អ្នកស្ងប់ស្ងាត់ជាប់លាប់';
+
+  @override
+  String get expertAdvice => 'ដំបូន្មានអ្នកជំនាញ';
+
+  @override
+  String get quickTips => 'គន្លឹះរហ័ស';
+
+  @override
+  String dataPoints(int count) {
+    return '$count ចំណុច';
+  }
+
+  @override
   String get grantMicrophonePermission => 'ផ្តល់សិទ្ធិមីក្រូហ្វូនដើម្បីវាស់កម្រិតសំឡេង';
 
   @override
@@ -1999,10 +2055,13 @@ class AppLocalizationsKm extends AppLocalizations {
   String get recordingIntervalMs => 'ចន្លោះពេលកត់ត្រា (ms)';
 
   @override
-  String get recordingIntervalHint => '1000';
+  String get recordingIntervalSec => 'ចន្លោះពេលកត់ត្រា (វិនាទី)';
 
   @override
-  String get intervalMustBeBetween => 'ចន្លោះពេលត្រូវតែនៅចន្លោះ 100-10000 ms';
+  String get recordingIntervalHint => '1';
+
+  @override
+  String get intervalMustBeBetween => 'ចន្លោះពេលត្រូវតែនៅចន្លោះ 0.1-10 វិនាទី';
 
   @override
   String get pleaseEnterInterval => 'សូមបញ្ចូលចន្លោះពេល';
@@ -2126,11 +2185,6 @@ class AppLocalizationsKm extends AppLocalizations {
 
   @override
   String get failedToStartRecording => 'បរាជ័យក្នុងការចាប់ផ្តើមវគ្គកត់ត្រា';
-
-  @override
-  String dataPoints(int count) {
-    return '$count ចំណុច';
-  }
 
   @override
   String get noRecordingSessionsYet => 'មិនទាន់មានវគ្គកត់ត្រានៅឡើយ';

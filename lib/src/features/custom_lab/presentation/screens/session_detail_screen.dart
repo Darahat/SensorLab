@@ -5,6 +5,7 @@ import 'package:sensorlab/l10n/app_localizations.dart';
 import 'package:sensorlab/src/features/custom_lab/application/providers/export_provider.dart';
 import 'package:sensorlab/src/features/custom_lab/application/providers/recording_session_provider.dart';
 import 'package:sensorlab/src/features/custom_lab/domain/entities/lab_session.dart';
+import 'package:sensorlab/src/features/custom_lab/domain/entities/sensor_type.dart'; // Import SensorType
 
 /// Screen showing details of a recording session
 class SessionDetailScreen extends ConsumerWidget {
@@ -113,11 +114,11 @@ class SessionDetailScreen extends ConsumerWidget {
             Wrap(
               spacing: 8,
               runSpacing: 8,
-              children: session.sensorTypes.map((sensorName) {
+              children: session.sensorTypes.map((sensorType) {
                 return Chip(
-                  avatar: Icon(_getSensorIcon(sensorName), size: 18),
+                  avatar: Icon(_getSensorIcon(sensorType), size: 18),
                   label: Text(
-                    sensorName.replaceAll('_', ' ').toUpperCase(),
+                    sensorType.name.replaceAll('_', ' ').toUpperCase(),
                     style: theme.textTheme.bodySmall,
                   ),
                 );
@@ -402,7 +403,7 @@ class SessionDetailScreen extends ConsumerWidget {
     }
   }
 
-  String _formatSensorValues(Map<String, dynamic> values) {
+  String _formatSensorValues(Map<SensorType, dynamic> values) {
     return values.entries
         .map((entry) {
           final value = entry.value;
@@ -410,9 +411,9 @@ class SessionDetailScreen extends ConsumerWidget {
             final formatted = value.entries
                 .map((e) => '${e.key}: ${_formatNumber(e.value)}')
                 .join(', ');
-            return '${entry.key}: {$formatted}';
+            return '${entry.key.name}: {$formatted}';
           }
-          return '${entry.key}: ${_formatNumber(value)}';
+          return '${entry.key.name}: ${_formatNumber(value)}';
         })
         .join('\n');
   }
@@ -424,40 +425,38 @@ class SessionDetailScreen extends ConsumerWidget {
     return value.toString();
   }
 
-  IconData _getSensorIcon(String sensorName) {
-    switch (sensorName.toLowerCase()) {
-      case 'accelerometer':
+  IconData _getSensorIcon(SensorType sensorType) {
+    switch (sensorType) {
+      case SensorType.accelerometer:
         return Icons.speed;
-      case 'gyroscope':
+      case SensorType.gyroscope:
         return Icons.screen_rotation;
-      case 'magnetometer':
+      case SensorType.magnetometer:
         return Icons.explore;
-      case 'barometer':
+      case SensorType.barometer:
         return Icons.compress;
-      case 'lightmeter':
+      case SensorType.lightMeter:
         return Icons.light_mode;
-      case 'noisemeter':
+      case SensorType.noiseMeter:
         return Icons.volume_up;
-      case 'gps':
+      case SensorType.gps:
         return Icons.location_on;
-      case 'proximity':
+      case SensorType.proximity:
         return Icons.phonelink_ring;
-      case 'temperature':
+      case SensorType.temperature:
         return Icons.thermostat;
-      case 'humidity':
+      case SensorType.humidity:
         return Icons.water_drop;
-      case 'pedometer':
+      case SensorType.pedometer:
         return Icons.directions_walk;
-      case 'compass':
+      case SensorType.compass:
         return Icons.compass_calibration;
-      case 'altimeter':
+      case SensorType.altimeter:
         return Icons.terrain;
-      case 'speedmeter':
+      case SensorType.speedMeter:
         return Icons.speed;
-      case 'heartbeat':
+      case SensorType.heartBeat:
         return Icons.favorite;
-      default:
-        return Icons.sensors;
     }
   }
 

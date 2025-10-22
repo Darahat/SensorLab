@@ -784,6 +784,39 @@ class AppLocalizationsEs extends AppLocalizations {
   String get grantPermission => 'Conceder permiso';
 
   @override
+  String get permissionGranted => 'Permiso concedido';
+
+  @override
+  String get microphonePermissionDenied => 'Permiso de micrófono denegado';
+
+  @override
+  String get microphonePermissionPermanentlyDenied => 'El permiso del micrófono fue denegado permanentemente. Por favor, habilítalo en la configuración de tu dispositivo para usar el medidor de ruido.';
+
+  @override
+  String get openSettings => 'Abrir configuración';
+
+  @override
+  String get microphoneAccessNeeded => 'Acceso al micrófono necesario';
+
+  @override
+  String get microphoneAccessDescription => 'Para medir y analizar los niveles de sonido con precisión, necesitamos acceso al micrófono de tu dispositivo. Tu audio nunca se graba ni se almacena.';
+
+  @override
+  String get measureNoiseLevels => 'Medir niveles de ruido en tiempo real';
+
+  @override
+  String get analyzeAcoustics => 'Analizar el entorno acústico';
+
+  @override
+  String get generateReports => 'Generar informes detallados';
+
+  @override
+  String get allowMicrophoneAccess => 'Permitir acceso al micrófono';
+
+  @override
+  String get audioNotRecorded => 'El audio nunca se graba ni se almacena';
+
+  @override
   String get inactive => 'Inactivo';
 
   @override
@@ -1843,7 +1876,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get realtimeNoiseLevels => 'Niveles de Ruido en Tiempo Real';
 
   @override
-  String get decibelStatistics => 'Estadísticas de Decibelios';
+  String get decibelStatistics => 'Estadísticas de Decibeles';
 
   @override
   String get quietEnvironment => 'Ambiente Tranquilo';
@@ -1859,6 +1892,29 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get dangerousLevels => 'Niveles Peligrosos';
+
+  @override
+  String get keyStatistics => 'Estadísticas Clave';
+
+  @override
+  String get noiseEvents => 'Eventos de Ruido';
+
+  @override
+  String get noInterruptionsDetected => 'No se Detectaron Interrupciones';
+
+  @override
+  String get environmentConsistentlyQuiet => 'Su ambiente estuvo constantemente tranquilo';
+
+  @override
+  String get expertAdvice => 'Consejos de Experto';
+
+  @override
+  String get quickTips => 'Consejos Rápidos';
+
+  @override
+  String dataPoints(int count) {
+    return '$count puntos';
+  }
 
   @override
   String get grantMicrophonePermission => 'Otorgue permiso de micrófono para medir niveles de ruido';
@@ -1999,10 +2055,13 @@ class AppLocalizationsEs extends AppLocalizations {
   String get recordingIntervalMs => 'Intervalo de Grabación (ms)';
 
   @override
-  String get recordingIntervalHint => '1000';
+  String get recordingIntervalSec => 'Intervalo de Grabación (segundos)';
 
   @override
-  String get intervalMustBeBetween => 'El intervalo debe estar entre 100-10000 ms';
+  String get recordingIntervalHint => '1';
+
+  @override
+  String get intervalMustBeBetween => 'El intervalo debe estar entre 0.1-10 segundos';
 
   @override
   String get pleaseEnterInterval => 'Por favor ingrese un intervalo';
@@ -2126,11 +2185,6 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get failedToStartRecording => 'Error al iniciar sesión de grabación';
-
-  @override
-  String dataPoints(int count) {
-    return '$count puntos';
-  }
 
   @override
   String get noRecordingSessionsYet => 'Aún no hay sesiones de grabación';

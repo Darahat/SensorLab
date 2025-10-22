@@ -20,7 +20,7 @@ class _CreateLabScreenState extends ConsumerState<CreateLabScreen> {
   final _formKey = GlobalKey<FormState>();
   final _nameController = TextEditingController();
   final _descriptionController = TextEditingController();
-  final _intervalController = TextEditingController(text: '1000');
+  final _intervalController = TextEditingController(text: '1');
 
   Set<SensorType> _selectedSensors = {};
   Color _selectedColor = Colors.blue;
@@ -33,7 +33,13 @@ class _CreateLabScreenState extends ConsumerState<CreateLabScreen> {
     if (_isEditing) {
       _nameController.text = widget.labToEdit!.name;
       _descriptionController.text = widget.labToEdit!.description;
-      _intervalController.text = widget.labToEdit!.recordingInterval.toString();
+      // Convert milliseconds to seconds for display
+      final intervalInSeconds = (widget.labToEdit!.recordingInterval / 1000)
+          .toStringAsFixed(1);
+      _intervalController.text = intervalInSeconds.replaceAll(
+        RegExp(r'\.0$'),
+        '',
+      );
       _selectedSensors = widget.labToEdit!.sensors.toSet();
       _selectedColor = widget.labToEdit!.colorValue != null
           ? Color(widget.labToEdit!.colorValue!)
@@ -113,19 +119,21 @@ class _CreateLabScreenState extends ConsumerState<CreateLabScreen> {
             TextFormField(
               controller: _intervalController,
               decoration: InputDecoration(
-                labelText: l10n.recordingIntervalMs,
+                labelText: l10n.recordingIntervalSec,
                 hintText: l10n.recordingIntervalHint,
                 border: const OutlineInputBorder(),
                 prefixIcon: const Icon(Icons.timer),
-                suffixText: 'ms',
+                suffixText: 's',
               ),
-              keyboardType: TextInputType.number,
+              keyboardType: const TextInputType.numberWithOptions(
+                decimal: true,
+              ),
               validator: (value) {
                 if (value == null || value.isEmpty) {
                   return l10n.pleaseEnterInterval;
                 }
-                final interval = int.tryParse(value);
-                if (interval == null || interval < 100 || interval > 10000) {
+                final interval = double.tryParse(value);
+                if (interval == null || interval < 0.1 || interval > 10) {
                   return l10n.intervalMustBeBetween;
                 }
                 return null;
@@ -287,7 +295,9 @@ class _CreateLabScreenState extends ConsumerState<CreateLabScreen> {
       return;
     }
 
-    final interval = int.parse(_intervalController.text);
+    // Convert seconds to milliseconds
+    final intervalInSeconds = double.parse(_intervalController.text);
+    final interval = (intervalInSeconds * 1000).round();
     final labManagementNotifier = ref.read(labManagementProvider.notifier);
 
     Lab? result;

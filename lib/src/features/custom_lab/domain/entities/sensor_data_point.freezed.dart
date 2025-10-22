@@ -25,7 +25,9 @@ mixin _$SensorDataPoint {
   @HiveField(1)
   DateTime get timestamp => throw _privateConstructorUsedError;
   @HiveField(2)
-  Map<String, dynamic> get sensorValues => throw _privateConstructorUsedError;
+  @JsonKey(fromJson: _sensorValuesFromJson, toJson: _sensorValuesToJson)
+  Map<SensorType, dynamic> get sensorValues =>
+      throw _privateConstructorUsedError;
   @HiveField(3)
   int get sequenceNumber => throw _privateConstructorUsedError;
 
@@ -44,7 +46,9 @@ abstract class $SensorDataPointCopyWith<$Res> {
   $Res call(
       {@HiveField(0) String sessionId,
       @HiveField(1) DateTime timestamp,
-      @HiveField(2) Map<String, dynamic> sensorValues,
+      @HiveField(2)
+      @JsonKey(fromJson: _sensorValuesFromJson, toJson: _sensorValuesToJson)
+      Map<SensorType, dynamic> sensorValues,
       @HiveField(3) int sequenceNumber});
 }
 
@@ -78,7 +82,7 @@ class _$SensorDataPointCopyWithImpl<$Res, $Val extends SensorDataPoint>
       sensorValues: null == sensorValues
           ? _value.sensorValues
           : sensorValues // ignore: cast_nullable_to_non_nullable
-              as Map<String, dynamic>,
+              as Map<SensorType, dynamic>,
       sequenceNumber: null == sequenceNumber
           ? _value.sequenceNumber
           : sequenceNumber // ignore: cast_nullable_to_non_nullable
@@ -98,7 +102,9 @@ abstract class _$$SensorDataPointImplCopyWith<$Res>
   $Res call(
       {@HiveField(0) String sessionId,
       @HiveField(1) DateTime timestamp,
-      @HiveField(2) Map<String, dynamic> sensorValues,
+      @HiveField(2)
+      @JsonKey(fromJson: _sensorValuesFromJson, toJson: _sensorValuesToJson)
+      Map<SensorType, dynamic> sensorValues,
       @HiveField(3) int sequenceNumber});
 }
 
@@ -130,7 +136,7 @@ class __$$SensorDataPointImplCopyWithImpl<$Res>
       sensorValues: null == sensorValues
           ? _value._sensorValues
           : sensorValues // ignore: cast_nullable_to_non_nullable
-              as Map<String, dynamic>,
+              as Map<SensorType, dynamic>,
       sequenceNumber: null == sequenceNumber
           ? _value.sequenceNumber
           : sequenceNumber // ignore: cast_nullable_to_non_nullable
@@ -145,7 +151,9 @@ class _$SensorDataPointImpl implements _SensorDataPoint {
   const _$SensorDataPointImpl(
       {@HiveField(0) required this.sessionId,
       @HiveField(1) required this.timestamp,
-      @HiveField(2) required final Map<String, dynamic> sensorValues,
+      @HiveField(2)
+      @JsonKey(fromJson: _sensorValuesFromJson, toJson: _sensorValuesToJson)
+      required final Map<SensorType, dynamic> sensorValues,
       @HiveField(3) this.sequenceNumber = 0})
       : _sensorValues = sensorValues;
 
@@ -158,10 +166,11 @@ class _$SensorDataPointImpl implements _SensorDataPoint {
   @override
   @HiveField(1)
   final DateTime timestamp;
-  final Map<String, dynamic> _sensorValues;
+  final Map<SensorType, dynamic> _sensorValues;
   @override
   @HiveField(2)
-  Map<String, dynamic> get sensorValues {
+  @JsonKey(fromJson: _sensorValuesFromJson, toJson: _sensorValuesToJson)
+  Map<SensorType, dynamic> get sensorValues {
     if (_sensorValues is EqualUnmodifiableMapView) return _sensorValues;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableMapView(_sensorValues);
@@ -216,7 +225,9 @@ abstract class _SensorDataPoint implements SensorDataPoint {
   const factory _SensorDataPoint(
       {@HiveField(0) required final String sessionId,
       @HiveField(1) required final DateTime timestamp,
-      @HiveField(2) required final Map<String, dynamic> sensorValues,
+      @HiveField(2)
+      @JsonKey(fromJson: _sensorValuesFromJson, toJson: _sensorValuesToJson)
+      required final Map<SensorType, dynamic> sensorValues,
       @HiveField(3) final int sequenceNumber}) = _$SensorDataPointImpl;
 
   factory _SensorDataPoint.fromJson(Map<String, dynamic> json) =
@@ -230,7 +241,8 @@ abstract class _SensorDataPoint implements SensorDataPoint {
   DateTime get timestamp;
   @override
   @HiveField(2)
-  Map<String, dynamic> get sensorValues;
+  @JsonKey(fromJson: _sensorValuesFromJson, toJson: _sensorValuesToJson)
+  Map<SensorType, dynamic> get sensorValues;
   @override
   @HiveField(3)
   int get sequenceNumber;

@@ -1,6 +1,8 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hive/hive.dart';
 
+import 'sensor_type.dart';
+
 part 'lab_session.freezed.dart';
 part 'lab_session.g.dart';
 
@@ -38,7 +40,7 @@ class LabSession with _$LabSession {
     @HiveField(7) @Default(0) int duration, // seconds
     @HiveField(8) String? notes,
     @HiveField(9) String? exportPath, // Path to exported CSV file
-    @HiveField(10) @Default([]) List<String> sensorTypes,
+    @HiveField(10) @Default([]) List<SensorType> sensorTypes,
   }) = _LabSession;
 
   factory LabSession.fromJson(Map<String, dynamic> json) =>

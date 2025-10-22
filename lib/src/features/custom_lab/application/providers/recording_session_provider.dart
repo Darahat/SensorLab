@@ -1,10 +1,12 @@
 import 'dart:async';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:sensorlab/src/core/utils/logger.dart';
 import 'package:sensorlab/src/features/custom_lab/application/providers/lab_repository_provider.dart';
 import 'package:sensorlab/src/features/custom_lab/application/use_cases/record_session_use_case.dart';
 import 'package:sensorlab/src/features/custom_lab/domain/entities/lab_session.dart';
 import 'package:sensorlab/src/features/custom_lab/domain/entities/sensor_data_point.dart';
+import 'package:sensorlab/src/features/custom_lab/domain/entities/sensor_type.dart'; // Import SensorType
 
 /// Provider for RecordSessionUseCase
 final recordSessionUseCaseProvider = Provider<RecordSessionUseCase>((ref) {
@@ -78,10 +80,18 @@ class RecordingSessionNotifier extends StateNotifier<RecordingSessionState> {
         elapsedSeconds: 0,
       );
 
+      AppLogger.log(
+        'RecordingSessionNotifier: started session ${session.id} for lab ${session.labId}',
+        level: LogLevel.info,
+      );
       _startTimer();
       return true;
     } catch (e) {
       state = state.copyWith(isLoading: false, errorMessage: e.toString());
+      AppLogger.log(
+        'RecordingSessionNotifier: startSession failed: $e',
+        level: LogLevel.error,
+      );
       return false;
     }
   }
@@ -170,13 +180,29 @@ class RecordingSessionNotifier extends StateNotifier<RecordingSessionState> {
   /// Add a data point to the active session
   Future<void> addDataPoint(Map<String, dynamic> sensorValues) async {
     if (state.activeSession == null || !state.isRecording) {
+      AppLogger.log(
+        'RecordingSessionNotifier: addDataPoint skipped (no active session or not recording)',
+        level: LogLevel.debug,
+      );
       return;
     }
 
     try {
+      AppLogger.log(
+        'RecordingSessionNotifier: adding data point to ${state.activeSession!.id}',
+        level: LogLevel.debug,
+      );
+      // Convert Map<String, dynamic> to Map<SensorType, dynamic>
+      final Map<SensorType, dynamic> typedSensorValues = sensorValues.map(
+        (key, value) => MapEntry(
+          SensorType.values.firstWhere((e) => e.name == key),
+          value,
+        ),
+      );
+
       await _useCase.addDataPoint(
         sessionId: state.activeSession!.id,
-        sensorValues: sensorValues,
+        sensorValues: typedSensorValues, // Pass the converted map
       );
 
       // Update the session with new data points count
@@ -185,8 +211,16 @@ class RecordingSessionNotifier extends StateNotifier<RecordingSessionState> {
       );
 
       state = state.copyWith(activeSession: updatedSession);
+      AppLogger.log(
+        'RecordingSessionNotifier: dataPointsCount=${updatedSession.dataPointsCount}',
+        level: LogLevel.info,
+      );
     } catch (e) {
       state = state.copyWith(errorMessage: e.toString());
+      AppLogger.log(
+        'RecordingSessionNotifier: addDataPoint error: $e',
+        level: LogLevel.error,
+      );
     }
   }
 
@@ -199,9 +233,20 @@ class RecordingSessionNotifier extends StateNotifier<RecordingSessionState> {
     }
 
     try {
+      // Convert List<Map<String, dynamic>> to List<Map<SensorType, dynamic>>
+      final List<Map<SensorType, dynamic>> typedSensorValuesList =
+          sensorValuesList.map((map) {
+        return map.map(
+          (key, value) => MapEntry(
+            SensorType.values.firstWhere((e) => e.name == key),
+            value,
+          ),
+        );
+      }).toList();
+
       await _useCase.addDataPointsBatch(
         sessionId: state.activeSession!.id,
-        sensorValuesList: sensorValuesList,
+        sensorValuesList: typedSensorValuesList, // Pass the converted list
       );
 
       // Update the session with new data points count
@@ -258,6 +303,12 @@ class RecordingSessionNotifier extends StateNotifier<RecordingSessionState> {
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       if (state.isRecording && !state.isPaused) {
         state = state.copyWith(elapsedSeconds: state.elapsedSeconds + 1);
+        if (state.elapsedSeconds % 5 == 0) {
+          AppLogger.log(
+            'RecordingSessionNotifier: elapsed ${state.elapsedSeconds}s',
+            level: LogLevel.debug,
+          );
+        }
       }
     });
   }

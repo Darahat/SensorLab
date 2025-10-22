@@ -19,7 +19,7 @@ class SensorDataPointAdapter extends TypeAdapter<SensorDataPoint> {
     return SensorDataPoint(
       sessionId: fields[0] as String,
       timestamp: fields[1] as DateTime,
-      sensorValues: (fields[2] as Map).cast<String, dynamic>(),
+      sensorValues: (fields[2] as Map).cast<SensorType, dynamic>(),
       sequenceNumber: fields[3] as int,
     );
   }
@@ -58,7 +58,8 @@ _$SensorDataPointImpl _$$SensorDataPointImplFromJson(
     _$SensorDataPointImpl(
       sessionId: json['sessionId'] as String,
       timestamp: DateTime.parse(json['timestamp'] as String),
-      sensorValues: json['sensorValues'] as Map<String, dynamic>,
+      sensorValues:
+          _sensorValuesFromJson(json['sensorValues'] as Map<String, dynamic>),
       sequenceNumber: (json['sequenceNumber'] as num?)?.toInt() ?? 0,
     );
 
@@ -67,6 +68,6 @@ Map<String, dynamic> _$$SensorDataPointImplToJson(
     <String, dynamic>{
       'sessionId': instance.sessionId,
       'timestamp': instance.timestamp.toIso8601String(),
-      'sensorValues': instance.sensorValues,
+      'sensorValues': _sensorValuesToJson(instance.sensorValues),
       'sequenceNumber': instance.sequenceNumber,
     };

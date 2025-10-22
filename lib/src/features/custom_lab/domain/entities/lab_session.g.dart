@@ -27,7 +27,7 @@ class LabSessionAdapter extends TypeAdapter<LabSession> {
       duration: fields[7] as int,
       notes: fields[8] as String?,
       exportPath: fields[9] as String?,
-      sensorTypes: (fields[10] as List).cast<String>(),
+      sensorTypes: (fields[10] as List).cast<SensorType>(),
     );
   }
 
@@ -143,7 +143,7 @@ _$LabSessionImpl _$$LabSessionImplFromJson(Map<String, dynamic> json) =>
       notes: json['notes'] as String?,
       exportPath: json['exportPath'] as String?,
       sensorTypes: (json['sensorTypes'] as List<dynamic>?)
-              ?.map((e) => e as String)
+              ?.map((e) => $enumDecode(_$SensorTypeEnumMap, e))
               .toList() ??
           const [],
     );
@@ -160,7 +160,8 @@ Map<String, dynamic> _$$LabSessionImplToJson(_$LabSessionImpl instance) =>
       'duration': instance.duration,
       'notes': instance.notes,
       'exportPath': instance.exportPath,
-      'sensorTypes': instance.sensorTypes,
+      'sensorTypes':
+          instance.sensorTypes.map((e) => _$SensorTypeEnumMap[e]!).toList(),
     };
 
 const _$RecordingStatusEnumMap = {
@@ -169,4 +170,22 @@ const _$RecordingStatusEnumMap = {
   RecordingStatus.paused: 'paused',
   RecordingStatus.completed: 'completed',
   RecordingStatus.failed: 'failed',
+};
+
+const _$SensorTypeEnumMap = {
+  SensorType.accelerometer: 'accelerometer',
+  SensorType.gyroscope: 'gyroscope',
+  SensorType.magnetometer: 'magnetometer',
+  SensorType.barometer: 'barometer',
+  SensorType.lightMeter: 'lightMeter',
+  SensorType.noiseMeter: 'noiseMeter',
+  SensorType.gps: 'gps',
+  SensorType.proximity: 'proximity',
+  SensorType.temperature: 'temperature',
+  SensorType.humidity: 'humidity',
+  SensorType.pedometer: 'pedometer',
+  SensorType.compass: 'compass',
+  SensorType.altimeter: 'altimeter',
+  SensorType.speedMeter: 'speedMeter',
+  SensorType.heartBeat: 'heartBeat',
 };

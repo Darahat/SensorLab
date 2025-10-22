@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:hive/hive.dart';
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:sensorlab/src/core/utils/logger.dart';
 import 'package:sensorlab/src/features/custom_lab/domain/entities/lab.dart';
 import 'package:sensorlab/src/features/custom_lab/domain/entities/lab_session.dart';
 import 'package:sensorlab/src/features/custom_lab/domain/entities/sensor_data_point.dart';
@@ -101,6 +102,10 @@ class LabRepositoryImpl implements LabRepository {
     // Use a composite key: sessionId_sequenceNumber
     final key = '${dataPoint.sessionId}_${dataPoint.sequenceNumber}';
     await _dataBox.put(key, dataPoint);
+    AppLogger.log(
+      'LabRepositoryImpl: saved data point key=$key',
+      level: LogLevel.debug,
+    );
   }
 
   @override

@@ -106,7 +106,8 @@ class LabDetailScreen extends ConsumerWidget {
                         child: _InfoCard(
                           icon: Icons.timer,
                           label: l10n.interval,
-                          value: '${lab.recordingInterval}ms',
+                          value:
+                              '${(lab.recordingInterval / 1000).toStringAsFixed(1).replaceAll(RegExp(r'\.0$'), '')}s',
                         ),
                       ),
                     ],
