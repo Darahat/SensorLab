@@ -3,8 +3,12 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sensorlab/l10n/app_localizations.dart';
+import 'package:sensorlab/src/core/utils/logger.dart';
 import 'package:sensorlab/src/features/custom_lab/application/providers/recording_session_provider.dart';
 import 'package:sensorlab/src/features/custom_lab/domain/entities/lab.dart';
+import 'package:sensorlab/src/features/custom_lab/domain/entities/lab_session.dart';
+import 'package:sensorlab/src/features/custom_lab/domain/entities/sensor_type.dart';
+import 'package:sensorlab/src/features/custom_lab/presentation/widgets/session_complete_dialog.dart';
 
 /// Screen for recording sensor data
 class RecordingScreen extends ConsumerStatefulWidget {
@@ -33,14 +37,34 @@ class _RecordingScreenState extends ConsumerState<RecordingScreen> {
   }
 
   Future<void> _startSession() async {
+    AppLogger.log(
+      'RecordingScreen: _startSession called for lab ${widget.lab.id}',
+      level: LogLevel.info,
+    );
+
     final notifier = ref.read(recordingSessionProvider.notifier);
     final success = await notifier.startSession(labId: widget.lab.id);
 
+    AppLogger.log(
+      'RecordingScreen: startSession returned success=$success',
+      level: LogLevel.info,
+    );
+
     if (success) {
+      final state = ref.read(recordingSessionProvider);
+      AppLogger.log(
+        'RecordingScreen: Session started - id=${state.activeSession?.id}, status=${state.activeSession?.status}, isRecording=${state.isRecording}',
+        level: LogLevel.info,
+      );
       _startDataCollection();
     } else {
+      final state = ref.read(recordingSessionProvider);
+      AppLogger.log(
+        'RecordingScreen: Failed to start - error=${state.errorMessage}',
+        level: LogLevel.error,
+      );
       if (mounted) {
-        _showError('Failed to start recording session');
+        _showError(state.errorMessage ?? 'Failed to start recording session');
       }
     }
   }
@@ -53,6 +77,10 @@ class _RecordingScreenState extends ConsumerState<RecordingScreen> {
       Duration(milliseconds: widget.lab.recordingInterval),
       (timer) {
         final state = ref.read(recordingSessionProvider);
+        AppLogger.log(
+          'RecordingScreen tick: isRecording=${state.isRecording}, isPaused=${state.isPaused}, elapsed=${state.elapsedSeconds}s',
+          level: LogLevel.debug,
+        );
         if (state.isRecording) {
           _collectAndSaveSensorData();
         }
@@ -61,52 +89,74 @@ class _RecordingScreenState extends ConsumerState<RecordingScreen> {
   }
 
   Future<void> _collectAndSaveSensorData() async {
-    // Simulate reading sensor data
+    // Simulate reading sensor data using SensorType directly
     final sensorData = <String, dynamic>{};
 
     for (final sensor in widget.lab.sensors) {
-      switch (sensor.name.toLowerCase()) {
-        case 'accelerometer':
-          sensorData['accelerometer'] = {
+      final sensorKey = sensor.name;
+
+      switch (sensor) {
+        case SensorType.accelerometer:
+          sensorData[sensorKey] = {
             'x': _randomValue(-10, 10),
             'y': _randomValue(-10, 10),
             'z': _randomValue(-10, 10),
           };
           break;
-        case 'gyroscope':
-          sensorData['gyroscope'] = {
+        case SensorType.gyroscope:
+          sensorData[sensorKey] = {
             'x': _randomValue(-5, 5),
             'y': _randomValue(-5, 5),
             'z': _randomValue(-5, 5),
           };
           break;
-        case 'temperature':
-          sensorData['temperature'] = _randomValue(15, 35);
+        case SensorType.temperature:
+          sensorData[sensorKey] = _randomValue(15, 35);
           break;
-        case 'humidity':
-          sensorData['humidity'] = _randomValue(30, 80);
+        case SensorType.humidity:
+          sensorData[sensorKey] = _randomValue(30, 80);
           break;
-        case 'lightmeter':
-          sensorData['light'] = _randomValue(0, 1000);
+        case SensorType.lightMeter:
+          sensorData[sensorKey] = _randomValue(0, 1000);
           break;
-        case 'noisemeter':
-          sensorData['noise'] = _randomValue(30, 100);
+        case SensorType.noiseMeter:
+          sensorData[sensorKey] = _randomValue(30, 100);
           break;
-        case 'barometer':
-          sensorData['pressure'] = _randomValue(900, 1100);
+        case SensorType.barometer:
+          sensorData[sensorKey] = _randomValue(900, 1100);
           break;
-        default:
-          sensorData[sensor.name] = _randomValue(0, 100);
+        case SensorType.magnetometer:
+        case SensorType.proximity:
+        case SensorType.gps:
+        case SensorType.compass:
+        case SensorType.pedometer:
+        case SensorType.altimeter:
+        case SensorType.speedMeter:
+        case SensorType.heartBeat:
+          sensorData[sensorKey] = _randomValue(0, 100);
+          break;
       }
     }
 
     setState(() {
+      _currentSensorData.clear();
       _currentSensorData.addAll(sensorData);
     });
 
     // Save data point
     final notifier = ref.read(recordingSessionProvider.notifier);
+    AppLogger.log(
+      'RecordingScreen: addDataPoint called with keys: ${sensorData.keys.toList()}',
+      level: LogLevel.debug,
+    );
     await notifier.addDataPoint(sensorData);
+    final session = ref.read(recordingSessionProvider).activeSession;
+    if (session != null) {
+      AppLogger.log(
+        'RecordingScreen: dataPointsCount now ${session.dataPointsCount}',
+        level: LogLevel.info,
+      );
+    }
   }
 
   double _randomValue(double min, double max) {
@@ -118,6 +168,25 @@ class _RecordingScreenState extends ConsumerState<RecordingScreen> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final l10n = AppLocalizations.of(context)!;
+
+    // Listen for session completion and show dialog
+    ref.listen<RecordingSessionState>(recordingSessionProvider, (
+      previous,
+      next,
+    ) {
+      // Session just completed
+      if (previous?.isRecording == true &&
+          !next.isRecording &&
+          !next.isPaused &&
+          next.activeSession != null &&
+          next.activeSession!.status == RecordingStatus.completed) {
+        SessionCompleteDialog.show(
+          context: context,
+          session: next.activeSession!,
+        );
+      }
+    });
+
     final recordingState = ref.watch(recordingSessionProvider);
     final session = recordingState.activeSession;
 
@@ -388,15 +457,12 @@ class _RecordingScreenState extends ConsumerState<RecordingScreen> {
     await notifier.stopSession();
     _recordingTimer?.cancel();
 
-    if (mounted) {
-      final l10n = AppLocalizations.of(context)!;
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(l10n.recordingSavedSuccessfully),
-          backgroundColor: Colors.green,
-        ),
-      );
-    }
+    AppLogger.log(
+      'RecordingScreen: stopRecording called',
+      level: LogLevel.info,
+    );
+
+    // Dialog will be shown automatically via ref.listen
   }
 
   Future<bool?> _showExitConfirmation() async {
@@ -414,9 +480,8 @@ class _RecordingScreenState extends ConsumerState<RecordingScreen> {
           FilledButton(
             onPressed: () async {
               await _stopRecording();
-              if (mounted) {
-                Navigator.of(context).pop(true);
-              }
+              if (!context.mounted) return;
+              Navigator.of(context).pop(true);
             },
             style: FilledButton.styleFrom(backgroundColor: Colors.red),
             child: Text(l10n.stopAndSave),

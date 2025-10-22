@@ -106,7 +106,7 @@ class _SessionInfoSectionState extends State<SessionInfoSection> {
                       _buildInfoRow(
                         theme,
                         Iconsax.chart_square,
-                        l10n.dataPoints,
+                        l10n.dataPoints(widget.report.events.length),
                         '${widget.report.events.length}',
                       ),
                     ],

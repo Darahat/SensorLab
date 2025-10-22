@@ -1912,7 +1912,9 @@ class AppLocalizationsKm extends AppLocalizations {
   String get quickTips => 'គន្លឹះរហ័ស';
 
   @override
-  String get dataPoints => 'ចំណុចទិន្នន័យ';
+  String dataPoints(int count) {
+    return '$count ចំណុច';
+  }
 
   @override
   String get grantMicrophonePermission => 'ផ្តល់សិទ្ធិមីក្រូហ្វូនដើម្បីវាស់កម្រិតសំឡេង';
@@ -2053,10 +2055,13 @@ class AppLocalizationsKm extends AppLocalizations {
   String get recordingIntervalMs => 'ចន្លោះពេលកត់ត្រា (ms)';
 
   @override
-  String get recordingIntervalHint => '1000';
+  String get recordingIntervalSec => 'ចន្លោះពេលកត់ត្រា (វិនាទី)';
 
   @override
-  String get intervalMustBeBetween => 'ចន្លោះពេលត្រូវតែនៅចន្លោះ 100-10000 ms';
+  String get recordingIntervalHint => '1';
+
+  @override
+  String get intervalMustBeBetween => 'ចន្លោះពេលត្រូវតែនៅចន្លោះ 0.1-10 វិនាទី';
 
   @override
   String get pleaseEnterInterval => 'សូមបញ្ចូលចន្លោះពេល';
@@ -2180,11 +2185,6 @@ class AppLocalizationsKm extends AppLocalizations {
 
   @override
   String get failedToStartRecording => 'បរាជ័យក្នុងការចាប់ផ្តើមវគ្គកត់ត្រា';
-
-  @override
-  String dataPoints(int count) {
-    return '$count ចំណុច';
-  }
 
   @override
   String get noRecordingSessionsYet => 'មិនទាន់មានវគ្គកត់ត្រានៅឡើយ';

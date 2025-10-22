@@ -1912,7 +1912,9 @@ class AppLocalizationsJa extends AppLocalizations {
   String get quickTips => 'クイックヒント';
 
   @override
-  String get dataPoints => 'データポイント';
+  String dataPoints(int count) {
+    return '$countポイント';
+  }
 
   @override
   String get grantMicrophonePermission => '騒音レベルを測定するためにマイクの許可を付与してください';
@@ -2053,10 +2055,13 @@ class AppLocalizationsJa extends AppLocalizations {
   String get recordingIntervalMs => '記録間隔（ms）';
 
   @override
-  String get recordingIntervalHint => '1000';
+  String get recordingIntervalSec => '記録間隔（秒）';
 
   @override
-  String get intervalMustBeBetween => '間隔は100〜10000 msの範囲で指定してください';
+  String get recordingIntervalHint => '1';
+
+  @override
+  String get intervalMustBeBetween => '間隔は0.1〜10秒の範囲で指定してください';
 
   @override
   String get pleaseEnterInterval => '間隔を入力してください';
@@ -2180,11 +2185,6 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get failedToStartRecording => '記録セッションの開始に失敗しました';
-
-  @override
-  String dataPoints(int count) {
-    return '$countポイント';
-  }
 
   @override
   String get noRecordingSessionsYet => 'まだ記録セッションがありません';

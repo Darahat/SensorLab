@@ -1912,7 +1912,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get quickTips => 'Consejos Rápidos';
 
   @override
-  String get dataPoints => 'Puntos de Datos';
+  String dataPoints(int count) {
+    return '$count puntos';
+  }
 
   @override
   String get grantMicrophonePermission => 'Otorgue permiso de micrófono para medir niveles de ruido';
@@ -2053,10 +2055,13 @@ class AppLocalizationsEs extends AppLocalizations {
   String get recordingIntervalMs => 'Intervalo de Grabación (ms)';
 
   @override
-  String get recordingIntervalHint => '1000';
+  String get recordingIntervalSec => 'Intervalo de Grabación (segundos)';
 
   @override
-  String get intervalMustBeBetween => 'El intervalo debe estar entre 100-10000 ms';
+  String get recordingIntervalHint => '1';
+
+  @override
+  String get intervalMustBeBetween => 'El intervalo debe estar entre 0.1-10 segundos';
 
   @override
   String get pleaseEnterInterval => 'Por favor ingrese un intervalo';
@@ -2180,11 +2185,6 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get failedToStartRecording => 'Error al iniciar sesión de grabación';
-
-  @override
-  String dataPoints(int count) {
-    return '$count puntos';
-  }
 
   @override
   String get noRecordingSessionsYet => 'Aún no hay sesiones de grabación';

@@ -3816,8 +3816,8 @@ abstract class AppLocalizations {
   /// No description provided for @dataPoints.
   ///
   /// In en, this message translates to:
-  /// **'Data Points'**
-  String get dataPoints;
+  /// **'{count} points'**
+  String dataPoints(int count);
 
   /// No description provided for @grantMicrophonePermission.
   ///
@@ -4083,16 +4083,22 @@ abstract class AppLocalizations {
   /// **'Recording Interval (ms)'**
   String get recordingIntervalMs;
 
+  /// No description provided for @recordingIntervalSec.
+  ///
+  /// In en, this message translates to:
+  /// **'Recording Interval (seconds)'**
+  String get recordingIntervalSec;
+
   /// No description provided for @recordingIntervalHint.
   ///
   /// In en, this message translates to:
-  /// **'1000'**
+  /// **'1'**
   String get recordingIntervalHint;
 
   /// No description provided for @intervalMustBeBetween.
   ///
   /// In en, this message translates to:
-  /// **'Interval must be between 100-10000 ms'**
+  /// **'Interval must be between 0.1-10 seconds'**
   String get intervalMustBeBetween;
 
   /// No description provided for @pleaseEnterInterval.
@@ -4328,12 +4334,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Failed to start recording session'**
   String get failedToStartRecording;
-
-  /// No description provided for @dataPoints.
-  ///
-  /// In en, this message translates to:
-  /// **'{count} points'**
-  String dataPoints(int count);
 
   /// No description provided for @noRecordingSessionsYet.
   ///

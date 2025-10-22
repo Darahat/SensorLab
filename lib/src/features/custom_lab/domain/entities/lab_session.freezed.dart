@@ -42,7 +42,7 @@ mixin _$LabSession {
   String? get exportPath =>
       throw _privateConstructorUsedError; // Path to exported CSV file
   @HiveField(10)
-  List<String> get sensorTypes => throw _privateConstructorUsedError;
+  List<SensorType> get sensorTypes => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -67,7 +67,7 @@ abstract class $LabSessionCopyWith<$Res> {
       @HiveField(7) int duration,
       @HiveField(8) String? notes,
       @HiveField(9) String? exportPath,
-      @HiveField(10) List<String> sensorTypes});
+      @HiveField(10) List<SensorType> sensorTypes});
 }
 
 /// @nodoc
@@ -139,7 +139,7 @@ class _$LabSessionCopyWithImpl<$Res, $Val extends LabSession>
       sensorTypes: null == sensorTypes
           ? _value.sensorTypes
           : sensorTypes // ignore: cast_nullable_to_non_nullable
-              as List<String>,
+              as List<SensorType>,
     ) as $Val);
   }
 }
@@ -163,7 +163,7 @@ abstract class _$$LabSessionImplCopyWith<$Res>
       @HiveField(7) int duration,
       @HiveField(8) String? notes,
       @HiveField(9) String? exportPath,
-      @HiveField(10) List<String> sensorTypes});
+      @HiveField(10) List<SensorType> sensorTypes});
 }
 
 /// @nodoc
@@ -233,7 +233,7 @@ class __$$LabSessionImplCopyWithImpl<$Res>
       sensorTypes: null == sensorTypes
           ? _value._sensorTypes
           : sensorTypes // ignore: cast_nullable_to_non_nullable
-              as List<String>,
+              as List<SensorType>,
     ));
   }
 }
@@ -252,7 +252,7 @@ class _$LabSessionImpl implements _LabSession {
       @HiveField(7) this.duration = 0,
       @HiveField(8) this.notes,
       @HiveField(9) this.exportPath,
-      @HiveField(10) final List<String> sensorTypes = const []})
+      @HiveField(10) final List<SensorType> sensorTypes = const []})
       : _sensorTypes = sensorTypes;
 
   factory _$LabSessionImpl.fromJson(Map<String, dynamic> json) =>
@@ -292,12 +292,12 @@ class _$LabSessionImpl implements _LabSession {
   @HiveField(9)
   final String? exportPath;
 // Path to exported CSV file
-  final List<String> _sensorTypes;
+  final List<SensorType> _sensorTypes;
 // Path to exported CSV file
   @override
   @JsonKey()
   @HiveField(10)
-  List<String> get sensorTypes {
+  List<SensorType> get sensorTypes {
     if (_sensorTypes is EqualUnmodifiableListView) return _sensorTypes;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_sensorTypes);
@@ -373,7 +373,7 @@ abstract class _LabSession implements LabSession {
       @HiveField(7) final int duration,
       @HiveField(8) final String? notes,
       @HiveField(9) final String? exportPath,
-      @HiveField(10) final List<String> sensorTypes}) = _$LabSessionImpl;
+      @HiveField(10) final List<SensorType> sensorTypes}) = _$LabSessionImpl;
 
   factory _LabSession.fromJson(Map<String, dynamic> json) =
       _$LabSessionImpl.fromJson;
@@ -410,7 +410,7 @@ abstract class _LabSession implements LabSession {
   String? get exportPath;
   @override // Path to exported CSV file
   @HiveField(10)
-  List<String> get sensorTypes;
+  List<SensorType> get sensorTypes;
   @override
   @JsonKey(ignore: true)
   _$$LabSessionImplCopyWith<_$LabSessionImpl> get copyWith =>

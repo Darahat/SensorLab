@@ -69,7 +69,7 @@ class LabManagementNotifier extends StateNotifier<LabManagementState> {
       state = state.copyWith(isLoading: false, selectedLab: lab);
 
       // Refresh the lab list
-      _ref.invalidate(labListProvider);
+      _ref.invalidate(allLabsProvider);
 
       return lab;
     } catch (e) {
@@ -104,7 +104,7 @@ class LabManagementNotifier extends StateNotifier<LabManagementState> {
       state = state.copyWith(isLoading: false, selectedLab: lab);
 
       // Refresh the lab list
-      _ref.invalidate(labListProvider);
+      _ref.invalidate(allLabsProvider);
 
       return lab;
     } catch (e) {
@@ -126,7 +126,7 @@ class LabManagementNotifier extends StateNotifier<LabManagementState> {
       );
 
       // Refresh the lab list
-      _ref.invalidate(labListProvider);
+      _ref.invalidate(allLabsProvider);
 
       return true;
     } catch (e) {
@@ -145,7 +145,7 @@ class LabManagementNotifier extends StateNotifier<LabManagementState> {
       state = state.copyWith(isLoading: false, selectedLab: lab);
 
       // Refresh the lab list
-      _ref.invalidate(labListProvider);
+      _ref.invalidate(allLabsProvider);
 
       return lab;
     } catch (e) {

@@ -1912,7 +1912,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get quickTips => 'Quick Tips';
 
   @override
-  String get dataPoints => 'Data Points';
+  String dataPoints(int count) {
+    return '$count points';
+  }
 
   @override
   String get grantMicrophonePermission => 'Grant microphone permission to measure noise levels';
@@ -2053,10 +2055,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get recordingIntervalMs => 'Recording Interval (ms)';
 
   @override
-  String get recordingIntervalHint => '1000';
+  String get recordingIntervalSec => 'Recording Interval (seconds)';
 
   @override
-  String get intervalMustBeBetween => 'Interval must be between 100-10000 ms';
+  String get recordingIntervalHint => '1';
+
+  @override
+  String get intervalMustBeBetween => 'Interval must be between 0.1-10 seconds';
 
   @override
   String get pleaseEnterInterval => 'Please enter an interval';
@@ -2180,11 +2185,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get failedToStartRecording => 'Failed to start recording session';
-
-  @override
-  String dataPoints(int count) {
-    return '$count points';
-  }
 
   @override
   String get noRecordingSessionsYet => 'No recording sessions yet';
