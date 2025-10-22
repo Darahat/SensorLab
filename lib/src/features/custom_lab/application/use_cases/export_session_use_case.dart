@@ -15,7 +15,10 @@ class ExportSessionUseCase {
       throw Exception('Session not found: $sessionId');
     }
 
-    final csvPath = await _repository.exportSessionToCSV(sessionId);
+    // Get the data points for the session
+    final dataPoints = await _repository.getSensorDataPoints(sessionId);
+
+    final csvPath = await _repository.exportSessionToCSV(sessionId, dataPoints);
 
     // Update session with export path
     final updatedSession = session.copyWith(exportPath: csvPath);

@@ -167,7 +167,7 @@ class RecordSessionUseCase {
       sequenceNumber: session.dataPointsCount + 1,
     );
 
-    await _repository.saveDataPoint(dataPoint);
+    await _repository.saveDataPoint(session.id, dataPoint);
 
     // Update session data points count
     final updatedSession = LabSession(
@@ -215,7 +215,7 @@ class RecordSessionUseCase {
       );
     }
 
-    await _repository.saveBatchDataPoints(dataPoints);
+    await _repository.saveBatchDataPoints(sessionId, dataPoints);
 
     // Update session data points count
     final updatedSession = LabSession(
