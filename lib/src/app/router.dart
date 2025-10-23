@@ -15,6 +15,8 @@ import '../features/humidity/presentation/screens/humidity_screen.dart';
 import '../features/light_meter/presentation/screens/light_meter_screen.dart';
 import '../features/magnetometer/presentation/screens/magnetometer_screen.dart';
 import '../features/noise_meter/presentation/screens/noise_meter_screen.dart';
+// Onboarding
+import '../features/onboarding/presentation/screens/onboarding_screen.dart';
 import '../features/proximity/presentation/screens/proximity_screen.dart';
 import '../features/qr_scanner/presentation/screens/qr_scanner_screen.dart';
 // Scanner Models
@@ -60,6 +62,13 @@ final routerProvider = Provider<GoRouter>((ref) {
         path: '/splash',
         name: 'splash',
         builder: (context, state) => const SplashScreen(),
+      ),
+
+      // Onboarding Screen
+      GoRoute(
+        path: '/onboarding',
+        name: 'onboarding',
+        builder: (context, state) => const OnboardingScreen(),
       ),
 
       // Home Screen
