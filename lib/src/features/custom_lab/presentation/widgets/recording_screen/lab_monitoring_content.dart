@@ -4,9 +4,8 @@ import 'package:sensorlab/l10n/app_localizations.dart';
 import 'package:sensorlab/src/features/custom_lab/application/providers/lab_monitoring_notifier.dart';
 import 'package:sensorlab/src/features/custom_lab/application/state/lab_monitoring_state.dart';
 import 'package:sensorlab/src/features/custom_lab/domain/entities/lab.dart';
-import 'package:sensorlab/src/features/custom_lab/domain/entities/lab_session.dart';
+import 'package:sensorlab/src/features/custom_lab/presentation/screens/session_history_screen.dart';
 import 'package:sensorlab/src/features/custom_lab/presentation/widgets/recording_screen/sensor_component_factory.dart';
-import 'package:sensorlab/src/features/custom_lab/presentation/widgets/recording_screen/session_complete_dialog.dart';
 
 class LabMonitoringContent extends ConsumerWidget {
   final Lab lab;
@@ -18,20 +17,23 @@ class LabMonitoringContent extends ConsumerWidget {
     final theme = Theme.of(context);
     final l10n = AppLocalizations.of(context)!;
 
-    // Listen for session completion and show dialog
+    // Listen for session completion and navigate to session history
     ref.listen<LabMonitoringState>(labMonitoringNotifierProvider, (
       previous,
       next,
     ) {
-      // Session just completed
+      // Session just stopped - navigate to session history
       if (previous?.isRecording == true &&
           !next.isRecording &&
-          !next.isPaused &&
-          next.activeSession != null &&
-          next.activeSession!.status == RecordingStatus.completed) {
-        SessionCompleteDialog.show(
-          context: context,
-          session: next.activeSession!,
+          !next.isPaused) {
+        // Pop the recording screen
+        Navigator.of(context).pop();
+
+        // Navigate to session history
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => SessionHistoryScreen(lab: lab),
+          ),
         );
       }
     });
@@ -182,18 +184,6 @@ class LabMonitoringContent extends ConsumerWidget {
                   ),
                 ),
               ],
-              if (!monitoringState.isRecording && !monitoringState.isPaused)
-                Expanded(
-                  child: FilledButton.icon(
-                    onPressed: () => Navigator.of(context).pop(),
-                    icon: const Icon(Icons.check),
-                    label: Text(l10n.done),
-                    style: FilledButton.styleFrom(
-                      backgroundColor: Colors.green,
-                      padding: const EdgeInsets.all(16),
-                    ),
-                  ),
-                ),
             ],
           ),
         ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:sensorlab/src/core/providers.dart';
 import 'package:sensorlab/src/features/custom_lab/application/providers/sensor_data_providers.dart';
 import 'package:sensorlab/src/features/custom_lab/domain/entities/sensor_type.dart';
 import 'package:sensorlab/src/shared/widgets/utility_widgets.dart';
@@ -9,11 +10,14 @@ class PedometerDisplayWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final dataPoints = ref.watch(sensorTimeSeriesProvider(SensorType.pedometer));
+    final dataPoints = ref.watch(
+      sensorTimeSeriesProvider(SensorType.pedometer),
+    );
+    final pedometerData = ref.watch(pedometerProvider);
 
     return RealtimeLineChart(
       dataPoints: dataPoints,
-      title: 'Steps',
+      title: 'Steps (${pedometerData.steps})',
       lineColor: Colors.pink,
       minY: 0,
       maxY: dataPoints.isNotEmpty

@@ -124,21 +124,31 @@ class LabDetailScreen extends ConsumerWidget {
                       ),
                       const SizedBox(width: 12),
                       Expanded(
-                        child: sessionsAsync.when(
-                          data: (sessions) => _InfoCard(
-                            icon: Icons.history,
-                            label: l10n.sessions,
-                            value: '${sessions.length}',
-                          ),
-                          loading: () => _InfoCard(
-                            icon: Icons.history,
-                            label: l10n.sessions,
-                            value: '...',
-                          ),
-                          error: (_, __) => _InfoCard(
-                            icon: Icons.history,
-                            label: l10n.sessions,
-                            value: '0',
+                        child: InkWell(
+                          onTap: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    SessionHistoryScreen(lab: lab),
+                              ),
+                            );
+                          },
+                          child: sessionsAsync.when(
+                            data: (sessions) => _InfoCard(
+                              icon: Icons.history,
+                              label: l10n.sessions,
+                              value: '${sessions.length}',
+                            ),
+                            loading: () => _InfoCard(
+                              icon: Icons.history,
+                              label: l10n.sessions,
+                              value: '...',
+                            ),
+                            error: (_, __) => _InfoCard(
+                              icon: Icons.history,
+                              label: l10n.sessions,
+                              value: '0',
+                            ),
                           ),
                         ),
                       ),

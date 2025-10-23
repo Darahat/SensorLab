@@ -1,22 +1,23 @@
 import 'dart:async';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:sensorlab/src/core/providers.dart'; // Import core sensor providers
 import 'package:sensorlab/src/core/utils/logger.dart';
+import 'package:sensorlab/src/features/custom_lab/application/providers/recording_session_provider.dart';
 import 'package:sensorlab/src/features/custom_lab/application/providers/sensor_data_providers.dart';
 import 'package:sensorlab/src/features/custom_lab/application/state/lab_monitoring_state.dart';
-import 'package:sensorlab/src/features/custom_lab/data/providers/lab_repository_provider.dart';
 import 'package:sensorlab/src/features/custom_lab/domain/entities/lab.dart';
 import 'package:sensorlab/src/features/custom_lab/domain/entities/sensor_type.dart';
-import 'package:sensorlab/src/features/custom_lab/domain/repositories/lab_repository.dart';
 import 'package:sensorlab/src/features/custom_lab/domain/use_cases/add_data_point_use_case.dart';
 import 'package:sensorlab/src/features/custom_lab/domain/use_cases/pause_lab_session_use_case.dart';
 import 'package:sensorlab/src/features/custom_lab/domain/use_cases/resume_lab_session_use_case.dart';
 import 'package:sensorlab/src/features/custom_lab/domain/use_cases/start_lab_session_use_case.dart';
 import 'package:sensorlab/src/features/custom_lab/domain/use_cases/stop_lab_session_use_case.dart';
+import 'package:sensorlab/src/features/noise_meter/domain/entities/acoustic_report_entity.dart'
+    as entities;
 
 /// Manages the state and logic for a custom lab monitoring session.
 class LabMonitoringNotifier extends StateNotifier<LabMonitoringState> {
-  final LabRepository _repository;
   final StartLabSessionUseCase _startLabSession;
   final StopLabSessionUseCase _stopLabSession;
   final PauseLabSessionUseCase _pauseLabSession;
@@ -24,7 +25,7 @@ class LabMonitoringNotifier extends StateNotifier<LabMonitoringState> {
   final AddDataPointUseCase _addDataPoint;
   final Ref _ref; // To access other providers like sensorTimeSeriesProvider
 
-  StreamSubscription<Map<String, dynamic>>? _sensorStreamSubscription;
+  Timer? _sensorPollTimer;
   Timer? _sessionTimer;
 
   // Store current sensor data for saving (not for UI updates)
@@ -32,11 +33,15 @@ class LabMonitoringNotifier extends StateNotifier<LabMonitoringState> {
 
   // Throttle sensor data - track last update time per sensor
   final Map<String, DateTime> _lastSensorUpdate = {};
+
+  // Battery optimization: slower polling for less critical sensors
   static const _sensorThrottleMs =
-      200; // Accept data max every 200ms per sensor
+      500; // Increased from 200ms to 500ms (2 Hz instead of 5 Hz)
+
+  // Track poll cycles to stagger heavy sensors
+  int _pollCycle = 0;
 
   LabMonitoringNotifier(
-    this._repository,
     this._startLabSession,
     this._stopLabSession,
     this._pauseLabSession,
@@ -77,63 +82,184 @@ class LabMonitoringNotifier extends StateNotifier<LabMonitoringState> {
       _ref.read(sensorTimeSeriesProvider(sensor).notifier).clear();
     }
 
-    // Subscribe to real sensor streams based on selected sensors
-    // We'll combine all sensor streams into one for simplicity here,
-    // or manage individual subscriptions if needed.
-    // For now, let's assume we get a combined stream or manage individually.
-    // This part needs careful implementation based on how getSensorStream works.
-
-    // For now, let's iterate through each sensor and subscribe individually
+    // Initialize sensors that need explicit setup
     for (final sensor in lab.sensors) {
-      final sensorKey = sensor.name;
-      _sensorStreamSubscription = _repository
-          .getSensorStream(sensor)
-          .listen(
-            (data) {
-              _onSensorData(sensor, data);
-            },
-            onError: (error) {
-              AppLogger.log(
-                'Sensor stream error for $sensorKey: $error',
-                level: LogLevel.error,
+      switch (sensor) {
+        case SensorType.noiseMeter:
+          // Noise meter needs to start recording
+          _ref
+              .read(enhancedNoiseMeterProvider.notifier)
+              .startRecordingWithPreset(
+                // Use custom preset with very long duration for continuous monitoring
+                entities.RecordingPreset.custom,
+                customDuration: const Duration(hours: 24),
               );
-              state = state.copyWith(errorMessage: 'Sensor error: $error');
-            },
-            onDone: () {
-              AppLogger.log(
-                'Sensor stream for $sensorKey done',
-                level: LogLevel.info,
-              );
-            },
-          );
+          break;
+        case SensorType.gps:
+          // GPS/Geolocator needs initialization
+          _ref.read(geolocatorProvider.notifier).initialize();
+          break;
+        case SensorType.lightMeter:
+          // Light meter - ensure it's in standard mode (not photo mode)
+          _ref.read(lightMeterProvider.notifier).enableStandardMode();
+          break;
+        default:
+          // Other sensors auto-start when provider is watched
+          break;
+      }
+    }
+
+    // Poll core sensor providers periodically (every 200ms)
+    _sensorPollTimer?.cancel();
+    _sensorPollTimer = Timer.periodic(
+      const Duration(milliseconds: _sensorThrottleMs),
+      (_) => _pollSensorData(lab.sensors),
+    );
+  }
+
+  void _pollSensorData(List<SensorType> sensors) {
+    if (!state.isRecording || state.isPaused) return;
+
+    final now = DateTime.now();
+    _pollCycle++;
+
+    // Define heavy sensors that should be polled less frequently
+    const heavySensors = {
+      SensorType.noiseMeter, // Uses microphone constantly
+      SensorType.gps, // GPS drains battery
+      SensorType.heartBeat, // Uses camera + flashlight
+    };
+
+    for (final sensor in sensors) {
+      try {
+        // Skip heavy sensors on odd cycles (poll them every 1 second instead of 500ms)
+        if (heavySensors.contains(sensor) && _pollCycle % 2 != 0) {
+          continue;
+        }
+
+        // Read from core providers based on sensor type
+        dynamic sensorData;
+
+        switch (sensor) {
+          case SensorType.lightMeter:
+            sensorData = _ref.read(lightMeterProvider);
+            _processSensorValue(
+              sensor,
+              'lightMeter',
+              sensorData.currentLux,
+              now,
+            );
+            break;
+          case SensorType.noiseMeter:
+            sensorData = _ref.read(enhancedNoiseMeterProvider);
+            _processSensorValue(
+              sensor,
+              'noiseMeter',
+              sensorData.currentDecibels,
+              now,
+            );
+            break;
+          case SensorType.accelerometer:
+            sensorData = _ref.read(accelerometerProvider);
+            _processSensorValue(
+              sensor,
+              'accelerometer',
+              sensorData.magnitude,
+              now,
+            );
+            break;
+          case SensorType.gyroscope:
+            sensorData = _ref.read(gyroscopeProvider);
+            _processSensorValue(sensor, 'gyroscope', sensorData.intensity, now);
+            break;
+          case SensorType.magnetometer:
+            sensorData = _ref.read(magnetometerProvider);
+            _processSensorValue(
+              sensor,
+              'magnetometer',
+              sensorData.strength,
+              now,
+            );
+            break;
+          case SensorType.barometer:
+            // Barometer uses altimeter data
+            final altimeter = _ref.read(altimeterProvider);
+            _processSensorValue(sensor, 'barometer', altimeter.pressure, now);
+            break;
+          case SensorType.compass:
+            sensorData = _ref.read(compassProvider);
+            final headingValue = sensorData.heading ?? 0.0;
+            _processSensorValue(sensor, 'compass', headingValue, now);
+            break;
+          case SensorType.proximity:
+            sensorData = _ref.read(proximityProvider);
+            _processSensorValue(
+              sensor,
+              'proximity',
+              sensorData.isNear ? 1.0 : 0.0,
+              now,
+            );
+            break;
+          case SensorType.pedometer:
+            sensorData = _ref.read(pedometerProvider);
+            _processSensorValue(
+              sensor,
+              'pedometer',
+              sensorData.steps.toDouble(),
+              now,
+            );
+            break;
+          case SensorType.heartBeat:
+            sensorData = _ref.read(heartBeatProvider);
+            _processSensorValue(
+              sensor,
+              'heartBeat',
+              sensorData.currentBPM.toDouble(),
+              now,
+            );
+            break;
+          case SensorType.gps:
+            sensorData = _ref.read(geolocatorProvider);
+            // GPS needs special handling - store multiple values
+            if (sensorData.latitude != null && sensorData.longitude != null) {
+              _currentSensorData['gps_latitude'] = sensorData.latitude;
+              _currentSensorData['gps_longitude'] = sensorData.longitude;
+              _currentSensorData['gps_altitude'] = sensorData.altitude ?? 0.0;
+              _currentSensorData['gps_speed'] = sensorData.speed ?? 0.0;
+              _currentSensorData['gps_accuracy'] = sensorData.accuracy ?? 0.0;
+              // For graph, use speed or accuracy
+              _ref
+                  .read(sensorTimeSeriesProvider(sensor).notifier)
+                  .addDataPoint(sensorData.speed ?? 0.0);
+            }
+            break;
+          case SensorType.altimeter:
+            sensorData = _ref.read(altimeterProvider);
+            _processSensorValue(sensor, 'altimeter', sensorData.altitude, now);
+            break;
+          default:
+            break;
+        }
+      } catch (e) {
+        AppLogger.log(
+          'Error reading sensor ${sensor.name}: $e',
+          level: LogLevel.warning,
+        );
+      }
     }
   }
 
-  void _onSensorData(SensorType sensor, Map<String, dynamic> data) {
-    final sensorKey = sensor.name;
-    // Throttle: only accept data every 200ms per sensor
-    final now = DateTime.now();
-    final lastUpdate = _lastSensorUpdate[sensorKey];
-    if (lastUpdate != null) {
-      final timeSinceLastUpdate = now.difference(lastUpdate).inMilliseconds;
-      if (timeSinceLastUpdate < _sensorThrottleMs) {
-        // Skip this update - too soon since last one
-        return;
-      }
-    }
-    _lastSensorUpdate[sensorKey] = now;
+  void _processSensorValue(
+    SensorType sensor,
+    String sensorKey,
+    double value,
+    DateTime timestamp,
+  ) {
+    // Store for database
+    _currentSensorData[sensorKey] = value;
 
-    // Update current sensor data for saving
-    _currentSensorData.addAll(data);
-
-    // Add to time series for graphing via provider (assuming data contains a single value for graph)
-    // This part needs to be generic enough to extract the graphable value.
-    // For now, let's assume the map contains a key that matches the sensorKey and its value is the graphable double.
-    if (data.containsKey(sensorKey) && data[sensorKey] is double) {
-      _ref
-          .read(sensorTimeSeriesProvider(sensor).notifier)
-          .addDataPoint(data[sensorKey] as double);
-    }
+    // Add to time series for graphing
+    _ref.read(sensorTimeSeriesProvider(sensor).notifier).addDataPoint(value);
   }
 
   void _startSessionTimer() {
@@ -141,12 +267,21 @@ class LabMonitoringNotifier extends StateNotifier<LabMonitoringState> {
     _sessionTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
       if (state.isRecording && !state.isPaused) {
         state = state.copyWith(elapsedSeconds: state.elapsedSeconds + 1);
-        // Periodically save data points
-        if (state.elapsedSeconds %
-                (state.activeLab?.recordingInterval ?? 1000) ==
-            0) {
+
+        // Battery optimization: Save data less frequently
+        // recordingInterval is in milliseconds, convert to seconds
+        final intervalMillis = state.activeLab?.recordingInterval ?? 5000;
+        final saveInterval = (intervalMillis / 1000).round().clamp(
+          1,
+          60,
+        ); // Min 1s, max 60s
+
+        if (state.elapsedSeconds % saveInterval == 0) {
           _collectAndSaveSensorData();
         }
+
+        // TODO: Add auto-stop based on preset duration when Lab entity has maxDuration field
+        // For now, sessions continue until manually stopped
       }
     });
   }
@@ -183,8 +318,24 @@ class LabMonitoringNotifier extends StateNotifier<LabMonitoringState> {
     if (state.activeSession == null) return;
 
     try {
-      await _pauseLabSession(state.activeSession!);
+      // Save labId for invalidation
+      final labId = state.activeLab?.id;
+
+      // Update session with current duration before pausing
+      final updatedSession = state.activeSession!.copyWith(
+        duration: state.elapsedSeconds,
+      );
+      await _pauseLabSession(updatedSession);
+
+      // Stop sensor polling when paused to save battery
+      _sensorPollTimer?.cancel();
+
       state = state.copyWith(isPaused: true);
+
+      // Invalidate the session list provider to refresh UI
+      if (labId != null) {
+        _ref.invalidate(labSessionsProvider(labId));
+      }
     } catch (e) {
       AppLogger.log('Error pausing lab session: $e', level: LogLevel.error);
       state = state.copyWith(errorMessage: 'Failed to pause session: $e');
@@ -198,6 +349,11 @@ class LabMonitoringNotifier extends StateNotifier<LabMonitoringState> {
     try {
       await _resumeLabSession(state.activeSession!);
       state = state.copyWith(isPaused: false);
+
+      // Resume sensor polling
+      if (state.activeLab != null) {
+        _startSensorDataCollection(state.activeLab!);
+      }
     } catch (e) {
       AppLogger.log('Error resuming lab session: $e', level: LogLevel.error);
       state = state.copyWith(errorMessage: 'Failed to resume session: $e');
@@ -209,7 +365,14 @@ class LabMonitoringNotifier extends StateNotifier<LabMonitoringState> {
     if (state.activeSession == null) return;
 
     try {
-      await _stopLabSession(state.activeSession!);
+      // Save labId before clearing state
+      final labId = state.activeLab?.id;
+
+      // Update session with final duration before stopping
+      final updatedSession = state.activeSession!.copyWith(
+        duration: state.elapsedSeconds,
+      );
+      await _stopLabSession(updatedSession);
       _cleanupSession();
       state = state.copyWith(
         isRecording: false,
@@ -218,6 +381,11 @@ class LabMonitoringNotifier extends StateNotifier<LabMonitoringState> {
         activeSession: null,
         elapsedSeconds: 0,
       );
+
+      // Invalidate the session list provider to refresh UI
+      if (labId != null) {
+        _ref.invalidate(labSessionsProvider(labId));
+      }
     } catch (e) {
       AppLogger.log('Error stopping lab session: $e', level: LogLevel.error);
       state = state.copyWith(errorMessage: 'Failed to stop session: $e');
@@ -225,11 +393,39 @@ class LabMonitoringNotifier extends StateNotifier<LabMonitoringState> {
   }
 
   void _cleanupSession() {
-    _sensorStreamSubscription?.cancel();
+    _sensorPollTimer?.cancel();
     _sessionTimer?.cancel();
     _currentSensorData.clear();
     _lastSensorUpdate.clear();
-    // Also clear all sensorTimeSeriesProviders
+
+    // Stop sensors that need explicit cleanup
+    if (state.activeLab != null) {
+      for (final sensor in state.activeLab!.sensors) {
+        switch (sensor) {
+          case SensorType.noiseMeter:
+            // Stop noise meter recording
+            final noiseMeterNotifier = _ref.read(
+              enhancedNoiseMeterProvider.notifier,
+            );
+            if (_ref.read(enhancedNoiseMeterProvider).isRecording) {
+              noiseMeterNotifier.stopRecording();
+            }
+            break;
+          case SensorType.gps:
+            // Stop GPS tracking if active
+            final gpsNotifier = _ref.read(geolocatorProvider.notifier);
+            if (_ref.read(geolocatorProvider).isTracking) {
+              gpsNotifier.stopTracking();
+            }
+            break;
+          default:
+            // Other sensors auto-cleanup
+            break;
+        }
+      }
+    }
+
+    // Clear all sensorTimeSeriesProviders
     for (final sensor in state.activeLab?.sensors ?? []) {
       _ref.read(sensorTimeSeriesProvider(sensor).notifier).clear();
     }
@@ -248,7 +444,6 @@ final labMonitoringNotifierProvider =
       LabMonitoringState
     >(
       (ref) => LabMonitoringNotifier(
-        ref.read(labRepositoryProvider),
         ref.read(startLabSessionUseCaseProvider),
         ref.read(stopLabSessionUseCaseProvider),
         ref.read(pauseLabSessionUseCaseProvider),
