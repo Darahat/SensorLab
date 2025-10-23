@@ -176,7 +176,7 @@ class SessionCard extends ConsumerWidget {
                       padding: const EdgeInsets.only(top: 12),
                       child: Row(
                         children: [
-                          Icon(
+                          const Icon(
                             Icons.check_circle,
                             size: 16,
                             color: Colors.green,

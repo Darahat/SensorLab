@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:sensorlab/l10n/app_localizations.dart';
+// Removed unused l10n import
 import 'package:sensorlab/src/features/light_meter/models/plant_light_data.dart';
 import 'package:sensorlab/src/features/light_meter/presentation/providers/light_meter_provider.dart';
 import 'package:sensorlab/src/shared/widgets/common_cards.dart';
@@ -56,7 +56,7 @@ class _PlantLightAssistantScreenState
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final l10n = AppLocalizations.of(context)!;
+    // Removed unused local l10n to satisfy analyzer
     final lightState = ref.watch(lightMeterProvider);
     final notifier = ref.read(lightMeterProvider.notifier);
     final plantData = notifier.plantTrackingData;

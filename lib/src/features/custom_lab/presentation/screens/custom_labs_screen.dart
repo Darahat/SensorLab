@@ -7,6 +7,7 @@ import 'package:sensorlab/src/features/custom_lab/domain/entities/lab.dart';
 import 'package:sensorlab/src/features/custom_lab/presentation/screens/create_lab_screen.dart';
 import 'package:sensorlab/src/features/custom_lab/presentation/screens/lab_detail_screen.dart';
 import 'package:sensorlab/src/features/custom_lab/presentation/widgets/lab_card.dart';
+import 'package:sensorlab/src/features/custom_lab/presentation/widgets/preset_preflight_dialog.dart';
 
 /// Main screen showing all labs (presets and custom)
 class CustomLabsScreen extends ConsumerStatefulWidget {
@@ -161,12 +162,28 @@ class _CustomLabsScreenState extends ConsumerState<CustomLabsScreen>
         final lab = labs[index];
         return LabCard(
           lab: lab,
-          onTap: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) => LabDetailScreen(lab: lab),
-              ),
-            );
+          onTap: () async {
+            if (lab.isPreset) {
+              final proceed = await showDialog<bool>(
+                context: context,
+                barrierDismissible: true,
+                builder: (_) => PresetPreflightDialog(lab: lab),
+              );
+              if (proceed == true && context.mounted) {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => LabDetailScreen(lab: lab),
+                  ),
+                );
+              }
+            } else {
+              if (!context.mounted) return;
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => LabDetailScreen(lab: lab),
+                ),
+              );
+            }
           },
         );
       },

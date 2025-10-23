@@ -72,8 +72,7 @@ class _GeolocatorPageState extends State<GeolocatorPage> {
         _longitude = position.longitude;
         _location =
             '${position.latitude.toStringAsFixed(6)}, ${position.longitude.toStringAsFixed(6)}';
-        _accuracy =
-            "${position.accuracy.toStringAsFixed(2) ?? "--"} ${l10n.meters}";
+        _accuracy = "${position.accuracy.toStringAsFixed(2)} ${l10n.meters}";
       });
 
       // Get address from coordinates

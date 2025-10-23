@@ -8,7 +8,7 @@ import '../../models/pedometer_data.dart';
 class PedometerNotifier extends StateNotifier<PedometerData> {
   StreamSubscription<StepCount>? _stepCountSubscription;
   StreamSubscription<PedestrianStatus>? _pedestrianStatusSubscription;
-  int _initialStepCount = 0;
+  // Removed initial step baseline field; using state.previousSteps instead
   bool _isInitialized = false;
 
   PedometerNotifier() : super(PedometerData()) {
@@ -34,7 +34,6 @@ class PedometerNotifier extends StateNotifier<PedometerData> {
   void _onStepCount(StepCount event) {
     // Initialize on first event
     if (!_isInitialized) {
-      _initialStepCount = event.steps;
       _isInitialized = true;
       state = state.copyWith(previousSteps: event.steps, isActive: true);
       return;
@@ -72,7 +71,6 @@ class PedometerNotifier extends StateNotifier<PedometerData> {
   /// Reset the step counter (start new session)
   void reset() {
     _isInitialized = false;
-    _initialStepCount = 0;
     state = PedometerData(
       dailyGoal: state.dailyGoal,
       startTime: DateTime.now(),

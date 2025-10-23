@@ -9,11 +9,11 @@ import '../../models/heart_beat_data.dart';
 
 class HeartBeatNotifier extends StateNotifier<HeartBeatData> {
   CameraController? _cameraController;
-  late TorchLight _torchController;
+  // Removed unused field to satisfy analyzer
   Timer? _warningTimer;
 
   HeartBeatNotifier() : super(HeartBeatData.initial()) {
-    _torchController = TorchLight();
+    // torch_light provides static methods; no instance needed
     _initializeCamera();
   }
 
@@ -300,7 +300,6 @@ class HeartBeatNotifier extends StateNotifier<HeartBeatData> {
 
   CameraController? get cameraController => _cameraController;
 
-  @override
   @override
   void dispose() {
     _warningTimer?.cancel();

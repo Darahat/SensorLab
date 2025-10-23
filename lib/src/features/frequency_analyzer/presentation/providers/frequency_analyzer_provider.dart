@@ -107,7 +107,7 @@ class FrequencyAnalyzerNotifier extends StateNotifier<FrequencyData> {
   List<List<double>> _performFFT(List<double> samples) {
     final n = samples.length;
     final real = List<double>.from(samples);
-    final imag = List<double>.filled(n, 0.0);
+    // Removed unused variable to satisfy analyzer
 
     // Simple DFT for demonstration (slow but works)
     // In production, use package like 'fftea' or 'scidart'

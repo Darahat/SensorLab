@@ -19,8 +19,9 @@ class FlashlightNotifier extends StateNotifier<FlashlightData> {
   Timer? _onTimeTracker;
   Timer? _strobeTimer;
   Timer? _sosTimer;
-  bool _sosState = false;
+  // Removed unused field to satisfy analyzer
   int _sosStep = 0;
+  bool _sosState = false;
 
   @override
   void dispose() {

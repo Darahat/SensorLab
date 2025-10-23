@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'dart:math';
+import 'dart:math' show sqrt;
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sensorlab/src/features/health/domain/entities/activity_session.dart';
@@ -373,35 +373,7 @@ class HealthProvider extends StateNotifier<HealthData> {
     state = state.copyWith(caloriesBurned: calories);
   }
 
-  // Quick actions for testing/demonstration
-  void simulateWorkout() {
-    if (state.isTracking) return;
-
-    startTracking();
-
-    // Simulate 5 minutes of activity
-    Timer.periodic(const Duration(seconds: 1), (timer) {
-      if (timer.tick > 300 || !state.isTracking) {
-        timer.cancel();
-        return;
-      }
-
-      // Simulate steps
-      if (timer.tick % 2 == 0) {
-        incrementSteps();
-      }
-
-      // Simulate movement data
-      final simulatedAccel = UserAccelerometerEvent(
-        Random().nextDouble() * 2 - 1,
-        Random().nextDouble() * 2 - 1,
-        Random().nextDouble() * 2 - 1,
-        DateTime.now(),
-      );
-
-      _handleAccelerometerData(simulatedAccel);
-    });
-  }
+  // (Removed simulateWorkout: random-based simulation is not allowed)
 
   void quickStepTest() {
     // Add 100 steps for testing

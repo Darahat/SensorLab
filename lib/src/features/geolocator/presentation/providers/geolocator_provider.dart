@@ -1,5 +1,7 @@
 import 'dart:async';
-import 'dart:math';
+import 'dart:math' show max;
+
+// Note: Removed random-based simulation; this provider now uses only real GPS data.
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:geocoding/geocoding.dart';
@@ -369,32 +371,7 @@ class GeolocatorProvider extends StateNotifier<GeolocatorData> {
   }
 
   // Quick actions for testing
-  void simulateMovement() {
-    if (!state.isTracking) return;
-
-    // Simulate a random walk
-    final currentLat = state.currentLocation?.latitude ?? 0.0;
-    final currentLng = state.currentLocation?.longitude ?? 0.0;
-
-    final random = Random();
-    final newLat = currentLat + (random.nextDouble() - 0.5) * 0.001; // ~100m
-    final newLng = currentLng + (random.nextDouble() - 0.5) * 0.001;
-
-    final simulatedPosition = Position(
-      latitude: newLat,
-      longitude: newLng,
-      timestamp: DateTime.now(),
-      accuracy: 5.0 + random.nextDouble() * 10, // 5-15m accuracy
-      altitude: 100.0 + random.nextDouble() * 50,
-      altitudeAccuracy: 3.0,
-      heading: random.nextDouble() * 360,
-      headingAccuracy: 5.0,
-      speed: random.nextDouble() * 5, // 0-5 m/s
-      speedAccuracy: 1.0,
-    );
-
-    _handleLocationUpdate(simulatedPosition);
-  }
+  // (Removed simulateMovement: random simulation is not allowed)
 
   // Service status refresh
   Future<void> refreshServiceStatus() async {

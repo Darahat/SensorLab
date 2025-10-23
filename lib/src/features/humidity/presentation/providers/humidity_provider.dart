@@ -1,5 +1,7 @@
 import 'dart:async';
-import 'dart:math';
+import 'dart:math' show min, max;
+
+// Note: Random-based simulation removed. This provider only exposes real sensor data when available.
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -17,9 +19,8 @@ class HumidityNotifier extends StateNotifier<HumidityData> {
   HumidityNotifier() : super(const HumidityData());
 
   Timer? _sessionTimer;
-  Timer? _simulationTimer;
+  Timer? _sensorPollTimer; // Placeholder for real sensor poll if supported
   final List<double> _allReadings = [];
-  final Random _random = Random();
 
   @override
   void dispose() {
@@ -30,15 +31,14 @@ class HumidityNotifier extends StateNotifier<HumidityData> {
   /// Check if device has humidity sensor and initialize
   Future<void> checkSensorAvailability() async {
     try {
-      // Most consumer devices don't have humidity sensors
-      // We'll simulate this functionality for demonstration
+      // Check actual hardware availability (platform/implementation specific)
       final hasSensor = await _checkHumidityAvailability();
 
       state = state.copyWith(
         hasSensor: hasSensor,
         errorMessage: hasSensor
             ? null
-            : 'Device does not have a humidity sensor. Showing simulated data.',
+            : 'Device does not have a humidity sensor.',
       );
     } catch (e) {
       state = state.copyWith(
@@ -48,26 +48,34 @@ class HumidityNotifier extends StateNotifier<HumidityData> {
     }
   }
 
-  /// Simulate humidity sensor availability check
+  /// Check humidity sensor availability (stub - replace with platform-specific implementation)
   Future<bool> _checkHumidityAvailability() async {
-    // In a real app, you would check for actual sensor availability
-    // Most smartphones don't have humidity sensors, so we'll simulate
-    await Future.delayed(const Duration(milliseconds: 500));
-    return false; // Most devices don't have humidity sensors
+    // TODO: Implement actual availability check via a suitable plugin or platform channel.
+    // For now, return false to indicate unavailable on most devices.
+    return false;
   }
 
-  /// Start humidity measurement (simulation for most devices)
+  /// Start humidity measurement (real sensor only)
   Future<void> startMeasurement() async {
     if (!state.hasSensor) {
       await checkSensorAvailability();
     }
 
     try {
+      if (!state.hasSensor) {
+        // Do not start measurement without a real sensor
+        state = state.copyWith(
+          isReading: false,
+          errorMessage: 'Humidity sensor not available on this device.',
+        );
+        return;
+      }
+
       // Reset session data
       _allReadings.clear();
       state = state.copyWith(
         isReading: true,
-        errorMessage: state.hasSensor ? null : 'Using simulated humidity data',
+        errorMessage: null,
         minHumidity: double.infinity,
         maxHumidity: double.negativeInfinity,
         averageHumidity: 0.0,
@@ -76,12 +84,8 @@ class HumidityNotifier extends StateNotifier<HumidityData> {
         recentReadings: [],
       );
 
-      // Start simulation timer (since most devices don't have humidity sensors)
-      _simulationTimer = Timer.periodic(const Duration(seconds: 2), (timer) {
-        _generateSimulatedHumidityData();
-      });
-
-      // Start session timer
+      // TODO: Subscribe to real humidity sensor stream if available.
+      // As a placeholder, we keep a session timer to track elapsed time only.
       _sessionTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
         state = state.copyWith(sessionDuration: state.sessionDuration + 1);
       });
@@ -93,54 +97,10 @@ class HumidityNotifier extends StateNotifier<HumidityData> {
     }
   }
 
-  /// Generate simulated humidity data
-  void _generateSimulatedHumidityData() {
-    if (!mounted) return;
-
-    try {
-      // Generate realistic humidity values
-      // Base humidity around 45-55% with some variation
-      const baseHumidity = 50.0;
-      final variation = (_random.nextDouble() - 0.5) * 20; // ±10%
-      final seasonalOffset = _getSeasonalOffset();
-
-      double humidity = (baseHumidity + variation + seasonalOffset).clamp(
-        20.0,
-        90.0,
-      );
-
-      // Add small trends over time
-      if (_allReadings.isNotEmpty) {
-        final lastReading = _allReadings.last;
-        final trend = (_random.nextDouble() - 0.5) * 2; // Small trend
-        humidity = (lastReading + trend).clamp(20.0, 90.0);
-      }
-
-      _processHumidityReading(humidity);
-    } catch (e) {
-      state = state.copyWith(
-        errorMessage: 'Error generating humidity data: $e',
-      );
-    }
-  }
-
-  /// Get seasonal humidity offset (simulation)
-  double _getSeasonalOffset() {
-    final month = DateTime.now().month;
-
-    // Summer months tend to be more humid
-    if (month >= 6 && month <= 8) {
-      return 10.0; // Higher humidity in summer
-    }
-    // Winter months tend to be drier
-    else if (month >= 12 || month <= 2) {
-      return -15.0; // Lower humidity in winter
-    }
-
-    return 0.0; // Spring/fall baseline
-  }
-
   /// Process humidity reading (real or simulated)
+  // Process a real humidity reading from hardware/plugin.
+  // This remains for when a real sensor stream is integrated.
+  // ignore: unused_element
   void _processHumidityReading(double humidity) {
     if (!mounted) return;
 
@@ -192,8 +152,8 @@ class HumidityNotifier extends StateNotifier<HumidityData> {
 
   /// Stop humidity measurement
   void stopMeasurement() {
-    _simulationTimer?.cancel();
-    _simulationTimer = null;
+    _sensorPollTimer?.cancel();
+    _sensorPollTimer = null;
     _sessionTimer?.cancel();
     _sessionTimer = null;
 
@@ -222,18 +182,16 @@ class HumidityNotifier extends StateNotifier<HumidityData> {
     try {
       if (!state.hasSensor) {
         await checkSensorAvailability();
+        state = state.copyWith(
+          errorMessage: 'Humidity sensor not available on this device.',
+        );
+        return;
       }
 
-      // Generate single simulated reading
-      final humidity = 45.0 + (_random.nextDouble() - 0.5) * 30; // 30-60% range
-      final humidityLevel = HumidityData.getHumidityLevel(humidity);
-
+      // TODO: Read a single real humidity value from the platform, if supported.
       state = state.copyWith(
-        currentHumidity: humidity,
-        humidityLevel: humidityLevel,
-        errorMessage: state.hasSensor
-            ? null
-            : 'Single reading from simulated data',
+        errorMessage:
+            'Single humidity reading is not supported on this device yet.',
       );
     } catch (e) {
       state = state.copyWith(

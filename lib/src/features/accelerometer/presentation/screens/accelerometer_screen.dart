@@ -13,7 +13,7 @@ class AccelerometerScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final accelerometerData = ref.watch(accelerometerProvider);
     final colorScheme = Theme.of(context).colorScheme;
-    final isDarkMode = colorScheme.brightness == Brightness.dark;
+    // Removed unused variable to satisfy analyzer
     final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
