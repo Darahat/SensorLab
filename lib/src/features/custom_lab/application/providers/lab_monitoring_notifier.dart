@@ -20,8 +20,6 @@ import 'package:sensorlab/src/features/noise_meter/domain/entities/acoustic_repo
 class LabMonitoringNotifier extends StateNotifier<LabMonitoringState> {
   final StartLabSessionUseCase _startLabSession;
   final StopLabSessionUseCase _stopLabSession;
-  final PauseLabSessionUseCase _pauseLabSession;
-  final ResumeLabSessionUseCase _resumeLabSession;
   final AddDataPointUseCase _addDataPoint;
   final Ref _ref; // To access other providers like sensorTimeSeriesProvider
 
@@ -36,7 +34,7 @@ class LabMonitoringNotifier extends StateNotifier<LabMonitoringState> {
 
   // Battery optimization: slower polling for less critical sensors
   static const _sensorThrottleMs =
-      500; // Increased from 200ms to 500ms (2 Hz instead of 5 Hz)
+      400; // Increased from 200ms to 400ms (2 Hz instead of 5 Hz)
 
   // Track poll cycles to stagger heavy sensors
   int _pollCycle = 0;
@@ -44,8 +42,7 @@ class LabMonitoringNotifier extends StateNotifier<LabMonitoringState> {
   LabMonitoringNotifier(
     this._startLabSession,
     this._stopLabSession,
-    this._pauseLabSession,
-    this._resumeLabSession,
+
     this._addDataPoint,
     this._ref,
   ) : super(const LabMonitoringState());
@@ -102,6 +99,7 @@ class LabMonitoringNotifier extends StateNotifier<LabMonitoringState> {
         case SensorType.lightMeter:
           // Light meter - ensure it's in standard mode (not photo mode)
           _ref.read(lightMeterProvider.notifier).enableStandardMode();
+          _ref.read(lightMeterProvider.notifier).startMeasurement();
           break;
         default:
           // Other sensors auto-start when provider is watched
@@ -313,50 +311,57 @@ class LabMonitoringNotifier extends StateNotifier<LabMonitoringState> {
     );
   }
 
-  Future<void> pauseSession() async {
-    if (!state.isRecording || state.isPaused) return;
-    if (state.activeSession == null) return;
+  Future<void> toggleSession() async {
+    if (!state.isRecording || state.activeSession == null) return;
 
-    try {
-      // Save labId for invalidation
-      final labId = state.activeLab?.id;
+    if (state.isPaused) {
+      // Resume logic
+      try {
+        await _ref.read(resumeLabSessionUseCaseProvider)(state.activeSession!);
+        state = state.copyWith(isPaused: false);
 
-      // Update session with current duration before pausing
-      final updatedSession = state.activeSession!.copyWith(
-        duration: state.elapsedSeconds,
-      );
-      await _pauseLabSession(updatedSession);
-
-      // Stop sensor polling when paused to save battery
-      _sensorPollTimer?.cancel();
-
-      state = state.copyWith(isPaused: true);
-
-      // Invalidate the session list provider to refresh UI
-      if (labId != null) {
-        _ref.invalidate(labSessionsProvider(labId));
+        // Resume sensor polling
+        if (state.activeLab != null) {
+          _sensorPollTimer?.cancel();
+          _sensorPollTimer = Timer.periodic(
+            const Duration(milliseconds: _sensorThrottleMs),
+            (_) => _pollSensorData(state.activeLab!.sensors),
+          );
+        }
+        // Restart light meter measurement explicitly
+        _ref.read(lightMeterProvider.notifier).startMeasurement();
+      } catch (e) {
+        AppLogger.log('Error resuming lab session: $e', level: LogLevel.error);
+        state = state.copyWith(errorMessage: 'Failed to resume session: $e');
       }
-    } catch (e) {
-      AppLogger.log('Error pausing lab session: $e', level: LogLevel.error);
-      state = state.copyWith(errorMessage: 'Failed to pause session: $e');
-    }
-  }
+    } else {
+      // Pause logic
+      try {
+        // Save labId for invalidation
+        final labId = state.activeLab?.id;
 
-  Future<void> resumeSession() async {
-    if (!state.isRecording || !state.isPaused) return;
-    if (state.activeSession == null) return;
+        // Update session with current duration before pausing
+        final updatedSession = state.activeSession!.copyWith(
+          duration: state.elapsedSeconds,
+        );
+        await _ref.read(pauseLabSessionUseCaseProvider)(updatedSession);
 
-    try {
-      await _resumeLabSession(state.activeSession!);
-      state = state.copyWith(isPaused: false);
+        // Stop sensor polling when paused to save battery
+        _sensorPollTimer?.cancel();
 
-      // Resume sensor polling
-      if (state.activeLab != null) {
-        _startSensorDataCollection(state.activeLab!);
+        // Stop light meter measurement explicitly
+        _ref.read(lightMeterProvider.notifier).stopMeasurement();
+
+        state = state.copyWith(isPaused: true);
+
+        // Invalidate the session list provider to refresh UI
+        if (labId != null) {
+          _ref.invalidate(labSessionsProvider(labId));
+        }
+      } catch (e) {
+        AppLogger.log('Error pausing lab session: $e', level: LogLevel.error);
+        state = state.copyWith(errorMessage: 'Failed to pause session: $e');
       }
-    } catch (e) {
-      AppLogger.log('Error resuming lab session: $e', level: LogLevel.error);
-      state = state.copyWith(errorMessage: 'Failed to resume session: $e');
     }
   }
 
@@ -418,8 +423,10 @@ class LabMonitoringNotifier extends StateNotifier<LabMonitoringState> {
               gpsNotifier.stopTracking();
             }
             break;
+          case SensorType.lightMeter:
+            _ref.read(lightMeterProvider.notifier).stopMeasurement();
+            break;
           default:
-            // Other sensors auto-cleanup
             break;
         }
       }
@@ -446,8 +453,6 @@ final labMonitoringNotifierProvider =
       (ref) => LabMonitoringNotifier(
         ref.read(startLabSessionUseCaseProvider),
         ref.read(stopLabSessionUseCaseProvider),
-        ref.read(pauseLabSessionUseCaseProvider),
-        ref.read(resumeLabSessionUseCaseProvider),
         ref.read(addDataPointUseCaseProvider),
         ref,
       ),

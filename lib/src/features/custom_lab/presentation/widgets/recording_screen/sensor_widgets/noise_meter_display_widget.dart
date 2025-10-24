@@ -15,15 +15,23 @@ class NoiseMeterDisplayWidget extends ConsumerWidget {
     );
     final noiseMeterData = ref.watch(enhancedNoiseMeterProvider);
 
-    return RealtimeLineChart(
-      dataPoints: dataPoints,
-      title:
-          'Noise Level (${noiseMeterData.currentDecibels.toStringAsFixed(1)} dB)',
-      lineColor: Colors.red,
-      minY: 0,
-      maxY: 120,
-      horizontalInterval: 20,
-      leftTitleBuilder: (value) => '${value.toInt()}',
+    return Column(
+      children: [
+        // AcousticMonitoringContent(
+        //   preset: preset,
+        //   customConfig: customConfig,
+        // ),
+        RealtimeLineChart(
+          dataPoints: dataPoints,
+          title:
+              'Noise Level (${noiseMeterData.currentDecibels.toStringAsFixed(1)} dB)',
+          lineColor: Colors.red,
+          minY: 0,
+          maxY: 120,
+          horizontalInterval: 20,
+          leftTitleBuilder: (value) => '${value.toInt()}',
+        ),
+      ],
     );
   }
 }

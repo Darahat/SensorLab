@@ -140,34 +140,28 @@ class LabMonitoringContent extends ConsumerWidget {
           padding: const EdgeInsets.all(16),
           child: Row(
             children: [
-              if (monitoringState.isRecording)
+              if (monitoringState.isRecording || monitoringState.isPaused)
                 Expanded(
                   child: FilledButton.icon(
                     onPressed: () => ref
                         .read(labMonitoringNotifierProvider.notifier)
-                        .pauseSession(),
-                    icon: const Icon(Icons.pause),
-                    label: Text(l10n.pause),
-                    style: FilledButton.styleFrom(
-                      backgroundColor: Colors.orange,
-                      padding: const EdgeInsets.all(16),
+                        .toggleSession(),
+                    icon: Icon(
+                      monitoringState.isPaused ? Icons.play_arrow : Icons.pause,
                     ),
-                  ),
-                )
-              else if (monitoringState.isPaused) ...[
-                Expanded(
-                  child: FilledButton.icon(
-                    onPressed: () => ref
-                        .read(labMonitoringNotifierProvider.notifier)
-                        .resumeSession(),
-                    icon: const Icon(Icons.play_arrow),
-                    label: Text(l10n.resume),
+                    label: Text(
+                      monitoringState.isPaused ? l10n.resume : l10n.pause,
+                    ),
                     style: FilledButton.styleFrom(
+                      backgroundColor: monitoringState.isPaused
+                          ? Theme.of(context)
+                                .colorScheme
+                                .primary // Default primary color for resume
+                          : Colors.orange, // Orange for pause
                       padding: const EdgeInsets.all(16),
                     ),
                   ),
                 ),
-              ],
               if (monitoringState.isRecording || monitoringState.isPaused) ...[
                 const SizedBox(width: 12),
                 Expanded(
