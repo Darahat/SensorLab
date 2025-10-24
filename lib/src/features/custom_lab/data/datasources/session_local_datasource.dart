@@ -95,13 +95,55 @@ class SessionLocalDataSource {
     required String sessionId,
     required Map<String, dynamic> dataPoint,
   }) async {
+    AppLogger.log(
+      '💾 [Datasource] Adding data point to session: $sessionId',
+      level: LogLevel.debug,
+    );
+    AppLogger.log(
+      '   Data point keys: ${dataPoint.keys.toList()}',
+      level: LogLevel.debug,
+    );
     final box = await _openSensorDataBox(sessionId);
     await box.add(dataPoint);
+    AppLogger.log(
+      '✅ [Datasource] Data point added. Total in box: ${box.length}',
+      level: LogLevel.debug,
+    );
   }
 
   /// Retrieves all sensor data points for a session
   Future<List<Map<String, dynamic>>> getDataPoints(String sessionId) async {
+    AppLogger.log(
+      '🔍 [Datasource] Opening box for session: $sessionId',
+      level: LogLevel.info,
+    );
     final box = await _openSensorDataBox(sessionId);
-    return box.values.toList();
+    AppLogger.log(
+      '🔍 [Datasource] Box opened. Contains ${box.length} items',
+      level: LogLevel.info,
+    );
+
+    // Convert box values to List<Map<String, dynamic>>
+    final dataPoints = <Map<String, dynamic>>[];
+    for (var i = 0; i < box.length; i++) {
+      final value = box.getAt(i);
+      if (value != null) {
+        dataPoints.add(value);
+      }
+    }
+
+    if (dataPoints.isNotEmpty) {
+      AppLogger.log(
+        '   First item keys: ${dataPoints.first.keys.toList()}',
+        level: LogLevel.debug,
+      );
+    }
+
+    AppLogger.log(
+      '✅ [Datasource] Returning ${dataPoints.length} data points',
+      level: LogLevel.info,
+    );
+
+    return dataPoints;
   }
 }

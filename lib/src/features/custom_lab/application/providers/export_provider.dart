@@ -67,6 +67,25 @@ class ExportNotifier extends StateNotifier<ExportState> {
     }
   }
 
+  Future<String?> exportMultipleForSharing(
+    String labId,
+    List<String> sessionIds,
+  ) async {
+    state = state.copyWith(isExporting: true, errorMessage: null);
+
+    try {
+      final filePath = await _useCase.exportMultipleForSharing(
+        labId,
+        sessionIds,
+      );
+      state = state.copyWith(isExporting: false, exportedFilePath: filePath);
+      return filePath;
+    } catch (e) {
+      state = state.copyWith(isExporting: false, errorMessage: e.toString());
+      return null;
+    }
+  }
+
   /// Delete an exported file
   Future<bool> deleteExportedFile(String sessionId) async {
     try {

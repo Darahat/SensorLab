@@ -85,4 +85,10 @@ abstract class LabRepository {
     String sessionId,
     List<Map<String, dynamic>> dataPoints,
   );
+
+  /// Exports multiple lab sessions' data to a single file (e.g., Excel with multiple sheets).
+  Future<String> exportMultipleSessionsToFile(
+    String labName,
+    Map<String, List<Map<String, dynamic>>> sessionsData,
+  );
 }

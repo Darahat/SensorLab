@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:excel/excel.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_file_dialog/flutter_file_dialog.dart';
 import 'package:path_provider/path_provider.dart';
@@ -13,7 +14,7 @@ class DataExportService {
     List<Map<String, dynamic>> dataPoints,
   ) async {
     AppLogger.log(
-      'Starting export for session $sessionId with ${dataPoints.length} data points',
+      'Starting single session export for session $sessionId with ${dataPoints.length} data points',
       level: LogLevel.info,
     );
 
@@ -155,5 +156,91 @@ class DataExportService {
     }
 
     return savedPath;
+  }
+}
+
+extension DataExportServiceMultiSession on DataExportService {
+  /// Exports multiple sessions to a single Excel (.xlsx) file
+  Future<String> exportMultipleSessionsToExcel(
+    Map<String, List<Map<String, dynamic>>> sessionDataMap,
+    Map<String, List<Map<String, dynamic>>> sessionsData,
+  ) async {
+    if (sessionDataMap.isEmpty) {
+      AppLogger.log('No sessions provided for export', level: LogLevel.warning);
+      throw Exception('No session data to export.');
+    }
+
+    final excel = Excel.createExcel();
+    excel.delete('Sheet1'); // remove default sheet
+
+    for (final entry in sessionDataMap.entries) {
+      final sessionId = entry.key;
+      final dataPoints = entry.value;
+
+      AppLogger.log(
+        'Adding sheet for session $sessionId with ${dataPoints.length} rows',
+        level: LogLevel.info,
+      );
+
+      if (dataPoints.isEmpty) continue;
+
+      final sheet = excel[sessionId];
+
+      // Get sorted headers (like your CSV)
+      final headers = <String>{};
+      for (final dp in dataPoints) {
+        headers.addAll(dp.keys);
+      }
+      final sortedHeaders = headers.toList()..sort();
+
+      // ✅ Add header row using TextCellValue
+      sheet.appendRow([
+        TextCellValue('timestamp'),
+        ...sortedHeaders.map((h) => TextCellValue(h)),
+      ]);
+
+      // ✅ Add data rows using TextCellValue
+      for (var i = 0; i < dataPoints.length; i++) {
+        final dp = dataPoints[i];
+        final row = <CellValue?>[
+          TextCellValue(i.toString()),
+          ...sortedHeaders.map((h) => TextCellValue(dp[h]?.toString() ?? '')),
+        ];
+        sheet.appendRow(row);
+      }
+    }
+
+    // Save file to disk
+    final timestamp = DateTime.now();
+    final filename =
+        'lab_sessions_${timestamp.year}${timestamp.month.toString().padLeft(2, '0')}${timestamp.day.toString().padLeft(2, '0')}_${timestamp.hour.toString().padLeft(2, '0')}${timestamp.minute.toString().padLeft(2, '0')}.xlsx';
+
+    String? savedPath;
+
+    try {
+      final excelBytes = Uint8List.fromList(excel.encode()!);
+      if (Platform.isAndroid || Platform.isIOS) {
+        final params = SaveFileDialogParams(
+          fileName: filename,
+          data: excelBytes,
+        );
+        savedPath = await FlutterFileDialog.saveFile(params: params);
+      } else {
+        final directory = await getApplicationDocumentsDirectory();
+        savedPath = '${directory.path}/$filename';
+        final file = File(savedPath);
+        await file.writeAsBytes(excelBytes);
+      }
+
+      AppLogger.log(
+        'Multi-session Excel saved: $savedPath',
+        level: LogLevel.info,
+      );
+    } catch (e) {
+      AppLogger.log('Error saving Excel file: $e', level: LogLevel.error);
+      rethrow;
+    }
+
+    return savedPath!;
   }
 }
