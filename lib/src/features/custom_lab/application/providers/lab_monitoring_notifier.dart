@@ -234,18 +234,28 @@ class LabMonitoringNotifier extends StateNotifier<LabMonitoringState> {
             );
             break;
           case SensorType.gps:
-            sensorData = _ref.read(geolocatorProvider);
+            final geolocatorState = _ref.read(geolocatorProvider);
+            final locationData = geolocatorState.currentLocation;
             // GPS needs special handling - store multiple values
-            if (sensorData.latitude != null && sensorData.longitude != null) {
-              _currentSensorData['gps_latitude'] = sensorData.latitude;
-              _currentSensorData['gps_longitude'] = sensorData.longitude;
-              _currentSensorData['gps_altitude'] = sensorData.altitude ?? 0.0;
-              _currentSensorData['gps_speed'] = sensorData.speed ?? 0.0;
-              _currentSensorData['gps_accuracy'] = sensorData.accuracy ?? 0.0;
+            if (locationData != null &&
+                locationData.latitude != null &&
+                locationData.longitude != null) {
+              _currentSensorData['gps_latitude'] = locationData.latitude;
+              _currentSensorData['gps_longitude'] = locationData.longitude;
+              _currentSensorData['gps_altitude'] = locationData.altitude;
+              _currentSensorData['gps_speed'] = locationData.speed;
+              _currentSensorData['gps_accuracy'] = locationData.accuracy;
               // For graph, use speed or accuracy
               _ref
                   .read(sensorTimeSeriesProvider(sensor).notifier)
-                  .addDataPoint(sensorData.speed ?? 0.0);
+                  .addDataPoint(locationData.speed);
+            } else {
+              // If no current location, mark as unavailable or error
+              _currentSensorData['gps_latitude'] = 'Unavailable';
+              _currentSensorData['gps_longitude'] = 'Unavailable';
+              _currentSensorData['gps_altitude'] = 'Unavailable';
+              _currentSensorData['gps_speed'] = 'Unavailable';
+              _currentSensorData['gps_accuracy'] = 'Unavailable';
             }
             break;
           case SensorType.altimeter:
@@ -385,7 +395,23 @@ class LabMonitoringNotifier extends StateNotifier<LabMonitoringState> {
                   );
               break;
             case SensorType.gps:
-              _ref.read(geolocatorProvider.notifier).initialize();
+              // GPS/Geolocator needs initialization and permission handling
+              final geolocatorNotifier = _ref.read(geolocatorProvider.notifier);
+              await geolocatorNotifier
+                  .initialize(); // Initialize and check permissions
+
+              if (!geolocatorNotifier.state.permissionStatus.isGranted) {
+                // If permission is not granted, request it
+                await geolocatorNotifier.requestPermission();
+                if (!geolocatorNotifier.state.permissionStatus.isGranted) {
+                  // If still not granted, log and potentially show a message to the user
+                  AppLogger.log(
+                    'GPS permission not granted. GPS data will be unavailable.',
+                    level: LogLevel.warning,
+                  );
+                  // You might want to add a state.copyWith(errorMessage: 'GPS permission denied') here
+                }
+              }
               break;
             case SensorType.lightMeter:
               _ref.read(lightMeterProvider.notifier).startMeasurement();

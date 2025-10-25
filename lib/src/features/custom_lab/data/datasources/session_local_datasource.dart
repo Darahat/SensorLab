@@ -14,10 +14,11 @@ class SessionLocalDataSource {
   }
 
   /// Opens the sensor data box for a specific session
-  Future<Box<Map<String, dynamic>>> _openSensorDataBox(String sessionId) async {
-    return await Hive.openBox<Map<String, dynamic>>(
-      '$_sensorDataBoxPrefix$sessionId',
-    );
+  /// Note: Use dynamic Box typing to avoid runtime cast errors when legacy
+  /// entries were written without strict generic types. We'll normalize types
+  /// when reading.
+  Future<Box> _openSensorDataBox(String sessionId) async {
+    return await Hive.openBox('$_sensorDataBoxPrefix$sessionId');
   }
 
   /// Creates a new session
@@ -123,12 +124,23 @@ class SessionLocalDataSource {
       level: LogLevel.info,
     );
 
-    // Convert box values to List<Map<String, dynamic>>
+    // Convert box values to List<Map<String, dynamic>> with normalized key types
     final dataPoints = <Map<String, dynamic>>[];
     for (var i = 0; i < box.length; i++) {
       final value = box.getAt(i);
-      if (value != null) {
-        dataPoints.add(value);
+      if (value is Map) {
+        // Normalize to Map<String, dynamic>
+        final normalized = <String, dynamic>{
+          for (final entry in value.entries) entry.key.toString(): entry.value,
+        };
+        // Also normalize nested 'sensorValues' map if present
+        final sv = normalized['sensorValues'];
+        if (sv is Map) {
+          normalized['sensorValues'] = {
+            for (final e in (sv).entries) e.key.toString(): e.value,
+          };
+        }
+        dataPoints.add(normalized);
       }
     }
 

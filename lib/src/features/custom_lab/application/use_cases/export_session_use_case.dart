@@ -135,20 +135,57 @@ class ExportSessionUseCase {
     String labId,
     List<String> sessionIds,
   ) async {
+    AppLogger.log(
+      '📦 [ExportUseCase] Starting multi-session export. Lab: $labId, sessions: ${sessionIds.length}',
+      level: LogLevel.info,
+    );
+
     final lab = await _repository.getLabById(labId);
+
     if (lab == null) {
       throw Exception('Lab not found: $labId');
     }
 
     final Map<String, List<Map<String, dynamic>>> sessionsData = {};
+
     for (final sessionId in sessionIds) {
+      AppLogger.log(
+        '📊 [ExportUseCase] Collecting data points for session: $sessionId',
+        level: LogLevel.info,
+      );
       final dataPoints = await _repository.getSensorDataPoints(sessionId);
+      AppLogger.log(
+        '📊 [ExportUseCase] Session $sessionId has ${dataPoints.length} data points',
+        level: LogLevel.info,
+      );
       sessionsData[sessionId] = dataPoints;
     }
+
+    final nonEmptyCount = sessionsData.values.where((v) => v.isNotEmpty).length;
+    AppLogger.log(
+      '🧮 [ExportUseCase] Completed collection. Non-empty sessions: $nonEmptyCount / ${sessionsData.length}',
+      level: LogLevel.info,
+    );
+    if (nonEmptyCount == 0) {
+      AppLogger.log(
+        '⚠️ [ExportUseCase] No data points in selected sessions. Aborting export.',
+        level: LogLevel.warning,
+      );
+      throw Exception('No data points to export in selected sessions');
+    }
+
+    AppLogger.log(
+      '💾 [ExportUseCase] Invoking repository to build multi-session file',
+      level: LogLevel.info,
+    );
 
     final filePath = await _repository.exportMultipleSessionsToFile(
       lab.name,
       sessionsData,
+    );
+    AppLogger.log(
+      '✅ [ExportUseCase] Multi-session export complete: $filePath',
+      level: LogLevel.info,
     );
     return filePath;
   }

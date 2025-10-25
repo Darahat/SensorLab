@@ -163,7 +163,7 @@ extension DataExportServiceMultiSession on DataExportService {
   /// Exports multiple sessions to a single Excel (.xlsx) file
   Future<String> exportMultipleSessionsToExcel(
     Map<String, List<Map<String, dynamic>>> sessionDataMap,
-    Map<String, List<Map<String, dynamic>>> sessionsData,
+    // Map<String, List<Map<String, dynamic>>> sessionsData,
   ) async {
     if (sessionDataMap.isEmpty) {
       AppLogger.log('No sessions provided for export', level: LogLevel.warning);
@@ -220,11 +220,35 @@ extension DataExportServiceMultiSession on DataExportService {
     try {
       final excelBytes = Uint8List.fromList(excel.encode()!);
       if (Platform.isAndroid || Platform.isIOS) {
-        final params = SaveFileDialogParams(
-          fileName: filename,
-          data: excelBytes,
-        );
-        savedPath = await FlutterFileDialog.saveFile(params: params);
+        try {
+          final params = SaveFileDialogParams(
+            fileName: filename,
+            data: excelBytes,
+          );
+          AppLogger.log(
+            'Attempting to save multi-session Excel via FlutterFileDialog: $filename',
+            level: LogLevel.info,
+          );
+          savedPath = await FlutterFileDialog.saveFile(params: params);
+
+          if (savedPath == null) {
+            AppLogger.log(
+              'User cancelled multi-session Excel save dialog',
+              level: LogLevel.warning,
+            );
+            throw Exception('File save cancelled by user');
+          }
+        } on MissingPluginException catch (e) {
+          // Fallback to application documents dir
+          AppLogger.log(
+            'FlutterFileDialog plugin not available for Excel, fallback to app dir: $e',
+            level: LogLevel.warning,
+          );
+          final directory = await getApplicationDocumentsDirectory();
+          savedPath = '${directory.path}/$filename';
+          final file = File(savedPath);
+          await file.writeAsBytes(excelBytes);
+        }
       } else {
         final directory = await getApplicationDocumentsDirectory();
         savedPath = '${directory.path}/$filename';
@@ -241,6 +265,6 @@ extension DataExportServiceMultiSession on DataExportService {
       rethrow;
     }
 
-    return savedPath!;
+    return savedPath;
   }
 }

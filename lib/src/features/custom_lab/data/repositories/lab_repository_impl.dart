@@ -227,9 +227,21 @@ class LabRepositoryImpl implements LabRepository {
     String labName,
     Map<String, List<Map<String, dynamic>>> sessionsData,
   ) async {
-    // Assuming you want to export to Excel for multiple sessions
+    AppLogger.log(
+      '📦 [Repository] Preparing multi-session export for lab "$labName" with ${sessionsData.length} sessions',
+      level: LogLevel.info,
+    );
+    final nonEmpty = sessionsData.entries
+        .where((e) => e.value.isNotEmpty)
+        .map((e) => e.key)
+        .toList();
+    AppLogger.log(
+      '🧮 [Repository] Non-empty sessions to include: ${nonEmpty.length} -> $nonEmpty',
+      level: LogLevel.info,
+    );
+
     return await _exportService.exportMultipleSessionsToExcel(
-      labName as Map<String, List<Map<String, dynamic>>>,
+      // labName,
       sessionsData,
     );
   }
