@@ -135,7 +135,22 @@ class LabRepositoryImpl implements LabRepository {
   Future<List<Map<String, dynamic>>> getSensorDataPoints(
     String sessionId,
   ) async {
-    return await _sessionDataSource.getDataPoints(sessionId);
+    AppLogger.log(
+      '🔍 [Repository] Getting data points for session: $sessionId',
+      level: LogLevel.info,
+    );
+    final dataPoints = await _sessionDataSource.getDataPoints(sessionId);
+    AppLogger.log(
+      '🔍 [Repository] Retrieved ${dataPoints.length} data points from datasource',
+      level: LogLevel.info,
+    );
+    if (dataPoints.isNotEmpty) {
+      AppLogger.log(
+        '   First data point: ${dataPoints.first}',
+        level: LogLevel.debug,
+      );
+    }
+    return dataPoints;
   }
 
   @override
@@ -205,5 +220,29 @@ class LabRepositoryImpl implements LabRepository {
     List<Map<String, dynamic>> dataPoints,
   ) async {
     return await _exportService.exportToCSV(sessionId, dataPoints);
+  }
+
+  @override
+  Future<String> exportMultipleSessionsToFile(
+    String labName,
+    Map<String, List<Map<String, dynamic>>> sessionsData,
+  ) async {
+    AppLogger.log(
+      '📦 [Repository] Preparing multi-session export for lab "$labName" with ${sessionsData.length} sessions',
+      level: LogLevel.info,
+    );
+    final nonEmpty = sessionsData.entries
+        .where((e) => e.value.isNotEmpty)
+        .map((e) => e.key)
+        .toList();
+    AppLogger.log(
+      '🧮 [Repository] Non-empty sessions to include: ${nonEmpty.length} -> $nonEmpty',
+      level: LogLevel.info,
+    );
+
+    return await _exportService.exportMultipleSessionsToExcel(
+      // labName,
+      sessionsData,
+    );
   }
 }

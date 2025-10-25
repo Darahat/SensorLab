@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:sensorlab/l10n/app_localizations.dart';
+import 'package:sensorlab/src/core/utils/logger.dart';
 import 'package:sensorlab/src/features/custom_lab/application/providers/export_provider.dart';
 import 'package:sensorlab/src/features/custom_lab/application/providers/recording_session_provider.dart';
 import 'package:sensorlab/src/features/custom_lab/domain/entities/lab.dart';
@@ -55,6 +56,7 @@ class _SessionHistoryScreenState extends ConsumerState<SessionHistoryScreen> {
     if (_selectedSessions.isEmpty) return;
 
     final exportNotifier = ref.read(exportProvider.notifier);
+    final l10n = AppLocalizations.of(context)!;
 
     // Show progress dialog
     if (!mounted) return;
@@ -73,175 +75,162 @@ class _SessionHistoryScreenState extends ConsumerState<SessionHistoryScreen> {
       ),
     );
 
-    final exportedFiles = <String>[];
-    final errors = <String>[];
-
+    String? exportedFilePath;
+    String? errorMessage;
     try {
-      for (final sessionId in _selectedSessions) {
-        try {
-          final filePath = await exportNotifier.exportForSharing(sessionId);
-          if (filePath != null) {
-            exportedFiles.add(filePath);
-          }
-        } catch (e) {
-          errors.add('Session $sessionId: ${e.toString()}');
-        }
-      }
-
-      if (!mounted) return;
-      Navigator.of(context).pop(); // Close progress dialog
-
-      if (exportedFiles.isNotEmpty) {
-        // Show success dialog with file locations
-        await showDialog(
-          context: context,
-          builder: (context) => AlertDialog(
-            title: const Row(
-              children: [
-                Icon(Icons.check_circle, color: Colors.green, size: 28),
-                SizedBox(width: 12),
-                Text('Export Success'),
-              ],
-            ),
-            content: SingleChildScrollView(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Exported ${exportedFiles.length} session(s) successfully',
-                  ),
-                  if (errors.isNotEmpty) ...[
-                    const SizedBox(height: 12),
-                    Text(
-                      'Failed: ${errors.length} session(s)',
-                      style: const TextStyle(color: Colors.orange),
-                    ),
-                  ],
-                  const SizedBox(height: 12),
-                  Container(
-                    padding: const EdgeInsets.all(12),
-                    decoration: BoxDecoration(
-                      color: const Color.fromARGB(255, 68, 68, 68),
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text(
-                          'Files saved to:',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 12,
-                          ),
-                        ),
-                        const SizedBox(height: 4),
-                        ...exportedFiles
-                            .take(3)
-                            .map(
-                              (path) => Padding(
-                                padding: const EdgeInsets.only(bottom: 4),
-                                child: Text(
-                                  path,
-                                  style: const TextStyle(fontSize: 11),
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                              ),
-                            ),
-                        if (exportedFiles.length > 3)
-                          Text(
-                            '... and ${exportedFiles.length - 3} more',
-                            style: const TextStyle(
-                              fontSize: 11,
-                              fontStyle: FontStyle.italic,
-                            ),
-                          ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.pop(context),
-                child: const Text('OK'),
-              ),
-            ],
-          ),
-        );
-
-        if (!mounted) return;
-        _deselectAll();
-      } else {
-        if (!mounted) return;
-        showDialog(
-          context: context,
-          builder: (context) => AlertDialog(
-            title: const Row(
-              children: [
-                Icon(Icons.error, color: Colors.red, size: 28),
-                SizedBox(width: 12),
-                Text('Export Failed'),
-              ],
-            ),
-            content: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text('Failed to export sessions.'),
-                if (errors.isNotEmpty) ...[
-                  const SizedBox(height: 12),
-                  const Text(
-                    'Errors:',
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                  ...errors.map(
-                    (err) => Padding(
-                      padding: const EdgeInsets.only(top: 4),
-                      child: Text(
-                        '• $err',
-                        style: const TextStyle(fontSize: 12),
-                      ),
-                    ),
-                  ),
-                ],
-              ],
-            ),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.pop(context),
-                child: const Text('OK'),
-              ),
-            ],
-          ),
-        );
-      }
+      exportedFilePath = await exportNotifier.exportMultipleForSharing(
+        widget.lab.id,
+        _selectedSessions.toList(),
+      );
     } catch (e) {
+      errorMessage = e.toString();
+      AppLogger.log(
+        'Error during multi-session export: $e',
+        level: LogLevel.error,
+      );
+    } finally {
       if (!mounted) return;
       Navigator.of(context).pop(); // Close progress dialog
+    }
 
-      showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-          title: const Row(
-            children: [
-              Icon(Icons.error, color: Colors.red, size: 28),
-              SizedBox(width: 12),
-              Text('Export Error'),
-            ],
-          ),
-          content: Text('An error occurred: $e'),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(context),
-              child: const Text('OK'),
+    if (!mounted) return;
+    if (exportedFilePath != null) {
+      _showExportResultDialog([exportedFilePath], {}, l10n);
+      _deselectAll();
+    } else {
+      _showExportResultDialog([], {
+        'General Error': errorMessage ?? 'Unknown error occurred',
+      }, l10n);
+    }
+  }
+
+  Future<void> _showExportResultDialog(
+    List<String> exportedFiles,
+    Map<String, String> errors,
+    AppLocalizations l10n,
+  ) async {
+    final hasSuccesses = exportedFiles.isNotEmpty;
+    final hasFailures = errors.isNotEmpty;
+
+    return showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Row(
+          children: [
+            Icon(
+              hasFailures && !hasSuccesses ? Icons.error : Icons.check_circle,
+              color: hasFailures && !hasSuccesses ? Colors.red : Colors.green,
+              size: 28,
+            ),
+            const SizedBox(width: 12),
+            Text(
+              hasFailures && !hasSuccesses
+                  ? 'Export Failed'
+                  : hasFailures
+                  ? 'Partial Success'
+                  : 'Export Success',
             ),
           ],
         ),
-      );
-    }
+        content: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              if (hasSuccesses) ...[
+                Text(
+                  'Successfully exported ${exportedFiles.length} session(s)',
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.green,
+                  ),
+                ),
+                const SizedBox(height: 12),
+                Container(
+                  padding: const EdgeInsets.all(12),
+                  decoration: BoxDecoration(
+                    color: Colors.grey[800],
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        'Files saved to:',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 12,
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      ...exportedFiles
+                          .take(3)
+                          .map(
+                            (path) => Padding(
+                              padding: const EdgeInsets.only(bottom: 4),
+                              child: Text(
+                                path,
+                                style: const TextStyle(fontSize: 11),
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                          ),
+                      if (exportedFiles.length > 3)
+                        Text(
+                          '... ${l10n.more} ${exportedFiles.length - 3}',
+                          style: const TextStyle(
+                            fontSize: 11,
+                            fontStyle: FontStyle.italic,
+                          ),
+                        ),
+                    ],
+                  ),
+                ),
+              ],
+              if (hasFailures) ...[
+                if (hasSuccesses) const SizedBox(height: 16),
+                Text(
+                  '${l10n.failedStatus}: ${errors.length} ${l10n.sessions}',
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.red,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                ...errors.entries
+                    .take(3)
+                    .map(
+                      (entry) => Padding(
+                        padding: const EdgeInsets.only(bottom: 4),
+                        child: Text(
+                          '• ${l10n.sessions} ${entry.key.substring(0, 8)}...: ${entry.value}',
+                          style: const TextStyle(fontSize: 11),
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                    ),
+                if (errors.length > 3)
+                  Text(
+                    '... ${l10n.more} ${errors.length - 3}',
+                    style: const TextStyle(
+                      fontSize: 11,
+                      fontStyle: FontStyle.italic,
+                    ),
+                  ),
+              ],
+            ],
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: Text(l10n.ok),
+          ),
+        ],
+      ),
+    );
   }
 
   @override

@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:sensorlab/src/core/utils/logger.dart';
 import 'package:sensorlab/src/features/custom_lab/application/providers/lab_repository_provider.dart';
 import 'package:sensorlab/src/features/custom_lab/application/use_cases/export_session_use_case.dart';
 
@@ -62,6 +63,37 @@ class ExportNotifier extends StateNotifier<ExportState> {
       state = state.copyWith(isExporting: false, exportedFilePath: csvPath);
       return csvPath;
     } catch (e) {
+      state = state.copyWith(isExporting: false, errorMessage: e.toString());
+      return null;
+    }
+  }
+
+  Future<String?> exportMultipleForSharing(
+    String labId,
+    List<String> sessionIds,
+  ) async {
+    state = state.copyWith(isExporting: true, errorMessage: null);
+    AppLogger.log(
+      '📦 [ExportProvider] exportMultipleForSharing invoked. Lab: $labId, sessions: ${sessionIds.length}',
+      level: LogLevel.info,
+    );
+
+    try {
+      final filePath = await _useCase.exportMultipleForSharing(
+        labId,
+        sessionIds,
+      );
+      AppLogger.log(
+        '✅ [ExportProvider] Multi-session export complete: $filePath',
+        level: LogLevel.info,
+      );
+      state = state.copyWith(isExporting: false, exportedFilePath: filePath);
+      return filePath;
+    } catch (e) {
+      AppLogger.log(
+        '❌ [ExportProvider] Multi-session export failed: $e',
+        level: LogLevel.error,
+      );
       state = state.copyWith(isExporting: false, errorMessage: e.toString());
       return null;
     }

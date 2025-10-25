@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sensorlab/src/core/providers.dart'; // Import core sensor providers
 import 'package:sensorlab/src/core/utils/logger.dart';
@@ -79,6 +80,11 @@ class LabMonitoringNotifier extends StateNotifier<LabMonitoringState> {
       _ref.read(sensorTimeSeriesProvider(sensor).notifier).clear();
     }
 
+    AppLogger.log(
+      'Starting sensor data collection for ${lab.sensors.length} sensors: ${lab.sensors.map((s) => s.name).join(", ")}',
+      level: LogLevel.info,
+    );
+
     // Initialize sensors that need explicit setup
     for (final sensor in lab.sensors) {
       switch (sensor) {
@@ -113,10 +119,21 @@ class LabMonitoringNotifier extends StateNotifier<LabMonitoringState> {
       const Duration(milliseconds: _sensorThrottleMs),
       (_) => _pollSensorData(lab.sensors),
     );
+
+    AppLogger.log(
+      'Sensor poll timer started with interval: $_sensorThrottleMs ms',
+      level: LogLevel.info,
+    );
   }
 
   void _pollSensorData(List<SensorType> sensors) {
-    if (!state.isRecording || state.isPaused) return;
+    if (!state.isRecording || state.isPaused) {
+      AppLogger.log(
+        'Poll skipped - Recording: ${state.isRecording}, Paused: ${state.isPaused}',
+        level: LogLevel.debug,
+      );
+      return;
+    }
 
     final now = DateTime.now();
     _pollCycle++;
@@ -217,18 +234,28 @@ class LabMonitoringNotifier extends StateNotifier<LabMonitoringState> {
             );
             break;
           case SensorType.gps:
-            sensorData = _ref.read(geolocatorProvider);
+            final geolocatorState = _ref.read(geolocatorProvider);
+            final locationData = geolocatorState.currentLocation;
             // GPS needs special handling - store multiple values
-            if (sensorData.latitude != null && sensorData.longitude != null) {
-              _currentSensorData['gps_latitude'] = sensorData.latitude;
-              _currentSensorData['gps_longitude'] = sensorData.longitude;
-              _currentSensorData['gps_altitude'] = sensorData.altitude ?? 0.0;
-              _currentSensorData['gps_speed'] = sensorData.speed ?? 0.0;
-              _currentSensorData['gps_accuracy'] = sensorData.accuracy ?? 0.0;
+            if (locationData != null &&
+                locationData.latitude != null &&
+                locationData.longitude != null) {
+              _currentSensorData['gps_latitude'] = locationData.latitude;
+              _currentSensorData['gps_longitude'] = locationData.longitude;
+              _currentSensorData['gps_altitude'] = locationData.altitude;
+              _currentSensorData['gps_speed'] = locationData.speed;
+              _currentSensorData['gps_accuracy'] = locationData.accuracy;
               // For graph, use speed or accuracy
               _ref
                   .read(sensorTimeSeriesProvider(sensor).notifier)
-                  .addDataPoint(sensorData.speed ?? 0.0);
+                  .addDataPoint(locationData.speed);
+            } else {
+              // If no current location, mark as unavailable or error
+              _currentSensorData['gps_latitude'] = 'Unavailable';
+              _currentSensorData['gps_longitude'] = 'Unavailable';
+              _currentSensorData['gps_altitude'] = 'Unavailable';
+              _currentSensorData['gps_speed'] = 'Unavailable';
+              _currentSensorData['gps_accuracy'] = 'Unavailable';
             }
             break;
           case SensorType.altimeter:
@@ -243,6 +270,10 @@ class LabMonitoringNotifier extends StateNotifier<LabMonitoringState> {
           'Error reading sensor ${sensor.name}: $e',
           level: LogLevel.warning,
         );
+        // Mark sensor as having error
+        final sensorKey = sensor.name.toLowerCase();
+        _currentSensorData[sensorKey] =
+            'Error: ${e.toString().substring(0, 50)}';
       }
     }
   }
@@ -286,18 +317,41 @@ class LabMonitoringNotifier extends StateNotifier<LabMonitoringState> {
 
   Future<void> _collectAndSaveSensorData() async {
     if (state.activeSession == null) return;
-
+    AppLogger.log(
+      'Collecting and saving sensor data...',
+      level: LogLevel.debug,
+    );
     // Only collect data from real sensor streams
     final sensorData = Map<String, dynamic>.from(_currentSensorData);
 
-    // Only save if we have actual sensor data
-    if (sensorData.isEmpty) {
+    // Add error/unavailable status for sensors that failed
+    for (final sensor in state.activeLab?.sensors ?? []) {
+      final sensorKey = describeEnum(sensor).toLowerCase();
+      if (!sensorData.containsKey(sensorKey) && !sensorKey.startsWith('gps_')) {
+        // GPS has multiple keys
+        // Sensor didn't provide data - mark as unavailable
+        sensorData[sensorKey] = 'Sensor Unavailable';
+      }
+    }
+
+    // Only save if we have actual sensor data (not all unavailable)
+    final hasValidData = sensorData.values.any(
+      (value) =>
+          value is num || (value is String && value != 'Sensor Unavailable'),
+    );
+
+    if (!hasValidData) {
       AppLogger.log(
-        'No sensor data to save - all sensors may be unavailable',
+        'No valid sensor data to save - all sensors may be unavailable',
         level: LogLevel.warning,
       );
       return;
     }
+
+    AppLogger.log(
+      'Saving data point with ${sensorData.length} sensor values: ${sensorData.keys.join(", ")}',
+      level: LogLevel.debug,
+    );
 
     await _addDataPoint(
       sessionId: state.activeSession!.id,
@@ -329,7 +383,43 @@ class LabMonitoringNotifier extends StateNotifier<LabMonitoringState> {
           );
         }
         // Restart light meter measurement explicitly
-        _ref.read(lightMeterProvider.notifier).startMeasurement();
+        // _ref.read(lightMeterProvider.notifier).startMeasurement();
+        for (final sensor in state.activeLab!.sensors) {
+          switch (sensor) {
+            case SensorType.noiseMeter:
+              _ref
+                  .read(enhancedNoiseMeterProvider.notifier)
+                  .startRecordingWithPreset(
+                    entities.RecordingPreset.custom,
+                    customDuration: const Duration(hours: 24),
+                  );
+              break;
+            case SensorType.gps:
+              // GPS/Geolocator needs initialization and permission handling
+              final geolocatorNotifier = _ref.read(geolocatorProvider.notifier);
+              await geolocatorNotifier
+                  .initialize(); // Initialize and check permissions
+
+              if (!geolocatorNotifier.state.permissionStatus.isGranted) {
+                // If permission is not granted, request it
+                await geolocatorNotifier.requestPermission();
+                if (!geolocatorNotifier.state.permissionStatus.isGranted) {
+                  // If still not granted, log and potentially show a message to the user
+                  AppLogger.log(
+                    'GPS permission not granted. GPS data will be unavailable.',
+                    level: LogLevel.warning,
+                  );
+                  // You might want to add a state.copyWith(errorMessage: 'GPS permission denied') here
+                }
+              }
+              break;
+            case SensorType.lightMeter:
+              _ref.read(lightMeterProvider.notifier).startMeasurement();
+              break;
+            default:
+              break;
+          }
+        }
       } catch (e) {
         AppLogger.log('Error resuming lab session: $e', level: LogLevel.error);
         state = state.copyWith(errorMessage: 'Failed to resume session: $e');
@@ -349,9 +439,31 @@ class LabMonitoringNotifier extends StateNotifier<LabMonitoringState> {
         // Stop sensor polling when paused to save battery
         _sensorPollTimer?.cancel();
 
-        // Stop light meter measurement explicitly
-        _ref.read(lightMeterProvider.notifier).stopMeasurement();
-
+        if (state.activeLab != null) {
+          for (final sensor in state.activeLab!.sensors) {
+            switch (sensor) {
+              case SensorType.noiseMeter:
+                final noiseMeterNotifier = _ref.read(
+                  enhancedNoiseMeterProvider.notifier,
+                );
+                if (_ref.read(enhancedNoiseMeterProvider).isRecording) {
+                  noiseMeterNotifier.stopRecording();
+                }
+                break;
+              case SensorType.gps:
+                final gpsNotifier = _ref.read(geolocatorProvider.notifier);
+                if (_ref.read(geolocatorProvider).isTracking) {
+                  gpsNotifier.stopTracking();
+                }
+                break;
+              case SensorType.lightMeter:
+                _ref.read(lightMeterProvider.notifier).stopMeasurement();
+                break;
+              default:
+                break;
+            }
+          }
+        }
         state = state.copyWith(isPaused: true);
 
         // Invalidate the session list provider to refresh UI

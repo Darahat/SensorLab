@@ -14,10 +14,11 @@ class SessionLocalDataSource {
   }
 
   /// Opens the sensor data box for a specific session
-  Future<Box<Map<String, dynamic>>> _openSensorDataBox(String sessionId) async {
-    return await Hive.openBox<Map<String, dynamic>>(
-      '$_sensorDataBoxPrefix$sessionId',
-    );
+  /// Note: Use dynamic Box typing to avoid runtime cast errors when legacy
+  /// entries were written without strict generic types. We'll normalize types
+  /// when reading.
+  Future<Box> _openSensorDataBox(String sessionId) async {
+    return await Hive.openBox('$_sensorDataBoxPrefix$sessionId');
   }
 
   /// Creates a new session
@@ -95,13 +96,66 @@ class SessionLocalDataSource {
     required String sessionId,
     required Map<String, dynamic> dataPoint,
   }) async {
+    AppLogger.log(
+      '💾 [Datasource] Adding data point to session: $sessionId',
+      level: LogLevel.debug,
+    );
+    AppLogger.log(
+      '   Data point keys: ${dataPoint.keys.toList()}',
+      level: LogLevel.debug,
+    );
     final box = await _openSensorDataBox(sessionId);
     await box.add(dataPoint);
+    AppLogger.log(
+      '✅ [Datasource] Data point added. Total in box: ${box.length}',
+      level: LogLevel.debug,
+    );
   }
 
   /// Retrieves all sensor data points for a session
   Future<List<Map<String, dynamic>>> getDataPoints(String sessionId) async {
+    AppLogger.log(
+      '🔍 [Datasource] Opening box for session: $sessionId',
+      level: LogLevel.info,
+    );
     final box = await _openSensorDataBox(sessionId);
-    return box.values.toList();
+    AppLogger.log(
+      '🔍 [Datasource] Box opened. Contains ${box.length} items',
+      level: LogLevel.info,
+    );
+
+    // Convert box values to List<Map<String, dynamic>> with normalized key types
+    final dataPoints = <Map<String, dynamic>>[];
+    for (var i = 0; i < box.length; i++) {
+      final value = box.getAt(i);
+      if (value is Map) {
+        // Normalize to Map<String, dynamic>
+        final normalized = <String, dynamic>{
+          for (final entry in value.entries) entry.key.toString(): entry.value,
+        };
+        // Also normalize nested 'sensorValues' map if present
+        final sv = normalized['sensorValues'];
+        if (sv is Map) {
+          normalized['sensorValues'] = {
+            for (final e in (sv).entries) e.key.toString(): e.value,
+          };
+        }
+        dataPoints.add(normalized);
+      }
+    }
+
+    if (dataPoints.isNotEmpty) {
+      AppLogger.log(
+        '   First item keys: ${dataPoints.first.keys.toList()}',
+        level: LogLevel.debug,
+      );
+    }
+
+    AppLogger.log(
+      '✅ [Datasource] Returning ${dataPoints.length} data points',
+      level: LogLevel.info,
+    );
+
+    return dataPoints;
   }
 }
