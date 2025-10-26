@@ -43,13 +43,15 @@ class LabsGridView extends StatelessWidget {
       );
       if (proceed == true && context.mounted) {
         Navigator.of(context).push(
-          MaterialPageRoute(builder: (context) => LabDetailScreen(lab: lab)),
+          MaterialPageRoute(
+            builder: (context) => LabDetailScreen(labId: lab.id),
+          ),
         );
       }
     } else {
       if (!context.mounted) return;
       Navigator.of(context).push(
-        MaterialPageRoute(builder: (context) => LabDetailScreen(lab: lab)),
+        MaterialPageRoute(builder: (context) => LabDetailScreen(labId: lab.id)),
       );
     }
   }

@@ -1,4 +1,5 @@
 // custom_labs_screen
+export 'create_lab_screen/sensor_selection_grid.dart';
 export 'custom_labs_screen/all_labs_tab.dart';
 export 'custom_labs_screen/empty_labs_state.dart';
 export 'custom_labs_screen/error_labs_state.dart';
@@ -25,4 +26,3 @@ export 'recording_screen/sensor_widgets/speed_meter_display_widget.dart';
 export 'recording_screen/session_complete_dialog.dart';
 // Root widgets
 export 'sensor_line_chart.dart';
-export 'sensor_selection_grid.dart';
