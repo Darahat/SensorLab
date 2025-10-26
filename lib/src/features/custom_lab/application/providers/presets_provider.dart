@@ -35,7 +35,6 @@ class PresetsInitializationState {
   }
 }
 
-/// StateNotifier for presets initialization
 class PresetsInitializationNotifier
     extends StateNotifier<PresetsInitializationState> {
   final InitializePresetsUseCase _useCase;
@@ -43,45 +42,29 @@ class PresetsInitializationNotifier
   PresetsInitializationNotifier(this._useCase)
     : super(const PresetsInitializationState());
 
-  /// Initialize presets if they don't exist
   Future<void> initializePresets() async {
+    print('🚀 Starting presets initialization...');
     state = state.copyWith(isLoading: true, errorMessage: null);
 
     try {
       await _useCase.initializePresets();
       state = state.copyWith(isInitialized: true, isLoading: false);
+      print('✅ Presets initialization completed successfully');
     } catch (e) {
+      print('❌ Presets initialization failed: $e');
       state = state.copyWith(isLoading: false, errorMessage: e.toString());
     }
   }
 
-  /// Check if presets are initialized
   Future<void> checkInitialization() async {
     try {
       final isInitialized = await _useCase.arePresetsInitialized();
+      print('🔍 Presets initialization check: $isInitialized');
       state = state.copyWith(isInitialized: isInitialized);
     } catch (e) {
+      print('❌ Error checking presets initialization: $e');
       state = state.copyWith(errorMessage: e.toString());
     }
-  }
-
-  /// Reset all presets
-  Future<bool> resetPresets() async {
-    state = state.copyWith(isLoading: true, errorMessage: null);
-
-    try {
-      await _useCase.resetPresets();
-      state = state.copyWith(isInitialized: true, isLoading: false);
-      return true;
-    } catch (e) {
-      state = state.copyWith(isLoading: false, errorMessage: e.toString());
-      return false;
-    }
-  }
-
-  /// Clear error message
-  void clearError() {
-    state = state.copyWith(errorMessage: null);
   }
 }
 
