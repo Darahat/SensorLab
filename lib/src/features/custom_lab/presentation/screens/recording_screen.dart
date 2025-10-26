@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sensorlab/l10n/app_localizations.dart';
+import 'package:sensorlab/src/core/providers.dart';
 import 'package:sensorlab/src/features/custom_lab/application/providers/lab_monitoring_notifier.dart';
 import 'package:sensorlab/src/features/custom_lab/application/state/lab_monitoring_state.dart';
 import 'package:sensorlab/src/features/custom_lab/domain/entities/lab.dart';
+import 'package:sensorlab/src/features/custom_lab/domain/entities/sensor_type.dart';
 import 'package:sensorlab/src/features/custom_lab/presentation/widgets/widgets_index.dart';
 
 class RecordingScreen extends ConsumerWidget {
@@ -64,11 +66,12 @@ class RecordingScreen extends ConsumerWidget {
     if (!monitoringState.isRecording &&
         !monitoringState.isPaused &&
         monitoringState.activeLab == null) {
-      Future.microtask(
-        () => ref
-            .read(labMonitoringNotifierProvider.notifier)
-            .startSession(lab: lab),
-      );
+      Future.microtask(() {
+        ref.read(labMonitoringNotifierProvider.notifier).startSession(lab: lab);
+        if (lab.sensors.contains(SensorType.gps)) {
+          ref.read(geolocatorProvider.notifier).initialize();
+        }
+      });
     }
 
     return WillPopScope(

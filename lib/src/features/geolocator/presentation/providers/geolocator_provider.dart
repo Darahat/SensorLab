@@ -313,7 +313,8 @@ class GeolocatorProvider extends StateNotifier<GeolocatorData> {
   String _formatFullAddress(Placemark placemark) {
     final parts = <String>[];
 
-    if (placemark.street?.isNotEmpty == true) {
+    // Check if the street is a Plus Code and skip it if so.
+    if (placemark.street?.isNotEmpty == true && !placemark.street!.contains('+')) {
       parts.add(placemark.street!);
     }
 
@@ -335,6 +336,11 @@ class GeolocatorProvider extends StateNotifier<GeolocatorData> {
 
     if (placemark.country?.isNotEmpty == true) {
       parts.add(placemark.country!);
+    }
+
+    // If no parts were added (e.g., only had a plus code), return a generic message.
+    if (parts.isEmpty) {
+      return 'Area identified (no street address)';
     }
 
     return parts.join(', ');
