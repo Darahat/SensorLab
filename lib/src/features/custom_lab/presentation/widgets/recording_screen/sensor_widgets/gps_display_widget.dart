@@ -1,15 +1,46 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:sensorlab/src/core/providers.dart';
 
 class GpsDisplayWidget extends ConsumerWidget {
   const GpsDisplayWidget({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // GPS data is not directly graphed as a time series of doubles
-    // We can still watch the provider if we want to display some aspect of it
-    // For now, it remains a placeholder.
-    // final dataPoints = ref.watch(sensorTimeSeriesProvider(SensorType.gps));
+    final gpsData = ref.watch(geolocatorProvider);
+
+    Widget content;
+    if (gpsData.isLoadingLocation) {
+      content = const CircularProgressIndicator();
+    } else if (gpsData.errorMessage != null) {
+      content = Text(
+        'Error: ${gpsData.errorMessage}',
+        style: TextStyle(color: Theme.of(context).colorScheme.error),
+      );
+    } else if (gpsData.currentLocation == null) {
+      content = Text(
+        'No location data available.',
+        style: Theme.of(context).textTheme.bodyMedium,
+      );
+    } else {
+      if (gpsData.isLoadingAddress) {
+        content = Text(
+          'Finding address...',
+          style: Theme.of(context).textTheme.bodyMedium,
+        );
+      } else if (gpsData.currentAddress != null) {
+        content = Text(
+          gpsData.currentAddress!.fullAddress,
+          style: Theme.of(context).textTheme.bodyMedium,
+          textAlign: TextAlign.center,
+        );
+      } else {
+        content = Text(
+          'Lat: ${gpsData.currentLocation!.latitude.toStringAsFixed(6)}, Lon: ${gpsData.currentLocation!.longitude.toStringAsFixed(6)}',
+          style: Theme.of(context).textTheme.bodyMedium,
+        );
+      }
+    }
 
     return Card(
       elevation: 2,
@@ -25,10 +56,7 @@ class GpsDisplayWidget extends ConsumerWidget {
               ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 16),
-            Text(
-              'Tracking location data...',
-              style: Theme.of(context).textTheme.bodyMedium,
-            ),
+            content,
           ],
         ),
       ),

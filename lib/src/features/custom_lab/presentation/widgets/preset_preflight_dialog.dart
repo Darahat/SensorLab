@@ -167,7 +167,7 @@ class _PresetPreflightDialogState extends State<PresetPreflightDialog> {
           set.add(Permission.microphone);
           break;
         case SensorType.pedometer:
-          set.add(Permission.activityRecognition);
+          // Skip - handled via platform-specific mechanisms
           break;
         case SensorType.gps:
         case SensorType.speedMeter:
