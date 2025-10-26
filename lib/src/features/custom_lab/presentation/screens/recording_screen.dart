@@ -4,7 +4,7 @@ import 'package:sensorlab/l10n/app_localizations.dart';
 import 'package:sensorlab/src/features/custom_lab/application/providers/lab_monitoring_notifier.dart';
 import 'package:sensorlab/src/features/custom_lab/application/state/lab_monitoring_state.dart';
 import 'package:sensorlab/src/features/custom_lab/domain/entities/lab.dart';
-import 'package:sensorlab/src/features/custom_lab/presentation/widgets/recording_screen/lab_monitoring_content.dart';
+import 'package:sensorlab/src/features/custom_lab/presentation/widgets/widgets_index.dart';
 
 class RecordingScreen extends ConsumerWidget {
   final Lab lab;
